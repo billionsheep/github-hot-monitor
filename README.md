@@ -42,6 +42,11 @@ python3 -m http.server --directory public 8000
 
 仓库已提供工作流：[`.github/workflows/pages.yml`](.github/workflows/pages.yml)
 
+首次使用需要在仓库里手动启用一次 Pages：
+
+1. `Settings -> Pages`
+2. `Build and deployment -> Source` 选择 `GitHub Actions`
+
 - 触发方式：
   - 手动触发 `workflow_dispatch`
   - 每 6 小时自动执行（`0 */6 * * *`）

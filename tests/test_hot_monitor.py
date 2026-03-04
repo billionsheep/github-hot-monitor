@@ -51,6 +51,7 @@ class HotMonitorTests(unittest.TestCase):
             archived=False,
         )
         self.assertEqual(MODULE.velocity_stars_per_day(current, previous, 2.0), 10.0)
+        self.assertEqual(MODULE.velocity_stars_per_day(current, previous, 0.02), 0.0)
 
     def test_weighted_total_range(self):
         score = MODULE.weighted_total(interesting=95.0, advanced=85.0, productive=90.0)
@@ -90,6 +91,64 @@ class HotMonitorTests(unittest.TestCase):
             archived=False,
         )
         self.assertGreater(MODULE.productivity_score(active, now), MODULE.productivity_score(stale, now))
+
+    def test_classify_repo(self):
+        self.assertEqual(MODULE.classify_repo(88.0, 20.0, 10.0), "Trend")
+        self.assertEqual(MODULE.classify_repo(10.0, 82.0, 30.0), "Frontier")
+        self.assertEqual(MODULE.classify_repo(10.0, 30.0, 82.0), "Builder")
+
+    def test_structured_report_contains_leaderboards(self):
+        rows = [
+            {
+                "full_name": "a/one",
+                "url": "https://github.com/a/one",
+                "description": "",
+                "language": "Python",
+                "topics": [],
+                "stars": 120,
+                "forks": 10,
+                "watchers": 7,
+                "open_issues": 2,
+                "created_at": "2026-02-01T00:00:00Z",
+                "updated_at": "2026-03-01T00:00:00Z",
+                "pushed_at": "2026-03-01T00:00:00Z",
+                "velocity": 6.0,
+                "interesting": 75.0,
+                "advanced": 70.0,
+                "productive": 60.0,
+                "total": 70.25,
+                "segment": "Trend",
+            },
+            {
+                "full_name": "b/two",
+                "url": "https://github.com/b/two",
+                "description": "",
+                "language": "Go",
+                "topics": [],
+                "stars": 90,
+                "forks": 8,
+                "watchers": 4,
+                "open_issues": 1,
+                "created_at": "2026-02-01T00:00:00Z",
+                "updated_at": "2026-03-01T00:00:00Z",
+                "pushed_at": "2026-03-01T00:00:00Z",
+                "velocity": 3.0,
+                "interesting": 50.0,
+                "advanced": 65.0,
+                "productive": 66.0,
+                "total": 58.75,
+                "segment": "Builder",
+            },
+        ]
+        payload = MODULE.build_structured_report(
+            captured_at="2026-03-04T00:00:00+00:00",
+            previous_at="2026-03-03T00:00:00+00:00",
+            rows=rows,
+            top_n=1,
+        )
+        self.assertEqual(payload["candidate_count"], 2)
+        self.assertEqual(payload["leaderboards"]["overall"][0]["full_name"], "a/one")
+        self.assertEqual(payload["filters"]["languages"], ["Go", "Python"])
 
 if __name__ == "__main__":
     unittest.main()

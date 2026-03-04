@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GitHub Hot Monitor</title>
+  <meta name="description" content="发现 GitHub 上升星最快、最有趣、最先进、最有生产力的项目。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-orb bg-orb-a"></div>
+  <div class="bg-orb bg-orb-b"></div>
+  <header class="hero reveal">
+    <p class="eyebrow">GitHub Project Radar</p>
+    <h1>发现升星最快与最值得跟进的项目</h1>
+    <p class="subtitle">
+      每 6 小时自动更新。用趋势、技术前沿与工程产出三个维度，快速筛选值得投入时间的仓库。
+    </p>
+    <div class="hero-meta">
+      <div class="meta-card">
+        <span class="meta-label">最新抓取</span>
+        <span id="capturedAt" class="meta-value">加载中...</span>
+      </div>
+      <div class="meta-card">
+        <span class="meta-label">上次快照</span>
+        <span id="previousAt" class="meta-value">加载中...</span>
+      </div>
+      <div class="meta-card">
+        <span class="meta-label">候选项目</span>
+        <span id="candidateCount" class="meta-value">0</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="summary reveal">
+      <article class="summary-card">
+        <h2>中位升星速度</h2>
+        <p id="medianVelocity" class="summary-value">0</p>
+        <p class="summary-note">stars/day</p>
+      </article>
+      <article class="summary-card">
+        <h2>综合第一名</h2>
+        <p id="topRepoName" class="summary-value summary-repo">-</p>
+        <p id="topRepoScore" class="summary-note">Score: -</p>
+      </article>
+      <article class="summary-card">
+        <h2>项目画像分布</h2>
+        <p id="segmentOverview" class="summary-value summary-segment">Trend 0 / Frontier 0 / Builder 0</p>
+        <p class="summary-note">按主导能力自动分类</p>
+      </article>
+    </section>
+
+    <section class="controls reveal">
+      <div id="metricTabs" class="tabs">
+        <button class="tab active" data-metric="total">综合</button>
+        <button class="tab" data-metric="velocity">升星最快</button>
+        <button class="tab" data-metric="interesting">有趣度</button>
+        <button class="tab" data-metric="advanced">先进性</button>
+        <button class="tab" data-metric="productive">生产力</button>
+      </div>
+
+      <div class="filters">
+        <label class="filter">
+          <span>搜索</span>
+          <input id="searchInput" type="search" placeholder="仓库名、描述、topic">
+        </label>
+        <label class="filter">
+          <span>语言</span>
+          <select id="languageSelect">
+            <option value="all">全部</option>
+          </select>
+        </label>
+        <label class="filter">
+          <span>画像</span>
+          <select id="segmentSelect">
+            <option value="all">全部</option>
+            <option value="Trend">Trend</option>
+            <option value="Frontier">Frontier</option>
+            <option value="Builder">Builder</option>
+          </select>
+        </label>
+        <label class="filter">
+          <span>最低 Stars: <b id="starsValue">0</b></span>
+          <input id="starsRange" type="range" min="0" max="5000" step="50" value="0">
+        </label>
+      </div>
+    </section>
+
+    <section class="spotlight reveal">
+      <div class="section-head">
+        <h2>今日焦点</h2>
+        <a href="./data/latest.md" target="_blank" rel="noopener">查看 Markdown 报告</a>
+      </div>
+      <div id="spotlightGrid" class="spotlight-grid"></div>
+    </section>
+
+    <section class="repo-section reveal">
+      <div class="section-head">
+        <h2 id="listTitle">综合榜单</h2>
+        <span id="resultCount">0 项</span>
+      </div>
+      <div id="repoGrid" class="repo-grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Built for continuous discovery of meaningful GitHub projects.</p>
+  </footer>
+
+  <template id="repoCardTemplate">
+    <article class="repo-card">
+      <div class="repo-top">
+        <a class="repo-name" target="_blank" rel="noopener"></a>
+        <span class="badge badge-segment"></span>
+      </div>
+      <p class="repo-desc"></p>
+      <div class="repo-metrics"></div>
+      <div class="repo-tags"></div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -37,6 +37,8 @@ DEFAULT_TOPICS = [
     "data-engineering",
 ]
 
+MIN_VELOCITY_INTERVAL_DAYS = 2 / 24  # Ignore noisy growth if snapshots are too close.
+
 
 @dataclass
 class RepoSnapshot:
@@ -189,7 +191,7 @@ def save_snapshot(
     snapshot_dir: pathlib.Path, captured_at: str, repos: Sequence[RepoSnapshot], queries: Sequence[str]
 ) -> pathlib.Path:
     snapshot_dir.mkdir(parents=True, exist_ok=True)
-    filename = f"snapshot-{captured_at.replace(':', '').replace('-', '')}.json"
+    filename = f"snapshot-{timestamp_slug(captured_at)}.json"
     snapshot_path = snapshot_dir / filename
     payload = {
         "captured_at": captured_at,
@@ -222,7 +224,7 @@ def build_queries(topics: Sequence[str], days: int, min_stars: int) -> List[str]
 def velocity_stars_per_day(
     current: RepoSnapshot, previous: Optional[RepoSnapshot], days_elapsed: float
 ) -> float:
-    if previous is None or days_elapsed <= 0.0:
+    if previous is None or days_elapsed < MIN_VELOCITY_INTERVAL_DAYS:
         return 0.0
     delta = current.stars - previous.stars
     if delta <= 0:
@@ -283,11 +285,56 @@ def weighted_total(interesting: float, advanced: float, productive: float) -> fl
     return clamp_0_100(interesting * 0.45 + advanced * 0.30 + productive * 0.25)
 
 
+def classify_repo(interesting: float, advanced: float, productive: float) -> str:
+    axes = {
+        "Trend": interesting,
+        "Frontier": advanced,
+        "Builder": productive,
+    }
+    return max(axes, key=axes.get)
+
+
 def median_velocity(rows: Sequence[Dict[str, Any]]) -> float:
     values = [float(r["velocity"]) for r in rows if r["velocity"] > 0]
     if not values:
         return 0.0
     return statistics.median(values)
+
+
+def top_rows(rows: Sequence[Dict[str, Any]], metric: str, top_n: int) -> List[Dict[str, Any]]:
+    return sorted(rows, key=lambda r: r[metric], reverse=True)[:top_n]
+
+
+def timestamp_slug(captured_at: str) -> str:
+    return captured_at.replace(":", "").replace("-", "")
+
+
+def build_structured_report(
+    *,
+    captured_at: str,
+    previous_at: Optional[str],
+    rows: Sequence[Dict[str, Any]],
+    top_n: int,
+) -> Dict[str, Any]:
+    rows_total = sorted(rows, key=lambda r: r["total"], reverse=True)
+    languages = sorted({(r.get("language") or "Unknown") for r in rows_total})
+    return {
+        "captured_at": captured_at,
+        "previous_snapshot": previous_at,
+        "candidate_count": len(rows_total),
+        "median_velocity": median_velocity(rows_total),
+        "filters": {
+            "languages": languages,
+        },
+        "leaderboards": {
+            "fastest": top_rows(rows_total, "velocity", top_n),
+            "interesting": top_rows(rows_total, "interesting", top_n),
+            "advanced": top_rows(rows_total, "advanced", top_n),
+            "productive": top_rows(rows_total, "productive", top_n),
+            "overall": top_rows(rows_total, "total", top_n),
+        },
+        "rows": rows_total,
+    }
 
 
 def format_report(
@@ -308,11 +355,11 @@ def format_report(
         prev_ts = parse_iso8601(previous_at)
         previous_line = prev_ts.astimezone().strftime("%Y-%m-%d %H:%M:%S %Z") if prev_ts else previous_at
 
-    fastest = sorted(rows, key=lambda r: r["velocity"], reverse=True)[:top_n]
-    most_interesting = sorted(rows, key=lambda r: r["interesting"], reverse=True)[:top_n]
-    most_advanced = sorted(rows, key=lambda r: r["advanced"], reverse=True)[:top_n]
-    most_productive = sorted(rows, key=lambda r: r["productive"], reverse=True)[:top_n]
-    total_rank = sorted(rows, key=lambda r: r["total"], reverse=True)[:top_n]
+    fastest = top_rows(rows, "velocity", top_n)
+    most_interesting = top_rows(rows, "interesting", top_n)
+    most_advanced = top_rows(rows, "advanced", top_n)
+    most_productive = top_rows(rows, "productive", top_n)
+    total_rank = top_rows(rows, "total", top_n)
 
     def table(title: str, items: Sequence[Dict[str, Any]], metric: str) -> str:
         lines = [f"## {title}", "", "| Repo | Stars | Metric | Notes |", "|---|---:|---:|---|"]
@@ -370,17 +417,27 @@ def generate_rank_rows(
         advanced = advanced_score(repo)
         productive = productivity_score(repo, now)
         total = weighted_total(interesting, advanced, productive)
+        segment = classify_repo(interesting, advanced, productive)
         rows.append(
             {
                 "full_name": repo.full_name,
                 "url": repo.html_url,
                 "description": repo.description or "",
+                "language": repo.language or "Unknown",
+                "topics": repo.topics,
                 "stars": repo.stars,
+                "forks": repo.forks,
+                "watchers": repo.watchers,
+                "open_issues": repo.open_issues,
+                "created_at": repo.created_at,
+                "updated_at": repo.updated_at,
+                "pushed_at": repo.pushed_at,
                 "velocity": velocity,
                 "interesting": interesting,
                 "advanced": advanced,
                 "productive": productive,
                 "total": total,
+                "segment": segment,
             }
         )
     return rows
@@ -446,13 +503,24 @@ def cli(argv: Optional[Sequence[str]] = None) -> int:
     snapshot_path = save_snapshot(snapshot_dir, captured_at, repos, queries)
     rows = generate_rank_rows(repos, previous_map=previous_map, elapsed_days=elapsed_days, now=now)
     report = format_report(captured_at=captured_at, previous_at=previous_at, rows=rows, top_n=args.top)
+    structured = build_structured_report(
+        captured_at=captured_at,
+        previous_at=previous_at,
+        rows=rows,
+        top_n=args.top,
+    )
     latest_report_path = report_dir / "latest.md"
-    dated_report_path = report_dir / f"report-{captured_at.replace(':', '').replace('-', '')}.md"
+    dated_report_path = report_dir / f"report-{timestamp_slug(captured_at)}.md"
+    latest_report_json_path = report_dir / "latest.json"
+    dated_report_json_path = report_dir / f"report-{timestamp_slug(captured_at)}.json"
     latest_report_path.write_text(report, encoding="utf-8")
     dated_report_path.write_text(report, encoding="utf-8")
+    latest_report_json_path.write_text(json.dumps(structured, ensure_ascii=False, indent=2), encoding="utf-8")
+    dated_report_json_path.write_text(json.dumps(structured, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print(f"Snapshot: {snapshot_path}")
     print(f"Report  : {latest_report_path}")
+    print(f"JSON    : {latest_report_json_path}")
     print(f"Top repo: {max(rows, key=lambda r: r['total'])['full_name']}")
     return 0
 

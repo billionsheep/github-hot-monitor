@@ -1,0 +1,76 @@
+name: Pages Monitor Deploy
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+  push:
+    branches:
+      - main
+    paths:
+      - "ops/scripts/**"
+      - "web/**"
+      - ".github/workflows/pages.yml"
+      - "README.md"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-hot-monitor-pages
+  cancel-in-progress: true
+
+jobs:
+  scan-build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run monitor scan
+        env:
+          GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
+          GITHUB_TOKEN_FALLBACK: ${{ github.token }}
+        run: |
+          if [ -n "$GH_API_TOKEN" ]; then
+            export GITHUB_TOKEN="$GH_API_TOKEN"
+          else
+            export GITHUB_TOKEN="$GITHUB_TOKEN_FALLBACK"
+          fi
+          python3 ops/scripts/github_hot_monitor.py scan --state-dir data --top 20
+
+      - name: Commit refreshed data
+        run: |
+          if [[ -n "$(git status --porcelain data)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data
+            git commit -m "chore(data): refresh hot monitor snapshot [skip ci]"
+            git push
+          else
+            echo "No data change"
+          fi
+
+      - name: Build static bundle
+        run: python3 ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir public
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

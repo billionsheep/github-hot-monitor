@@ -122,7 +122,8 @@ function renderSpotlight(payload) {
       grid.appendChild(card);
       return;
     }
-    const metricValue = key === "fastest" ? formatNumber(top.velocity, 2) : formatNumber(top.total || top[key], 2);
+    const metricKey = { fastest: "velocity", overall: "total", interesting: "interesting", advanced: "advanced", productive: "productive" }[key];
+    const metricValue = formatNumber(top[metricKey], 2);
     card.innerHTML = `
       <h3>${label}</h3>
       <a href="${top.url}" target="_blank" rel="noopener">${top.full_name}</a>

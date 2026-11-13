@@ -456,3 +456,28 @@ select:focus {
     min-height: auto;
   }
 }
+
+.evidence-panel { margin: 26px 0; padding: 26px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+.evidence-panel h2, .evidence-panel h3 { margin: 8px 0; }
+.evidence-form label { display: block; margin-bottom: 8px; font-weight: 600; }
+.evidence-form div { display: flex; gap: 8px; }
+.evidence-form input { flex: 1; min-width: 0; padding: 10px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
+.evidence-panel button { cursor: pointer; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: white; color: var(--ink); font: inherit; }
+.evidence-form button { background: var(--teal); color: white; }
+.evidence-layout { display: grid; grid-template-columns: minmax(200px, 1fr) minmax(0, 2fr); gap: 24px; }
+.tree-entry { margin: 4px 0; }.tree-children { margin-left: 16px; }.tree-entry button { text-align: left; overflow-wrap: anywhere; }
+#evidenceCard { min-width: 0; overflow-wrap: anywhere; } #evidenceCard pre { overflow: auto; max-height: 500px; padding: 16px; white-space: pre-wrap; background: #f2f1eb; border-radius: 8px; }
+#evidenceCard summary { cursor: pointer; margin-top: 16px; font-weight: 600; }.hash { font-size: .85rem; }.notice { color: #9b4c12; }
+@media (max-width: 700px) { .evidence-layout { grid-template-columns: 1fr; } }
+#snapshotInfo, .copy-value, .shortcuts, .page-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0; }
+.copy-value code { overflow-wrap: anywhere; }.copy-feedback { font-size: .85rem; }
+#breadcrumbs { margin: 10px 0; overflow-wrap: anywhere; } #breadcrumbs button { padding: 3px 7px; }
+#fileTree { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+#fileTree .tree-item { text-align: left; overflow-wrap: anywhere; }
+#fileTree .selected { border-color: var(--teal); background: #d9efea; font-weight: 700; }
+.evidence-lines { white-space: pre !important; overflow-x: auto; }
+.evidence-line { display: flex; min-width: max-content; }
+.line-number { color: #667; user-select: none; text-align: right; padding-right: 1.2em; min-width: 4em; }
+.line-content { white-space: pre; }
+.page-controls input { width: 6em; padding: 6px; }
+.evidence-panel button:disabled { cursor: not-allowed; opacity: .5; }

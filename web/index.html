@@ -36,6 +36,20 @@
   </header>
 
   <main>
+    <section class="evidence-panel">
+      <div class="section-head"><div><p class="eyebrow">固定版本证据</p><h2>浏览公开仓库</h2></div></div>
+      <form id="evidenceForm" class="evidence-form">
+        <label for="repositoryInput">仓库名称或 GitHub 地址</label>
+        <div><input id="repositoryInput" placeholder="例如 fastapi/fastapi" required><button id="createSnapshot" type="submit" disabled>创建快照</button></div>
+      </form>
+      <p id="evidenceStatus" role="status">输入仓库后读取默认分支当前版本。</p>
+      <div id="evidenceWorkspace" hidden>
+        <div id="snapshotInfo"></div>
+        <div id="shortcuts" class="shortcuts"></div>
+        <div class="evidence-layout"><div><h3>目录</h3><nav id="breadcrumbs" aria-label="目录路径"></nav><p id="treeStatus"></p><div id="fileTree"></div></div>
+        <div><h3>证据卡</h3><div id="evidenceCard">选择文件以读取文本。</div></div></div>
+      </div>
+    </section>
     <section class="summary reveal">
       <article class="summary-card">
         <h2>中位升星速度</h2>
@@ -124,5 +138,6 @@
   </template>
 
   <script src="app.js"></script>
+  <script src="evidence.js"></script>
 </body>
 </html>

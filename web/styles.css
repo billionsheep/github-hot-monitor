@@ -481,3 +481,10 @@ select:focus {
 .line-content { white-space: pre; }
 .page-controls input { width: 6em; padding: 6px; }
 .evidence-panel button:disabled { cursor: not-allowed; opacity: .5; }
+.agent-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.agent-form label { display: grid; gap: 5px; font-weight: 600; }
+.agent-form input { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
+.agent-form button { justify-self: start; background: var(--teal); color: white; }
+.agent-table { overflow-x: auto; }.agent-table table { border-collapse: collapse; width: 100%; }
+.agent-table th,.agent-table td { border: 1px solid var(--line); padding: 10px; vertical-align: top; text-align: left; overflow-wrap: anywhere; }
+@media (max-width: 700px) { .agent-form { grid-template-columns: 1fr; } }

@@ -1,8 +1,35 @@
 # GitHub Hot Monitor
 
-监控 GitHub 上升星最快的项目，并通过静态网页展示「升星趋势 / 有趣度 / 先进性 / 生产力 / 综合排名」。
+开源项目工程约束核查 Agent：输入一个公开 GitHub 仓库和 Python、容器部署或模型服务要求，模型按需读取固定提交的目录与文本，输出带来源引用的核查表。保留原有 GitHub 热门项目榜单。
 
-## 功能
+## Agent 演示
+
+技术栈：Python 3.11、FastAPI、Pydantic、SQLite、OpenAI Responses API / Function Calling、原生 JavaScript。
+
+- 固定 commit SHA，证据保留原始行号、文件与片段 SHA-256、来源链接；同版本文件复用本地缓存。
+- 模型使用 `gpt-6.1-sol` / low，仅可调用目录和文本片段读取工具，按要求补查证据。
+- 输出“证据支持 / 证据冲突 / 信息不足 / 需要运行验证”，自动校验引用属于本次读取；语义支持在演示验收时对照原文核对。
+- 每任务最多 6 次模型请求、8 次工具调用，展示 token 用量、耗时和停止原因。
+
+```bash
+python3.11 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+cp -n .env.example .env.local
+chmod 600 .env.local
+```
+
+用文本编辑器在 `.env.local` 填写 `LLM_API_KEY`，保留示例中的其他设置，然后启动：
+
+```bash
+.venv/bin/python ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir public
+.venv/bin/python -m uvicorn evidence.app:app --host 127.0.0.1 --port 8770
+```
+
+访问 <http://127.0.0.1:8770>。密钥保留在服务端，`.env.local` 和运行缓存已排除 Git。GitHub Pages 提供静态榜单，Agent 通过上述本地服务演示。
+
+[项目状态](docs/project/README.md) · [运行说明](docs/project/RUNBOOK.md) · [真实验证](docs/project/R2_REAL_VALIDATION.md) · [演示脚本](docs/project/R2_DEMO.md) · [简历项目经历](docs/project/RESUME_PROJECT.md)
+
+## 热门项目榜单功能
 
 - 抓取候选仓库并保存快照（`data/snapshots/`）。
 - 基于历史快照计算 `stars/day` 速度。
@@ -10,7 +37,7 @@
 - 前端页面支持分类榜单、搜索、语言筛选、最低星数筛选、项目画像（Trend / Frontier / Builder）。
 - GitHub Actions 定时执行并自动发布到 GitHub Pages。
 
-## 本地运行
+## 静态榜单运行
 
 1. 设置 token（建议）：
 

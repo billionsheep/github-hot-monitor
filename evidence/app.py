@@ -300,4 +300,7 @@ def fragment(id: str, path: str, start: int = Query(1, ge=1), lines: int = Query
             "fragment_sha256": fragment_hash, "evidence_id": evidence_id, "source_url": url, "cache_hit": hit}
 
 
+from evidence.agent import router as agent_router
+app.include_router(agent_router)
+
 app.mount("/", StaticFiles(directory=ROOT / "public", html=True, check_dir=False), name="site")

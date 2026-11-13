@@ -173,7 +173,7 @@
       createButton.disabled = false; status.textContent = "输入仓库后读取默认分支当前版本。";
     } catch (_) {
       createButton.disabled = true;
-      status.textContent = "当前页面没有可用的证据服务。静态榜单可正常使用；请启动本地服务并访问 http://127.0.0.1:8768。";
+      status.textContent = "当前页面没有可用的证据服务。静态榜单可正常使用；请启动本地服务并访问 http://127.0.0.1:8770。";
     }
   })();
 })();

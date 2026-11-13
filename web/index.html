@@ -37,6 +37,19 @@
 
   <main>
     <section class="evidence-panel">
+      <div class="section-head"><div><p class="eyebrow">Agent 核查</p><h2>按环境要求核查仓库</h2></div></div>
+      <form id="agentForm" class="agent-form">
+        <label>公开仓库<input id="agentRepository" placeholder="owner/repo 或 GitHub 地址" required></label>
+        <label>Python 要求<input id="agentPython" placeholder="例如：支持 Python 3.11"></label>
+        <label>容器部署要求<input id="agentContainer" placeholder="例如：提供 Docker Compose 部署"></label>
+        <label>模型服务要求<input id="agentModel" placeholder="例如：支持配置 OpenAI API"></label>
+        <button id="agentSubmit" type="submit" disabled>开始核查</button>
+      </form>
+      <p id="agentStatus" role="status">正在检查本地核查服务…</p>
+      <ol id="agentProgress"></ol>
+      <div id="agentResult"></div>
+    </section>
+    <section class="evidence-panel">
       <div class="section-head"><div><p class="eyebrow">固定版本证据</p><h2>浏览公开仓库</h2></div></div>
       <form id="evidenceForm" class="evidence-form">
         <label for="repositoryInput">仓库名称或 GitHub 地址</label>
@@ -139,5 +152,6 @@
 
   <script src="app.js"></script>
   <script src="evidence.js"></script>
+  <script src="agent.js"></script>
 </body>
 </html>

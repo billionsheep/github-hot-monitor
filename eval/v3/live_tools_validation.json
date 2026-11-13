@@ -1,0 +1,119 @@
+{
+  "repo": "modelcontextprotocol/python-sdk",
+  "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+  "tool": "scan_security_and_risk_sinks",
+  "errors": [],
+  "coverage": {
+    "complete": false,
+    "truncated": true,
+    "notes": [
+      "文本文件尝试次数达到 24 上限，仍有文件未扫描。",
+      "线索超过 40 项，仅保留前 40 项，其他线索未展开。"
+    ],
+    "inspected": [
+      "src/mcp/client/__init__.py",
+      "src/mcp/client/__main__.py",
+      "src/mcp/client/_input_required.py",
+      "src/mcp/client/_memory.py",
+      "src/mcp/client/_probe.py",
+      "src/mcp/client/_transport.py",
+      "src/mcp/client/auth/__init__.py",
+      "src/mcp/client/auth/exceptions.py",
+      "src/mcp/client/auth/extensions/__init__.py",
+      "src/mcp/client/auth/extensions/client_credentials.py",
+      "src/mcp/client/auth/extensions/identity_assertion.py",
+      "src/mcp/client/auth/oauth2.py",
+      "src/mcp/client/auth/utils.py",
+      "src/mcp/client/caching.py",
+      "src/mcp/client/client.py",
+      "src/mcp/client/context.py",
+      "src/mcp/client/extension.py",
+      "src/mcp/client/extensions/__init__.py",
+      "src/mcp/client/extensions/skills.py",
+      "src/mcp/client/session.py",
+      "src/mcp/client/session_group.py",
+      "src/mcp/client/sse.py",
+      "src/mcp/client/stdio.py",
+      "src/mcp/client/streamable_http.py"
+    ],
+    "continuation": "src/mcp/client"
+  },
+  "scope": {
+    "attempted_directories": 7,
+    "attempted_files": 24,
+    "bytes_read": 335086,
+    "complete": false,
+    "continuation": "src/mcp/client",
+    "continuations": [
+      {
+        "kind": "file",
+        "path": "src/mcp/client/subscriptions.py",
+        "path_prefix": "src/mcp/client"
+      },
+      {
+        "kind": "file",
+        "path": "src/mcp/client/session.py",
+        "path_prefix": "src/mcp/client"
+      },
+      {
+        "kind": "file",
+        "path": "src/mcp/client/session_group.py",
+        "path_prefix": "src/mcp/client"
+      },
+      {
+        "kind": "file",
+        "path": "src/mcp/client/sse.py",
+        "path_prefix": "src/mcp/client"
+      },
+      {
+        "kind": "file",
+        "path": "src/mcp/client/stdio.py",
+        "path_prefix": "src/mcp/client"
+      }
+    ],
+    "directories": [
+      "/",
+      "src",
+      "src/mcp",
+      "src/mcp/client",
+      "src/mcp/client/auth",
+      "src/mcp/client/extensions",
+      "src/mcp/client/auth/extensions"
+    ],
+    "files": [
+      "src/mcp/client/__init__.py",
+      "src/mcp/client/__main__.py",
+      "src/mcp/client/_input_required.py",
+      "src/mcp/client/_memory.py",
+      "src/mcp/client/_probe.py",
+      "src/mcp/client/_transport.py",
+      "src/mcp/client/auth/__init__.py",
+      "src/mcp/client/auth/exceptions.py",
+      "src/mcp/client/auth/extensions/__init__.py",
+      "src/mcp/client/auth/extensions/client_credentials.py",
+      "src/mcp/client/auth/extensions/identity_assertion.py",
+      "src/mcp/client/auth/oauth2.py",
+      "src/mcp/client/auth/utils.py",
+      "src/mcp/client/caching.py",
+      "src/mcp/client/client.py",
+      "src/mcp/client/context.py",
+      "src/mcp/client/extension.py",
+      "src/mcp/client/extensions/__init__.py",
+      "src/mcp/client/extensions/skills.py",
+      "src/mcp/client/session.py",
+      "src/mcp/client/session_group.py",
+      "src/mcp/client/sse.py",
+      "src/mcp/client/stdio.py",
+      "src/mcp/client/streamable_http.py"
+    ],
+    "mode": "all",
+    "notes": [
+      "文本文件尝试次数达到 24 上限，仍有文件未扫描。",
+      "线索超过 40 项，仅保留前 40 项，其他线索未展开。"
+    ],
+    "path_prefix": "src/mcp/client"
+  },
+  "findings": 40,
+  "artifact_sha256": "c3c88333c7333820556fc5fb5a8b2a2099b86f7ab881089b60713ff8afac24dd",
+  "source_integrity": true
+}

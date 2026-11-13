@@ -15,6 +15,15 @@ class OverviewInput(Binding):
 class PathInput(Binding):
     path: str = Field(min_length=1, max_length=500)
 
+class OutlineInput(PathInput):
+    symbol_or_param_hint: str | None = Field(default=None,max_length=200)
+
+class ScanInput(Binding):
+    path_prefix: str = Field(default='',max_length=500)
+
+class SecurityScanInput(ScanInput):
+    mode: Literal['all','exec_sinks','env_and_network','prompt_injection'] = 'all'
+
 class LinesInput(PathInput):
     start_line: int = Field(ge=1)
     end_line: int = Field(ge=1)
@@ -88,7 +97,20 @@ class MetadataEvidence(StrictModel):
     source_url: str
     fetched_at: str
 
-Evidence = Annotated[FileEvidence | IssueEvidence | TreeEvidence | OutlineEvidence | MetadataEvidence, Field(discriminator='source_type')]
+class DerivedEvidence(StrictModel):
+    source_type: Literal['arch_profile','security_scan']
+    evidence_id: str
+    repo: str
+    commit: str
+    path_prefix: str
+    rule_version: str
+    artifact_sha256: str
+    references: list[str]
+    text: str
+    source_url: str
+    fetched_at: str
+
+Evidence = Annotated[FileEvidence | IssueEvidence | TreeEvidence | OutlineEvidence | MetadataEvidence | DerivedEvidence, Field(discriminator='source_type')]
 
 class TreeItem(StrictModel):
     name: str
@@ -115,6 +137,10 @@ class OutlineEntry(StrictModel):
     level: int | None = None
     kind: str | None = None
     evidence_id: str | None = None
+    parameters: list[dict] | None = None
+    calls: list[dict] | None = None
+    aliases: list[dict] | None = None
+    calls_truncated: bool | None = None
 
 class MetadataFact(StrictModel):
     kind: Literal['metadata']
@@ -171,7 +197,11 @@ class CommunityFact(StrictModel):
     state: str
     evidence_id: str
 
-Fact = Annotated[MetadataFact | TreeFact | OutlineFact | EmptyFact | ParseFact | LineFact | ConfigFact | CommunityFact, Field(discriminator='kind')]
+class DerivedFact(StrictModel):
+    kind: Literal['arch_profile','security_scan']
+    evidence_id: str
+
+Fact = Annotated[MetadataFact | TreeFact | OutlineFact | EmptyFact | ParseFact | LineFact | ConfigFact | CommunityFact | DerivedFact, Field(discriminator='kind')]
 
 class Coverage(StrictModel):
     complete: bool

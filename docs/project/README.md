@@ -1,5 +1,7 @@
 # 项目入口与当前状态
 
+当前工作：**v3 增量改造实施中**。实施与验收入口：[v3 计划](REPOAUDIT_V3_PLAN.md)。下方 v2 交付记录保留为基线。
+
 更新：2026-11-13。**RepoAudit-Agent 四阶段演示交付已完成。** 当前统一流程为发现、候选、逐项尽调、原文、追问、导出和静态回放；详细状态与实际问题以 [DELIVERY_STATUS.md](DELIVERY_STATUS.md) 为准。
 
 - [交付现状与验收](DELIVERY_STATUS.md) · [三分钟演示](DELIVERY_GUIDE.md)

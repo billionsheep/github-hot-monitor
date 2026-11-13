@@ -1,0 +1,15 @@
+{
+  "commit": "1042a9b72b0c1b05792f817c5dd9dfa7175f5d01",
+  "tag": "repoaudit-demo-2026-11-13",
+  "original_replays": {
+    "web/replays/agents-python-comparison.json": "e803625feb35e02d02eabed38d08624bcf3b1bd40ba42fa42fd598ee8b2014bc",
+    "web/replays/pydantic-model-endpoint.json": "d0b5367fd1b694c979c2f0b0d9fe519e781c447da366c67d3d89647c76d50b06",
+    "web/replays/fastapi-python311.json": "2fa5ecce979d726c8fff75bf81c0ad4289997543ea0a1a4d4106002bd5945237"
+  },
+  "test_baseline": {
+    "python": 94,
+    "frontend": 13,
+    "frozen_contracts": 16
+  },
+  "phase": "before_v3"
+}

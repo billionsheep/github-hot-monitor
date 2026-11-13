@@ -9,7 +9,9 @@ from urllib.parse import quote
 import yaml
 from pydantic import ValidationError
 from evidence.github_client import GitHubClient, GitHubError
-from evidence.schemas import Binding, OverviewInput, PathInput, LinesInput, IssueInput, FileEvidence, IssueEvidence, TreeEvidence, OutlineEvidence, MetadataEvidence, Coverage, ToolError, ToolResult
+from evidence.schemas import Binding, OverviewInput, PathInput, OutlineInput, ScanInput, SecurityScanInput, LinesInput, IssueInput, FileEvidence, IssueEvidence, TreeEvidence, OutlineEvidence, MetadataEvidence, DerivedEvidence, Coverage, ToolError, ToolResult
+from evidence.analysis_v3 import python_index, scan_files, python_signals, rule_signals
+from evidence.github_client import timestamp
 
 
 def digest(value): return hashlib.sha256(value.encode('utf-8')).hexdigest()
@@ -17,6 +19,21 @@ def lines_of(text):
     parts=text.split('\n'); out=[p+'\n' for p in parts[:-1]]
     if parts[-1]: out.append(parts[-1])
     return out
+
+def evidence_from_scanned_file(repo,commit,file,start,end,max_chars=6000):
+    """Build a normal file fragment from bytes already counted by the scanner."""
+    rows=lines_of(file['text']);selected=[];count=0;partial=False
+    for line in rows[start-1:min(end,start+119,len(rows))]:
+        if count+len(line)>max_chars:
+            if not selected: selected.append(line[:max_chars]);partial=True
+            break
+        selected.append(line);count+=len(line)
+    if not selected:return None
+    first=start;last=start+len(selected)-1;text=''.join(selected);frag_hash=digest(text)
+    identity={'repository':repo.lower(),'commit':commit,'path':file['path'],'start_line':first,'end_line':last,'partial_line':partial,'empty':False,'fragment_sha256':frag_hash}
+    eid='ev_'+digest(json.dumps(identity,ensure_ascii=False,sort_keys=True,separators=(',',':')))
+    url=f'https://github.com/{repo}/blob/{commit}/{quote(file["path"],safe="/")}#L{first}-L{last}'
+    return FileEvidence(evidence_id=eid,repo=repo,commit=commit,path=file['path'],start_line=first,end_line=last,text=text,content_sha256=file['sha256'],fragment_sha256=frag_hash,source_url=url,fetched_at=file['fetched_at'],partial_line=partial)
 
 def error(tool,repo,commit,exc):
     if isinstance(exc,GitHubError): code,message=exc.code,exc.message
@@ -213,7 +230,7 @@ class AuditTools:
     async def get_markdown_outline(self,data):
         name='get_markdown_outline'; repo=self.binding.repo; sha=self.binding.commit
         try:
-            req=self.check(data,PathInput); blob,fetched,hit=await self.client.file(repo,sha,req.path); rows=lines_of(blob['text']); entries=[]; mode='line_blocks'; notes=[]
+            req=self.check(data,OutlineInput); blob,fetched,hit=await self.client.file(repo,sha,req.path); rows=lines_of(blob['text']); entries=[]; mode='line_blocks'; notes=[]
             if req.path.lower().endswith(('.md','.markdown')):
                 mode='markdown_headings'; fence=None
                 for i,line in enumerate(rows,1):
@@ -234,16 +251,16 @@ class AuditTools:
             elif req.path.lower().endswith('.py'):
                 mode='python_ast'
                 try:
-                    root=ast.parse(blob['text'])
-                    for n in ast.walk(root):
-                        if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef,ast.ClassDef)):
-                            entries.append({'title':n.name,'kind':type(n).__name__,'start_line':n.lineno,'end_line':n.end_lineno})
-                    entries.sort(key=lambda e:e['start_line'])
+                    _,entries,_,_=python_index(blob['text'])
+                    if any(e.get('calls_truncated') for e in entries): notes.append('函数或类内调用摘要超过 60 项；独立调用索引仍可按提示检索。')
                 except SyntaxError:
                     mode='line_blocks'; notes.append('Python 语法解析失败，改用行块索引。')
             if mode=='markdown_headings' and not entries and rows:
                 mode='line_blocks'; notes.append('没有 Markdown 标题，使用行块索引。')
             if mode=='line_blocks': entries=[{'start_line':i,'end_line':min(i+49,len(rows))} for i in range(1,len(rows)+1,50)]
+            if req.symbol_or_param_hint:
+                hint=req.symbol_or_param_hint.casefold()
+                entries=sorted(entries,key=lambda e:(hint not in json.dumps(e,ensure_ascii=False).casefold(),0 if e.get('kind')=='Call' else 1,e['start_line']))
             limited=entries[:120]; truncated=len(entries)>len(limited)
             if truncated: notes.append('索引超过 120 项，仅展示前 120 项。')
             index_text=json.dumps({'kind':mode,'entries':limited},ensure_ascii=False,sort_keys=True,separators=(',',':'))
@@ -335,6 +352,67 @@ class AuditTools:
             notes.append('仅检查已列目录；其他目录尚未检查。')
             return ToolResult(tool=name,repo=repo,commit=sha,facts=facts,evidence=evidence,coverage=Coverage(complete=False,truncated=any('超过' in n or '截断' in n or '达到' in n or '未返回结构化值' in n for n in notes),inspected=inspected+files,notes=notes),errors=errors,cache_hit=hit)
         except (GitHubError,ValidationError,ValueError) as exc: return error(name,repo,sha,exc)
+    async def analyze_architecture_profile(self,data):
+        return await self._derived_scan(data,'arch_profile')
+    async def scan_security_and_risk_sinks(self,data):
+        return await self._derived_scan(data,'security_scan')
+    async def _derived_scan(self,data,kind):
+        name='analyze_architecture_profile' if kind=='arch_profile' else 'scan_security_and_risk_sinks'
+        repo=self.binding.repo;commit=self.binding.commit
+        try:
+            req=self.check(data,ScanInput if kind=='arch_profile' else SecurityScanInput)
+            scan=await scan_files(self.client,self.binding,req.path_prefix)
+            mode=getattr(req,'mode','all'); signals=[]; evidence={};notes=list(scan.notes);errors=list(scan.errors)
+            omitted=False
+            for file in scan.files:
+                path=file['path'];text=file['text']; rows=lines_of(text)
+                if path.lower().endswith(('.py','.pyi')):
+                    try:
+                        matches=python_signals(text,kind)
+                        if kind=='security_scan': matches += [x for x in rule_signals(path,text,kind) if x['category']=='prompt_injection']
+                    except (SyntaxError,ValueError,RecursionError):
+                        notes.append(f'{path} Python AST 解析失败，使用文本规则线索。');scan.gap(path,'file')
+                        matches=rule_signals(path,text,kind)
+                else: matches=rule_signals(path,text,kind)
+                seen=set()
+                for item in matches:
+                    if kind=='security_scan' and mode!='all' and item['category']!=mode: continue
+                    fingerprint=(item['category'],item['relation'],item['to'],item['start_line'],item['end_line'])
+                    if fingerprint in seen: continue
+                    seen.add(fingerprint)
+                    if len(signals)>=40: omitted=True;scan.gap(path,'file');continue
+                    start=max(1,item['start_line']-20);end=min(len(rows),item['end_line']+20)
+                    # The originating statement must fit intact in the line and character limits.
+                    if item['end_line']-item['start_line']+1>120:
+                        notes.append(f"{path}:{item['start_line']}-{item['end_line']} 完整语句超出片段行数上限。");scan.gap(path,'file');continue
+                    if end-start+1>120:
+                        start=item['start_line'];end=item['end_line']
+                    ev=evidence_from_scanned_file(repo,commit,file,start,end,self.client.settings.max_fragment_chars)
+                    context_complete=bool(ev and ev.start_line==start and ev.end_line==end and not ev.partial_line)
+                    if not ev or ev.end_line<item['end_line'] or ev.partial_line:
+                        # Retry exactly the statement before declaring the context unavailable.
+                        ev=evidence_from_scanned_file(repo,commit,file,item['start_line'],item['end_line'],self.client.settings.max_fragment_chars)
+                    if not ev or ev.end_line<item['end_line'] or ev.partial_line:
+                        notes.append(f"{path}:{item['start_line']}-{item['end_line']} 完整语句超过字符预算，未生成线索。");scan.gap(path,'file');continue
+                    await asyncio.to_thread(self.client.db.save_evidence,ev); evidence[ev.evidence_id]=ev
+                    if not context_complete:
+                        notes.append(f"{path}:{item['start_line']} 的上下文未完整返回。");scan.gap(path,'file')
+                    signals.append({**item,'path':path,'evidence_id':ev.evidence_id,'assessment':('rule_hit' if context_complete else 'insufficient_evidence') if kind=='security_scan' else 'source_signal',**({'context_complete':context_complete,'needs_review':True} if kind=='security_scan' else {})})
+            if omitted: notes.append('线索超过 40 项，仅保留前 40 项，其他线索未展开。')
+            scope={'path_prefix':req.path_prefix,'directories':scan.directories,'files':[x['path'] for x in scan.files],
+                   'bytes_read':scan.bytes_read,'attempted_directories':scan.attempted_directories,'attempted_files':scan.attempted_files,'complete':not notes and not errors,'notes':notes,'continuation':scan.continuation,'continuations':scan.continuations,'mode':mode if kind=='security_scan' else None}
+            refs=sorted(evidence);rule_version='arch-v1' if kind=='arch_profile' else 'security-v1'
+            body={'rule_version':rule_version,'scope':scope,'references':refs,'edges' if kind=='arch_profile' else 'findings':signals,
+                  'interpretation':'规则线索须结合上下文复核，命中不等于漏洞；无命中不等于安全。' if kind=='security_scan' else '静态线索；导入与调用分别标注，需结合原文核对。'}
+            text=json.dumps(body,ensure_ascii=False,sort_keys=True,separators=(',',':')); h=digest(text)
+            eid=kind+'_'+digest(json.dumps([repo.lower(),commit,rule_version,req.path_prefix,h],ensure_ascii=False))
+            url=f'https://github.com/{repo}/tree/{commit}'+('/'+quote(req.path_prefix,safe='/') if req.path_prefix else '')
+            artifact=DerivedEvidence(source_type=kind,evidence_id=eid,repo=repo,commit=commit,path_prefix=req.path_prefix,rule_version=rule_version,artifact_sha256=h,references=refs,text=text,source_url=url,fetched_at=timestamp())
+            await asyncio.to_thread(self.client.db.save_evidence,artifact)
+            return ToolResult(tool=name,repo=repo,commit=commit,facts=[{'kind':kind,'evidence_id':eid}],evidence=[artifact,*evidence.values()],
+                              coverage=Coverage(complete=scope['complete'],truncated=bool(notes),notes=notes,inspected=scope['files'],continuation=scan.continuation),errors=[ToolError(**e) for e in errors],cache_hit=bool(scan.cache_hits) and all(scan.cache_hits))
+        except (GitHubError,ValidationError,ValueError) as exc: return error(name,repo,commit,exc)
+
     async def search_repo_issues_and_risks(self,data):
         name='search_repo_issues_and_risks'; repo=self.binding.repo; sha=self.binding.commit
         try:
@@ -387,5 +465,6 @@ def _guard_tool(method):
     return guarded
 
 for _name in ('get_repo_overview_and_tree','get_markdown_outline','read_file_lines',
-              'inspect_dependencies_and_env','inspect_deployment_artifacts','search_repo_issues_and_risks'):
+              'inspect_dependencies_and_env','inspect_deployment_artifacts','search_repo_issues_and_risks',
+              'analyze_architecture_profile','scan_security_and_risk_sinks'):
     setattr(AuditTools, _name, _guard_tool(getattr(AuditTools, _name)))

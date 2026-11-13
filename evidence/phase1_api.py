@@ -2,7 +2,7 @@
 import asyncio
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict
-from evidence.schemas import Binding, OverviewInput, PathInput, LinesInput, IssueInput, ToolResult
+from evidence.schemas import Binding, OverviewInput, OutlineInput, ScanInput, SecurityScanInput, LinesInput, IssueInput, ToolResult
 from evidence.db import AuditDB
 from evidence.github_client import GitHubClient, GitHubError
 from evidence.tools import AuditTools
@@ -40,7 +40,7 @@ async def dispatch(method,body):
 @router.post('/overview',response_model=ToolResult)
 async def overview(body:OverviewInput): return await dispatch('get_repo_overview_and_tree',body)
 @router.post('/outline',response_model=ToolResult)
-async def outline(body:PathInput): return await dispatch('get_markdown_outline',body)
+async def outline(body:OutlineInput): return await dispatch('get_markdown_outline',body)
 @router.post('/lines',response_model=ToolResult)
 async def lines(body:LinesInput): return await dispatch('read_file_lines',body)
 @router.post('/dependencies',response_model=ToolResult)
@@ -49,3 +49,7 @@ async def dependencies(body:Binding): return await dispatch('inspect_dependencie
 async def deployment(body:Binding): return await dispatch('inspect_deployment_artifacts',body)
 @router.post('/issues',response_model=ToolResult)
 async def issues(body:IssueInput): return await dispatch('search_repo_issues_and_risks',body)
+@router.post('/architecture',response_model=ToolResult)
+async def architecture(body:ScanInput): return await dispatch('analyze_architecture_profile',body)
+@router.post('/security',response_model=ToolResult)
+async def security(body:SecurityScanInput): return await dispatch('scan_security_and_risk_sinks',body)

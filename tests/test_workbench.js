@@ -53,3 +53,17 @@ test('report selector shows earlier live turns and gates replay turns by report_
   context.render(s,s.events);assert.equal(seen.at(-1),'追问 Python 3.11');assert.equal(document.getElementById('reportSelect').children.length,2);
   document.getElementById('reportSelect').listeners.change[0]({target:{value:'0'}});assert.equal(seen.at(-1),'首轮 Python 3.10');
 });
+test('derived replay identities and their underlying source ranges are verified',async()=>{
+  const c=makeContext(),payload=JSON.parse(JSON.parse(original).payload_json);
+  const base=Object.values(payload.evidence).find(e=>e.source_type==='file_lines');
+  const entry={path:base.path,evidence_id:base.evidence_id,start_line:base.start_line,end_line:base.end_line,category:'entry_or_route'};
+  const body={rule_version:'arch-v1',scope:{path_prefix:'',files:[base.path]},references:[base.evidence_id],edges:[entry]};
+  const item={source_type:'arch_profile',repo:base.repo,commit:base.commit,path_prefix:'',rule_version:'arch-v1',references:[base.evidence_id],text:JSON.stringify(body),source_url:`https://github.com/${base.repo}/tree/${base.commit}`,fetched_at:base.fetched_at};
+  item.artifact_sha256=await c.digest(item.text);item.evidence_id=await c.evidenceId(item);payload.evidence[item.evidence_id]=item;
+  await c.validateReplay(repack(payload));
+  const badBody=JSON.parse(item.text);badBody.edges[0].start_line=base.end_line+1;item.text=JSON.stringify(badBody);item.artifact_sha256=await c.digest(item.text);delete payload.evidence[item.evidence_id];item.evidence_id=await c.evidenceId(item);payload.evidence[item.evidence_id]=item;
+  await assert.rejects(c.validateReplay(repack(payload)));
+});
+test('all three v2 recordings still validate unchanged in the v3 browser',async()=>{
+  const c=makeContext();for(const name of ['agents-python-comparison.json','fastapi-python311.json','pydantic-model-endpoint.json']){const raw=fs.readFileSync('web/replays/'+name,'utf8');const payload=await c.validateReplay(raw);assert.ok(payload.session.id)}
+});

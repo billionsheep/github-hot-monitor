@@ -119,7 +119,7 @@ class AuditDB:
             db.execute('INSERT OR REPLACE INTO file_blob_cache VALUES (?,?,?,?,?,?)',(repo,sha,kind,path,json.dumps(payload,ensure_ascii=False),fetched_at))
     def save_evidence(self, evidence):
         item=evidence.model_dump(); payload=json.dumps(item,ensure_ascii=False,sort_keys=True)
-        source=item['source_type']; content_hash=item.get('fragment_sha256') or item.get('body_sha256') or item.get('tree_sha256') or item.get('index_sha256') or item.get('metadata_sha256')
+        source=item['source_type']; content_hash=item.get('fragment_sha256') or item.get('body_sha256') or item.get('tree_sha256') or item.get('index_sha256') or item.get('metadata_sha256') or item.get('artifact_sha256')
         with self.connect() as db:
             db.execute('BEGIN IMMEDIATE')
             existing=db.execute('SELECT payload FROM evidence_artifacts WHERE id=?',(item['evidence_id'],)).fetchone()

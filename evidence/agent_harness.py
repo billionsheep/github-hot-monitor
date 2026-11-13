@@ -66,22 +66,29 @@ def model_view(result):
         view={'error':'结果超过上下文限制；请缩小读取范围。','continuation':'按路径和行号继续读取。'};included.clear()
     return view,included
 
-NAMES={'get_repo_overview_and_tree','get_markdown_outline','read_file_lines','inspect_dependencies_and_env','inspect_deployment_artifacts','search_repo_issues_and_risks'}
+NAMES={'get_repo_overview_and_tree','get_markdown_outline','read_file_lines','inspect_dependencies_and_env','inspect_deployment_artifacts','search_repo_issues_and_risks','analyze_architecture_profile','scan_security_and_risk_sinks'}
 PROPERTIES={
  'get_repo_overview_and_tree':{'path':{'type':'string'}},
- 'get_markdown_outline':{'path':{'type':'string'}},
+ 'get_markdown_outline':{'path':{'type':'string'},'symbol_or_param_hint':{'type':['string','null']}},
  'read_file_lines':{'path':{'type':'string'},'start_line':{'type':'integer'},'end_line':{'type':'integer'}},
  'inspect_dependencies_and_env':{},'inspect_deployment_artifacts':{},
- 'search_repo_issues_and_risks':{'query_keywords':{'type':'string'},'state':{'type':'string','enum':['open','closed','all']}}}
+ 'search_repo_issues_and_risks':{'query_keywords':{'type':'string'},'state':{'type':'string','enum':['open','closed','all']}},
+ 'analyze_architecture_profile':{'path_prefix':{'type':'string'}},
+ 'scan_security_and_risk_sinks':{'path_prefix':{'type':'string'},'mode':{'type':'string','enum':['all','exec_sinks','env_and_network','prompt_injection']}}}
 DESCRIPTIONS={
  'get_repo_overview_and_tree':'查看目录。根目录 path 必须为空字符串；可提供仓库相对目录。',
- 'get_markdown_outline':'按原始行号读取文件索引，文件超过 150 行时在当前上下文先调用此工具。参数 path 为仓库相对文件路径。',
+ 'get_markdown_outline':'按原始行号读取文件索引，文件超过 150 行时在当前上下文先调用此工具。symbol_or_param_hint 可为 null 或用于优先定位的符号/参数。',
  'read_file_lines':'读取闭区间原始行；1 <= start_line <= end_line，最多 120 行、6000 字符。超过 150 行的文件先在当前上下文读取大纲。',
  'inspect_dependencies_and_env':'提取版本、依赖声明及关联证据。Python 版本或依赖问题优先调用此工具。',
  'inspect_deployment_artifacts':'读取有限数量的部署配置，返回结构化声明和关联证据。',
- 'search_repo_issues_and_risks':'检索社区线索；query_keywords 使用普通关键词，state 为 open、closed 或 all。'}
+ 'search_repo_issues_and_risks':'检索社区线索；query_keywords 使用普通关键词，state 为 open、closed 或 all。',
+ 'analyze_architecture_profile':'在 path_prefix 目录下有界扫描架构线索；每条关系引用固定版本文件，导入与调用分开。',
+ 'scan_security_and_risk_sinks':'在 path_prefix 目录下有界扫描安全线索；命中仅供上下文复核，不等于漏洞。'}
 TOOL_DEFS=[{'type':'function','name':name,'description':DESCRIPTIONS[name],'strict':True,
             'parameters':{'type':'object','properties':props,'required':list(props),'additionalProperties':False}} for name,props in PROPERTIES.items()]
+LEGACY_PROPERTIES={k:({'path':{'type':'string'}} if k=='get_markdown_outline' else v) for k,v in PROPERTIES.items() if k not in ('analyze_architecture_profile','scan_security_and_risk_sinks')}
+LEGACY_TOOL_DEFS=[{'type':'function','name':name,'description':DESCRIPTIONS[name],'strict':True,
+                   'parameters':{'type':'object','properties':props,'required':list(props),'additionalProperties':False}} for name,props in LEGACY_PROPERTIES.items()]
 PLAN_PROMPT=('将用户希望作出判断的业务约束拆成最多 8 项共同核查项，每一项必须能对单个仓库独立判断，适用于每个候选仓库。'
              '当问题要求比较多个仓库时，提取共同约束，移除跨仓比较和具体仓库名称；比较各仓结果由汇总阶段完成。'
              '例如“比较 A 和 B 是否支持 Python 3.11”应形成一项“该仓库声明的 Python 版本范围是否包含 Python 3.11”。'
@@ -100,20 +107,21 @@ LEAD_PROMPT='仅依据各仓库给出的已校验结论和必要摘录，概括�
 def extract_text(response):
     return ''.join(part.get('text','') for item in response.get('output',[]) if item.get('type')=='message' for part in item.get('content',[]) if part.get('type')=='output_text')
 
-def make_payload(model,effort,role,instructions,inputs,allow_tools):
+def make_payload(model,effort,role,instructions,inputs,allow_tools,v3_tools=False):
     payload={'model':model,'reasoning':{'effort':effort},'instructions':instructions,'input':[{'role':'developer','content':'Respond with a JSON object.'}]+inputs,
              'max_output_tokens':2048,'text':{'format':{'type':'json_object'}}}
     if role=='sub':
-        payload['tools']=TOOL_DEFS;payload['parallel_tool_calls']=False
+        payload['tools']=TOOL_DEFS if v3_tools else LEGACY_TOOL_DEFS;payload['parallel_tool_calls']=False
         if not allow_tools: payload['tool_choice']='none'
     return payload
 
 class ResponsesAdapter:
     model='gpt-6.1-sol'
+    def __init__(self,v3_tools=False): self.v3_tools=v3_tools
     async def complete(self,role,instructions,inputs,allow_tools):
         config=configuration()
         if not ready(config): raise RuntimeError('模型配置不可用。')
-        payload=make_payload(config['model'],config['effort'],role,instructions,inputs,allow_tools)
+        payload=make_payload(config['model'],config['effort'],role,instructions,inputs,allow_tools,self.v3_tools)
         if len(json.dumps(payload,ensure_ascii=False).encode())>24000: raise BudgetExceeded('上下文预算耗尽。')
         try:
             return await asyncio.to_thread(response_request,config,payload)
@@ -153,7 +161,7 @@ class Harness:
         if len({x['repo'].lower() for x in bindings})!=len(bindings): raise ValueError('同一仓库不能重复加入。')
         return self.store.create(bindings,query,key,TurnBudget.model_validate(budget or {}).model_dump())
     async def model(self,id,owner,row,state,role,instructions,inputs,allow_tools):
-        input_reserve=len(json.dumps(make_payload(self.adapter.model,'low',role,instructions,inputs,allow_tools),ensure_ascii=False).encode())
+        input_reserve=len(json.dumps(make_payload(self.adapter.model,'low',role,instructions,inputs,allow_tools,getattr(self.adapter,'v3_tools',False)),ensure_ascii=False).encode())
         if input_reserve>24000: raise BudgetExceeded('上下文预算耗尽。')
         if (state['turn_model_calls']>=min(MAX_TURN_MODEL_CALLS,state['budget']['model_requests']) or
             state['turn_usage']['input_tokens']+state['reserved_input']+input_reserve>min(MAX_TURN_INPUT,state['budget']['input_tokens']) or
@@ -218,7 +226,8 @@ class Harness:
                     allow_tools=calls<5 and tools<8 and state['turn_tool_calls']<state['budget']['tool_calls'] and state['turn_model_calls']+1<state['budget']['model_requests']
                     remaining=f"剩余总模型请求（含本次）{state['budget']['model_requests']-state['turn_model_calls']} 次，仓库工具调用 {8-tools} 次，总工具调用 {state['budget']['tool_calls']-state['turn_tool_calls']} 次。" + (' 本次必须依据已有证据输出最终报告。' if not allow_tools else ' 证据足够即输出报告。')
                     try:
-                        response,meta=await self.model(id,owner,row,state,'sub',SUB_PROMPT+'\n'+remaining,[initial]+state['history'],allow_tools)
+                        prompt=SUB_PROMPT.replace('六个工具是唯一读取途径。','提供的工具是唯一读取途径。') if getattr(self.adapter,'v3_tools',False) else SUB_PROMPT
+                        response,meta=await self.model(id,owner,row,state,'sub',prompt+'\n'+remaining,[initial]+state['history'],allow_tools)
                     except BudgetExceeded as exc:
                         state['budget_reason']=str(exc)
                         state['summaries'].append({'binding':binding,'rows':self.fallback(state,binding),'stop_reason':str(exc)})
@@ -297,7 +306,9 @@ class Harness:
         evidence=[]; result=None; args={}; tool_started=time.monotonic()
         try:
             args=json.loads(call.get('arguments',''))
-            if name not in NAMES or not isinstance(args,dict) or set(args)!=set(PROPERTIES[name]): raise ValueError('工具参数无效')
+            if name not in NAMES or not isinstance(args,dict): raise ValueError('工具参数无效')
+            keys=set(args);allowed=set(PROPERTIES[name])
+            if keys!=allowed and not (name=='get_markdown_outline' and keys=={'path'}): raise ValueError('工具参数无效')
             if any(k in args for k in ('repo','commit')): raise ValueError('禁止覆盖仓库绑定')
             if name=='get_repo_overview_and_tree' and args.get('path')=='.': args['path']=''
             path=args.get('path','')

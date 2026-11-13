@@ -4,7 +4,7 @@ import json
 import re
 from urllib.parse import quote, urlsplit
 from evidence.agent import configuration
-from evidence.guardrails import expected_id, sha
+from evidence.guardrails import expected_id, sha, validate_derived
 from evidence.github_client import timestamp
 from evidence.harness_store import HarnessStore
 
@@ -23,12 +23,14 @@ def validate_payload(payload):
         if kind in ('file_lines','file_outline'):
             expected=f"{root}/blob/{binding[1]}/{quote(e['path'],safe='/')}"
             if url.path!=expected: raise ValueError('file URL does not match commit and path')
-        if kind=='repo_tree':
-            expected=f"{root}/tree/{binding[1]}"+('/'+quote(e['path'],safe='/') if e['path'] else '')
+        if kind in ('repo_tree','arch_profile','security_scan'):
+            path=e.get('path',e.get('path_prefix',''))
+            expected=f"{root}/tree/{binding[1]}"+('/'+quote(path,safe='/') if path else '')
             if url.path!=expected: raise ValueError('tree URL does not match commit and path')
         if kind in ('issue','issue_comment') and url.path!=f"{root}/issues/{e['issue_number']}": raise ValueError('issue URL does not match issue')
-        raw=e.get('text',e.get('body','')); digest=e.get('fragment_sha256') or e.get('body_sha256') or e.get('tree_sha256') or e.get('index_sha256') or e.get('metadata_sha256')
+        raw=e.get('text',e.get('body','')); digest=e.get('fragment_sha256') or e.get('body_sha256') or e.get('tree_sha256') or e.get('index_sha256') or e.get('metadata_sha256') or e.get('artifact_sha256')
         if sha(raw)!=digest or expected_id(e)!=key or e.get('evidence_id')!=key: raise ValueError('invalid evidence hash or identity')
+        if kind in ('arch_profile','security_scan') and not validate_derived(e,evidence.get): raise ValueError('invalid derived evidence references')
     previous=0
     for event in session['events']:
         if not isinstance(event['id'],int) or event['id']<=previous: raise ValueError('invalid event order')
@@ -42,7 +44,7 @@ def validate_payload(payload):
                 for c in row['citations']:
                     e=evidence[c['evidence_id']]
                     if (e['repo'].lower(),e.get('commit',e.get('observed_against_commit')))!=binding or c['quote'] not in e.get('text',e.get('body','')): raise ValueError('invalid citation')
-                inline=set(re.findall(r'\[((?:ev|iss|isc|tree|outline|meta)_[^\]\s]+)\]',row['summary']))
+                inline=set(re.findall(r'\[((?:ev|iss|isc|tree|outline|meta|arch_profile|security_scan)_[^\]\s]+)\]',row['summary']))
                 if inline!={c['evidence_id'] for c in row['citations']}: raise ValueError('unresolved inline citation')
     for trace in payload['traces']:
         binding=(trace['repo'].lower(),trace['commit'])

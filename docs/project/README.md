@@ -1,17 +1,15 @@
 # 项目入口与当前状态
 
-更新：2026-11-13（Asia/Shanghai）
+更新：2026-11-13。**RepoAudit-Agent 四阶段演示交付已完成。** 当前统一流程为发现、候选、逐项尽调、原文、追问、导出和静态回放；详细状态与实际问题以 [DELIVERY_STATUS.md](DELIVERY_STATUS.md) 为准。
 
-目标：基于 GitHub Hot Monitor 实现开源 Agent 项目的工程约束核查助手，核查 Python 版本、容器部署和模型配置，并围绕真实实现学习。
+- [交付现状与验收](DELIVERY_STATUS.md) · [三分钟演示](DELIVERY_GUIDE.md)
+- [运行说明](RUNBOOK.md) · [代码走读](CODE_GUIDE.md) · [简历项目经历](RESUME_PROJECT.md)
+- [SDD 原文](REPOAUDIT_SDD_V2_SOURCE.md) · [调整后执行计划](REPOAUDIT_IMPLEMENTATION_PLAN.md) · [阶段计划](PROJECT_PLAN.md)
+- [实际评测](../../eval/eval_report.md) · [真实回放清单](examples/manifest.json)
 
-## 当前状态
+当前本机实时入口 <http://127.0.0.1:8774/>，纯静态回放 <http://127.0.0.1:8780/>。独立复跑 Python 94/94、前端 13/13、冻结契约 16/16；最终在线首轮 11/13，具体失败和恢复记录见评测。此版已固化为本地提交与标签，见 [版本基线](RELEASE_BASELINE.md)，尚未推送新版。
 
-已完成 R1.1 固定版本证据读取和 R2 最小 Agent 核查闭环：输入仓库与要求，模型读取目录和文本片段，输出带引用的核查表。运行模型为 OpenAI `gpt-6.1-sol` / low。已完成真实模型演示，当前按演示版本交付；以下旧阶段记录保留作学习与验收历史。
-
-- 当前本地演示：<http://127.0.0.1:8770>；新克隆配置与启动见 [RUNBOOK.md](RUNBOOK.md)。
-- 当前自动化验证：Python 29 项、前端 6 项通过。
-- 真实运行、引用语义核对与复核结果见 [R2_REAL_VALIDATION.md](R2_REAL_VALIDATION.md)。
-- [两分钟演示脚本](R2_DEMO.md) · [简历项目经历](RESUME_PROJECT.md)。
+以下保留各阶段当时的验证记录和决策，旧端口与旧测试数不作为当前入口。
 
 ## 初始基线记录
 
@@ -32,7 +30,9 @@
 1. [运行与复现](RUNBOOK.md)
 2. [代码结构与学习路线](CODE_GUIDE.md)
 3. [Agent 改造计划](PROJECT_PLAN.md)
-4. [R2 实施规格](R2_SPEC.md)
+4. [SDD v2.0 原文抽离版](REPOAUDIT_SDD_V2_SOURCE.md)
+5. [RepoAudit-Agent 改造执行计划](REPOAUDIT_IMPLEMENTATION_PLAN.md)
+6. [R2 原型实施规格](R2_SPEC.md)
 
 学习方法：每次只推进一条可运行路径，解释输入输出、设计理由、失败行为，再做一个可观察的小改动。完成后用实际测试、演示或提交支撑简历描述。
 

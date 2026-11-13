@@ -1,157 +1,21 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GitHub Hot Monitor</title>
-  <meta name="description" content="发现 GitHub 上升星最快、最有趣、最先进、最有生产力的项目。">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RepoAudit · 仓库证据工作台</title><link rel="stylesheet" href="styles.css"></head>
 <body>
-  <div class="bg-orb bg-orb-a"></div>
-  <div class="bg-orb bg-orb-b"></div>
-  <header class="hero reveal">
-    <p class="eyebrow">GitHub Project Radar</p>
-    <h1>发现升星最快与最值得跟进的项目</h1>
-    <p class="subtitle">
-      每 6 小时自动更新。用趋势、技术前沿与工程产出三个维度，快速筛选值得投入时间的仓库。
-    </p>
-    <div class="hero-meta">
-      <div class="meta-card">
-        <span class="meta-label">最新抓取</span>
-        <span id="capturedAt" class="meta-value">加载中...</span>
-      </div>
-      <div class="meta-card">
-        <span class="meta-label">上次快照</span>
-        <span id="previousAt" class="meta-value">加载中...</span>
-      </div>
-      <div class="meta-card">
-        <span class="meta-label">候选项目</span>
-        <span id="candidateCount" class="meta-value">0</span>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section class="evidence-panel">
-      <div class="section-head"><div><p class="eyebrow">Agent 核查</p><h2>按环境要求核查仓库</h2></div></div>
-      <form id="agentForm" class="agent-form">
-        <label>公开仓库<input id="agentRepository" placeholder="owner/repo 或 GitHub 地址" required></label>
-        <label>Python 要求<input id="agentPython" placeholder="例如：支持 Python 3.11"></label>
-        <label>容器部署要求<input id="agentContainer" placeholder="例如：提供 Docker Compose 部署"></label>
-        <label>模型服务要求<input id="agentModel" placeholder="例如：支持配置 OpenAI API"></label>
-        <button id="agentSubmit" type="submit" disabled>开始核查</button>
-      </form>
-      <p id="agentStatus" role="status">正在检查本地核查服务…</p>
-      <ol id="agentProgress"></ol>
-      <div id="agentResult"></div>
-    </section>
-    <section class="evidence-panel">
-      <div class="section-head"><div><p class="eyebrow">固定版本证据</p><h2>浏览公开仓库</h2></div></div>
-      <form id="evidenceForm" class="evidence-form">
-        <label for="repositoryInput">仓库名称或 GitHub 地址</label>
-        <div><input id="repositoryInput" placeholder="例如 fastapi/fastapi" required><button id="createSnapshot" type="submit" disabled>创建快照</button></div>
-      </form>
-      <p id="evidenceStatus" role="status">输入仓库后读取默认分支当前版本。</p>
-      <div id="evidenceWorkspace" hidden>
-        <div id="snapshotInfo"></div>
-        <div id="shortcuts" class="shortcuts"></div>
-        <div class="evidence-layout"><div><h3>目录</h3><nav id="breadcrumbs" aria-label="目录路径"></nav><p id="treeStatus"></p><div id="fileTree"></div></div>
-        <div><h3>证据卡</h3><div id="evidenceCard">选择文件以读取文本。</div></div></div>
-      </div>
-    </section>
-    <section class="summary reveal">
-      <article class="summary-card">
-        <h2>中位升星速度</h2>
-        <p id="medianVelocity" class="summary-value">0</p>
-        <p class="summary-note">stars/day</p>
-      </article>
-      <article class="summary-card">
-        <h2>综合第一名</h2>
-        <p id="topRepoName" class="summary-value summary-repo">-</p>
-        <p id="topRepoScore" class="summary-note">Score: -</p>
-      </article>
-      <article class="summary-card">
-        <h2>项目画像分布</h2>
-        <p id="segmentOverview" class="summary-value summary-segment">Trend 0 / Frontier 0 / Builder 0</p>
-        <p class="summary-note">按主导能力自动分类</p>
-      </article>
-    </section>
-
-    <section class="controls reveal">
-      <div id="metricTabs" class="tabs">
-        <button class="tab active" data-metric="total">综合</button>
-        <button class="tab" data-metric="velocity">升星最快</button>
-        <button class="tab" data-metric="interesting">有趣度</button>
-        <button class="tab" data-metric="advanced">先进性</button>
-        <button class="tab" data-metric="productive">生产力</button>
-      </div>
-
-      <div class="filters">
-        <label class="filter">
-          <span>搜索</span>
-          <input id="searchInput" type="search" placeholder="仓库名、描述、topic">
-        </label>
-        <label class="filter">
-          <span>语言</span>
-          <select id="languageSelect">
-            <option value="all">全部</option>
-          </select>
-        </label>
-        <label class="filter">
-          <span>画像</span>
-          <select id="segmentSelect">
-            <option value="all">全部</option>
-            <option value="Trend">Trend</option>
-            <option value="Frontier">Frontier</option>
-            <option value="Builder">Builder</option>
-          </select>
-        </label>
-        <label class="filter">
-          <span>最低 Stars: <b id="starsValue">0</b></span>
-          <input id="starsRange" type="range" min="0" max="5000" step="50" value="0">
-        </label>
-      </div>
-    </section>
-
-    <section class="spotlight reveal">
-      <div class="section-head">
-        <h2>今日焦点</h2>
-        <a href="./data/latest.md" target="_blank" rel="noopener">查看 Markdown 报告</a>
-      </div>
-      <div id="spotlightGrid" class="spotlight-grid"></div>
-    </section>
-
-    <section class="repo-section reveal">
-      <div class="section-head">
-        <h2 id="listTitle">综合榜单</h2>
-        <span id="resultCount">0 项</span>
-      </div>
-      <div id="repoGrid" class="repo-grid"></div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p>Built for continuous discovery of meaningful GitHub projects.</p>
-  </footer>
-
-  <template id="repoCardTemplate">
-    <article class="repo-card">
-      <div class="repo-top">
-        <a class="repo-name" target="_blank" rel="noopener"></a>
-        <span class="badge badge-segment"></span>
-      </div>
-      <p class="repo-desc"></p>
-      <div class="repo-metrics"></div>
-      <div class="repo-tags"></div>
-    </article>
-  </template>
-
-  <script src="app.js"></script>
-  <script src="evidence.js"></script>
-  <script src="agent.js"></script>
-</body>
-</html>
+<header class="app-header"><a class="brand" href="#discover">◈ <span>RepoAudit</span></a><nav aria-label="主导航"><button class="nav-button active" data-view="discover">发现</button><button class="nav-button" data-view="audit">尽调 <span id="poolCount">0</span></button></nav><div id="modeBadge" class="mode">检查服务中</div></header>
+<main class="shell">
+<section id="discover" class="view"><div class="view-heading"><div><p class="eyebrow">GITHUB PROJECT RADAR</p><h1>发现值得核查的仓库</h1><p>从趋势榜选择候选项目，带着具体工程约束开始比较。</p></div><div class="capture">数据更新 <strong id="capturedAt">加载中</strong><span id="candidateCount">0</span> 个候选</div></div>
+<div class="hidden-metrics" hidden><span id="previousAt"></span><span id="medianVelocity"></span><span id="topRepoName"></span><span id="topRepoScore"></span><span id="segmentOverview"></span></div>
+<div class="controls"><div id="metricTabs" class="tabs"><button class="tab active" data-metric="total">综合</button><button class="tab" data-metric="velocity">升星最快</button><button class="tab" data-metric="interesting">有趣度</button><button class="tab" data-metric="advanced">先进性</button><button class="tab" data-metric="productive">生产力</button></div><div class="filters"><label>搜索<input id="searchInput" type="search" placeholder="仓库名、描述、topic"></label><label>语言<select id="languageSelect"><option value="all">全部</option></select></label><label>画像<select id="segmentSelect"><option value="all">全部</option><option>Trend</option><option>Frontier</option><option>Builder</option></select></label><label>最低 Stars <b id="starsValue">0</b><input id="starsRange" type="range" min="0" max="5000" step="50" value="0"></label></div></div>
+<section class="spotlight"><div class="section-head"><h2>榜单焦点</h2><a href="./data/latest.md">Markdown 报告 ↗</a></div><div id="spotlightGrid" class="spotlight-grid"></div></section><section><div class="section-head"><h2 id="listTitle">综合榜单</h2><span id="resultCount">0 项</span></div><div id="repoGrid" class="repo-grid"></div></section></section>
+<section id="audit" class="view" hidden><div class="view-heading"><div><p class="eyebrow">EVIDENCE WORKBENCH</p><h1>仓库尽调</h1><p>固定仓库版本，逐项比较判断，并回到原文核对。</p></div><div class="mode-note" id="modeNote"></div></div>
+<div class="workspace"><aside class="sidebar"><section class="panel"><div class="section-head"><h2>候选仓库</h2><span>最多 3 个</span></div><div id="candidatePool" class="pool"></div><form id="repoForm" class="inline-form"><input id="repoInput" placeholder="owner/repo 或 GitHub 地址" aria-label="仓库地址"><button type="submit">添加</button></form></section>
+<section class="panel"><h2>核查要求</h2><label>场景<select id="scenario"><option value="deploy">本地部署与集成</option><option value="license">协议与依赖声明</option><option value="issues">维护与 Issue 线索</option><option value="custom">自定义问题</option></select></label><label>具体问题<textarea id="question" rows="5"></textarea></label><button id="startAudit" class="primary" disabled>开始尽调</button><p id="actionStatus" class="hint" role="status"></p></section>
+<section class="panel"><div class="section-head"><h2>历史会话</h2><button id="refreshHistory" class="quiet">刷新</button></div><div id="history" class="history"></div><h3>录制回放</h3><div id="replayList" class="history"></div><label class="file-label">导入回放 JSON<input id="replayFile" type="file" accept="application/json,.json"></label></section></aside>
+<div class="main-column"><div class="panel session-panel"><div class="session-heading"><div><p id="sessionMode" class="eyebrow">等待开始</p><h2 id="sessionTitle">选择候选仓库并提出问题</h2></div><div id="sessionState" class="status-pill">待命</div></div><div id="fixedVersions" class="version-bar">结果会固定到提交版本，方便逐条追溯。</div><div id="sessionControls" class="session-controls" hidden><button id="resume">恢复任务</button><a id="downloadMd" download>下载 Markdown</a><a id="downloadJson" download>下载回放 JSON</a></div><div id="replayControls" class="session-controls" hidden><button id="playReplay">播放</button><button id="pauseReplay">暂停</button><button id="restartReplay">重新播放</button><button id="endReplay">跳到结果</button></div><p id="recordingTime" class="hint"></p></div>
+<div class="panel"><div class="section-head"><div><p class="eyebrow">DECISION MATRIX</p><h2>决策矩阵</h2></div><span id="usage"></span></div><label id="reportPicker" hidden>报告轮次<select id="reportSelect" aria-label="报告轮次"></select></label><div id="matrix" class="matrix-empty">完成核查后，这里会显示各仓库的逐项判断和证据。</div></div>
+<div class="panel"><div class="section-head"><div><p class="eyebrow">ACTIVITY</p><h2>执行轨迹</h2></div><span id="eventCount">0 条事件</span></div><ol id="timeline" class="timeline"></ol></div>
+<form id="followForm" class="panel follow"><label>继续追问<textarea id="followQuestion" rows="2" placeholder="例如：模型服务地址具体在哪里配置？"></textarea></label><button id="followSubmit" class="primary" disabled>发送追问</button></form></div></div></section>
+</main>
+<dialog id="evidenceDialog"><div class="drawer-head"><div><p class="eyebrow">SOURCE EVIDENCE</p><h2 id="evidenceTitle">原文证据</h2></div><button id="closeEvidence" aria-label="关闭证据">✕</button></div><div id="evidenceMeta" class="evidence-meta"></div><pre id="evidenceText" class="source-code"></pre></dialog>
+<template id="repoCardTemplate"><article class="repo-card"><div class="repo-top"><a class="repo-name" target="_blank" rel="noopener"></a><span class="badge badge-segment"></span></div><p class="repo-desc"></p><div class="repo-metrics"></div><div class="repo-tags"></div><div class="card-actions"><button data-action="add">加入对比</button><button data-action="audit">立即核查 →</button></div></article></template>
+<script src="app.js"></script><script src="workbench.js"></script></body></html>

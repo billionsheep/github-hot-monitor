@@ -1,0 +1,95 @@
+{
+  "case": "A2",
+  "session_id": "43f8bf44816448ad8fd1ed846eb3a787",
+  "before_status": "INTERRUPTED",
+  "after_status": "COMPLETED",
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "PASS"
+    ]
+  },
+  "additional_calls": {
+    "requests": 0,
+    "max_requests": 4,
+    "estimated_usd": 0.0,
+    "reserved_usd": 0.0,
+    "max_usd": 0.4,
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cached_tokens": 0
+    }
+  },
+  "duration_seconds": 0.014239333002478816,
+  "report": {
+    "budget_reason": null,
+    "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+    "criteria": [
+      {
+        "id": "C1",
+        "title": "compose.yaml 的端口声明是否将宿主机端口 8080 映射到容器端口 8000"
+      }
+    ],
+    "query": "compose.yaml 是否将宿主机 8080 映射到容器 8000？只核对端口声明。",
+    "repositories": [
+      {
+        "binding": {
+          "commit": "6908536d850b5c43832719c2ca0fa94509f46cd3",
+          "repo": "eval/a2"
+        },
+        "rows": [
+          {
+            "citations": [
+              {
+                "evidence_id": "ev_2c5cc61fb79ce2e49df187f03036fd019a2dcfdbcf3b18396abd0fbdec6bbc0f",
+                "quote": "    ports:\n"
+              },
+              {
+                "evidence_id": "ev_52d0b22f19db360c77653f94fa474c415c2ec3cc9179ad14d7cdc4d957ac423c",
+                "quote": "      - \"8080:8000\"\n"
+              }
+            ],
+            "commit": "6908536d850b5c43832719c2ca0fa94509f46cd3",
+            "criterion_id": "C1",
+            "next_step": "该声明核查项已满足，无需运行验证；实际端口可达性不在本项范围内。",
+            "repo": "eval/a2",
+            "runtime_validation_required": false,
+            "status": "PASS",
+            "summary": "compose.yaml 的 ports 字段声明了 \"8080:8000\"，即宿主机端口 8080 映射到容器端口 8000；此判断仅针对静态配置。[ev_2c5cc61fb79ce2e49df187f03036fd019a2dcfdbcf3b18396abd0fbdec6bbc0f] [ev_52d0b22f19db360c77653f94fa474c415c2ec3cc9179ad14d7cdc4d957ac423c]",
+            "verification_basis": "static_config"
+          }
+        ],
+        "stop_reason": "完成",
+        "visible_evidence": [
+          "ev_2c5cc61fb79ce2e49df187f03036fd019a2dcfdbcf3b18396abd0fbdec6bbc0f",
+          "ev_52d0b22f19db360c77653f94fa474c415c2ec3cc9179ad14d7cdc4d957ac423c",
+          "ev_e4825ef8489b90a297d9e4ea6d7ea46a381b546eb57a6e19a3764a3c2c412118"
+        ]
+      }
+    ],
+    "summary": "请查看各仓库逐项核查结果。",
+    "summary_evidence_ids": [],
+    "turn_budget": {
+      "input_tokens": 60000,
+      "model_requests": 8,
+      "output_tokens": 16384,
+      "tool_calls": 8
+    },
+    "turn_model_calls": 6,
+    "turn_tool_calls": 5,
+    "turn_usage": {
+      "input_tokens": 5795,
+      "output_tokens": 456,
+      "total_tokens": 6251
+    },
+    "unknown_calls": 1,
+    "usage": {
+      "input_tokens": 5795,
+      "output_tokens": 456,
+      "total_tokens": 6251
+    }
+  },
+  "note": "独立恢复记录；首轮评测的网络失败保留在分母中。"
+}

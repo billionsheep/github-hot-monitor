@@ -302,5 +302,16 @@ def fragment(id: str, path: str, start: int = Query(1, ge=1), lines: int = Query
 
 from evidence.agent import router as agent_router
 app.include_router(agent_router)
+from evidence.phase1_api import router as phase1_router
+app.include_router(phase1_router)
+from evidence.harness_api import router as harness_router
+app.include_router(harness_router)
+
+@app.get('/api/health')
+def health():
+    from evidence.agent import configuration, ready
+    config=configuration()
+    return {'status':'ok','mode':'live','model_ready':ready(config),'model':config['model'],'reasoning_effort':config['effort'],
+            'capabilities':{'discovery':True,'sessions':True,'stream':True,'replay':True,'followup':True}}
 
 app.mount("/", StaticFiles(directory=ROOT / "public", html=True, check_dir=False), name="site")

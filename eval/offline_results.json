@@ -1,0 +1,119 @@
+{
+  "created_at": "2026-11-13T08:09:48.223195+00:00",
+  "corpus_sha256": "ccbc6379b216c8b83d04d586d57024450d2ceea7364038dd92c9b5491d97f22f",
+  "offline": [
+    {
+      "id": "A1",
+      "category": "normal",
+      "contract_passed": true,
+      "check": "source_and_encoding_integrity",
+      "model_called": false
+    },
+    {
+      "id": "A2",
+      "category": "normal",
+      "contract_passed": true,
+      "check": "source_and_encoding_integrity",
+      "model_called": false
+    },
+    {
+      "id": "A3",
+      "category": "normal",
+      "contract_passed": true,
+      "check": "source_and_encoding_integrity",
+      "model_called": false
+    },
+    {
+      "id": "A4",
+      "category": "normal",
+      "contract_passed": true,
+      "check": "source_and_encoding_integrity",
+      "model_called": false
+    },
+    {
+      "id": "B1",
+      "category": "contradiction",
+      "contract_passed": true,
+      "check": "source_and_encoding_integrity",
+      "model_called": false
+    },
+    {
+      "id": "B2",
+      "category": "contradiction",
+      "contract_passed": true,
+      "check": "source_and_encoding_integrity",
+      "model_called": false
+    },
+    {
+      "id": "B3",
+      "category": "contradiction",
+      "contract_passed": true,
+      "check": "source_and_encoding_integrity",
+      "model_called": false
+    },
+    {
+      "id": "B4",
+      "category": "contradiction",
+      "contract_passed": true,
+      "check": "source_and_encoding_integrity",
+      "model_called": false
+    },
+    {
+      "id": "C1",
+      "category": "missing",
+      "contract_passed": true,
+      "check": "missing_evidence_downgrade",
+      "model_called": false
+    },
+    {
+      "id": "C2",
+      "category": "missing",
+      "contract_passed": true,
+      "check": "missing_evidence_downgrade",
+      "model_called": false
+    },
+    {
+      "id": "C3",
+      "category": "missing",
+      "contract_passed": true,
+      "check": "missing_evidence_downgrade",
+      "model_called": false
+    },
+    {
+      "id": "D1",
+      "category": "citation_guard",
+      "contract_passed": true,
+      "check": "guard_rejection",
+      "model_called": false
+    },
+    {
+      "id": "D2",
+      "category": "citation_guard",
+      "contract_passed": true,
+      "check": "guard_rejection",
+      "model_called": false
+    },
+    {
+      "id": "D3",
+      "category": "citation_guard",
+      "contract_passed": true,
+      "check": "guard_rejection",
+      "model_called": false
+    },
+    {
+      "id": "E1",
+      "category": "injection",
+      "contract_passed": true,
+      "check": "source_and_encoding_integrity",
+      "model_called": false
+    },
+    {
+      "id": "E2",
+      "category": "injection",
+      "contract_passed": true,
+      "check": "source_and_encoding_integrity",
+      "model_called": false
+    }
+  ],
+  "online": []
+}

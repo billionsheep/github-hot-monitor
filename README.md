@@ -1,15 +1,18 @@
-# GitHub Hot Monitor
+# RepoAudit-Agent · GitHub Hot Monitor
 
-开源项目工程约束核查 Agent：输入一个公开 GitHub 仓库和 Python、容器部署或模型服务要求，模型按需读取固定提交的目录与文本，输出带来源引用的核查表。保留原有 GitHub 热门项目榜单。
+面向开源框架选型的证据核查工作台。把“这个项目是否满足我的 Python、部署或模型接口要求”变成可追溯的逐项判断，支持 1～3 个候选仓库比较。
 
-## Agent 演示
+**使用流程：发现项目 → 加入候选 → 输入约束 → Agent 取证 → 比较矩阵 → 打开原文 → 追问 → 导出报告与回放。**
 
-技术栈：Python 3.11、FastAPI、Pydantic、SQLite、OpenAI Responses API / Function Calling、原生 JavaScript。
+- Lead 拆解统一约束，每仓 Sub 使用独立上下文和六类只读工具，Lead 汇总已校验结论。
+- 文件绑定完整 commit；证据保留原始行号、SHA-256、抓取时间和固定版本链接。
+- SQLite WAL 保存状态、证据、工具轨迹和用量，支持检查点恢复、历史会话与多轮追问。
+- SSE 展示公开执行状态，原生页面提供矩阵与证据抽屉；真实录制可在纯静态站点播放。
+- 保留原有热门榜单、搜索、专项评分与 GitHub Pages 构建。
 
-- 固定 commit SHA，证据保留原始行号、文件与片段 SHA-256、来源链接；同版本文件复用本地缓存。
-- 模型使用 `gpt-6.1-sol` / low，仅可调用目录和文本片段读取工具，按要求补查证据。
-- 输出“证据支持 / 证据冲突 / 信息不足 / 需要运行验证”，自动校验引用属于本次读取；语义支持在演示验收时对照原文核对。
-- 每任务最多 6 次模型请求、8 次工具调用，展示 token 用量、耗时和停止原因。
+技术栈：Python 3.11、FastAPI、Pydantic v2、HTTPX、SQLite WAL、OpenAI Responses / Function Calling、原生 HTML/CSS/JavaScript。
+
+## 启动
 
 ```bash
 python3.11 -m venv .venv
@@ -18,101 +21,47 @@ cp -n .env.example .env.local
 chmod 600 .env.local
 ```
 
-用文本编辑器在 `.env.local` 填写 `LLM_API_KEY`，保留示例中的其他设置，然后启动：
+在本机编辑 `.env.local` 的 `LLM_API_KEY`；默认官方 OpenAI、`gpt-6.1-sol`、low。随后：
 
 ```bash
-.venv/bin/python ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir public
-.venv/bin/python -m uvicorn evidence.app:app --host 127.0.0.1 --port 8770
+python3 ops/scripts/start_local.py
 ```
 
-访问 <http://127.0.0.1:8770>。密钥保留在服务端，`.env.local` 和运行缓存已排除 Git。GitHub Pages 提供静态榜单，Agent 通过上述本地服务演示。
+打开 <http://127.0.0.1:8773/>。脚本自动构建，存在本机 `gh` 登录时读取 GitHub 凭证。密钥和运行数据库均留在本机。
 
-[项目状态](docs/project/README.md) · [运行说明](docs/project/RUNBOOK.md) · [真实验证](docs/project/R2_REAL_VALIDATION.md) · [演示脚本](docs/project/R2_DEMO.md) · [简历项目经历](docs/project/RESUME_PROJECT.md)
-
-## 热门项目榜单功能
-
-- 抓取候选仓库并保存快照（`data/snapshots/`）。
-- 基于历史快照计算 `stars/day` 速度。
-- 输出 Markdown 报告和结构化 JSON（`data/reports/latest.*`）。
-- 前端页面支持分类榜单、搜索、语言筛选、最低星数筛选、项目画像（Trend / Frontier / Builder）。
-- GitHub Actions 定时执行并自动发布到 GitHub Pages。
-
-## 静态榜单运行
-
-1. 设置 token（建议）：
-
-```bash
-export GITHUB_TOKEN=你的token
-```
-
-2. 执行扫描：
-
-```bash
-python3 ops/scripts/github_hot_monitor.py scan
-```
-
-3. 构建静态页面：
+## 无 API 演示
 
 ```bash
 python3 ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir public
+python3 -m http.server 8775 --bind 127.0.0.1 --directory public
 ```
 
-4. 本地预览：
+打开 <http://127.0.0.1:8775/>，进入“尽调 → 录制回放”，播放真实会话、比较结果、打开原文。回放不调用模型。
+
+## 文档与验证
+
+- [已固化的版本基线](docs/project/RELEASE_BASELINE.md)：`repoaudit-demo-2026-11-13`
+- [交付现状与验收](docs/project/DELIVERY_STATUS.md)
+- [三分钟演示与交付指南](docs/project/DELIVERY_GUIDE.md)
+- [安装、运行与排障](docs/project/RUNBOOK.md)
+- [代码走读与学习练习](docs/project/CODE_GUIDE.md)
+- [实测评测报告](eval/eval_report.md) · [评测协议](eval/README.md)
+- [可用于简历的项目经历](docs/project/RESUME_PROJECT.md)
+- [阶段计划和设计依据](docs/project/PROJECT_PLAN.md)
 
 ```bash
-python3 -m http.server --directory public 8000
+.venv/bin/python -m unittest discover -s tests -q
+node --test tests/test_*.js
+.venv/bin/python tests/phase2_crash_smoke.py
+.venv/bin/python eval/run_eval.py
 ```
 
-访问 `http://localhost:8000`。
+前三项验证代码与故障恢复，最后一项验证 16 个冻结证据契约。在线模型评测须显式追加 `--online --baseline --max-usd 3`；CI 运行免费检查。
 
-## GitHub Pages 自动部署
-
-仓库已提供工作流：[`.github/workflows/pages.yml`](.github/workflows/pages.yml)
-
-首次使用需要在仓库里手动启用一次 Pages：
-
-1. `Settings -> Pages`
-2. `Build and deployment -> Source` 选择 `GitHub Actions`
-
-- 触发方式：
-  - 手动触发 `workflow_dispatch`
-  - 每 6 小时自动执行（`0 */6 * * *`）
-  - 推送 `ops/scripts/`、`web/`、工作流文件后自动执行
-- 工作流行为：
-  - 执行监控脚本更新 `data/`
-  - 自动提交最新快照与报告到 `main`
-  - 构建 `public/` 并发布到 GitHub Pages
-
-建议在仓库 Secrets 配置 `GH_API_TOKEN`（避免 API 限流）。
-
-## 常用命令
-
-只关注某些方向：
+## 榜单采集与发布
 
 ```bash
-python3 ops/scripts/github_hot_monitor.py scan \
-  --topics ai,agent,developer-tools,automation \
-  --query-days 21 \
-  --min-stars 80 \
-  --top 15
+python3 ops/scripts/github_hot_monitor.py scan --state-dir data --top 20
 ```
 
-指定状态目录：
-
-```bash
-python3 ops/scripts/github_hot_monitor.py scan --state-dir /tmp/gh-hot
-```
-
-## 排名解释
-
-- `Fastest Star Growth`：相对上次快照的升星速度（stars/day）。
-- `Most Interesting`：趋势速度 + 最近活跃度 + 关注度（watchers）。
-- `Most Advanced`：技术关键词匹配 + star/fork 强度。
-- `Most Productive`：最近 push 频率 + issue 压力（open issues 相对 forks）+ 规模。
-- `Overall Rank`：综合加权分（interesting 45% / advanced 30% / productive 25%）。
-
-## 注意事项
-
-- 第一次运行只会有静态分数，第二次以后才会有真实速度趋势。
-- 未设置 token 时更容易触发 `403 rate limit exceeded`。
-- 这是启发式评分，不是绝对结论，建议根据你关注领域调整 `topics` 和阈值。
+榜单使用最近候选、元数据和启发式评分；首次采集没有历史增长速度。配置 `GITHUB_TOKEN` 可提高 API 额度。工作流 `.github/workflows/pages.yml` 每六小时扫描并构建，推送后通过测试才发布静态页面；实时 Agent 在本机运行。

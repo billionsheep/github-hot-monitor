@@ -124,13 +124,12 @@ function renderSpotlight(payload) {
     }
     const metricKey = { fastest: "velocity", overall: "total", interesting: "interesting", advanced: "advanced", productive: "productive" }[key];
     const metricValue = formatNumber(top[metricKey], 2);
-    card.innerHTML = `
-      <h3>${label}</h3>
-      <a href="${top.url}" target="_blank" rel="noopener">${top.full_name}</a>
-      <p class="spotlight-meta">Stars ${formatNumber(top.stars)} · ${
-        key === "fastest" ? `${metricValue} stars/day` : `Score ${metricValue}`
-      }</p>
-    `;
+    const heading=document.createElement('h3'); heading.textContent=label;
+    const link=document.createElement('a'); link.textContent=top.full_name;
+    link.href=`https://github.com/${encodeURI(top.full_name)}`; link.target='_blank'; link.rel='noopener';
+    const meta=document.createElement('p'); meta.className='spotlight-meta';
+    meta.textContent=`Stars ${formatNumber(top.stars)} · ${key === 'fastest' ? `${metricValue} stars/day` : `Score ${metricValue}`}`;
+    card.append(heading,link,meta);
     grid.appendChild(card);
   });
 }
@@ -171,7 +170,7 @@ function renderRows(payload) {
     const tagsWrap = node.querySelector(".repo-tags");
 
     link.textContent = row.full_name;
-    link.href = row.url;
+    link.href = `https://github.com/${encodeURI(row.full_name)}`;
     segment.textContent = row.segment || "Builder";
     segment.classList.add(scoreClass(row.segment));
     desc.textContent = row.description || "No description";
@@ -186,6 +185,9 @@ function renderRows(payload) {
 
     tagsWrap.append(createBadge(row.language || "Unknown"));
     (row.topics || []).slice(0, 3).forEach((topic) => tagsWrap.append(createBadge(`#${topic}`)));
+    node.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>{
+      window.dispatchEvent(new CustomEvent('candidate-action',{detail:{repo:row.full_name,action:button.dataset.action}}));
+    }));
     grid.appendChild(node);
   });
 }
@@ -276,7 +278,7 @@ async function main() {
     renderRows(payload);
   } catch (error) {
     const grid = document.getElementById("repoGrid");
-    grid.innerHTML = `<article class="repo-card"><p class="repo-desc">数据加载失败：${error.message}</p></article>`;
+    grid.textContent = `数据加载失败：${error.message}`;
   }
 }
 

@@ -1,4 +1,26 @@
-# 开源 Agent 项目工程约束核查助手
+# RepoAudit-Agent 改造总计划
+
+## 当前状态：SDD v2.0 演示闭环交付（2026-11-13）
+
+交付入口：[现状与验收](DELIVERY_STATUS.md)、[演示指南](DELIVERY_GUIDE.md)。四阶段完成当前演示交付，停止扩展；模型质量和费用按实测记录，不预填收益。
+
+按用户最新要求，项目升级为“开源项目架构尽调与多仓库选型工作台”。目标流程：**发现候选 → 最多 3 仓对比池 → 配置工程约束 → Lead-Sub 隔离取证 → 决策矩阵与证据抽屉 → 追问 / 恢复 → 导出与静态回放**。
+
+- [SDD v2.0 原文抽离版](REPOAUDIT_SDD_V2_SOURCE.md)：完整保留第二部分的设计范围。
+- [v2 改造执行计划](REPOAUDIT_IMPLEMENTATION_PLAN.md)：结合当前代码的契约勘误、迁移方式、各阶段交付与验收，作为实施入口。
+
+| 阶段 | 交付 | 状态 |
+| --- | --- | --- |
+| Phase 1 | SQLite WAL、严格 Schema、异步 GitHub 客户端、六类取证工具 | 已通过独立验收，见 PHASE1_VALIDATION.md |
+| Phase 2 | Lead-Sub 上下文隔离、渐进式加载与去重、Checkpointer、引用护栏 | 已通过独立验收，见 PHASE2_VALIDATION.md |
+| Phase 3 | 统一工作台、SSE、历史 / 恢复 / 追问、导出与静态回放 | 已通过主会话实时/静态独立验收 |
+| Phase 4 | 真实案例、3 份回放、16 例冻结评测与实测报告 | 交付完成，实测及缺陷见 DELIVERY_STATUS.md |
+
+Phase 1 已完成代码、离线测试、真实六工具联网与主会话独立复核，详见 [验收记录](PHASE1_VALIDATION.md)。现有 R2 是迁移基线；下方“停止于 R2”“R3 / R4 暂缓”等为此前阶段的决策记录，由本节的新路线接替，不构成 v2 实施限制。v2 的 Token 收益、效果和恢复能力按新验收单独记录。
+
+---
+
+## 原型基线与历史计划
 
 ## 定位与判断规则
 
@@ -96,3 +118,11 @@ R1.1 完成时提供下一阶段最小任务、输入输出草案、工具契约
 ## R2 最小演示实施（2026-11-13）
 
 使用官方 gpt-6.1-sol Responses、low；单任务上限 6 次模型请求、8 次只读工具调用、每次 2048 输出 tokens、请求上下文 24000 字节。Python 28/28、前端 6/6；浏览器替身结果表已验证。真实模型两个案例已完成；按用量计算的费用估算与账单状态见 [R2_REAL_VALIDATION.md](R2_REAL_VALIDATION.md)，详细步骤见 [R2_SPEC.md](R2_SPEC.md) 与 [RUNBOOK.md](RUNBOOK.md)。
+
+## RepoAudit Phase 1 本地结果（2026-11-13）
+
+SQLite WAL、严格证据契约、六类只读工具与旧库备份导入已在本地实现；Python 58 项与前端 6 项通过。真实公开仓库六工具结果、覆盖不足、迁移和格式范围见 [PHASE1_VALIDATION.md](PHASE1_VALIDATION.md)。本阶段已通过主会话独立验收。
+
+## RepoAudit Phase 2 本地结果（2026-11-13）
+
+Lead-Sub 与六工具、按上下文去重、租约/持久化边界、引用护栏和追问上下文已实现。主会话独立复跑 Python 84 项、前端 6 项和进程退出恢复测试均通过；真实模型对固定版本 FastAPI 的 Python 3.11 声明核查返回带两条有效引用的 PASS。具体用量、修复记录及恢复条件见 [PHASE2_VALIDATION.md](PHASE2_VALIDATION.md)。

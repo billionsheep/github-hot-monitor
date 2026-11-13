@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "replays": [
+    {
+      "title": "Pydantic AI / Agno · Python 选型与升级追问",
+      "path": "replays/agents-python-comparison.json"
+    },
+    {
+      "title": "Pydantic AI · 模型服务地址源码补查",
+      "path": "replays/pydantic-model-endpoint.json"
+    },
+    {
+      "title": "FastAPI · Python 3.11 声明核查",
+      "path": "replays/fastapi-python311.json"
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+[
+  {
+    "title": "Pydantic AI / Agno · Python 选型与升级追问",
+    "path": "replays/agents-python-comparison.json",
+    "session_id": "5902603e9d62406285e2ee8a6803f365",
+    "recorded_at": "2026-11-13T08:05:04.024014+00:00",
+    "bindings": [
+      {
+        "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+        "repo": "pydantic/pydantic-ai"
+      },
+      {
+        "commit": "878151ba85c7bec6f0df7edfa1bbc0e025fdd5c1",
+        "repo": "agno-agi/agno"
+      }
+    ],
+    "reports": [
+      {
+        "query": "我们的现有项目暂时只能使用 Python 3.10。比较两个 Agent 框架当前包声明是否允许 Python 3.10，逐项引用原文并给选型建议。仅核查声明，不要求安装运行。配置路径参考：pydantic/pydantic-ai 的 pyproject.toml；agno-agi/agno 的 libs/agno/pyproject.toml。",
+        "statuses": {
+          "pydantic/pydantic-ai": [
+            "FAIL"
+          ],
+          "agno-agi/agno": [
+            "PASS"
+          ]
+        },
+        "usage": {
+          "input_tokens": 13574,
+          "output_tokens": 816,
+          "total_tokens": 14390
+        },
+        "model_calls": 10,
+        "tool_calls": 6,
+        "unknown_calls": 0
+      },
+      {
+        "query": "如果我们把环境升级到 Python 3.11，这两个仓库的版本声明是否都满足？沿用本次固定提交，分别引用 requires-python 原文即可。",
+        "statuses": {
+          "pydantic/pydantic-ai": [
+            "PASS"
+          ],
+          "agno-agi/agno": [
+            "PASS"
+          ]
+        },
+        "usage": {
+          "input_tokens": 11841,
+          "output_tokens": 760,
+          "total_tokens": 12601
+        },
+        "model_calls": 8,
+        "tool_calls": 4,
+        "unknown_calls": 0
+      }
+    ],
+    "evidence_count": 23,
+    "sha256": "e803625feb35e02d02eabed38d08624bcf3b1bd40ba42fa42fd598ee8b2014bc",
+    "model": {
+      "name": "gpt-6.1-sol",
+      "reasoning_effort": "low"
+    },
+    "tool_cache_hits": 8
+  },
+  {
+    "title": "Pydantic AI · 模型服务地址源码补查",
+    "path": "replays/pydantic-model-endpoint.json",
+    "session_id": "55a9c26e7a284c7e9f56fafccc37919e",
+    "recorded_at": "2026-11-13T08:07:49.038360+00:00",
+    "bindings": [
+      {
+        "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+        "repo": "pydantic/pydantic-ai"
+      }
+    ],
+    "reports": [
+      {
+        "query": "在 pydantic_ai_slim/pydantic_ai/providers/openai.py 文件中，OpenAIProvider 是否把用户提供的 base_url 参数传入 OpenAI 客户端？只核查该源码参数传递，不推断远端接口功能兼容。",
+        "statuses": {
+          "pydantic/pydantic-ai": [
+            "UNVERIFIED"
+          ]
+        },
+        "usage": {
+          "input_tokens": 10034,
+          "output_tokens": 598,
+          "total_tokens": 10632
+        },
+        "model_calls": 7,
+        "tool_calls": 4,
+        "unknown_calls": 0
+      },
+      {
+        "query": "请精读 pydantic_ai_slim/pydantic_ai/providers/openai.py 第 225 行，核对 base_url 是否作为参数传给 _create_openai_client，并引用整行。此次只核查这一调用，不要求追踪基类内部实现。",
+        "statuses": {
+          "pydantic/pydantic-ai": [
+            "PASS"
+          ]
+        },
+        "usage": {
+          "input_tokens": 9487,
+          "output_tokens": 566,
+          "total_tokens": 10053
+        },
+        "model_calls": 6,
+        "tool_calls": 3,
+        "unknown_calls": 0
+      }
+    ],
+    "evidence_count": 15,
+    "sha256": "d0b5367fd1b694c979c2f0b0d9fe519e781c447da366c67d3d89647c76d50b06",
+    "model": {
+      "name": "gpt-6.1-sol",
+      "reasoning_effort": "low"
+    },
+    "tool_cache_hits": 6
+  },
+  {
+    "title": "FastAPI · Python 3.11 声明核查",
+    "path": "replays/fastapi-python311.json",
+    "session_id": "fe9aef6add4c4d1dad20d1132512a825",
+    "recorded_at": "2026-11-13T07:20:33.829895+00:00",
+    "bindings": [
+      {
+        "commit": "5add7a458d629b07311d48261f696b5ac2bb9a5f",
+        "repo": "fastapi/fastapi"
+      }
+    ],
+    "reports": [
+      {
+        "query": "只核查一个问题：仓库声明的 Python 版本范围是否允许 Python 3.11？优先检查 pyproject.toml 的 requires-python 及 .python-version，给出精确原文引用，并说明声明与实际运行验证的区别。",
+        "statuses": {
+          "fastapi/fastapi": [
+            "PASS"
+          ]
+        },
+        "usage": {
+          "input_tokens": 9214,
+          "output_tokens": 620,
+          "total_tokens": 9834
+        },
+        "model_calls": 6,
+        "tool_calls": 4,
+        "unknown_calls": 0
+      }
+    ],
+    "evidence_count": 15,
+    "sha256": "2fa5ecce979d726c8fff75bf81c0ad4289997543ea0a1a4d4106002bd5945237",
+    "model": {
+      "name": "gpt-6.1-sol",
+      "reasoning_effort": "low"
+    },
+    "tool_cache_hits": 4
+  }
+]

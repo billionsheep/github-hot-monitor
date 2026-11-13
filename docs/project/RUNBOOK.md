@@ -1,82 +1,82 @@
-# 本地运行与复现
+# 运行与复现
 
-## 环境
+当前主入口是统一 RepoAudit 工作台。旧 R1/R2 接口保留兼容；旧阶段文档中的端口是当时验收记录。
 
-采集和静态构建使用标准库；R1 服务使用 Python 3.11 和 `requirements.txt`，前端测试使用 Node.js。网页是原生 HTML/CSS/JavaScript。
-
-## 启动已有数据页面
-
-```bash
-cd '/Users/moon/Documents/ai agent/github-hot-monitor'
-python3 ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir public
-python3 -m http.server 8765 --bind 127.0.0.1 --directory public
-```
-
-访问 <http://127.0.0.1:8765>。终端按 Ctrl+C 停止服务。端口被占用时先访问已有服务，或换一个端口。
-
-`build_pages.py` 会删除并重建指定的输出目录，因此 `--out-dir` 应固定使用可再生的 `public`，不要指向源码或资料目录。`public/` 已在 .gitignore 内。
-
-## 测试
-
-```bash
-.venv/bin/python -m unittest discover -s tests -v
-node --test tests/test_frontend.js
-```
-
-## 单独验证实时采集
-
-```bash
-python3 ops/scripts/github_hot_monitor.py scan \
-  --topics agent --query-days 30 --min-stars 50 \
-  --per-query 5 --top 5 \
-  --state-dir /private/tmp/github-hot-monitor-practice
-```
-
-未配置 Token 时使用匿名 GitHub API，可能遇到限流。需要认证时通过 `GITHUB_TOKEN` 环境变量提供，不写进代码、报告或提交。当前代码会额外执行一个不限制 topic 的兜底查询，所以结果不一定全是 Agent 项目。
-
-首次扫描没有历史快照，升星速度为 0；间隔至少两小时且仓库出现在前后快照中，才会计算有效速度。后续练习沿用同一个 state-dir。
-
-要用练习数据预览，构建时改为对应 state-dir，之后刷新网页即可。
-
-## 自动更新与排障
-
-本地 HTTP 服务只提供静态文件，不会每六小时自行采集；六小时调度来自远端 `.github/workflows/pages.yml`。
-
-- 页面加载失败：检查 `public/data/latest.json` 是否存在及服务是否仍在运行。
-- 修改采集结果或 web 源码后：重跑构建，再刷新浏览器。
-- 结果缺失：查看扫描 stderr 中的 `[warn] query failed`；当前部分查询失败仍可能生成报告。
-- 浏览器 favicon 404：仓库没有站点图标，不影响榜单。
-
-## 启动 R1 同源页面
+## 安装与本机配置
 
 ```bash
 cd '/Users/moon/Documents/ai agent/github-hot-monitor'
 python3.11 -m venv .venv
 .venv/bin/pip install -r requirements.txt
-.venv/bin/python ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir public
-# 如本机已用 gh 登录，可选择仅在当前终端提供凭证：
-export GITHUB_TOKEN="$(gh auth token)"
-.venv/bin/python -m uvicorn evidence.app:app --host 127.0.0.1 --port 8768
+cp -n .env.example .env.local
+chmod 600 .env.local
 ```
 
-访问 <http://127.0.0.1:8768>，输入 `owner/repo` 或 `https://github.com/owner/repo`。默认读取 README，展开目录可选其他文件。也可匿名访问；遇到限流时等待额度恢复或提供服务端令牌。快照和缓存保存在 `.evidence-data/evidence.sqlite3`，已排除 Git。抓取时间是首次成功读取该版本对象的时间。修改网页后重新构建，修改服务代码后重启；Ctrl+C 停止服务。
+已有虚拟环境可以直接安装依赖。用文本编辑器打开 `.env.local`，填写：
 
-目录提示截断时其他路径的存在状态未知。文件限制 512 KiB；片段限制 200 行、16 KiB。单行超长时界面显示截断提示及固定来源链接。
+```dotenv
+LLM_BASE_URL=https://api.openai.com/v1
+LLM_MODEL=gpt-6.1-sol
+LLM_API_KEY=在本机填写
+LLM_API_FORMAT=responses
+LLM_REASONING_EFFORT=low
+```
 
-## R1.1 阅读与复现
+配置由服务端读取，网页不会接触密钥。`.env.local` 与 `.evidence-data/` 已排除 Git。启动脚本优先使用环境中的 `GITHUB_TOKEN`，否则尝试已有 `gh` 登录；没有登录时用匿名 API。
 
-页面加载时检测 `/api/capabilities`，静态页面禁用提交并提示启动本地服务。创建快照后使用根目录和面包屑浏览；常用文件入口只来自已读取的目录。选择文件后展开原文逐行查看，使用指定行跳转和上一段/下一段浏览实际访问历史；commit、完整文件 SHA-256、片段 SHA-256 与证据 ID 可复制。空文件显示无行号。单行超过上限时查看固定版本来源。
+## 启动实时工作台
 
-当前新版服务在 8768；8766 是本机已有的旧版进程。若 8768 已占用，使用其他空闲端口启动并访问该端口。用静态模式验证可另开终端运行 `.venv/bin/python -m http.server 8769 --bind 127.0.0.1 --directory public`。
+```bash
+python3 ops/scripts/start_local.py
+```
 
-接口契约可在本地 `http://127.0.0.1:8768/docs` 查看：`GET /api/capabilities`、`POST /api/snapshots`、目录及片段接口。错误为 `detail.code` 和 `detail.message`。
+默认 <http://127.0.0.1:8773/>，API 文档 <http://127.0.0.1:8773/docs>。换端口：`python3 ops/scripts/start_local.py --port 8774`。Ctrl+C 停止服务。脚本先重建 `public/`，再启动服务；源码修改后重新启动。
 
-## R2 最小核查演示
+1. 在“发现”选择项目并加入对比，或在“尽调”输入公开 GitHub 仓库。
+2. 填写具体工程约束，点击“开始尽调”；每个仓库固定到当时的完整提交。
+3. 查看逐项矩阵、执行轨迹和原文；完成后可追问及导出 Markdown / Replay JSON。
+4. 刷新页面会恢复最近会话，也可从历史列表重新打开。恢复与追问继续使用原提交，新建会话才刷新版本。
 
-首次克隆后，在仓库根目录执行 `cp -n .env.example .env.local` 与 `chmod 600 .env.local` 创建本机配置；`-n` 保留已有文件。安装依赖和构建页面的命令见上方；R2 使用 8770 端口。
+当前每轮总预算最多 20 次模型、24 次工具、60,000 输入 / 16,384 输出 tokens；每仓 Sub 最多 6 次模型、8 次工具，Lead 最多 2 次模型。达到预算保留证据并给出缺口。实时执行会产生模型费用，页面显示实际 usage。
 
-在本机 `.env.local` 的 `LLM_API_KEY=` 后填写密钥，保留已有官方地址、模型、Responses 和 low 设置；不要将密钥放入页面、命令历史或聊天。服务按请求读取配置，无需 `source`；文件已排除 Git。密钥填好后刷新页面，填写公开仓库和至少一项明确要求，点击开始核查。页面显示工具进度、要求/证据/判断/下一步和实际 token 用量、耗时。
+## 静态回放
 
-当前服务地址 <http://127.0.0.1:8770>。重启可复用上面的构建与启动命令，将端口改为 8770。每任务最多 6 次模型请求、8 次只读工具调用、每次最多 2048 输出 tokens，序列化请求不超过 24000 字节。达到限制时给出停止原因；引用存在性不等于语义正确，需打开来源逐条核对。
+```bash
+python3 ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir public
+python3 -m http.server 8775 --bind 127.0.0.1 --directory public
+```
 
-填好密钥后按授权只执行两个真实案例：一个仓库中有明确声明的正常案例，一个证据不足案例；记录固定 commit、工具调用、判断与原文是否相符、实际 usage、耗时和实际费用。认证失败或模型不可用时停止并检查权限，不自动重试。演示脚本和基于已测事实的简历素材见 [R2_DEMO.md](R2_DEMO.md)。
+访问 <http://127.0.0.1:8775/>，在“尽调”的录制回放中选择案例。支持播放、暂停、重播、跳到结果和证据查看，也可导入自己导出的 JSON。静态模式禁用实时任务，无需 API 密钥。
+
+回放包上限 5 MiB，载入时核对包和片段哈希、证据身份、固定版本、引用及来源地址。格式见 [REPLAY_BUNDLE_SCHEMA.md](REPLAY_BUNDLE_SCHEMA.md)。分享时提供整个 `public/` 或通过已有 Pages 工作流发布。
+
+## 数据与恢复
+
+`.evidence-data/audit_engine.db` 保存快照、缓存、证据、会话检查点、公开事件、模型用量和工具回执。采用 SQLite WAL 短事务；停止服务后再备份整个 `.evidence-data/`。旧 `evidence.sqlite3` 只用于历史 R1/R2 兼容，可通过 `/api/phase1/import-legacy` 先备份再导入。
+
+服务意外退出时，已提交工具回执可复用。旧执行租约最长约 180 秒；到期后在历史会话中恢复。若模型响应在写入检查点前丢失，该请求保留为未知用量，恢复可能再次调用；这项边界由故障测试和用量账本记录。
+
+## 测试与评测
+
+```bash
+.venv/bin/python -m unittest discover -s tests -q
+node --test tests/test_*.js
+.venv/bin/python tests/phase2_crash_smoke.py
+.venv/bin/python eval/run_eval.py
+```
+
+需要重做收费模型评测时：`.venv/bin/python eval/run_eval.py --online --baseline --max-usd 3`。详见 [评测说明](../../eval/README.md)。
+
+## 常见情况
+
+| 表现 | 处理 |
+|---|---|
+| 显示静态模式 | 使用上述启动脚本，确认 `/api/health` 可访问 |
+| 模型未配置 / 401 | 检查本机 API 密钥及项目权限，然后刷新 |
+| GitHub 限流 | 使用已有 `gh` 登录启动，或等待返回的额度恢复时间 |
+| 恢复提示执行权被占用 | 等待返回的 `retry_after`，避免重复启动 |
+| UNVERIFIED | 打开证据与覆盖信息；缩小问题或补充文件路径后追问 |
+| 配置存在但需要运行验证 | 工具读取静态资料；按报告建议在自己的环境安装测试 |
+| 端口占用 | 访问已有进程，或用 `--port` 换端口 |
+
+`build_pages.py` 会重建输出目录，始终将 `--out-dir` 指向可再生的 `public/`。

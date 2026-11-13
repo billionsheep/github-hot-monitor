@@ -4,12 +4,12 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 test('spotlight displays each leaderboard score including zero', () => {
   const cards = [], grid = {innerHTML:'', appendChild(card) { cards.push(card); }};
-  const document = {getElementById:() => grid, createElement:() => ({})};
+  const document = {getElementById:() => grid, createElement:() => ({children:[],append(...nodes){this.children.push(...nodes)}})};
   const context = {document}; vm.createContext(context);
   vm.runInContext(fs.readFileSync('web/app.js','utf8').replace(/main\(\);\s*$/, ''), context);
   const row = {full_name:'a/b',url:'https://github.com/a/b',stars:4,total:99,velocity:7,interesting:0,advanced:25,productive:30};
   context.renderSpotlight({leaderboards:Object.fromEntries(['fastest','interesting','advanced','productive','overall'].map(k => [k,[row]]))});
-  for (const [i,value] of ['7.00 stars/day','Score 0.00','Score 25.00','Score 30.00','Score 99.00'].entries()) assert.ok(cards[i].innerHTML.includes(value));
+  for (const [i,value] of ['7.00 stars/day','Score 0.00','Score 25.00','Score 30.00','Score 99.00'].entries()) assert.ok(cards[i].children[2].textContent.includes(value));
 });
 const flush = () => new Promise(resolve => setImmediate(resolve));
 function node(tag='div') {

@@ -1,0 +1,1 @@
+{"test/alpha":{"README.md":"# Alpha\nMODEL_URL is configurable\nDocker Compose is documented\n","settings.py":"MODEL_URL = os.getenv('MODEL_URL', 'http://localhost:11434')\n",".env.example":"MODEL_URL=http://localhost:11434\n"},"test/beta":{"README.md":"# Beta\nOnly a README declaration exists\nDeployment remains unspecified\n"}}

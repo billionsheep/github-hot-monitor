@@ -4,6 +4,7 @@ import json
 import time
 import uuid
 from evidence.github_client import timestamp
+from evidence.routing import choose_route
 
 class Conflict(Exception): pass
 
@@ -11,8 +12,10 @@ def pack(data): return json.dumps(data,ensure_ascii=False,sort_keys=True,separat
 
 class HarnessStore:
     def __init__(self,db): self.db=db
-    def create(self,bindings,query,key=None,budget=None):
-        request_hash=hashlib.sha256(pack({'bindings':bindings,'query':query,'budget':budget}).encode()).hexdigest()
+    def create(self,bindings,query,key=None,budget=None,workflow_mode='deploy_readiness',force_full=False):
+        request={'bindings':bindings,'query':query,'budget':budget}
+        if workflow_mode!='deploy_readiness' or force_full:request.update(workflow_mode=workflow_mode,force_full=force_full)
+        request_hash=hashlib.sha256(pack(request).encode()).hexdigest()
         with self.db.connect() as conn:
             conn.execute('BEGIN IMMEDIATE')
             if key:
@@ -21,12 +24,13 @@ class HarnessStore:
                     if existing['request_hash']!=request_hash: raise Conflict('幂等键已用于不同请求。')
                     return existing['session_id']
             id=uuid.uuid4().hex; turn=uuid.uuid4().hex; now=timestamp()
-            state={'bindings':bindings,'query':query,'budget':budget,'criteria':[], 'repo_index':0,'summaries':[], 'history':[],
+            state={'bindings':bindings,'query':query,'budget':budget,'workflow_mode':workflow_mode,'force_full':force_full,'execution_route':choose_route(query,bindings,workflow_mode,force_full),'v3':True,'criteria':[], 'repo_index':0,'summaries':[], 'history':[],
                    'context_id':uuid.uuid4().hex,'ranges':{},'outlines':[],'visible_evidence':[], 'lead_calls':0,'sub_calls':{},'tool_counts':{},
                    'report_version':0,'usage':{'input_tokens':0,'output_tokens':0,'total_tokens':0},'turn_usage':{'input_tokens':0,'output_tokens':0,'total_tokens':0},'turn_model_calls':0,'turn_tool_calls':0,'reserved_input':0,'reserved_output':0,'unknown_calls':0}
             conn.execute('INSERT INTO audit_sessions(id,status,revision,turn_id,created_at,updated_at,payload) VALUES (?,?,?,?,?,?,?)',(id,'INIT',0,turn,now,now,pack(state)))
             if key: conn.execute('INSERT INTO harness_keys VALUES (?,?,?)',(key,id,request_hash))
             self._event(conn,id,turn,'created',{'status':'INIT'})
+            self._event(conn,id,turn,'route_selected',state['execution_route'])
         return id
     def _event(self,conn,id,turn,kind,payload):
         seq=conn.execute('SELECT COALESCE(MAX(event_seq),0)+1 FROM audit_events WHERE session_id=?',(id,)).fetchone()[0]
@@ -69,7 +73,7 @@ class HarnessStore:
             if model_result:
                 changed=c.execute("UPDATE model_calls SET status='COMPLETED',input_tokens=?,output_tokens=?,elapsed_ms=?,payload=? WHERE id=? AND status='STARTED'",(model_result['usage'].get('input_tokens',0),model_result['usage'].get('output_tokens',0),model_result['elapsed_ms'],pack({'usage':model_result['usage'],'public_output':model_result.get('public_output','')}),model_result['id'])).rowcount
                 if changed!=1: raise Conflict('模型调用状态已变化。')
-            for event in guardrail_events or []: self._event(c,id,row['turn_id'],'guardrail_triggered',event)
+            for event in guardrail_events or []: self._event(c,id,row['turn_id'],event.get('event_type','guardrail_triggered'),{k:v for k,v in event.items() if k!='event_type'})
             self._event(c,id,row['turn_id'],kind,payload)
             c.execute('UPDATE audit_sessions SET status=?,revision=revision+1,payload=?,pending_operation=?,last_tool_call_id=?,lease_until=?,updated_at=? WHERE id=?',(status,pack(state),None if model_result else row['pending_operation'],tool_result['call_id'] if tool_result else row['last_tool_call_id'],str(time.time()+180),timestamp(),id))
     def begin_model(self,id,owner,expected_rev,role,model,state,input_reserve):
@@ -107,7 +111,7 @@ class HarnessStore:
             if not row or row['lease_owner']!=owner or row['revision']!=revision or float(row['lease_until'] or 0)<=time.time(): raise Conflict('执行权或版本已变化。')
             version=state['report_version']+1; state['report_version']=version
             c.execute('INSERT INTO harness_reports VALUES (?,?,?,?,?)',(id,version,row['turn_id'],pack(report),timestamp()))
-            for event in guardrail_events or []: self._event(c,id,row['turn_id'],'guardrail_triggered',event)
+            for event in guardrail_events or []: self._event(c,id,row['turn_id'],event.get('event_type','guardrail_triggered'),{k:v for k,v in event.items() if k!='event_type'})
             self._event(c,id,row['turn_id'],'report_ready',{'version':version})
             c.execute("UPDATE audit_sessions SET status='COMPLETED',revision=revision+1,payload=?,pending_operation=NULL,updated_at=? WHERE id=?",(pack(state),timestamp(),id))
     def public(self,id):
@@ -116,7 +120,7 @@ class HarnessStore:
             reports=[json.loads(x['payload']) for x in c.execute('SELECT payload FROM harness_reports WHERE session_id=? ORDER BY version',(id,))]
             events=[{'id':x['event_seq'],'type':x['event_type'],'data':json.loads(x['payload'])} for x in c.execute('SELECT * FROM audit_events WHERE session_id=? ORDER BY event_seq',(id,))]
         remaining=max(0,int(float(row['lease_until'] or 0)-time.time()+0.999)) if row['lease_owner'] else 0
-        return {'id':id,'status':row['status'],'lease_busy':remaining>0,'retry_after':remaining,'revision':row['revision'],'turn_id':row['turn_id'],'bindings':state['bindings'], 'criteria':state['criteria'],'usage':state['usage'],'unknown_calls':state['unknown_calls'],'reports':reports,'events':events}
+        return {'id':id,'status':row['status'],'lease_busy':remaining>0,'retry_after':remaining,'revision':row['revision'],'turn_id':row['turn_id'],'bindings':state['bindings'], 'criteria':state['criteria'],'usage':state['usage'],'unknown_calls':state['unknown_calls'],'reports':reports,'events':events,'workflow_mode':state.get('workflow_mode','deploy_readiness'),'execution_route':state.get('execution_route',{'route':'full','reason':'旧检查点保留完整流程'})}
     def followup(self,id,query):
         with self.db.connect() as c:
             c.execute('BEGIN IMMEDIATE'); row=c.execute('SELECT * FROM audit_sessions WHERE id=?',(id,)).fetchone()
@@ -138,7 +142,10 @@ class HarnessStore:
                     repositories.append({'binding':item['binding'],'rows':rows})
                 prior={'query':report.get('query','')[:1500],'criteria':report.get('criteria',[]),'repositories':repositories}
             state.update(stage='plan',query=query,prior_context=prior,criteria=[],repo_index=0,summaries=[],history=[],context_id=uuid.uuid4().hex,ranges={},outlines=[],visible_evidence=[],lead_calls=0,sub_calls={},tool_counts={},turn_usage={'input_tokens':0,'output_tokens':0,'total_tokens':0},turn_model_calls=0,turn_tool_calls=0,reserved_input=0,reserved_output=0)
+            if state.get('v3'):state['execution_route']=choose_route(query,state['bindings'],state['workflow_mode'],state.get('force_full',False))
+            state.pop('auto_prefetch_done',None)
             state.pop('pending_tool',None); state.pop('summary',None)
             turn=uuid.uuid4().hex
             c.execute("UPDATE audit_sessions SET status='INIT',turn_id=?,revision=revision+1,payload=?,pending_operation=NULL,updated_at=? WHERE id=?",(turn,pack(state),timestamp(),id))
             self._event(c,id,turn,'followup',{'query':query})
+            if state.get('v3'):self._event(c,id,turn,'route_selected',state['execution_route'])

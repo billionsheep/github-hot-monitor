@@ -141,6 +141,7 @@ class OutlineEntry(StrictModel):
     calls: list[dict] | None = None
     aliases: list[dict] | None = None
     calls_truncated: bool | None = None
+    symbols: list[str] | None = None
 
 class MetadataFact(StrictModel):
     kind: Literal['metadata']

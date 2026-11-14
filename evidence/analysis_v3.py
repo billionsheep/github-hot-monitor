@@ -52,18 +52,33 @@ def python_index(text):
         current=node
         while current in parents and not isinstance(current,ast.stmt): current=parents[current]
         return current
+    def call_info(call):
+        stmt=statement(call)
+        return {'name':dotted(call.func),'resolved':resolve(dotted(call.func),aliases),'keywords':[k.arg or '**' for k in call.keywords],
+                'keyword_arguments':[{'name':k.arg or '**','value':ast.unparse(k.value)[:200]} for k in call.keywords],
+                'start_line':call.lineno,'end_line':call.end_lineno,'statement_start':stmt.lineno,'statement_end':stmt.end_lineno}
     entries=[]; calls=[]
     for item in imports:
         entries.append({'title':item['name'],'kind':'Import','start_line':item['start_line'],'end_line':item['end_line'],'parameters':[],'calls':[],'aliases':[item]})
     for n in ast.walk(tree):
+        if isinstance(n,(ast.Assign,ast.AnnAssign,ast.AugAssign,ast.Return)):
+            symbols=[]
+            for part in ast.walk(n):
+                if isinstance(part,ast.Name): value=part.id
+                elif isinstance(part,ast.Attribute): value=dotted(part)
+                elif isinstance(part,ast.Constant) and isinstance(part.value,str) and len(part.value)<=100: value=part.value
+                else: continue
+                if value and value not in symbols:symbols.append(value)
+            if symbols:
+                entries.append({'title':symbols[0],'kind':type(n).__name__,'start_line':n.lineno,'end_line':n.end_lineno,'parameters':[],'calls':[],'aliases':[],'symbols':symbols[:80]})
         if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef,ast.ClassDef)):
             nested=[]
             for call in ast.walk(n):
                 if isinstance(call,ast.Call):
-                    stmt=statement(call);nested.append({'name':dotted(call.func),'resolved':resolve(dotted(call.func),aliases),'keywords':[k.arg or '**' for k in call.keywords], 'start_line':call.lineno,'end_line':call.end_lineno,'statement_start':stmt.lineno,'statement_end':stmt.end_lineno})
+                    nested.append(call_info(call))
             entries.append({'title':n.name,'kind':type(n).__name__,'start_line':n.lineno,'end_line':n.end_lineno,'parameters':params_for(n),'calls':nested[:60],'calls_truncated':len(nested)>60,'aliases':imports[:60]})
         if isinstance(n,ast.Call):
-            stmt=statement(n);calls.append({'name':dotted(n.func),'resolved':resolve(dotted(n.func),aliases),'keywords':[k.arg or '**' for k in n.keywords],'start_line':n.lineno,'end_line':n.end_lineno,'statement_start':stmt.lineno,'statement_end':stmt.end_lineno})
+            stmt=statement(n);calls.append(call_info(n))
             entries.append({'title':resolve(dotted(n.func),aliases),'kind':'Call','start_line':stmt.lineno,'end_line':stmt.end_lineno,'parameters':[],'calls':[calls[-1]],'aliases':[]})
     entries.sort(key=lambda x:(x['start_line'],x['end_line']));calls.sort(key=lambda x:(x['start_line'],x['end_line']))
     return tree,entries,calls,imports
@@ -96,6 +111,13 @@ def file_priority(item):
     elif base.endswith(('.toml','.yaml','.yml','.json','.ini','.cfg')) or base in ('.env.example','.env.template','makefile'): rank=2
     else: rank=3
     return (rank,path.lower(),path)
+
+def file_category(path):
+    base=path.rsplit('/',1)[-1].lower()
+    if base.endswith(('.py','.pyi','.js','.jsx','.ts','.tsx','.mjs','.cjs','.sh','.bash','.zsh')):return 'src'
+    if base.endswith(('.toml','.yaml','.yml','.json','.ini','.cfg')) or base in ('dockerfile','makefile','.env.example','.env.template'):return 'config'
+    if base.endswith(('.md','.markdown','.txt')):return 'doc'
+    return 'other'
 
 def directory_priority(item):
     name=item['name'].lower()
@@ -174,7 +196,7 @@ def architecture_kind(name):
 
 def security_kind(name,keywords=()):
     n=name.lower()
-    if n in ('eval','exec','compile','builtins.eval','builtins.exec','os.system','os.popen','subprocess.run','subprocess.popen','subprocess.call','subprocess.check_output','subprocess.check_call','pickle.load','pickle.loads','yaml.unsafe_load','yaml.load') or ('subprocess.' in n and 'shell' in keywords): return 'exec_sinks'
+    if n in ('eval','exec','compile','builtins.eval','builtins.exec','os.system','os.popen','subprocess.run','subprocess.popen','subprocess.call','subprocess.check_output','subprocess.check_call','anyio.open_process','anyio.run_process','asyncio.create_subprocess_exec','asyncio.create_subprocess_shell','pickle.load','pickle.loads','yaml.unsafe_load','yaml.load') or ('subprocess.' in n and 'shell' in keywords): return 'exec_sinks'
     if n.startswith(('os.environ','os.getenv','httpx.','requests.','urllib.','aiohttp.')) or any(x in n for x in ('getenv','environ.get','urlopen','http.client')): return 'env_and_network'
     if any(x in n for x in ('prompt','system_message','user_message','instruction','tool_result')): return 'prompt_injection'
     return None

@@ -61,6 +61,7 @@ class V3ToolsTests(unittest.IsolatedAsyncioTestCase):
                 return await super().file(repo,sha,path)
         client=Failing(self.db,fixture);result=await AuditTools({'repo':repo,'commit':'a'*40},client).analyze_architecture_profile({'repo':repo,'commit':'a'*40})
         data=json.loads(result.evidence[0].text);scope=data['scope'];self.assertEqual(scope['attempted_files'],24);self.assertEqual(len(client.attempts),24)
+        self.assertEqual(scope['file_categories']['denominator'],len(scope['files']));self.assertEqual(sum(scope['file_categories'][x] for x in ('src','doc','config','other')),len(scope['files']))
         self.assertTrue(all(x.startswith('src/') for x in client.attempts));self.assertFalse(scope['complete']);self.assertTrue(scope['continuations']);self.assertTrue(all('path_prefix' in x for x in scope['continuations']))
         self.assertLessEqual(scope['bytes_read'],1024*1024)
     async def test_total_budget_and_ast_failure_are_explicit(self):
@@ -95,6 +96,11 @@ class V3ToolsTests(unittest.IsolatedAsyncioTestCase):
         edges=json.loads(result.evidence[0].text)['edges'];self.assertTrue({'import','call','read','write'}<={x['relation'] for x in edges})
         for edge in edges:
             source=self.db.get_evidence(edge['evidence_id']);self.assertLessEqual(source['start_line'],edge['start_line']);self.assertGreaterEqual(source['end_line'],edge['end_line'])
+    async def test_async_process_sinks_are_review_signals(self):
+        fixture={'files':{'process.py':'import anyio as io\nimport asyncio as aio\nasync def run():\n    await io.open_process(["tool"])\n    await aio.create_subprocess_exec("tool")\n'},'selected_files_only':False}
+        binding={'repo':'test/async','commit':'f'*40}
+        result=await AuditTools(binding,FrozenClient(self.db,fixture)).scan_security_and_risk_sinks({**binding,'mode':'exec_sinks'})
+        findings=json.loads(result.evidence[0].text)['findings'];self.assertEqual({x['to'] for x in findings},{'anyio.open_process','asyncio.create_subprocess_exec'});self.assertTrue(all(x['needs_review'] for x in findings))
     async def test_derived_verdict_checks_session_source_blob(self):
         fixture={'files':{'app.py':'import subprocess\nsubprocess.run(["date"])\n'},'selected_files_only':False};binding={'repo':'test/check','commit':'d'*40}
         self.db.put_snapshot({'id':'v3','repo':binding['repo'],'sha':binding['commit'],'created_at':'now'})

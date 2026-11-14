@@ -28,6 +28,10 @@ class Verdict(StrictModel):
     verification_basis: Literal['declaration','static_config','community_report','insufficient']
     runtime_validation_required: bool
     next_step: str = Field(max_length=1000)
+    support_relation: Literal['supports','contradicts','partial','insufficient','unknown'] | None = None
+    gap_reason: str | None = Field(default=None,max_length=1000)
+    status_calibrated: bool | None = None
+    original_status: Literal['PASS','RISK','FAIL','UNVERIFIED'] | None = None
 
 class SubReport(StrictModel):
     rows: list[Verdict] = Field(max_length=8)
@@ -46,6 +50,7 @@ class CreateSession(StrictModel):
     query: str = Field(min_length=1,max_length=1500)
     budget: TurnBudget = Field(default_factory=TurnBudget)
     idempotency_key: str | None = Field(default=None,max_length=100)
+    workflow_mode: Literal['deploy_readiness','arch_research','sec_sentinel'] = 'deploy_readiness'
     @model_validator(mode='after')
     def unique(self):
         if len(set(self.snapshot_ids))!=len(self.snapshot_ids): raise ValueError('duplicate snapshot')

@@ -30,7 +30,7 @@ async def schedule(harness,id):
 @router.post('')
 async def create(body:CreateSession):
     harness=Harness(await asyncio.to_thread(AuditDB))
-    try: id=await asyncio.to_thread(harness.create,body.snapshot_ids,body.query,body.idempotency_key,body.budget.model_dump())
+    try: id=await asyncio.to_thread(harness.create,body.snapshot_ids,body.query,body.idempotency_key,body.budget.model_dump(),workflow_mode=body.workflow_mode)
     except (ValueError,Conflict) as e: raise HTTPException(409,detail={'code':'invalid_session','message':str(e)}) from None
     if body.idempotency_key:
         existing=await asyncio.to_thread(harness.store.public,id)

@@ -10,7 +10,7 @@ import yaml
 from pydantic import ValidationError
 from evidence.github_client import GitHubClient, GitHubError
 from evidence.schemas import Binding, OverviewInput, PathInput, OutlineInput, ScanInput, SecurityScanInput, LinesInput, IssueInput, FileEvidence, IssueEvidence, TreeEvidence, OutlineEvidence, MetadataEvidence, DerivedEvidence, Coverage, ToolError, ToolResult
-from evidence.analysis_v3 import python_index, scan_files, python_signals, rule_signals
+from evidence.analysis_v3 import python_index, scan_files, python_signals, rule_signals, file_category
 from evidence.github_client import timestamp
 
 
@@ -260,7 +260,7 @@ class AuditTools:
             if mode=='line_blocks': entries=[{'start_line':i,'end_line':min(i+49,len(rows))} for i in range(1,len(rows)+1,50)]
             if req.symbol_or_param_hint:
                 hint=req.symbol_or_param_hint.casefold()
-                entries=sorted(entries,key=lambda e:(hint not in json.dumps(e,ensure_ascii=False).casefold(),0 if e.get('kind')=='Call' else 1,e['start_line']))
+                entries=sorted(entries,key=lambda e:(hint not in json.dumps(e,ensure_ascii=False).casefold(),0 if e.get('kind') in ('Call','Assign','AnnAssign','AugAssign','Return') else 1,e['start_line']))
             limited=entries[:120]; truncated=len(entries)>len(limited)
             if truncated: notes.append('索引超过 120 项，仅展示前 120 项。')
             index_text=json.dumps({'kind':mode,'entries':limited},ensure_ascii=False,sort_keys=True,separators=(',',':'))
@@ -400,7 +400,9 @@ class AuditTools:
                     signals.append({**item,'path':path,'evidence_id':ev.evidence_id,'assessment':('rule_hit' if context_complete else 'insufficient_evidence') if kind=='security_scan' else 'source_signal',**({'context_complete':context_complete,'needs_review':True} if kind=='security_scan' else {})})
             if omitted: notes.append('线索超过 40 项，仅保留前 40 项，其他线索未展开。')
             scope={'path_prefix':req.path_prefix,'directories':scan.directories,'files':[x['path'] for x in scan.files],
-                   'bytes_read':scan.bytes_read,'attempted_directories':scan.attempted_directories,'attempted_files':scan.attempted_files,'complete':not notes and not errors,'notes':notes,'continuation':scan.continuation,'continuations':scan.continuations,'mode':mode if kind=='security_scan' else None}
+                   'bytes_read':scan.bytes_read,'attempted_directories':scan.attempted_directories,'attempted_files':scan.attempted_files,
+                   'file_categories':{'denominator':len(scan.files),**{category:sum(file_category(f['path'])==category for f in scan.files) for category in ('src','doc','config','other')}},
+                   'complete':not notes and not errors,'notes':notes,'continuation':scan.continuation,'continuations':scan.continuations,'mode':mode if kind=='security_scan' else None}
             refs=sorted(evidence);rule_version='arch-v1' if kind=='arch_profile' else 'security-v1'
             body={'rule_version':rule_version,'scope':scope,'references':refs,'edges' if kind=='arch_profile' else 'findings':signals,
                   'interpretation':'规则线索须结合上下文复核，命中不等于漏洞；无命中不等于安全。' if kind=='security_scan' else '静态线索；导入与调用分别标注，需结合原文核对。'}

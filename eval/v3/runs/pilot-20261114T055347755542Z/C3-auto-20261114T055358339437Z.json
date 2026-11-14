@@ -1,0 +1,348 @@
+{
+  "id": "C3",
+  "attempt": "20261114T055358339437Z",
+  "batch": "pilot-20261114T055347755542Z",
+  "route_requested": "auto",
+  "origin": "synthetic",
+  "query": "现有资料能否确定该项目采用 MIT 协议？缺少授权文本时不要推测。",
+  "repo": "eval/c3",
+  "commit": "0b3b92f8ef946b386ec6e9284d533b8e91166a47",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T055358339437Z",
+  "input_fixture_sha256": "47bbc88201f8c73b9d7d04e703ccdc003988049f8903bafb89e9ddb7e8e8fe95",
+  "session_id": "415a0d370b6a4cbd88720ca797161678",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "requirement",
+          "title": "现有资料能否确定该项目采用 MIT 协议？缺少授权文本时不要推测。"
+        }
+      ],
+      "execution_route": {
+        "reason": "单仓单项协议声明",
+        "route": "fast"
+      },
+      "query": "现有资料能否确定该项目采用 MIT 协议？缺少授权文本时不要推测。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "0b3b92f8ef946b386ec6e9284d533b8e91166a47",
+            "repo": "eval/c3"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "tree_683a79a3a5bc3f410f91a721b7efbc3e3763a0a0f5962fb450ef677809531eaf",
+                  "quote": "{\"entries\":[{\"mode\":\"100644\",\"name\":\"README.md\",\"sha\":\"b53f28c3c8b905ae4efd9637dd0443a7f726fcb4\",\"size\":35,\"type\":\"blob\"}],\"truncated\":false}"
+                },
+                {
+                  "evidence_id": "ev_b85740f036d4a75416f2dd39ef0cbd275e01afb16506b09d8bdb3f362077e970",
+                  "quote": "# Package\nA demonstration project.\n"
+                }
+              ],
+              "commit": "0b3b92f8ef946b386ec6e9284d533b8e91166a47",
+              "criterion_id": "requirement",
+              "gap_reason": "缺少 MIT 授权文本或其他足以确认该项目授权协议的材料。",
+              "next_step": "请项目权利人提供适用于该提交的授权文本，再核实是否为 MIT 协议；无需运行验证。",
+              "original_status": "UNVERIFIED",
+              "repo": "eval/c3",
+              "runtime_validation_required": false,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "现有资料不能确定项目采用 MIT 协议。固定提交的完整目录仅包含 README.md，未提供授权文本；README 也没有协议声明，不能据此推测采用 MIT。[tree_683a79a3a5bc3f410f91a721b7efbc3e3763a0a0f5962fb450ef677809531eaf] [ev_b85740f036d4a75416f2dd39ef0cbd275e01afb16506b09d8bdb3f362077e970]",
+              "support_relation": "insufficient",
+              "verification_basis": "insufficient"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_b85740f036d4a75416f2dd39ef0cbd275e01afb16506b09d8bdb3f362077e970",
+            "meta_6c7e0f7bcb5b68586a0e3b8025db8c9e01249a8dbe7ba708b9bfec1fd0f9f384",
+            "tree_683a79a3a5bc3f410f91a721b7efbc3e3763a0a0f5962fb450ef677809531eaf"
+          ]
+        }
+      ],
+      "summary": "单仓单项核查结果见下方。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 3,
+      "turn_tool_calls": 2,
+      "turn_usage": {
+        "input_tokens": 5239,
+        "output_tokens": 526,
+        "total_tokens": 5765
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 5239,
+        "output_tokens": 526,
+        "total_tokens": 5765
+      },
+      "workflow_mode": "deploy_readiness"
+    }
+  ],
+  "usage": {
+    "input_tokens": 5239,
+    "output_tokens": 526,
+    "total_tokens": 5765
+  },
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "UNVERIFIED"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/c3",
+      "name": "get_repo_overview_and_tree",
+      "args": {
+        "path": ""
+      }
+    },
+    {
+      "repo": "eval/c3",
+      "name": "read_file_lines",
+      "args": {
+        "path": "README.md",
+        "start_line": 1,
+        "end_line": 10
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 3,
+    "lead_calls": 0,
+    "lead_input_peak": 0,
+    "known_input_tokens": 5239,
+    "known_output_tokens": 526,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "单仓单项协议声明",
+        "route": "fast"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "requirement",
+            "title": "现有资料能否确定该项目采用 MIT 协议？缺少授权文本时不要推测。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 6,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"\"}",
+        "repo": "eval/c3",
+        "tool": "get_repo_overview_and_tree"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "meta_6c7e0f7bcb5b68586a0e3b8025db8c9e01249a8dbe7ba708b9bfec1fd0f9f384",
+          "tree_683a79a3a5bc3f410f91a721b7efbc3e3763a0a0f5962fb450ef677809531eaf"
+        ],
+        "repo": "eval/c3",
+        "status": "CACHE_HIT",
+        "tool": "get_repo_overview_and_tree"
+      }
+    },
+    {
+      "id": 8,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 9,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"README.md\",\"start_line\":1,\"end_line\":10}",
+        "repo": "eval/c3",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 10,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_b85740f036d4a75416f2dd39ef0cbd275e01afb16506b09d8bdb3f362077e970"
+        ],
+        "repo": "eval/c3",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 11,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 12,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/c3"
+      }
+    },
+    {
+      "id": 13,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 14,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 15,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 13.858,
+  "request_records": [
+    {
+      "id": "52b0431cd8aa456489572d8d4fa282e3",
+      "label": "pilot-20261114T055347755542Z/C3/auto/20261114T055358339437Z",
+      "role": "sub",
+      "started_at": "2026-11-14T05:53:58.350842+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 5588,
+      "request_sha256": "e33a992a4ba667db50bb8c9fdb3a4e2a3d67a6413a596aba1e32f584a9aa558a",
+      "elapsed_ms": 2764,
+      "estimated_usd": 0.0029325,
+      "usage": {
+        "input_tokens": 1085,
+        "input_tokens_details": {
+          "cache_write_tokens": 1082,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1082
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 22,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1107
+      }
+    },
+    {
+      "id": "5a8f8c222f7845a38a19e561b886daca",
+      "label": "pilot-20261114T055347755542Z/C3/auto/20261114T055358339437Z",
+      "role": "sub",
+      "started_at": "2026-11-14T05:54:01.126664+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 7968,
+      "request_sha256": "1f2a82cd31e9147d163d288aceb4e55c0ac2d3117531c1c8889467be78df5c43",
+      "elapsed_ms": 3590,
+      "estimated_usd": 0.0049975,
+      "usage": {
+        "input_tokens": 1879,
+        "input_tokens_details": {
+          "cache_write_tokens": 1876,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1876
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1909
+      }
+    },
+    {
+      "id": "0bbd5fe2eaf2457fb2cd3b564a4359f2",
+      "label": "pilot-20261114T055347755542Z/C3/auto/20261114T055358339437Z",
+      "role": "sub",
+      "started_at": "2026-11-14T05:54:04.730275+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 9378,
+      "request_sha256": "bdc6e025415ac96e8f6b14a5982fc69ec9853a3ad999597052df7d4c7194f35f",
+      "elapsed_ms": 7456,
+      "estimated_usd": 0.010427500000000001,
+      "usage": {
+        "input_tokens": 2275,
+        "input_tokens_details": {
+          "cache_write_tokens": 2272,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 2272
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 474,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2749
+      }
+    }
+  ]
+}

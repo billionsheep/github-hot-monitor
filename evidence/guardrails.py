@@ -116,3 +116,37 @@ def verify_verdict(row:Verdict, session_id, binding, db, visible_ids=None):
             'summary':'引用校验未通过，需重新核对原文。','citations':[], 'verification_basis':'insufficient',
             'runtime_validation_required':True, 'next_step':'重新读取相关证据并核对引用。'}),invalid
     return row,[]
+
+def calibrate_verdict(row,query,db,*,criterion='',require_relation=False):
+    """Conservatively reconcile explicit support and user-required evidence after identity checks."""
+    original=row.original_status or row.status
+    reason=None;relation=row.support_relation;partial=False
+    expected={'supports':'PASS','contradicts':'FAIL','partial':'RISK','insufficient':'UNVERIFIED','unknown':'UNVERIFIED'}
+    if row.status!='UNVERIFIED':
+        if row.verification_basis=='insufficient':reason='证据基础不足。'
+        elif relation in ('insufficient','unknown'):reason=row.gap_reason or '证据支持关系不足。'
+        elif relation=='partial' and row.status=='PASS' and row.gap_reason and row.citations:partial=True
+        elif relation and expected[relation]!=row.status:reason='判断与声明的证据支持关系不一致。'
+        elif require_relation and relation is None:reason='未给出可核对的证据支持关系。'
+        if not reason and re.search(r'协议|许可|授权|licen[cs]e',criterion,re.I) and re.search(r'缺少.{0,8}(?:授权|许可|协议)文本|without.{0,15}licen[cs]e\s+text',query,re.I):
+            has_license_text=False
+            for citation in row.citations:
+                e=db.get_evidence(citation.evidence_id)
+                raw=e.get('text','') if e and e.get('source_type')=='file_lines' else ''
+                # Check the substantive grant and conditions; file name alone is not evidence.
+                if re.search(r'permission is hereby granted',raw,re.I) and re.search(r'(?:subject to the following conditions|copyright notice and this permission notice)',raw,re.I) and re.search(r'(?:the software is provided|without warranty)',raw,re.I):has_license_text=True
+            if not has_license_text:reason='题目要求核对授权文本，引用中缺少可核对的完整授权内容。'
+        if not reason and row.status=='PASS' and re.search(r'安全|漏洞|security|vulnerab',criterion,re.I) and re.search(r'全仓|整个|整体|项目|系统|框架|代码库|无漏洞|无风险|不存在.{0,8}漏洞|没有.{0,8}漏洞|安全可靠|entire|overall|secure',criterion,re.I):
+            if not re.search(r'扫描范围.{0,12}(?:命中|线索)|(?:命中|线索).{0,12}扫描范围|within.{0,20}scan',criterion,re.I):
+                sources=[db.get_evidence(c.evidence_id) for c in row.citations]
+                if any(e and e.get('source_type')=='security_scan' for e in sources):reason='规则扫描不能单独证明整个项目安全或没有漏洞。'
+    if reason:
+        refs=' '.join('['+c.evidence_id+']' for c in row.citations)
+        return row.model_copy(update={'status':'UNVERIFIED','summary':('资料不足，无法确认。 '+refs).strip(),
+            'verification_basis':'insufficient','gap_reason':reason,'runtime_validation_required':True,'next_step':'补充可核对的证据并重新判断。',
+            'status_calibrated':original!='UNVERIFIED','original_status':original}),[reason]
+    if partial:
+        refs=' '.join('['+c.evidence_id+']' for c in row.citations)
+        return row.model_copy(update={'status':'RISK','summary':('证据仅部分支持，仍有限制：'+row.gap_reason+' '+refs).strip(),
+            'original_status':original,'status_calibrated':True}),['证据仅部分支持，存在具体限制。']
+    return row.model_copy(update={'status_calibrated':original!=row.status,'original_status':original}),[]

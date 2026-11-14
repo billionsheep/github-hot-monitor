@@ -1,0 +1,15 @@
+{
+  "created_at": "pilot-20261114T055347755542Z",
+  "shared_ledger": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-budget.json",
+  "planned": [
+    {
+      "id": "A1",
+      "route": "auto"
+    },
+    {
+      "id": "C3",
+      "route": "auto"
+    }
+  ],
+  "status": "planned"
+}

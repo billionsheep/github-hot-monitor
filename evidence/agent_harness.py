@@ -5,12 +5,13 @@ import re
 import time
 import uuid
 from evidence.agent import configuration, ready, response_request
-from evidence.guardrails import missing_ranges, verify_verdict, calibrate_verdict, wrap_untrusted, REF
+from evidence.guardrails import missing_ranges, verify_verdict, calibrate_verdict, source_matches_blob, wrap_untrusted, REF
 from evidence.harness_schemas import CriteriaPlan, SubReport, LeadSummary, Verdict, TurnBudget
 from evidence.harness_store import HarnessStore, Conflict
 from evidence.github_client import GitHubClient
 from evidence.tools import AuditTools, lines_of
 from evidence.routing import MODES, source_hints, scoped_source_hints
+from evidence.report_v3 import valid_blueprint, valid_citation, visible_texts, collect_report_extras, validate_report_extras
 
 class BudgetExceeded(Exception): pass
 class DefiniteModelError(Exception): pass
@@ -72,11 +73,28 @@ def model_view(result,max_bytes=MAX_MODEL_VIEW_BYTES):
         view={k:compact_value(item[k]) for k in ('tool','repo','commit','coverage','errors','cache_hit','error','deduplicated','message') if k in item}
         view['facts']=[]; view['evidence']=[]
         facts=item.get('facts',[]); evidence=item.get('evidence',[])
+        preview_refs=[]
+        if max_bytes>MAX_MODEL_VIEW_BYTES:
+            for artifact in evidence:
+                if artifact.get('source_type') not in ('arch_profile','security_scan'):continue
+                try:
+                    body=json.loads(artifact['text']);kind='edges' if artifact['source_type']=='arch_profile' else 'findings'
+                    scope=body['scope'];summary={'kind':artifact['source_type'],'artifact_id':artifact['evidence_id'],
+                        'scope':{k:scope.get(k) for k in ('path_prefix','complete','notes','continuation','file_categories','bytes_read')},
+                        'entries':[],'notice':'规则线索和证据索引不等于已读原文；请按路径和范围补查。'}
+                    entries=body[kind]
+                    for entry in entries:
+                        brief={k:entry[k] for k in ('category','relation','from','to','path','start_line','end_line','evidence_id','assessment','context_complete','needs_review') if k in entry}
+                        if len(json.dumps({**summary,'entries':summary['entries']+[brief]},ensure_ascii=False).encode())>min(4500,max_bytes//2):break
+                        summary['entries'].append(brief);preview_refs.append(entry.get('evidence_id'))
+                    summary['omitted_entries']=len(entries)-len(summary['entries']);view['derived_summary']=summary
+                except (KeyError,ValueError,TypeError):pass
+                break
         def fact_priority(f):
             key=str(f.get('key','')).lower()
             return (0 if f.get('kind')=='config_value' else 1, 0 if 'python' in key else 1)
         facts=sorted(facts,key=fact_priority)
-        prioritized=[f.get('evidence_id') for f in facts if f.get('kind')=='config_value' and f.get('evidence_id')]
+        prioritized=[f.get('evidence_id') for f in facts if f.get('kind')=='config_value' and f.get('evidence_id')]+[x for x in preview_refs if x]
         ordered=[]; seen=set()
         for e in sorted(evidence,key=lambda x:prioritized.index(x['evidence_id']) if x.get('evidence_id') in prioritized else len(prioritized)):
             if e.get('evidence_id') in seen: continue
@@ -301,7 +319,21 @@ class Harness:
                     pending=state.get('pending_tool')
                     if pending:
                         await self.run_tool(id,owner,row,state,binding,pending); continue
-                    if state.get('v3') and getattr(self.adapter,'v3_tools',False) and not state.get('auto_prefetch_done') and not state['history']:
+                    if state.get('v3') and getattr(self.adapter,'v3_tools',False) and state.get('workflow_mode') in ('arch_research','sec_sentinel') and not state.get('workflow_scan_done'):
+                        state['workflow_scan_done']=True
+                        kind='analyze_architecture_profile' if state['workflow_mode']=='arch_research' else 'scan_security_and_risk_sinks'
+                        hints=scoped_source_hints(state['query'],binding,state['bindings']); paths=hints['paths']
+                        prefix=paths[0].rpartition('/')[0] if len(paths)==1 else ''
+                        if not prefix:
+                            directories=re.findall(r'(?<![\w/.-])(?:[\w.-]+/)+[\w.-]+(?!(?:[\w./-]))',state['query'])
+                            directories=[x for x in directories if '.' not in x.rsplit('/',1)[-1] and x.count('/')>=2]
+                            if len(directories)==1:prefix=directories[0]
+                        args={'path_prefix':prefix}
+                        if kind=='scan_security_and_risk_sinks':args['mode']='all'
+                        call={'type':'function_call','name':kind,'arguments':json.dumps(args,ensure_ascii=False),'call_id':'auto_'+uuid.uuid4().hex,'_automatic':True}
+                        state['pending_tool']=call
+                        await asyncio.to_thread(self.store.transition,id,owner,row['revision'],'INVESTIGATING',state,'tool_requested',{'repo':repo,'tool':kind,'args':json.dumps(args,ensure_ascii=False),'automatic':True});continue
+                    if state.get('v3') and getattr(self.adapter,'v3_tools',False) and not state.get('auto_prefetch_done'):
                         hints=scoped_source_hints(state['query'],binding,state['bindings']);paths=[p for p in hints['paths'] if p.lower().endswith(('.py','.pyi'))]
                         symbols=hints['symbols'];state['auto_prefetch_done']=True
                         if len(paths)==1 and symbols and state['turn_tool_calls']<state['budget']['tool_calls']:
@@ -327,6 +359,9 @@ class Harness:
                         if state.get('v3') and getattr(self.adapter,'v3_tools',False):prompt+=('\n针对每项判断附 support_relation: supports|contradicts|partial|insufficient|unknown 和 gap_reason（无缺口为 null）。'
                             '支持关系必须依据引用原文；只有资料充分支持才能 PASS，明确冲突为 FAIL，具体限制为 RISK，证据或关系不足为 UNVERIFIED。'
                             'source_hints 保留用户指定路径和符号，按需读取，不构成对结论的证据。')
+                        if state.get('workflow_mode')=='arch_research':prompt+='\n架构研报：优先使用 analyze_architecture_profile，按调用、导入、状态读写区分直接证据与推断；保留扫描覆盖缺口。'
+                        elif state.get('workflow_mode')=='sec_sentinel':prompt+='\n安全线索审计：优先使用 scan_security_and_risk_sinks，规则命中不是漏洞、无命中不是整体安全。仅实际核对上下文时可输出 security_reviews 数组，每项含 evidence_id、path、start_line、end_line、quote、explanation。'
+                        elif state.get('workflow_mode')=='deploy_readiness':prompt+='\n如有原文支持且示例语法可检查，可选输出 integration_blueprint：format（python/json/env）、content、applicability、verification_steps 数组和 citations。python 格式仅支持每行一个简单字面量赋值；未确定值使用明确占位符，并单列待运行验证步骤；没有依据则省略。'
                         if state.get('v3') and getattr(self.adapter,'v3_tools',False):self.fit_context(state,initial,prompt+'\n'+remaining,allow_tools)
                         response,meta=await self.model(id,owner,row,state,'sub',prompt+'\n'+remaining,[initial]+state['history'],allow_tools)
                     except BudgetExceeded as exc:
@@ -345,9 +380,27 @@ class Harness:
                             await asyncio.to_thread(self.store.transition,id,owner,row['revision'],'INVESTIGATING',state,'tool_requested',{'repo':repo,'tool':calls_out[0].get('name'),'args':calls_out[0].get('arguments','')[:2000]},model_result=meta)
                     else:
                         guard_events=[]
-                        try: sub=SubReport.model_validate_json(extract_text(response)); rows=self.verify_rows(id,state,binding,sub,guard_events=guard_events)
+                        blueprint=None;reviews=[]
+                        try:
+                            raw_sub=json.loads(extract_text(response))
+                            try:sub=SubReport.model_validate(raw_sub)
+                            except Exception:
+                                # A malformed optional extension must not erase valid verdict rows.
+                                sub=SubReport.model_validate({'rows':raw_sub['rows']})
+                                guard_events.append({'repo':repo,'reason':'可选配置或上下文复核格式无效，已排除。'})
+                            rows=self.verify_rows(id,state,binding,sub,guard_events=guard_events)
+                            visible=visible_texts(state['history'])
+                            def lookup(ref):
+                                with self.db.connect() as c:r=c.execute('SELECT e.payload FROM evidence_artifacts e JOIN session_evidence s ON s.evidence_id=e.id WHERE s.session_id=? AND e.id=?',(id,ref)).fetchone()
+                                e=json.loads(r['payload']) if r else None
+                                return e if e and (e.get('source_type')!='file_lines' or source_matches_blob(e,self.db)) else None
+                            if sub.integration_blueprint and valid_blueprint(sub.integration_blueprint.model_dump(),binding,lookup,visible):blueprint=sub.integration_blueprint.model_dump()
+                            elif sub.integration_blueprint:guard_events.append({'repo':repo,'reason':'配置示例语法、来源或当前上下文校验未通过。'})
+                            for review in sub.security_reviews:
+                                data=review.model_dump();citation={'evidence_id':data['evidence_id'],'quote':data['quote']}
+                                if data['evidence_id'] in visible and data['quote'] in visible[data['evidence_id']] and valid_citation(citation,binding,lookup):reviews.append(data)
                         except Exception: rows=self.fallback(state,binding)
-                        state['summaries'].append({'binding':binding,'rows':rows,'visible_evidence':list(state['visible_evidence']),'stop_reason':'完成'});self.advance(state)
+                        state['summaries'].append({'binding':binding,'rows':rows,'visible_evidence':list(state['visible_evidence']),'stop_reason':'完成','integration_blueprint':blueprint,'security_reviews':reviews});self.advance(state)
                         await asyncio.to_thread(self.store.transition,id,owner,row['revision'],'INVESTIGATING',state,'repository_complete',{'repo':repo},model_result=meta,guardrail_events=guard_events)
                         await self.checkpoint('repository_committed',session_id=id,repo=repo)
                 elif stage=='synthesis':
@@ -374,10 +427,19 @@ class Harness:
                     allowed={c['evidence_id'] for item in state['summaries'] for r in item['rows'] for c in r['citations']}
                     summary_refs=set(REF.findall(state['summary']))
                     if not summary_refs.issubset(allowed): state['summary']='请查看各仓库逐项核查结果。';summary_refs=set()
-                    report={'summary_evidence_ids':sorted(summary_refs),'budget_reason':state.get('budget_reason'), 'query':state['query'],'criteria':state['criteria'],'repositories':state['summaries'],
+                    clean_summaries=[{k:v for k,v in item.items() if k not in ('integration_blueprint','security_reviews')} for item in state['summaries']]
+                    report={'summary_evidence_ids':sorted(summary_refs),'budget_reason':state.get('budget_reason'), 'query':state['query'],'criteria':state['criteria'],'repositories':clean_summaries,
                             'summary':state['summary'],'usage':state['usage'],'turn_usage':state['turn_usage'],'turn_budget':state['budget'],'turn_model_calls':state['turn_model_calls'],'turn_tool_calls':state['turn_tool_calls'],'unknown_calls':state['unknown_calls'],
                             'citation_check':'身份、哈希和原文摘录；语义支持需单独评估'}
                     if state.get('v3'):report.update(workflow_mode=state['workflow_mode'],execution_route=state['execution_route'])
+                    if state.get('v3'):
+                        extras=await asyncio.to_thread(collect_report_extras,self.db,id,row['turn_id'],state['summaries']);report.update(extras)
+                        with self.db.connect() as c:
+                            records=c.execute('SELECT e.id,e.payload FROM evidence_artifacts e JOIN session_evidence s ON s.evidence_id=e.id WHERE s.session_id=?',(id,)).fetchall()
+                        pool={x['id']:json.loads(x['payload']) for x in records}
+                        try:validate_report_extras(report,pool.get)
+                        except (ValueError,KeyError,TypeError):
+                            report.update(architecture_graph=[],security_findings=[],analysis_metrics=[],integration_blueprint=[]);report['analysis_gaps'].append('扩展报告引用校验失败，已排除。')
                     await asyncio.to_thread(self.store.finish,id,owner,row['revision'],state,report,guard_events);interrupted=False;return True
                 else: raise RuntimeError('未知执行阶段。')
         finally:
@@ -391,7 +453,7 @@ class Harness:
             if not await asyncio.to_thread(self.store.renew,id,owner): return
     @staticmethod
     def advance(state):
-        state['repo_index']+=1;state['history']=[];state['ranges']={};state['outlines']=[];state['context_id']=uuid.uuid4().hex;state['visible_evidence']=[];state.pop('pending_tool',None);state.pop('auto_prefetch_done',None);state.pop('context_pruned',None);state.pop('prefetch_expected',None)
+        state['repo_index']+=1;state['history']=[];state['ranges']={};state['outlines']=[];state['context_id']=uuid.uuid4().hex;state['visible_evidence']=[];state.pop('pending_tool',None);state.pop('auto_prefetch_done',None);state.pop('context_pruned',None);state.pop('prefetch_expected',None);state.pop('workflow_scan_done',None)
     @staticmethod
     def fallback(state,binding):
         return [Verdict(criterion_id=x['id'],repo=binding['repo'],commit=binding['commit'],status='UNVERIFIED',summary='证据不足。',citations=[],verification_basis='insufficient',runtime_validation_required=True,next_step='补充原文并核查。').model_dump() for x in state['criteria']]

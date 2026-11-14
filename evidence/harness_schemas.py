@@ -33,8 +33,55 @@ class Verdict(StrictModel):
     status_calibrated: bool | None = None
     original_status: Literal['PASS','RISK','FAIL','UNVERIFIED'] | None = None
 
+class IntegrationBlueprint(StrictModel):
+    format: Literal['python','json','env']
+    content: str = Field(min_length=1,max_length=8000)
+    applicability: str = Field(min_length=1,max_length=1000)
+    verification_steps: list[str] = Field(min_length=1,max_length=8)
+    citations: list[Citation] = Field(min_length=1,max_length=8)
+
+class SecurityReview(StrictModel):
+    evidence_id: str
+    path: str
+    start_line: int = Field(ge=1)
+    end_line: int = Field(ge=1)
+    quote: str = Field(min_length=1,max_length=6000)
+    explanation: str = Field(min_length=10,max_length=1000)
+
 class SubReport(StrictModel):
     rows: list[Verdict] = Field(max_length=8)
+    integration_blueprint: IntegrationBlueprint | None = None
+    security_reviews: list[SecurityReview] = Field(default_factory=list,max_length=40)
+
+class ArchitectureGraph(StrictModel):
+    repo: str
+    commit: str
+    artifact_id: str
+    edges: list[dict] = Field(max_length=40)
+
+class SecurityFindings(StrictModel):
+    repo: str
+    commit: str
+    artifact_id: str
+    findings: list[dict] = Field(max_length=40)
+
+class AnalysisMetrics(StrictModel):
+    repo: str
+    commit: str
+    artifact_id: str
+    scope: dict
+
+class BlueprintGroup(StrictModel):
+    repo: str
+    commit: str
+    blueprint: IntegrationBlueprint
+
+class V3ReportExtensions(StrictModel):
+    architecture_graph: list[ArchitectureGraph] = Field(default_factory=list,max_length=24)
+    security_findings: list[SecurityFindings] = Field(default_factory=list,max_length=24)
+    analysis_metrics: list[AnalysisMetrics] = Field(default_factory=list,max_length=24)
+    integration_blueprint: list[BlueprintGroup] = Field(default_factory=list,max_length=24)
+    analysis_gaps: list[str] = Field(default_factory=list,max_length=100)
 
 class LeadSummary(StrictModel):
     summary: str = Field(max_length=2000)

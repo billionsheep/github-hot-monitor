@@ -8,8 +8,8 @@ test('tampering and foreign source or citation are rejected',async()=>{const c=m
 
 function uiContext(){
   const elements=new Map();
-  function node(){return {hidden:false,disabled:false,dataset:{},children:[],classList:{toggle(){}},replaceChildren(...x){this.children=x},append(...x){this.children.push(...x)},addEventListener(type,fn){(this.listeners??={})[type]??=[];this.listeners[type].push(fn)},set textContent(v){this.text=String(v)},get textContent(){return this.text||''}}}
-  const brand=node();const document={getElementById(id){if(!elements.has(id))elements.set(id,node());return elements.get(id)},createElement:node,querySelector(){return brand},querySelectorAll(){return []}};
+  function node(tag='div'){return {tag,hidden:false,disabled:false,dataset:{},style:{},children:[],classList:{toggle(){}},replaceChildren(...x){this.children=x},append(...x){this.children.push(...x)},setAttribute(k,v){(this.attributes??={})[k]=v},addEventListener(type,fn){(this.listeners??={})[type]??=[];this.listeners[type].push(fn)},set innerHTML(v){throw Error('unsafe HTML insertion')},set textContent(v){this.text=String(v)},get textContent(){return this.text||''}}}
+  const brand=node();const document={getElementById(id){if(!elements.has(id))elements.set(id,node());return elements.get(id)},createElement:node,createElementNS(ns,tag){return node(tag)},querySelector(){return brand},querySelectorAll(){return []}};
   const streams=[];class FakeEventSource{constructor(){this.handlers={};streams.push(this)}addEventListener(k,fn){this.handlers[k]=fn}close(){this.closed=true}emit(k){this.handlers[k]?.()}}
   const callbacks=[];const context={document,window:{scrollTo(){}},EventSource:FakeEventSource,setInterval(fn){callbacks.push(fn);return callbacks.length},clearInterval(){},localStorage:{setItem(){}}};
   vm.createContext(context);vm.runInContext(code.slice(0,code.indexOf('async function digest(')),context);
@@ -66,4 +66,29 @@ test('derived replay identities and their underlying source ranges are verified'
 });
 test('all three v2 recordings still validate unchanged in the v3 browser',async()=>{
   const c=makeContext();for(const name of ['agents-python-comparison.json','fastapi-python311.json','pydantic-model-endpoint.json']){const raw=fs.readFileSync('web/replays/'+name,'utf8');const payload=await c.validateReplay(raw);assert.ok(payload.session.id)}
+});
+test('v3 graph replay rejects altered relationships even when envelope is rehashed',async()=>{
+  const c=makeContext(),p=JSON.parse(JSON.parse(original).payload_json),base=Object.values(p.evidence).find(e=>e.source_type==='file_lines');
+  const edge={from:'module',to:'client',relation:'call',category:'model_tool_protocol',path:base.path,start_line:base.start_line,end_line:base.end_line,evidence_id:base.evidence_id};
+  const body={rule_version:'arch-v1',scope:{path_prefix:'',files:[base.path]},references:[base.evidence_id],edges:[edge]};
+  const e={source_type:'arch_profile',repo:base.repo,commit:base.commit,path_prefix:'',rule_version:'arch-v1',references:[base.evidence_id],text:JSON.stringify(body),source_url:`https://github.com/${base.repo}/tree/${base.commit}`,fetched_at:base.fetched_at};e.artifact_sha256=await c.digest(e.text);e.evidence_id=await c.evidenceId(e);p.evidence[e.evidence_id]=e;
+  const report=p.session.reports[0];report.architecture_graph=[{repo:e.repo,commit:e.commit,artifact_id:e.evidence_id,edges:[edge]}];const raw=JSON.parse(repack(p));raw.schema_version='2.0';await c.validateReplay(JSON.stringify(raw));
+  report.architecture_graph[0].edges=[{...edge,to:'forged'}];const forged=JSON.parse(repack(p));forged.schema_version='2.0';await assert.rejects(c.validateReplay(JSON.stringify(forged)));
+});
+test('graph uses safe text nodes and mobile uses a source-linked component list',()=>{
+  const {context,document}=uiContext();const target=document.createElement('div');context.window.matchMedia=()=>({matches:true});
+  const attack='<script>throw 1</script>';const report={architecture_graph:[{repo:'a/b',edges:[{from:attack,to:'client',relation:'call',category:'entry',path:'x.py',start_line:1,end_line:2,evidence_id:'ev_1'}]}]};
+  context.renderExtras(target,report);function flatten(x){return [x,...(x.children||[]).flatMap(flatten)]}const nodes=flatten(target);assert.ok(nodes.some(n=>n.textContent.includes(attack)));assert.ok(!nodes.some(n=>n.tag==='svg'));assert.ok(nodes.some(n=>n.textContent==='查看关系原文'));
+  const desktop=document.createElement('div');context.window.matchMedia=()=>({matches:false});context.renderExtras(desktop,report);assert.ok(flatten(desktop).some(n=>n.tag==='svg'));
+});
+test('portable blueprint syntax rejects executable env and invalid python',()=>{
+  const c=makeContext();assert.equal(c.blueprintSyntax('python','BASE_URL = "https://example.test"'),true);assert.equal(c.blueprintSyntax('python','BASE_URL ='),false);assert.equal(c.blueprintSyntax('env','BASE_URL=https://example.test'),true);assert.equal(c.blueprintSyntax('env','X=a; echo bad'),false);assert.equal(c.blueprintSyntax('json','{"base_url":"x"}'),true);
+});
+test('complete workbench initialization loads canonical workflow templates',async()=>{
+  const elements=new Map();function node(){return {value:'',textContent:'',disabled:false,hidden:false,children:[],style:{},dataset:{},classList:{toggle(){}},replaceChildren(...x){this.children=x},append(...x){this.children.push(...x)},addEventListener(type,fn){(this.listeners??={})[type]=fn}}}
+  const document={getElementById(id){if(!elements.has(id))elements.set(id,node());return elements.get(id)},createElement:node,querySelector(){return node()},querySelectorAll(){return []}};
+  const templates=JSON.parse(fs.readFileSync('evidence/workflows.json','utf8'));const response=x=>({ok:true,headers:{get:()=> 'application/json'},json:async()=>x});
+  const fetch=async url=>response(url==='/api/workflows'?templates:url==='./replays/index.json'?{schema_version:'1.0',replays:[]}:url==='/api/health'?{status:'ok',model_ready:true}:[]);
+  const context={document,fetch,window:{addEventListener(){},scrollTo(){}},navigator:{},localStorage:{getItem(){return null},setItem(){},removeItem(){}},URL,TextEncoder,Uint8Array,crypto:webcrypto,EventSource:class{},setInterval,clearInterval};
+  vm.createContext(context);vm.runInContext(code,context);await flush();await flush();assert.equal(document.getElementById('scenario').children.length,3);assert.equal(document.getElementById('scenario').value,'deploy_readiness');assert.equal(document.getElementById('question').value,templates.workflows[0].preset);assert.equal(document.getElementById('startAudit').disabled,false);
 });

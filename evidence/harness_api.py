@@ -9,6 +9,8 @@ from evidence.agent_harness import Harness
 from evidence.harness_schemas import CreateSession, FollowupInput
 from evidence.harness_store import Conflict
 from evidence.replay import make_bundle, markdown
+from evidence.report_v3 import validate_report_extras
+from evidence.guardrails import source_matches_blob
 
 router=APIRouter(prefix='/api/audit/sessions')
 _tasks=set()
@@ -57,6 +59,16 @@ async def get(id:str):
             with harness.db.connect() as c:
                 return [{'repo':r['repo'],'commit':r['commit_sha'],'tool':r['tool_name'],'status':r['status'],'created_at':r['created_at'],**{k:v for k,v in json.loads(r['payload']).items() if k in ('args','duration_ms','evidence_ids')}} for r in c.execute('SELECT * FROM tool_traces WHERE session_id=? ORDER BY id',(id,))]
         result['traces']=await asyncio.to_thread(traces)
+        def validate():
+            with harness.db.connect() as c:
+                records=c.execute('SELECT e.id,e.payload FROM evidence_artifacts e JOIN session_evidence s ON s.evidence_id=e.id WHERE s.session_id=?',(id,)).fetchall()
+            pool={r['id']:json.loads(r['payload']) for r in records}
+            def lookup(key):
+                e=pool.get(key)
+                return e if e and (e.get('source_type')!='file_lines' or source_matches_blob(e,harness.db)) else None
+            for report in result['reports']:validate_report_extras(report,lookup)
+        try: await asyncio.to_thread(validate)
+        except (KeyError,ValueError,TypeError): raise HTTPException(422,detail={'code':'invalid_report','message':'报告扩展内容或证据校验失败。'}) from None
         return result
     except KeyError: raise HTTPException(404,detail={'code':'session_not_found','message':'会话不存在。'}) from None
 

@@ -70,6 +70,9 @@ def cli() -> int:
         shutil.rmtree(out_dir)
 
     copy_tree_contents(web_dir, out_dir)
+    # The API and static workbench share the exact same workflow definitions.
+    workflow_source = pathlib.Path(__file__).resolve().parents[2] / 'evidence' / 'workflows.json'
+    shutil.copy2(workflow_source, out_dir / 'workflows.json')
     payload = enrich_payload(read_json(latest_json))
     write_json(out_dir / "data" / "latest.json", payload)
     (out_dir / ".nojekyll").write_text("", encoding="utf-8")

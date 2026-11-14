@@ -307,6 +307,11 @@ app.include_router(phase1_router)
 from evidence.harness_api import router as harness_router
 app.include_router(harness_router)
 
+@app.get('/api/workflows')
+def list_workflows():
+    from evidence.workflows import workflows
+    return workflows()
+
 @app.get('/api/health')
 def health():
     from evidence.agent import configuration, ready

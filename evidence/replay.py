@@ -7,6 +7,7 @@ from evidence.agent import configuration
 from evidence.guardrails import expected_id, sha, validate_derived
 from evidence.github_client import timestamp
 from evidence.harness_store import HarnessStore
+from evidence.report_v3 import validate_report_extras
 
 MAX_REPLAY_BYTES=5*1024*1024
 
@@ -46,6 +47,7 @@ def validate_payload(payload):
                     if (e['repo'].lower(),e.get('commit',e.get('observed_against_commit')))!=binding or c['quote'] not in e.get('text',e.get('body','')): raise ValueError('invalid citation')
                 inline=set(re.findall(r'\[((?:ev|iss|isc|tree|outline|meta|arch_profile|security_scan)_[^\]\s]+)\]',row['summary']))
                 if inline!={c['evidence_id'] for c in row['citations']}: raise ValueError('unresolved inline citation')
+        validate_report_extras(report,evidence.get)
     for trace in payload['traces']:
         binding=(trace['repo'].lower(),trace['commit'])
         if binding not in bindings: raise ValueError('foreign trace')
@@ -62,14 +64,14 @@ def make_bundle(db,id):
     config=configuration(); payload={'recorded_at':session_row['updated_at'],'exported_at':timestamp(),'session':session,'evidence':evidence,'traces':traces,'model':{'name':config['model'],'reasoning_effort':config['effort']}}
     validate_payload(payload)
     raw=json.dumps(payload,ensure_ascii=False,sort_keys=True,separators=(',',':'))
-    bundle={'schema_version':'1.0','payload_json':raw,'sha256':sha(raw)}
+    bundle={'schema_version':'2.0','payload_json':raw,'sha256':sha(raw)}
     if len(json.dumps(bundle,ensure_ascii=False).encode())>MAX_REPLAY_BYTES: raise ValueError('replay too large')
     return bundle
 
 def read_bundle(raw):
     if len(raw)>MAX_REPLAY_BYTES: raise ValueError('replay too large')
     b=json.loads(raw)
-    if set(b)!={'schema_version','payload_json','sha256'} or b['schema_version']!='1.0' or sha(b['payload_json'])!=b['sha256']: raise ValueError('invalid replay envelope')
+    if set(b)!={'schema_version','payload_json','sha256'} or b['schema_version'] not in ('1.0','2.0') or sha(b['payload_json'])!=b['sha256']: raise ValueError('invalid replay envelope')
     return validate_payload(json.loads(b['payload_json']))
 
 def markdown(session,evidence=None):
@@ -86,4 +88,17 @@ def markdown(session,evidence=None):
                     source=f'[{label}]({url})' if url else label
                     result += [f"  - {source}：`{citation['quote'].strip()}`"]
         result += ['',report.get('summary','')]
+        for graph in report.get('architecture_graph') or []:
+            result += ['',f"### 架构线索 · {graph['repo']}"]
+            for edge in graph['edges']:
+                item=(evidence or {}).get(edge['evidence_id'],{});url=item.get('source_url','')
+                source=f"[{edge['path']}:{edge['start_line']}-{edge['end_line']}]({url})" if url else edge['evidence_id']
+                result.append(f"- {edge['from']} —{edge['relation']}→ {edge['to']} · {source}")
+        for group in report.get('security_findings') or []:
+            result += ['',f"### 安全线索 · {group['repo']}"]
+            for finding in group['findings']:result.append(f"- {finding['assessment']} · {finding['category']} · {finding['path']}:{finding['start_line']}-{finding['end_line']} [{finding['evidence_id']}]")
+        for item in report.get('analysis_metrics') or []:
+            scope=item['scope'];result += ['',f"### 扫描范围 · {item['repo']}",f"文件 {len(scope.get('files',[]))}，覆盖完整：{scope.get('complete')}；缺口：{'；'.join(scope.get('notes',[])) or '无'}"]
+        for group in report.get('integration_blueprint') or []:
+            b=group['blueprint'];result += ['',f"### 配置示例 · {group['repo']}",b['applicability'],'',f"```{b['format']}",b['content'],'```','',*['- '+step for step in b['verification_steps']]]
     return '\n'.join(result)+'\n'

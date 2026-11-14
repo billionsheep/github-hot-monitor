@@ -10,7 +10,7 @@ MAX_BYTES=1024*1024
 MAX_FILE_BYTES=512*1024
 EXCLUDED={'.git','.hg','.svn','.venv','venv','node_modules','__pycache__','.mypy_cache','.pytest_cache','.ruff_cache','dist','build','coverage','vendor','target','.next','.tox'}
 TEXT_SUFFIXES=('.py','.pyi','.js','.jsx','.ts','.tsx','.mjs','.cjs','.sh','.bash','.zsh','.md','.markdown','.txt','.toml','.yaml','.yml','.json','.ini','.cfg')
-TEXT_NAMES={'dockerfile','makefile','.env.example','.env.template'}
+TEXT_NAMES={'dockerfile','makefile','.env.example','.env.template','license','licence','copying','notice'}
 
 def dotted(node):
     if isinstance(node,ast.Name): return node.id
@@ -116,7 +116,7 @@ def file_category(path):
     base=path.rsplit('/',1)[-1].lower()
     if base.endswith(('.py','.pyi','.js','.jsx','.ts','.tsx','.mjs','.cjs','.sh','.bash','.zsh')):return 'src'
     if base.endswith(('.toml','.yaml','.yml','.json','.ini','.cfg')) or base in ('dockerfile','makefile','.env.example','.env.template'):return 'config'
-    if base.endswith(('.md','.markdown','.txt')):return 'doc'
+    if base.endswith(('.md','.markdown','.txt')) or base in ('license','licence','copying','notice'):return 'doc'
     return 'other'
 
 def directory_priority(item):

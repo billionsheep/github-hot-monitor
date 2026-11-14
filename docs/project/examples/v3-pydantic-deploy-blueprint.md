@@ -1,6 +1,6 @@
 # 仓库尽调报告
 
-会话：d4c99beacbd8443d9b9fbe7cf091ae58  
+会话：d4c99beacbd8443d9b9fbe7cf091ae58
 状态：COMPLETED
 
 ## 问题

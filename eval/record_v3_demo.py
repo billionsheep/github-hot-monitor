@@ -64,7 +64,7 @@ async def main(args):
             archive.write_bytes(data)
             target = ROOT / 'web/replays' / ('v3-' + case['id'] + '.json')
             target.write_bytes(data)
-            (ROOT / 'docs/project/examples' / ('v3-' + case['id'] + '.md')).write_text(markdown(payload['session'], payload['evidence']).rstrip() + '\n')
+            (ROOT / 'docs/project/examples' / ('v3-' + case['id'] + '.md')).write_text('\n'.join(line.rstrip() for line in markdown(payload['session'], payload['evidence']).splitlines()) + '\n')
             result['export'] = {'path': str(target.relative_to(ROOT)), 'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data), 'schema_version': bundle['schema_version']}
         except Exception as exc:
             result['export_error'] = str(exc)

@@ -1,0 +1,10 @@
+{
+  "batch": "multifile-20261114T062812876194Z",
+  "grading_scope": "引用片段合同；不作为漏洞检出准确率",
+  "planned": [
+    "M2",
+    "M3",
+    "M4"
+  ],
+  "M1": "Use real architecture-gateway recording with two repositories."
+}

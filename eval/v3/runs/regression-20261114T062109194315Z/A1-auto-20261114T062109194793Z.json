@@ -1,0 +1,286 @@
+{
+  "id": "A1",
+  "attempt": "20261114T062109194793Z",
+  "batch": "regression-20261114T062109194315Z",
+  "route_requested": "auto",
+  "origin": "synthetic",
+  "query": "pyproject.toml 声明的 Python 版本范围是否允许 Python 3.11？只判断声明，并引用原文。",
+  "repo": "eval/a1",
+  "commit": "a34294d02c767fcc9c741f56b9a9c8d01c98dac8",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T062109194793Z",
+  "code_version": {
+    "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+    "evidence_source_sha256": "b71a45bfd8b6ad8daa6ebcb103a21cda92120dc1135e2d5c703c2c679c975d83"
+  },
+  "input_fixture_sha256": "e8bb50cc851415cec0309ae34960a73bffd77943c820648421acbeb5c99c6e24",
+  "session_id": "0893c52385dd43f9b4d7d959833bce3c",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "requirement",
+          "title": "pyproject.toml 声明的 Python 版本范围是否允许 Python 3.11？只判断声明，并引用原文。"
+        }
+      ],
+      "execution_route": {
+        "reason": "单仓单项 Python 版本声明",
+        "route": "fast"
+      },
+      "integration_blueprint": [],
+      "query": "pyproject.toml 声明的 Python 版本范围是否允许 Python 3.11？只判断声明，并引用原文。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "a34294d02c767fcc9c741f56b9a9c8d01c98dac8",
+            "repo": "eval/a1"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_9075e2ab243b413f160b596737e3f5f942f91d934005fc2bce685c2a21b4cd5b",
+                  "quote": "requires-python = \">=3.10,<3.13\""
+                }
+              ],
+              "commit": "a34294d02c767fcc9c741f56b9a9c8d01c98dac8",
+              "criterion_id": "requirement",
+              "gap_reason": null,
+              "next_step": "无需进一步核查；本项仅判断版本声明。",
+              "original_status": "PASS",
+              "repo": "eval/a1",
+              "runtime_validation_required": false,
+              "status": "PASS",
+              "status_calibrated": false,
+              "summary": "pyproject.toml 第 3 行声明 Python 版本范围为 >=3.10,<3.13，允许 Python 3.11；此判断仅针对声明，不代表运行兼容性验证。[ev_9075e2ab243b413f160b596737e3f5f942f91d934005fc2bce685c2a21b4cd5b]",
+              "support_relation": "supports",
+              "verification_basis": "declaration"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_207f366172b2a3d8ea8ffe24fcaad54e58ddb79d201f72992980be1fda243074",
+            "ev_9075e2ab243b413f160b596737e3f5f942f91d934005fc2bce685c2a21b4cd5b"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "单仓单项核查结果见下方。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 2,
+      "turn_tool_calls": 1,
+      "turn_usage": {
+        "input_tokens": 3217,
+        "output_tokens": 312,
+        "total_tokens": 3529
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 3217,
+        "output_tokens": 312,
+        "total_tokens": 3529
+      },
+      "workflow_mode": "deploy_readiness"
+    }
+  ],
+  "usage": {
+    "input_tokens": 3217,
+    "output_tokens": 312,
+    "total_tokens": 3529
+  },
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "PASS"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/a1",
+      "name": "inspect_dependencies_and_env",
+      "args": {}
+    }
+  ],
+  "metrics": {
+    "model_calls": 2,
+    "lead_calls": 0,
+    "lead_input_peak": 0,
+    "known_input_tokens": 3217,
+    "known_output_tokens": 312,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "单仓单项 Python 版本声明",
+        "route": "fast"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "requirement",
+            "title": "pyproject.toml 声明的 Python 版本范围是否允许 Python 3.11？只判断声明，并引用原文。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 6,
+      "type": "tool_requested",
+      "data": {
+        "args": "{}",
+        "repo": "eval/a1",
+        "tool": "inspect_dependencies_and_env"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_9075e2ab243b413f160b596737e3f5f942f91d934005fc2bce685c2a21b4cd5b",
+          "ev_207f366172b2a3d8ea8ffe24fcaad54e58ddb79d201f72992980be1fda243074",
+          "ev_9075e2ab243b413f160b596737e3f5f942f91d934005fc2bce685c2a21b4cd5b"
+        ],
+        "repo": "eval/a1",
+        "status": "CACHE_HIT",
+        "tool": "inspect_dependencies_and_env"
+      }
+    },
+    {
+      "id": 8,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 9,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/a1"
+      }
+    },
+    {
+      "id": 10,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 11,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 12,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 9.25,
+  "request_records": [
+    {
+      "id": "85f269f5e67f48a7bb0f1a12e6e309c8",
+      "label": "regression-20261114T062109194315Z/A1/auto/20261114T062109194793Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:21:09.212651+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 5956,
+      "request_sha256": "9209cf5ddd5cd210f4a9a6c419801e3e2eedc7478d13598aea41c029c2211658",
+      "elapsed_ms": 3478,
+      "estimated_usd": 0.003085,
+      "usage": {
+        "input_tokens": 1170,
+        "input_tokens_details": {
+          "cache_write_tokens": 1167,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1167
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 16,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1186
+      }
+    },
+    {
+      "id": "dc0e102daedf40b6b0466e3d11db13b5",
+      "label": "regression-20261114T062109194315Z/A1/auto/20261114T062109194793Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:21:12.708018+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 8588,
+      "request_sha256": "b12e45465c0cc1779ab1e22ec92af295ffce43db09da33cb79c0870d5e9312a4",
+      "elapsed_ms": 5728,
+      "estimated_usd": 0.008077500000000001,
+      "usage": {
+        "input_tokens": 2047,
+        "input_tokens_details": {
+          "cache_write_tokens": 2044,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 2044
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 296,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2343
+      }
+    }
+  ]
+}

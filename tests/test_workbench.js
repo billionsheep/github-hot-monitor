@@ -75,11 +75,12 @@ test('v3 graph replay rejects altered relationships even when envelope is rehash
   const report=p.session.reports[0];report.architecture_graph=[{repo:e.repo,commit:e.commit,artifact_id:e.evidence_id,edges:[edge]}];const raw=JSON.parse(repack(p));raw.schema_version='2.0';await c.validateReplay(JSON.stringify(raw));
   report.architecture_graph[0].edges=[{...edge,to:'forged'}];const forged=JSON.parse(repack(p));forged.schema_version='2.0';await assert.rejects(c.validateReplay(JSON.stringify(forged)));
 });
-test('graph uses safe text nodes and mobile uses a source-linked component list',()=>{
+test('graph labels static source locations and exposes a source-linked collapsible list',()=>{
   const {context,document}=uiContext();const target=document.createElement('div');context.window.matchMedia=()=>({matches:true});
   const attack='<script>throw 1</script>';const report={architecture_graph:[{repo:'a/b',edges:[{from:attack,to:'client',relation:'call',category:'entry',path:'x.py',start_line:1,end_line:2,evidence_id:'ev_1'}]}]};
-  context.renderExtras(target,report);function flatten(x){return [x,...(x.children||[]).flatMap(flatten)]}const nodes=flatten(target);assert.ok(nodes.some(n=>n.textContent.includes(attack)));assert.ok(!nodes.some(n=>n.tag==='svg'));assert.ok(nodes.some(n=>n.textContent==='查看关系原文'));
-  const desktop=document.createElement('div');context.window.matchMedia=()=>({matches:false});context.renderExtras(desktop,report);assert.ok(flatten(desktop).some(n=>n.tag==='svg'));
+  context.renderExtras(target,report);function flatten(x){return [x,...(x.children||[]).flatMap(flatten)]}const nodes=flatten(target);assert.ok(nodes.some(n=>n.textContent.includes(attack)));assert.ok(nodes.some(n=>n.tag==='details'));assert.ok(nodes.some(n=>n.textContent==='查看关系原文'));
+  const svg=nodes.find(n=>n.tag==='svg');assert.ok(svg);assert.equal(svg.attributes.class,'architecture-graph');assert.ok(nodes.some(n=>n.textContent==='位置 x.py:1'));assert.ok(nodes.some(n=>n.textContent==='目标 client'));assert.ok(nodes.some(n=>n.textContent==='— 调用 →'));assert.ok(nodes.some(n=>n.textContent.includes('语句/目标：')));
+  const css=fs.readFileSync('web/styles.css','utf8');assert.match(css,/@media\(max-width:600px\)\{\.architecture-graph,\.architecture-graph-note\{display:none\}/);assert.match(css,/\.session-heading\{flex-direction:column/);
 });
 test('portable blueprint syntax rejects executable env and invalid python',()=>{
   const c=makeContext();assert.equal(c.blueprintSyntax('python','BASE_URL = "https://example.test"'),true);assert.equal(c.blueprintSyntax('python','BASE_URL ='),false);assert.equal(c.blueprintSyntax('env','BASE_URL=https://example.test'),true);assert.equal(c.blueprintSyntax('env','BASE_URL=<user-supplied>'),false);assert.equal(c.blueprintSyntax('env','BASE_URL="<user-supplied>"'),true);assert.equal(c.blueprintSyntax('env','X=a; echo bad'),false);assert.equal(c.blueprintSyntax('json','{"base_url":"x"}'),true);

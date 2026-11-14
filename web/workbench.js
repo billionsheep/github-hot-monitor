@@ -22,15 +22,16 @@ function matrix(report){const target=$('matrix');target.replaceChildren();if(!re
 function renderExtras(target,report){
   const addHeading=(text)=>{const h=el('h3',text);h.style.margin='20px 0 10px';target.append(h)};
   const evidenceButton=(id,label)=>{const button=el('button',label,'evidence-link');button.onclick=()=>openEvidence(id);return button};
+  const relationName=relation=>({call:'调用',import:'导入',read:'读取',write:'写入',access:'访问',rule_mention:'规则提及'}[relation]||'静态线索');
   for(const group of report.architecture_graph||[]){
-    addHeading(`架构关系 · ${group.repo}`);const edges=group.edges||[];
+    addHeading(`静态调用位置与关系 · ${group.repo}`);const edges=group.edges||[];
     if(!edges.length){target.append(el('p','扫描范围内暂无可引用的架构关系。','hint'));continue}
-    if(typeof window.matchMedia==='function'&&!window.matchMedia('(max-width: 600px)').matches){
-      const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`0 0 760 ${Math.min(edges.length,12)*50+20}`);svg.setAttribute('role','img');svg.setAttribute('aria-label',`${group.repo} 架构关系示意`);svg.style.width='100%';svg.style.maxHeight='620px';
-      edges.slice(0,12).forEach((edge,i)=>{const y=25+i*50;for(const [x,label] of [[10,edge.from],[445,edge.to]]){const rect=document.createElementNS(ns,'rect');rect.setAttribute('x',x);rect.setAttribute('y',y-17);rect.setAttribute('width','300');rect.setAttribute('height','34');rect.setAttribute('rx','5');rect.setAttribute('fill','#edf4f8');rect.setAttribute('stroke','#b7cad8');svg.append(rect);const text=document.createElementNS(ns,'text');text.setAttribute('x',x+8);text.setAttribute('y',y+4);text.setAttribute('fill','#172c3f');text.setAttribute('font-size','12');text.textContent=String(label).slice(0,38);svg.append(text)}const connector=document.createElementNS(ns,'text');connector.setAttribute('x','320');connector.setAttribute('y',y+4);connector.setAttribute('font-size','12');connector.setAttribute('fill','#245c85');connector.textContent=`— ${edge.relation} →`;svg.append(connector)});target.append(svg);
-      if(edges.length>12)target.append(el('p',`示意图显示前 12 条，完整 ${edges.length} 条见下方。`,'hint'));
-    }
-    const list=el('div',undefined,'history');for(const edge of edges){const row=el('div',undefined,'verdict');row.append(el('p',`${edge.from} —${edge.relation}→ ${edge.to}`),el('p',`${edge.category} · ${edge.path}:${edge.start_line}–${edge.end_line}`,'hint'),evidenceButton(edge.evidence_id,'查看关系原文'));list.append(row)}target.append(list);
+    const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('class','architecture-graph');svg.setAttribute('viewBox',`0 0 760 ${Math.min(edges.length,12)*50+20}`);svg.setAttribute('role','img');svg.setAttribute('aria-label',`${group.repo} 静态调用位置与关系示意`);
+    edges.slice(0,12).forEach((edge,i)=>{const y=25+i*50;for(const x of [10,445]){const rect=document.createElementNS(ns,'rect');rect.setAttribute('x',x);rect.setAttribute('y',y-18);rect.setAttribute('width','300');rect.setAttribute('height','38');rect.setAttribute('rx','5');rect.setAttribute('fill','#edf4f8');rect.setAttribute('stroke','#b7cad8');svg.append(rect)}
+      for(const [x,offset,label] of [[18,-3,`位置 ${String(edge.path).split('/').at(-1)}:${edge.start_line}`],[18,12,`语句/目标 ${edge.from}`],[453,4,`目标 ${edge.to}`]]){const text=document.createElementNS(ns,'text');text.setAttribute('x',x);text.setAttribute('y',y+offset);text.setAttribute('fill','#172c3f');text.setAttribute('font-size','11');text.textContent=String(label).slice(0,38);svg.append(text)}
+      const connector=document.createElementNS(ns,'text');connector.setAttribute('x','320');connector.setAttribute('y',y+4);connector.setAttribute('font-size','12');connector.setAttribute('fill','#245c85');connector.textContent=`— ${relationName(edge.relation)} →`;svg.append(connector)});target.append(svg);
+    if(edges.length>12){const note=el('p',`示意图显示前 12 条，完整 ${edges.length} 条可展开查看。`,'hint architecture-graph-note');target.append(note)}
+    const details=el('details',undefined,'architecture-list');details.append(el('summary',`展开完整关系列表（${edges.length} 条）`));const list=el('div',undefined,'history');for(const edge of edges){const row=el('div',undefined,'verdict');row.append(el('p',`位置：${edge.path}:${edge.start_line}–${edge.end_line}`),el('p',`语句/目标：${edge.from} · ${relationName(edge.relation)}：${edge.to}`),el('p',edge.category,'hint'),evidenceButton(edge.evidence_id,'查看关系原文'));list.append(row)}details.append(list);target.append(details);
   }
   for(const group of report.security_findings||[]){
     addHeading(`安全线索 · ${group.repo}`);if(!group.findings.length){target.append(el('p','扫描范围内没有规则命中；仍需结合覆盖范围判断。','hint'));continue}

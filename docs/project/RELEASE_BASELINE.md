@@ -1,5 +1,20 @@
 # RepoAudit-Agent 演示版本基线
 
+## v3：2026-11-14
+
+交付标签：`repoaudit-v3-demo-2026-11-14`。保留下面的v2基线，新增三个工作流、AST完整语句与参数转交补查、有界架构/安全扫描、确定性快速路由、四态校准、Replay2.0和真实演示。
+
+交付包：`RepoAudit-Agent-v3-交付包-2026-11-14.zip`。包内 `VERSION.json` 是准确提交与标签的依据，`MANIFEST.json` 保存逐文件Hash。生成脚本拒绝脏工作区、错位标签、运行数据与疑似密钥，并逐项核对压缩包内容。
+
+```bash
+git rev-parse repoaudit-v3-demo-2026-11-14^{commit}
+.venv/bin/python ops/scripts/package_delivery.py --tag repoaudit-v3-demo-2026-11-14 --output '../RepoAudit-Agent-v3-交付包-2026-11-14.zip'
+```
+
+测试与页面结果见 [v3阶段验收](V3_VALIDATION.md)，最新实际效果见 [v3评测报告](../../eval/v3/eval_report.md)。全部变更本地固化，未自动推送或发布。
+
+## v2：保留的历史基线
+
 固化日期：2026-11-13。版本标签：`repoaudit-demo-2026-11-13`。
 
 此标签对应用户验收后的本地提交，固化源码、三份真实回放、冻结评测、运行文档和简历项目经历。后续修改从此基线继续，已录制的案例和原始评测结果保留。

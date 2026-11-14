@@ -1,0 +1,94 @@
+{
+  "id": "A3",
+  "attempt": "20261114T065247160521Z",
+  "batch": "comparison-20261114T065143399509Z",
+  "route_requested": "full_text",
+  "origin": "synthetic",
+  "query": "LICENSE 文件的协议名称是否为 MIT？只识别名称，不作商用法律结论。",
+  "repo": "eval/a3",
+  "commit": "00d4fbcd764f811659352cfe7465042850ce111b",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T065247160521Z",
+  "code_version": {
+    "commit": "99473b56e7f363862bd9ef6a822e388c78436755",
+    "evidence_source_sha256": "becb0c521499ecd906d07e4b4ea99b098170bf6b7481baa2ab8e0e7ded041024"
+  },
+  "input_fixture_sha256": "e4c6dbfa741ac71db7a0e4f602057ef716cdfa9935311ae0a4653fa5e6dd720e",
+  "usage": {
+    "input_tokens": 1796,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cache_write_tokens_details": {
+        "ttl_12h_tokens": 0,
+        "ttl_30m_tokens": 0
+      },
+      "cached_tokens": 1721
+    },
+    "output_tokens": 193,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 1989
+  },
+  "rows": [
+    {
+      "criterion_id": "c1",
+      "repo": "eval/a3",
+      "commit": "00d4fbcd764f811659352cfe7465042850ce111b",
+      "status": "PASS",
+      "summary": "LICENSE 首行明确写明“MIT License”，协议名称为 MIT；仅识别名称，不作商用法律结论。[ev_a0e069a06e9240364f684d1a54fa75af94fe939203aba56d6a1d76d32343cf9c]",
+      "citations": [
+        {
+          "evidence_id": "ev_a0e069a06e9240364f684d1a54fa75af94fe939203aba56d6a1d76d32343cf9c",
+          "quote": "MIT License"
+        }
+      ],
+      "verification_basis": "declaration",
+      "runtime_validation_required": false,
+      "next_step": "无需进一步核查。",
+      "support_relation": null,
+      "gap_reason": null,
+      "status_calibrated": null,
+      "original_status": null
+    }
+  ],
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "PASS"
+    ]
+  },
+  "duration_seconds": 3.987,
+  "request_records": [
+    {
+      "id": "ce371bc5d6a44a9f9458ababb609a053",
+      "label": "comparison-20261114T065143399509Z/A3/full_text/20261114T065247160521Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:52:47.171466+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 7203,
+      "request_sha256": "f32c218bf3d3e69936327087685dc14e540491cbafebac811425ecf4daa4fa27",
+      "elapsed_ms": 3969,
+      "estimated_usd": 0.00642,
+      "usage": {
+        "input_tokens": 1796,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 1721
+        },
+        "output_tokens": 193,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1989
+      }
+    }
+  ]
+}

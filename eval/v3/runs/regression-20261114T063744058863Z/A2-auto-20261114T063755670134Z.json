@@ -1,0 +1,355 @@
+{
+  "id": "A2",
+  "attempt": "20261114T063755670134Z",
+  "batch": "regression-20261114T063744058863Z",
+  "route_requested": "auto",
+  "origin": "synthetic",
+  "query": "compose.yaml 是否将宿主机 8080 映射到容器 8000？只核对端口声明。",
+  "repo": "eval/a2",
+  "commit": "6908536d850b5c43832719c2ca0fa94509f46cd3",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T063755670134Z",
+  "code_version": {
+    "commit": "3710bc3a1938d195a524ce7eccf0a1cab5c64507",
+    "evidence_source_sha256": "3a0f5d0e7d72fb2e03d3ebe63a7aee094d5ce82e64fd74dc14d6af0dc374b642"
+  },
+  "input_fixture_sha256": "cf9babd5f63d770b5032bb64055391034fccf7e9d74acc631dde0cb117eec88f",
+  "session_id": "d717f229e65c4a44a72623a979dca403",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "C1",
+          "title": "compose.yaml 的端口声明是否将宿主机端口 8080 映射到容器端口 8000"
+        }
+      ],
+      "execution_route": {
+        "reason": "包含部署、架构、安全或性能约束",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "compose.yaml 是否将宿主机 8080 映射到容器 8000？只核对端口声明。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "6908536d850b5c43832719c2ca0fa94509f46cd3",
+            "repo": "eval/a2"
+          },
+          "rows": [
+            {
+              "citations": [],
+              "commit": "6908536d850b5c43832719c2ca0fa94509f46cd3",
+              "criterion_id": "C1",
+              "gap_reason": null,
+              "next_step": "补充原文并核查。",
+              "original_status": "UNVERIFIED",
+              "repo": "eval/a2",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "证据不足。",
+              "support_relation": null,
+              "verification_basis": "insufficient"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_52d0b22f19db360c77653f94fa474c415c2ec3cc9179ad14d7cdc4d957ac423c",
+            "ev_c21450cebd175fd2c20ef4c58c601279a762b28f9765f68f264c7d51b707a59c",
+            "ev_e4825ef8489b90a297d9e4ea6d7ea46a381b546eb57a6e19a3764a3c2c412118"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "eval/a2 对 C1 的结论为未验证：现有证据不足，无法确认 compose.yaml 是否将宿主机端口 8080 映射到容器端口 8000，需补充原文核查。仅提供一个仓库，无法进行跨仓库比较。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 4,
+      "turn_tool_calls": 1,
+      "turn_usage": {
+        "input_tokens": 4224,
+        "output_tokens": 459,
+        "total_tokens": 4683
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 4224,
+        "output_tokens": 459,
+        "total_tokens": 4683
+      },
+      "workflow_mode": "deploy_readiness"
+    }
+  ],
+  "usage": {
+    "input_tokens": 4224,
+    "output_tokens": 459,
+    "total_tokens": 4683
+  },
+  "grading": {
+    "score": 0,
+    "reason": "status_mismatch",
+    "observed": [
+      "UNVERIFIED"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/a2",
+      "name": "inspect_deployment_artifacts",
+      "args": {}
+    }
+  ],
+  "metrics": {
+    "model_calls": 4,
+    "lead_calls": 2,
+    "lead_input_peak": 419,
+    "known_input_tokens": 4224,
+    "known_output_tokens": 459,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "包含部署、架构、安全或性能约束",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "C1",
+            "title": "compose.yaml 的端口声明是否将宿主机端口 8080 映射到容器端口 8000"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_requested",
+      "data": {
+        "args": "{}",
+        "repo": "eval/a2",
+        "tool": "inspect_deployment_artifacts"
+      }
+    },
+    {
+      "id": 8,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_e4825ef8489b90a297d9e4ea6d7ea46a381b546eb57a6e19a3764a3c2c412118",
+          "ev_52d0b22f19db360c77653f94fa474c415c2ec3cc9179ad14d7cdc4d957ac423c",
+          "ev_c21450cebd175fd2c20ef4c58c601279a762b28f9765f68f264c7d51b707a59c",
+          "ev_60c9f579a2cfad85eb9f41c18dca8162fb0cd09cbcca6e57c7979f30eaa06fed",
+          "ev_e4825ef8489b90a297d9e4ea6d7ea46a381b546eb57a6e19a3764a3c2c412118",
+          "ev_2c5cc61fb79ce2e49df187f03036fd019a2dcfdbcf3b18396abd0fbdec6bbc0f"
+        ],
+        "repo": "eval/a2",
+        "status": "CACHE_HIT",
+        "tool": "inspect_deployment_artifacts"
+      }
+    },
+    {
+      "id": 9,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 10,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/a2"
+      }
+    },
+    {
+      "id": 11,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 12,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 13,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 14,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 21.151,
+  "request_records": [
+    {
+      "id": "4d515893db68403788fee2f493cc4d74",
+      "label": "regression-20261114T063744058863Z/A2/auto/20261114T063755670134Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:37:55.681126+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1078,
+      "request_sha256": "57b636393088044e127a656362753765554112291aa33bfa4b5c7d9d677b475d",
+      "elapsed_ms": 3300,
+      "estimated_usd": 0.0010350000000000001,
+      "usage": {
+        "input_tokens": 226,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 47,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 273
+      }
+    },
+    {
+      "id": "5cdef8f04ecf48e89839274bc4ac3761",
+      "label": "regression-20261114T063744058863Z/A2/auto/20261114T063755670134Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:37:58.990692+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 5922,
+      "request_sha256": "171c23dbae4ed60fc7960f0b826ad61a328287dece3e41e66fbfe321c0a222da",
+      "elapsed_ms": 3230,
+      "estimated_usd": 0.0030800000000000003,
+      "usage": {
+        "input_tokens": 1164,
+        "input_tokens_details": {
+          "cache_write_tokens": 107,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 107
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 17,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1181
+      }
+    },
+    {
+      "id": "7978ca5505cc4fc282cd6b23760f9112",
+      "label": "regression-20261114T063744058863Z/A2/auto/20261114T063755670134Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:38:02.248870+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 9600,
+      "request_sha256": "bf45687a73ce6a908c0e4649a320687e435d8b0668ed4dbde65ff9e9b7b6fcb5",
+      "elapsed_ms": 7029,
+      "estimated_usd": 0.0092175,
+      "usage": {
+        "input_tokens": 2415,
+        "input_tokens_details": {
+          "cache_write_tokens": 1358,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1358
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 318,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2733
+      }
+    },
+    {
+      "id": "4e24ba83cba14be5a005b2185a19f64e",
+      "label": "regression-20261114T063744058863Z/A2/auto/20261114T063755670134Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:38:09.289880+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1457,
+      "request_sha256": "b24ebeb6332264fdf3864c2235a52aaec279dd2d5e2e4b5ed356d016cc8e68a3",
+      "elapsed_ms": 7520,
+      "estimated_usd": 0.0018175,
+      "usage": {
+        "input_tokens": 419,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 77,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 496
+      }
+    }
+  ]
+}

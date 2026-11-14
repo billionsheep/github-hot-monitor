@@ -1,10 +1,11 @@
 # RepoAudit-Agent · GitHub Hot Monitor
 
-面向开源框架选型的证据核查工作台。把“这个项目是否满足我的 Python、部署或模型接口要求”变成可追溯的逐项判断，支持 1～3 个候选仓库比较。
+面向开源框架调研和引入决策的证据核查工作台。提供架构研报、安全线索审计、部署适配三种工作流，支持1～3个仓库顺序调查与比较。
 
 **使用流程：发现项目 → 加入候选 → 输入约束 → Agent 取证 → 比较矩阵 → 打开原文 → 追问 → 导出报告与回放。**
 
-- Lead 拆解统一约束，每仓 Sub 使用独立上下文和六类只读工具，Lead 汇总已校验结论。
+- Lead 拆解共同问题，每仓 Sub 使用独立上下文和八类只读工具；简单单仓部署核查走确定性快速路由。
+- Python AST 定位参数与完整调用语句；有界扫描输出源码关联图、安全线索与覆盖缺口，配置示例可复制并附验证步骤。
 - 文件绑定完整 commit；证据保留原始行号、SHA-256、抓取时间和固定版本链接。
 - SQLite WAL 保存状态、证据、工具轨迹和用量，支持检查点恢复、历史会话与多轮追问。
 - SSE 展示公开执行状态，原生页面提供矩阵与证据抽屉；真实录制可在纯静态站点播放。
@@ -33,19 +34,19 @@ python3 ops/scripts/start_local.py
 
 ```bash
 python3 ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir public
-python3 -m http.server 8775 --bind 127.0.0.1 --directory public
+python3 -m http.server 8781 --bind 127.0.0.1 --directory public
 ```
 
-打开 <http://127.0.0.1:8775/>，进入“尽调 → 录制回放”，播放真实会话、比较结果、打开原文。回放不调用模型。
+打开 <http://127.0.0.1:8781/>，进入“尽调 → 录制回放”，播放真实会话、比较结果、打开原文。回放不调用模型。
 
 ## 文档与验证
 
-- [已固化的版本基线](docs/project/RELEASE_BASELINE.md)：`repoaudit-demo-2026-11-13`
+- [版本基线](docs/project/RELEASE_BASELINE.md)：v3 `repoaudit-v3-demo-2026-11-14`，保留 v2 基线
 - [交付现状与验收](docs/project/DELIVERY_STATUS.md)
-- [三分钟演示与交付指南](docs/project/DELIVERY_GUIDE.md)
+- [五分钟演示与交付指南](docs/project/DELIVERY_GUIDE.md)
 - [安装、运行与排障](docs/project/RUNBOOK.md)
 - [代码走读与学习练习](docs/project/CODE_GUIDE.md)
-- [实测评测报告](eval/eval_report.md) · [评测协议](eval/README.md)
+- [v3 实测评测报告](eval/v3/eval_report.md) · [评测协议](eval/README.md)
 - [可用于简历的项目经历](docs/project/RESUME_PROJECT.md)
 - [阶段计划和设计依据](docs/project/PROJECT_PLAN.md)
 
@@ -56,7 +57,7 @@ node --test tests/test_*.js
 .venv/bin/python eval/run_eval.py
 ```
 
-前三项验证代码与故障恢复，最后一项验证 16 个冻结证据契约。在线模型评测须显式追加 `--online --baseline --max-usd 3`；CI 运行免费检查。
+前三项验证代码与故障恢复，最后一项验证16个冻结证据契约。v3在线评测按 [预算清单](eval/v3/BUDGET_PLAN.md) 和 [评测入口](eval/README.md) 使用共享账本；CI运行免费检查。
 
 ## 榜单采集与发布
 

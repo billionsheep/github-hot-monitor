@@ -1,17 +1,17 @@
 # 项目入口与当前状态
 
-当前工作：**v3 增量改造实施中**。实施与验收入口：[v3 计划](REPOAUDIT_V3_PLAN.md)。下方 v2 交付记录保留为基线。
+更新：2026-11-14。**RepoAudit-Agent v3 三工作流演示交付完成。** 架构研报、安全线索审计、部署适配均可取证、追问、导出和静态回放。当前结果与具体覆盖缺口见 [交付现状](DELIVERY_STATUS.md)。
 
-更新：2026-11-13。**RepoAudit-Agent 四阶段演示交付已完成。** 当前统一流程为发现、候选、逐项尽调、原文、追问、导出和静态回放；详细状态与实际问题以 [DELIVERY_STATUS.md](DELIVERY_STATUS.md) 为准。
+- [五分钟演示](DELIVERY_GUIDE.md) · [运行说明](RUNBOOK.md) · [版本基线](RELEASE_BASELINE.md)
+- [代码走读与练习](CODE_GUIDE.md) · [简历素材](RESUME_PROJECT.md)
+- [v3 计划](REPOAUDIT_V3_PLAN.md) · [逐阶段验收](V3_VALIDATION.md)
+- [v3 实测报告](../../eval/v3/eval_report.md) · [真实回放清单](examples/manifest.json)
 
-- [交付现状与验收](DELIVERY_STATUS.md) · [三分钟演示](DELIVERY_GUIDE.md)
-- [运行说明](RUNBOOK.md) · [代码走读](CODE_GUIDE.md) · [简历项目经历](RESUME_PROJECT.md)
-- [SDD 原文](REPOAUDIT_SDD_V2_SOURCE.md) · [调整后执行计划](REPOAUDIT_IMPLEMENTATION_PLAN.md) · [阶段计划](PROJECT_PLAN.md)
-- [实际评测](../../eval/eval_report.md) · [真实回放清单](examples/manifest.json)
+本机实时入口 <http://127.0.0.1:8775/>，纯静态回放 <http://127.0.0.1:8781/>。最终 Python 141/141、前端21/21、原冻结契约16/16、新多文件工具合同4/4；在线13/13及C3额外2/2通过。三份新回放各有两轮报告，184条文件证据与冻结原文一致；新增MCP架构案例的服务端引用仍有覆盖缺口，详见评测。
 
-当前本机实时入口 <http://127.0.0.1:8774/>，纯静态回放 <http://127.0.0.1:8780/>。独立复跑 Python 94/94、前端 13/13、冻结契约 16/16；最终在线首轮 11/13，具体失败和恢复记录见评测。此版已固化为本地提交与标签，见 [版本基线](RELEASE_BASELINE.md)，尚未推送新版。
+v3 本地标签 `repoaudit-v3-demo-2026-11-14`，保留原v2标签，尚未推送新版。预览进程关闭后按运行说明重启。
 
-以下保留各阶段当时的验证记录和决策，旧端口与旧测试数不作为当前入口。
+以下保留早期阶段的验证与决策记录，旧端口和测试数以本节现状为准。
 
 ## 初始基线记录
 

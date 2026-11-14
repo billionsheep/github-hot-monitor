@@ -1,5 +1,17 @@
 # RepoAudit 冻结评测
 
+## v3 当前入口
+
+- `v3/eval_report.md`：本次实测汇总；`v3/runs/`、`v3/recordings/` 保留逐次结果，失败与重试分开。
+- `v3_budget.py`：所有 v3 线上回归、真实录制和验收页面共用5美元账本，保留超时未知请求预留。
+- `run_v3_eval.py --batch regression`：13个在线用例，加 C3 两次重复；`--batch comparison` 对 A1–A4 运行强制完整和全文单轮，与同源码哈希的自动路由结果配对。
+- `run_v3_multifile.py`：MCP 架构及两个构造安全对照的模型取证；只衡量预定引用合同，不能作为漏洞准确率。
+- `record_v3_demo.py`：固定公开提交录制三种工作流。每次尝试与导出原包分别保留，新增回放不覆盖旧三份 v2 原文件。
+- `v3_tool_cases.py`：四组多文件的离线工具合同；`validate_v3_delivery.py` 对交付回放与本机冻结文件缓存核对，需本次缓存存在。
+- `summarize_v3.py`：从已有记录生成报告，不调用模型。费用、Tokens、Lead峰值、耗时和失败均来自运行记录。
+
+下方保留 v2 的评测方法与历史结果；v3 的实际分母以新报告为准。
+
 `golden_cases.json` 定义 16 个用例，A4 / B4 / C3 / D3 / E2；`fixtures/repositories.json` 保存构造仓库的冻结文本和哈希。构造内容明确标为 synthetic，不指称真实开源项目存在缺陷。
 
 - `python eval/run_eval.py`：不联网，检查冻结资料、真实工具返回、引用护栏和外部内容编码契约。此结果不计作模型判断准确率。

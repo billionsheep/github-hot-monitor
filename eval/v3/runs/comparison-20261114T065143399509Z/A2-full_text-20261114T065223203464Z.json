@@ -1,0 +1,94 @@
+{
+  "id": "A2",
+  "attempt": "20261114T065223203464Z",
+  "batch": "comparison-20261114T065143399509Z",
+  "route_requested": "full_text",
+  "origin": "synthetic",
+  "query": "compose.yaml 是否将宿主机 8080 映射到容器 8000？只核对端口声明。",
+  "repo": "eval/a2",
+  "commit": "6908536d850b5c43832719c2ca0fa94509f46cd3",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T065223203464Z",
+  "code_version": {
+    "commit": "99473b56e7f363862bd9ef6a822e388c78436755",
+    "evidence_source_sha256": "becb0c521499ecd906d07e4b4ea99b098170bf6b7481baa2ab8e0e7ded041024"
+  },
+  "input_fixture_sha256": "cf9babd5f63d770b5032bb64055391034fccf7e9d74acc631dde0cb117eec88f",
+  "usage": {
+    "input_tokens": 1806,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cache_write_tokens_details": {
+        "ttl_12h_tokens": 0,
+        "ttl_30m_tokens": 0
+      },
+      "cached_tokens": 1731
+    },
+    "output_tokens": 227,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 2033
+  },
+  "rows": [
+    {
+      "criterion_id": "c1",
+      "repo": "eval/a2",
+      "commit": "6908536d850b5c43832719c2ca0fa94509f46cd3",
+      "status": "PASS",
+      "summary": "compose.yaml 的 api 服务声明将宿主机 8080 端口映射到容器 8000 端口；仅核对静态端口声明。[ev_ee2267ddab9862a6dfdec30ba8f31a24409779c6cee9302261b4d51fd4128220]",
+      "citations": [
+        {
+          "evidence_id": "ev_ee2267ddab9862a6dfdec30ba8f31a24409779c6cee9302261b4d51fd4128220",
+          "quote": "    ports:\n      - \"8080:8000\"\n"
+        }
+      ],
+      "verification_basis": "static_config",
+      "runtime_validation_required": false,
+      "next_step": "无需进一步核查；本结论不涉及运行时端口可达性。",
+      "support_relation": null,
+      "gap_reason": null,
+      "status_calibrated": null,
+      "original_status": null
+    }
+  ],
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "PASS"
+    ]
+  },
+  "duration_seconds": 4.885,
+  "request_records": [
+    {
+      "id": "0b86edd5dfb64a12be640f559037925f",
+      "label": "comparison-20261114T065143399509Z/A2/full_text/20261114T065223203464Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:52:23.214325+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 7194,
+      "request_sha256": "b4d69ee78c2e7623fa374d7868158ad8088912f7f4dccba302a419bff8ef4833",
+      "elapsed_ms": 4868,
+      "estimated_usd": 0.006785000000000001,
+      "usage": {
+        "input_tokens": 1806,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 1731
+        },
+        "output_tokens": 227,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2033
+      }
+    }
+  ]
+}

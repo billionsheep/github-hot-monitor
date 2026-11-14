@@ -1,0 +1,129 @@
+{
+  "date": "2026-11-14",
+  "status": "passed",
+  "surface": "http://127.0.0.1:8775/",
+  "checks": [
+    {
+      "check": "page_initialization",
+      "passed": true,
+      "note": "Early presets reference error corrected before acceptance."
+    },
+    {
+      "check": "three_workflows_and_preset_switch",
+      "passed": true,
+      "modes": [
+        "deploy_readiness",
+        "arch_research",
+        "sec_sentinel"
+      ]
+    },
+    {
+      "check": "390px_empty_workspace",
+      "passed": true,
+      "viewport": 390,
+      "document_scroll_width": 390
+    },
+    {
+      "check": "v2_replay_matrix_and_evidence",
+      "passed": true,
+      "file": "fastapi-python311.json",
+      "status": "PASS",
+      "path": "pyproject.toml",
+      "lines": [
+        12,
+        12
+      ],
+      "commit": "5add7a458d629b07311d48261f696b5ac2bb9a5f",
+      "viewport": 390,
+      "document_scroll_width": 390
+    },
+    {
+      "check": "live_input_snapshot_sse_followup_export",
+      "passed": true,
+      "session_id": "7208d94f3774434e88e1a8f7540f5610",
+      "repo": "pydantic/pydantic-ai",
+      "commit": "fb64b4100c0882b4d5e1be8b9a38d7ae6b70c795",
+      "reports": 2,
+      "first_status": "PASS",
+      "source_path": "pyproject.toml",
+      "source_lines": [
+        48,
+        48
+      ],
+      "source_opened": true,
+      "markdown_download": true,
+      "replay_download": true
+    },
+    {
+      "check": "v3_architecture_replay",
+      "passed": true,
+      "file": "v3-architecture-gateway.json",
+      "reports": 2,
+      "mobile_svg_visible": false,
+      "mobile_component_list_expands": true,
+      "source_path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+      "source_lines": [
+        66,
+        106
+      ],
+      "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+      "viewport": 390,
+      "document_scroll_width": 390,
+      "desktop_viewport": 1440,
+      "desktop_scroll_width": 1440,
+      "screenshot": "docs/project/images/v3-architecture.png"
+    },
+    {
+      "check": "v3_security_replay",
+      "passed": true,
+      "file": "v3-mcp-security-signals.json",
+      "reports": 2,
+      "context_review_cards_first_report": 3,
+      "source_path": "src/mcp/client/stdio.py",
+      "source_lines": [
+        323,
+        355
+      ],
+      "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+      "coverage_gaps_visible": true,
+      "viewport": 390,
+      "document_scroll_width": 390
+    },
+    {
+      "check": "v3_deploy_replay",
+      "passed": true,
+      "file": "v3-pydantic-deploy-blueprint.json",
+      "reports": 2,
+      "blueprints": 1,
+      "copy_feedback": "已复制",
+      "source_path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+      "source_lines": [
+        170,
+        225
+      ],
+      "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+      "viewport": 390,
+      "document_scroll_width": 390
+    },
+    {
+      "check": "versioned_static_assets",
+      "passed": true,
+      "assets": [
+        "styles.css?v=bbd254ad6eb5",
+        "app.js?v=21d15db584e0",
+        "workbench.js?v=177352f335fc"
+      ]
+    },
+    {
+      "check": "static_console",
+      "passed": true,
+      "expected_404": [
+        "/api/workflows",
+        "/api/health"
+      ],
+      "other_errors": 0
+    }
+  ],
+  "remaining": [],
+  "static_surface": "http://127.0.0.1:8781/"
+}

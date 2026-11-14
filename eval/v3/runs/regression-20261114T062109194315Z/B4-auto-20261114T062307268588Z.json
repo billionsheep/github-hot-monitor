@@ -1,0 +1,434 @@
+{
+  "id": "B4",
+  "attempt": "20261114T062307268588Z",
+  "batch": "regression-20261114T062109194315Z",
+  "route_requested": "auto",
+  "origin": "synthetic",
+  "query": "compose.yaml 配置的容器目标端口是否等于 Dockerfile 启动命令的端口？对比这两个明确值，不推测运行成功。",
+  "repo": "eval/b4",
+  "commit": "ceace32f22c1a91fa1fc75a3505cccd818aaee9d",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T062307268588Z",
+  "code_version": {
+    "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+    "evidence_source_sha256": "b71a45bfd8b6ad8daa6ebcb103a21cda92120dc1135e2d5c703c2c679c975d83"
+  },
+  "input_fixture_sha256": "2f7e2e5b034a339440a6b51fc924417d652aae1e738b115ac671c6328b89415c",
+  "session_id": "c049729b79584658893bde3e5a4a2ab8",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "C1",
+          "title": "compose.yaml 配置的容器目标端口是否与 Dockerfile 启动命令中明确指定的端口相等，仅比较明确值，不推测运行是否成功。"
+        }
+      ],
+      "execution_route": {
+        "reason": "包含部署、架构、安全或性能约束",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "compose.yaml 配置的容器目标端口是否等于 Dockerfile 启动命令的端口？对比这两个明确值，不推测运行成功。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "ceace32f22c1a91fa1fc75a3505cccd818aaee9d",
+            "repo": "eval/b4"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_5298d3db81a989017cce57ec9b401faeb8bf057143c6dd4b58bcab89e453f141",
+                  "quote": "      - \"8080:8000\"\n"
+                },
+                {
+                  "evidence_id": "ev_15cf7591deea64aaf2f3a1fc960f037091fb7f03daedc089c11327c4741c68c3",
+                  "quote": "CMD [\"uvicorn\", \"app:app\", \"--port\", \"9000\"]\n"
+                }
+              ],
+              "commit": "ceace32f22c1a91fa1fc75a3505cccd818aaee9d",
+              "criterion_id": "C1",
+              "gap_reason": null,
+              "next_step": "统一容器目标端口与启动命令端口；修改后重新比较明确配置值即可。",
+              "original_status": "FAIL",
+              "repo": "eval/b4",
+              "runtime_validation_required": false,
+              "status": "FAIL",
+              "status_calibrated": false,
+              "summary": "compose.yaml 的端口映射为 8080:8000，容器目标端口明确为 8000 [ev_5298d3db81a989017cce57ec9b401faeb8bf057143c6dd4b58bcab89e453f141]；Dockerfile 启动命令明确指定 --port 9000，两者不相等 [ev_15cf7591deea64aaf2f3a1fc960f037091fb7f03daedc089c11327c4741c68c3]。本判断仅比较静态明确值，不判断运行是否成功。",
+              "support_relation": "contradicts",
+              "verification_basis": "static_config"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_15cf7591deea64aaf2f3a1fc960f037091fb7f03daedc089c11327c4741c68c3",
+            "ev_286b9c197d9a598446593c55fc5bde406ee68e2c5a1a353d423c271d35c6841e",
+            "ev_5298d3db81a989017cce57ec9b401faeb8bf057143c6dd4b58bcab89e453f141",
+            "ev_d5928aef082eb6405f0b91cb4440232fcaf1c96fe032125676633980654517cf"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "eval/b4 的 C1 结论为 FAIL：compose.yaml 映射为 8080:8000，容器目标端口为 8000；Dockerfile 启动命令明确指定 --port 9000，两者不相等。此结论仅比较明确配置值，不涉及运行是否成功。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 5,
+      "turn_tool_calls": 2,
+      "turn_usage": {
+        "input_tokens": 7801,
+        "output_tokens": 618,
+        "total_tokens": 8419
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 7801,
+        "output_tokens": 618,
+        "total_tokens": 8419
+      },
+      "workflow_mode": "deploy_readiness"
+    }
+  ],
+  "usage": {
+    "input_tokens": 7801,
+    "output_tokens": 618,
+    "total_tokens": 8419
+  },
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "FAIL"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/b4",
+      "name": "inspect_deployment_artifacts",
+      "args": {}
+    },
+    {
+      "repo": "eval/b4",
+      "name": "read_file_lines",
+      "args": {
+        "path": "Dockerfile",
+        "start_line": 2,
+        "end_line": 2
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 5,
+    "lead_calls": 2,
+    "lead_input_peak": 748,
+    "known_input_tokens": 7801,
+    "known_output_tokens": 618,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "包含部署、架构、安全或性能约束",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "C1",
+            "title": "compose.yaml 配置的容器目标端口是否与 Dockerfile 启动命令中明确指定的端口相等，仅比较明确值，不推测运行是否成功。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_requested",
+      "data": {
+        "args": "{}",
+        "repo": "eval/b4",
+        "tool": "inspect_deployment_artifacts"
+      }
+    },
+    {
+      "id": 8,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_d5928aef082eb6405f0b91cb4440232fcaf1c96fe032125676633980654517cf",
+          "ev_5298d3db81a989017cce57ec9b401faeb8bf057143c6dd4b58bcab89e453f141",
+          "ev_4927b94480bd1aadc2ad1f4f755de6474316128652ba9a7224dfb1f0f9eb9f6b",
+          "ev_32c2ae4fef8472e596046fdc28d618f21275f26ef5590bf5817685f4aeebb77c",
+          "ev_d5928aef082eb6405f0b91cb4440232fcaf1c96fe032125676633980654517cf",
+          "ev_ba393720a5cab73cbb9c7249a10b845619c3d99509d31086815b96d1b6b8d165",
+          "ev_286b9c197d9a598446593c55fc5bde406ee68e2c5a1a353d423c271d35c6841e",
+          "ev_15cf7591deea64aaf2f3a1fc960f037091fb7f03daedc089c11327c4741c68c3",
+          "ev_286b9c197d9a598446593c55fc5bde406ee68e2c5a1a353d423c271d35c6841e",
+          "ev_15cf7591deea64aaf2f3a1fc960f037091fb7f03daedc089c11327c4741c68c3"
+        ],
+        "repo": "eval/b4",
+        "status": "CACHE_HIT",
+        "tool": "inspect_deployment_artifacts"
+      }
+    },
+    {
+      "id": 9,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 10,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"Dockerfile\",\"start_line\":1,\"end_line\":2}",
+        "repo": "eval/b4",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 11,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_15cf7591deea64aaf2f3a1fc960f037091fb7f03daedc089c11327c4741c68c3"
+        ],
+        "repo": "eval/b4",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 12,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 13,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/b4"
+      }
+    },
+    {
+      "id": 14,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 15,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 16,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 17,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 20.047,
+  "request_records": [
+    {
+      "id": "7b89a595f98d4a288466d626d52beeea",
+      "label": "regression-20261114T062109194315Z/B4/auto/20261114T062307268588Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:23:07.277727+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1133,
+      "request_sha256": "2ea4e82acbed630bd45caeee52ba80327517da60380e41b295396bb9aef019c4",
+      "elapsed_ms": 3962,
+      "estimated_usd": 0.0011675000000000001,
+      "usage": {
+        "input_tokens": 235,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 58,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 293
+      }
+    },
+    {
+      "id": "3db47f910fc246a8b702ffbc38336d6d",
+      "label": "regression-20261114T062109194315Z/B4/auto/20261114T062307268588Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:23:11.245619+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 5995,
+      "request_sha256": "7bb2119482e59af9ce8330209613df430d64d266e46e7752ebbebb4d4da9ab9a",
+      "elapsed_ms": 3061,
+      "estimated_usd": 0.0031100000000000004,
+      "usage": {
+        "input_tokens": 1176,
+        "input_tokens_details": {
+          "cache_write_tokens": 119,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 119
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 17,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1193
+      }
+    },
+    {
+      "id": "e90ca6e5b1cb4386b50d36c16fd8462f",
+      "label": "regression-20261114T062109194315Z/B4/auto/20261114T062307268588Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:23:14.334158+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 10288,
+      "request_sha256": "cad9dcdb621fbbde8004b3e4de26004753d75cb91e7d16350a205820e89a5e13",
+      "elapsed_ms": 2820,
+      "estimated_usd": 0.006860000000000001,
+      "usage": {
+        "input_tokens": 2624,
+        "input_tokens_details": {
+          "cache_write_tokens": 1567,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1567
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2654
+      }
+    },
+    {
+      "id": "f1f91a653ddf41528ddfa83ecc7283b5",
+      "label": "regression-20261114T062109194315Z/B4/auto/20261114T062307268588Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:23:17.168068+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 11683,
+      "request_sha256": "2dbd5447d1f918ea7e632f561b1239e85e07ea265729038fb81bcf7aa5b48831",
+      "elapsed_ms": 6160,
+      "estimated_usd": 0.011875,
+      "usage": {
+        "input_tokens": 3018,
+        "input_tokens_details": {
+          "cache_write_tokens": 1961,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1961
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 433,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 3451
+      }
+    },
+    {
+      "id": "452189b3650f43f9b7f4ebcf9966ba1c",
+      "label": "regression-20261114T062109194315Z/B4/auto/20261114T062307268588Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:23:23.337935+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 2337,
+      "request_sha256": "0ea26568fb1a7dcfe3fd18434e38000e24d47f4c8f03f77bdc9e33bdbc96afa5",
+      "elapsed_ms": 3966,
+      "estimated_usd": 0.00267,
+      "usage": {
+        "input_tokens": 748,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 80,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 828
+      }
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "A1",
+  "attempt": "20261114T065200406309Z",
+  "batch": "comparison-20261114T065143399509Z",
+  "route_requested": "full_text",
+  "origin": "synthetic",
+  "query": "pyproject.toml 声明的 Python 版本范围是否允许 Python 3.11？只判断声明，并引用原文。",
+  "repo": "eval/a1",
+  "commit": "a34294d02c767fcc9c741f56b9a9c8d01c98dac8",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T065200406309Z",
+  "code_version": {
+    "commit": "99473b56e7f363862bd9ef6a822e388c78436755",
+    "evidence_source_sha256": "becb0c521499ecd906d07e4b4ea99b098170bf6b7481baa2ab8e0e7ded041024"
+  },
+  "input_fixture_sha256": "e8bb50cc851415cec0309ae34960a73bffd77943c820648421acbeb5c99c6e24",
+  "usage": {
+    "input_tokens": 1845,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cache_write_tokens_details": {
+        "ttl_12h_tokens": 0,
+        "ttl_30m_tokens": 0
+      },
+      "cached_tokens": 1770
+    },
+    "output_tokens": 281,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 2126
+  },
+  "rows": [
+    {
+      "criterion_id": "c1",
+      "repo": "eval/a1",
+      "commit": "a34294d02c767fcc9c741f56b9a9c8d01c98dac8",
+      "status": "PASS",
+      "summary": "pyproject.toml 声明的范围为 >=3.10,<3.13，允许 Python 3.11；此判断仅针对版本声明，不代表运行兼容性验证。[ev_19e355e4a39bd0c89cebdd5b3ea0ae9c98be6587e773f1b8dd8aa79ab65655d7]",
+      "citations": [
+        {
+          "evidence_id": "ev_19e355e4a39bd0c89cebdd5b3ea0ae9c98be6587e773f1b8dd8aa79ab65655d7",
+          "quote": "requires-python = \">=3.10,<3.13\""
+        }
+      ],
+      "verification_basis": "declaration",
+      "runtime_validation_required": false,
+      "next_step": "无需进一步核查；本项仅判断声明。",
+      "support_relation": null,
+      "gap_reason": null,
+      "status_calibrated": null,
+      "original_status": null
+    }
+  ],
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "PASS"
+    ]
+  },
+  "duration_seconds": 5.321,
+  "request_records": [
+    {
+      "id": "df275c2a69e24ca8ad85e898bc8ab027",
+      "label": "comparison-20261114T065143399509Z/A1/full_text/20261114T065200406309Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:52:00.418545+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 7310,
+      "request_sha256": "3cae2101bcb340b8b4f2006b710ed7af5ac6410d272f289d366b11f39d7d1ba8",
+      "elapsed_ms": 5302,
+      "estimated_usd": 0.0074225,
+      "usage": {
+        "input_tokens": 1845,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 1770
+        },
+        "output_tokens": 281,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2126
+      }
+    }
+  ]
+}

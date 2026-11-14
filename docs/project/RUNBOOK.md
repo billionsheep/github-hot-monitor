@@ -33,7 +33,7 @@ python3 ops/scripts/start_local.py
 默认 <http://127.0.0.1:8773/>，API 文档 <http://127.0.0.1:8773/docs>。换端口：`python3 ops/scripts/start_local.py --port 8774`。Ctrl+C 停止服务。脚本先重建 `public/`，再启动服务；源码修改后重新启动。
 
 1. 在“发现”选择项目并加入对比，或在“尽调”输入公开 GitHub 仓库。
-2. 填写具体工程约束，点击“开始尽调”；每个仓库固定到当时的完整提交。
+2. 选择架构研报、安全线索审计或部署适配，填写具体问题，点击“开始尽调”；每个仓库固定到当时的完整提交。
 3. 查看逐项矩阵、执行轨迹和原文；完成后可追问及导出 Markdown / Replay JSON。
 4. 刷新页面会恢复最近会话，也可从历史列表重新打开。恢复与追问继续使用原提交，新建会话才刷新版本。
 
@@ -43,10 +43,10 @@ python3 ops/scripts/start_local.py
 
 ```bash
 python3 ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir public
-python3 -m http.server 8775 --bind 127.0.0.1 --directory public
+python3 -m http.server 8781 --bind 127.0.0.1 --directory public
 ```
 
-访问 <http://127.0.0.1:8775/>，在“尽调”的录制回放中选择案例。支持播放、暂停、重播、跳到结果和证据查看，也可导入自己导出的 JSON。静态模式禁用实时任务，无需 API 密钥。
+访问 <http://127.0.0.1:8781/>，在“尽调”的录制回放中选择案例。支持播放、暂停、重播、跳到结果和证据查看，也可导入自己导出的 JSON。静态模式禁用实时任务，无需 API 密钥。
 
 回放包上限 5 MiB，载入时核对包和片段哈希、证据身份、固定版本、引用及来源地址。格式见 [REPLAY_BUNDLE_SCHEMA.md](REPLAY_BUNDLE_SCHEMA.md)。分享时提供整个 `public/` 或通过已有 Pages 工作流发布。
 
@@ -65,7 +65,9 @@ node --test tests/test_*.js
 .venv/bin/python eval/run_eval.py
 ```
 
-需要重做收费模型评测时：`.venv/bin/python eval/run_eval.py --online --baseline --max-usd 3`。详见 [评测说明](../../eval/README.md)。
+v3 离线多文件合同：`.venv/bin/python eval/v3_tool_cases.py`。实际在线记录见 [v3 实测报告](../../eval/v3/eval_report.md)。
+
+复做收费评测使用 `.venv/bin/python eval/run_v3_eval.py --batch regression`，成本对照使用 `--batch comparison`。这些脚本共用 `.evidence-data/v3-budget.json` 的5美元账本，已发生调用继续累计。普通运行入口使用轮次预算；本次验收的额外美元总预算由 `eval/v3_preview.py` 和评测适配器执行。
 
 ## 常见情况
 
@@ -80,3 +82,11 @@ node --test tests/test_*.js
 | 端口占用 | 访问已有进程，或用 `--port` 换端口 |
 
 `build_pages.py` 会重建输出目录，始终将 `--out-dir` 指向可再生的 `public/`。
+
+## 三工作流与扫描范围
+
+- 架构研报：输入关注的文件或参数，例如 `base_url`，系统先生成 AST/规则索引，再按完整语句补查。SVG 图边和组件列表均可打开证据；手机显示列表。
+- 安全线索审计：可限定仓库内目录。每次扫描最多尝试24个目录、24个文本文件、累计读取1MiB，单文件最多512KiB。报告显示覆盖范围、截断原因和继续位置；规则命中与上下文复核分开展示。
+- 部署适配：判断版本、容器和模型配置条件；有原文支持时输出可复制的 Python 字面量配置、JSON 或环境变量配置，附用户自填项与验证步骤。
+
+追问继承当前工作流和固定提交；切换工作流后开始会创建新会话。新导出 Replay 为2.0，继续读取旧1.0，原三份回放保留。

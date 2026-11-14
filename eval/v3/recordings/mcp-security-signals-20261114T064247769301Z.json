@@ -1,0 +1,1441 @@
+{
+  "case": "mcp-security-signals",
+  "attempt": "20261114T064247769301Z",
+  "session_id": "53a6901ac871405f889677fa7d988e48",
+  "workflow_mode": "sec_sentinel",
+  "followup": false,
+  "code_version": {
+    "commit": "3710bc3a1938d195a524ce7eccf0a1cab5c64507",
+    "evidence_source_sha256": "3a0f5d0e7d72fb2e03d3ebe63a7aee094d5ce82e64fd74dc14d6af0dc374b642"
+  },
+  "status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [
+        {
+          "artifact_id": "security_scan_6c7039eb6955c9d2e85f2e2d48f7f42357a4b0bcc5542bc5230a3a39bec2a912",
+          "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+          "repo": "modelcontextprotocol/python-sdk",
+          "scope": {
+            "attempted_directories": 7,
+            "attempted_files": 24,
+            "bytes_read": 335086,
+            "complete": false,
+            "continuation": "src/mcp/client",
+            "continuations": [
+              {
+                "kind": "file",
+                "path": "src/mcp/client/subscriptions.py",
+                "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/client/session.py",
+                "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/client/session_group.py",
+                "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/client/sse.py",
+                "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/client/stdio.py",
+                "path_prefix": "src/mcp/client"
+              }
+            ],
+            "directories": [
+              "/",
+              "src",
+              "src/mcp",
+              "src/mcp/client",
+              "src/mcp/client/auth",
+              "src/mcp/client/auth/extensions",
+              "src/mcp/client/extensions"
+            ],
+            "file_categories": {
+              "config": 0,
+              "denominator": 24,
+              "doc": 0,
+              "other": 0,
+              "src": 24
+            },
+            "files": [
+              "src/mcp/client/__init__.py",
+              "src/mcp/client/__main__.py",
+              "src/mcp/client/_input_required.py",
+              "src/mcp/client/_memory.py",
+              "src/mcp/client/_probe.py",
+              "src/mcp/client/_transport.py",
+              "src/mcp/client/auth/__init__.py",
+              "src/mcp/client/auth/exceptions.py",
+              "src/mcp/client/auth/extensions/__init__.py",
+              "src/mcp/client/auth/extensions/client_credentials.py",
+              "src/mcp/client/auth/extensions/identity_assertion.py",
+              "src/mcp/client/auth/oauth2.py",
+              "src/mcp/client/auth/utils.py",
+              "src/mcp/client/caching.py",
+              "src/mcp/client/client.py",
+              "src/mcp/client/context.py",
+              "src/mcp/client/extension.py",
+              "src/mcp/client/extensions/__init__.py",
+              "src/mcp/client/extensions/skills.py",
+              "src/mcp/client/session.py",
+              "src/mcp/client/session_group.py",
+              "src/mcp/client/sse.py",
+              "src/mcp/client/stdio.py",
+              "src/mcp/client/streamable_http.py"
+            ],
+            "mode": "all",
+            "notes": [
+              "文本文件尝试次数达到 24 上限，仍有文件未扫描。",
+              "线索超过 40 项，仅保留前 40 项，其他线索未展开。"
+            ],
+            "path_prefix": "src/mcp/client"
+          }
+        },
+        {
+          "artifact_id": "security_scan_67585c882306a1d352eb954e86ecc10daf5e99d091c6b94e9e8f83f08e166561",
+          "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+          "repo": "modelcontextprotocol/python-sdk",
+          "scope": {
+            "attempted_directories": 4,
+            "attempted_files": 0,
+            "bytes_read": 0,
+            "complete": false,
+            "continuation": "src/mcp/client/stdio.py",
+            "continuations": [
+              {
+                "kind": "directory",
+                "path": "src/mcp/client/stdio.py",
+                "path_prefix": "src/mcp/client/stdio.py"
+              }
+            ],
+            "directories": [
+              "/",
+              "src",
+              "src/mcp",
+              "src/mcp/client"
+            ],
+            "file_categories": {
+              "config": 0,
+              "denominator": 0,
+              "doc": 0,
+              "other": 0,
+              "src": 0
+            },
+            "files": [],
+            "mode": "all",
+            "notes": [
+              "未找到或无法确定目录 src/mcp/client/stdio.py。"
+            ],
+            "path_prefix": "src/mcp/client/stdio.py"
+          }
+        }
+      ],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "C1",
+          "title": "src/mcp/client 目录中的子进程启动逻辑是否存在安全风险，重点核查 src/mcp/client/stdio.py；正常的进程启动本身不构成漏洞。"
+        },
+        {
+          "id": "C2",
+          "title": "src/mcp/client 目录中的环境变量读取与向子进程传递逻辑是否存在安全风险，重点核查 src/mcp/client/stdio.py；正常的环境变量读取或传递本身不构成漏洞。"
+        }
+      ],
+      "execution_route": {
+        "reason": "架构与安全工作流使用完整流程",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "对 src/mcp/client 目录做安全线索审计，重点追查 src/mcp/client/stdio.py 的子进程启动与环境变量传递。把规则命中和上下文复核分开，给出对应调用、控制条件和覆盖范围；正常的进程启动或环境变量读取不能直接判为漏洞。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+            "repo": "modelcontextprotocol/python-sdk"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_ae43ca84919582be909ae8f295e0e675a3aa867361fc99860b83f8623383336d",
+                  "quote": "    command = await _get_executable_command(server.command)\n\n    process = await _create_platform_compatible_process(\n        command=command,\n        args=server.args,\n        env=get_default_environment() | (server.env or {}),\n        errlog=errlog,\n        cwd=server.cwd,\n    )"
+                }
+              ],
+              "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+              "criterion_id": "C1",
+              "gap_reason": "现有原文只覆盖启动入口，未覆盖实际创建进程的平台实现，不能据此确认存在漏洞或完成无风险判断。",
+              "next_step": "核对 _get_executable_command、_create_platform_compatible_process 及 Windows 启动实现，确认实际调用方式、参数转义和可执行文件解析边界；再检查目录内其他启动路径。",
+              "original_status": "UNVERIFIED",
+              "repo": "modelcontextprotocol/python-sdk",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "已核对 stdio.py 的启动入口：可执行文件、参数、环境与工作目录分别传给平台启动辅助函数；该行为本身不构成漏洞。但尚未核对辅助函数中的实际启动实现及目录内其他启动路径，无法判断是否存在 shell 拼接或其他安全风险。[ev_ae43ca84919582be909ae8f295e0e675a3aa867361fc99860b83f8623383336d]",
+              "support_relation": "insufficient",
+              "verification_basis": "insufficient"
+            },
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_ae43ca84919582be909ae8f295e0e675a3aa867361fc99860b83f8623383336d",
+                  "quote": "    for key in DEFAULT_INHERITED_ENV_VARS:\n        value = os.environ.get(key)\n        if value is None:  # pragma: lax no cover\n            continue\n\n        if value.startswith(\"()\"):  # pragma: no cover\n            # Skip functions, which are a security risk\n            continue  # pragma: no cover\n\n        env[key] = value\n\n    return env"
+                },
+                {
+                  "evidence_id": "ev_ae43ca84919582be909ae8f295e0e675a3aa867361fc99860b83f8623383336d",
+                  "quote": "        env=get_default_environment() | (server.env or {}),"
+                }
+              ],
+              "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+              "criterion_id": "C2",
+              "gap_reason": "原文支持默认环境过滤和显式覆盖的局部判断，但缺少输入信任边界、最终平台实现及目录其他相关路径的证据。",
+              "next_step": "追踪 server.env 的配置来源及信任边界，核对平台启动函数是否按给定环境传递而非额外继承整个父环境，并检查目录内其他环境读取与传递路径。",
+              "original_status": "UNVERIFIED",
+              "repo": "modelcontextprotocol/python-sdk",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "stdio.py 默认按名单读取环境变量，并跳过以 () 开头的值；显式 server.env 会覆盖默认环境。这些是环境传递机制及防护措施，不能单独认定为漏洞。尚未证明有不可信输入进入显式环境配置，也未核对最终平台传递实现及目录其他路径，因此不足以完成整体安全判断。[ev_ae43ca84919582be909ae8f295e0e675a3aa867361fc99860b83f8623383336d]",
+              "support_relation": "partial",
+              "verification_basis": "insufficient"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_ae43ca84919582be909ae8f295e0e675a3aa867361fc99860b83f8623383336d"
+          ]
+        }
+      ],
+      "security_findings": [
+        {
+          "artifact_id": "security_scan_6c7039eb6955c9d2e85f2e2d48f7f42357a4b0bcc5542bc5230a3a39bec2a912",
+          "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+          "findings": [
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 59,
+              "evidence_id": "ev_96843a965de3fe9ba6bbadc3a837812eb127da2ea568ddec3325e8cdc10e1698",
+              "from": "urllib.parse.urlparse",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/__main__.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 51,
+              "to": "urllib.parse.urlparse"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 124,
+              "evidence_id": "ev_037cce577d974ac7c41f974955dd439c3e9883aaa5d63bbdbfbabefc3ede2db3",
+              "from": "requests.items",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/_input_required.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 123,
+              "to": "requests.items"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 38,
+              "evidence_id": "ev_582491e9d4ecf334034b748d08d9bb6fe19ae5e85fa53d4d1fc1f5631abbeb58",
+              "from": "urllib.parse.urlparse",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/extensions/client_credentials.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 37,
+              "to": "urllib.parse.urlparse"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 55,
+              "evidence_id": "ev_0eb8b1436bd0f278c7d816f2ff1a166ec47205e0cccd5366ea02eb4c305ee794",
+              "from": "parsed",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/extensions/identity_assertion.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 55,
+              "to": "urllib.parse.urlsplit"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 155,
+              "evidence_id": "ev_3e084943434a00897e3080e8820ef5ffe65ef21db1a4a56b558455299119b6f8",
+              "from": "encoded_id",
+              "keywords": [
+                "safe"
+              ],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/extensions/identity_assertion.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 155,
+              "to": "urllib.parse.quote"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 156,
+              "evidence_id": "ev_aec35b5a985f21e905769ce5d0605dd388c3f575610a286f45eb1d213ccd3973",
+              "from": "encoded_secret",
+              "keywords": [
+                "safe"
+              ],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/extensions/identity_assertion.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 156,
+              "to": "urllib.parse.quote"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 179,
+              "evidence_id": "ev_434d0275ca85595002956c88a8e8de46cbabe4d3134e079e86c6c04915921a7e",
+              "from": "parsed",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/oauth2.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 179,
+              "to": "urllib.parse.urlparse"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 263,
+              "evidence_id": "ev_fd10a09c6b68d4dcb07351966b777a0ac602da16ba31182da8be203418c413fa",
+              "from": "encoded_id",
+              "keywords": [
+                "safe"
+              ],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/oauth2.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 263,
+              "to": "urllib.parse.quote"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 264,
+              "evidence_id": "ev_10601f057b2746dd834a7fdf5e04a27defc47c8e06eddfafff6fe67200b6de0c",
+              "from": "encoded_secret",
+              "keywords": [
+                "safe"
+              ],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/oauth2.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 264,
+              "to": "urllib.parse.quote"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 288,
+              "evidence_id": "ev_0ce7cab766c1fd10105a6db47858e3a930c1b0499fbda2e2cf51e1390592dfea",
+              "from": "parsed",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/oauth2.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 288,
+              "to": "urllib.parse.urlparse"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 398,
+              "evidence_id": "ev_de4d12555adcd8cec001c43fb20ace1a7cc14aa08abf25a0270f5ea95289030a",
+              "from": "auth_endpoint",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/oauth2.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 398,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 428,
+              "evidence_id": "ev_975ae4f87c4bf7b00fd41940add71b2acfcc9dea41b3ec776d9591d1689edaa3",
+              "from": "authorization_url",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/oauth2.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 428,
+              "to": "urllib.parse.urlencode"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 450,
+              "evidence_id": "ev_ede13040cf9cc1c77497b616ee071edadf9cc056515fd2ed5bc1510943b9fe11",
+              "from": "token_url",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/oauth2.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 450,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 515,
+              "evidence_id": "ev_1a9b87577583a4e2f200789500cd5a620ca7246ec909da68a7f106ce24d479b7",
+              "from": "token_url",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/oauth2.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 515,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 423,
+              "evidence_id": "ev_b07a548ccc70a412e21ccb76218df505170979b128fbd73117e686c283cc398b",
+              "from": "file",
+              "needs_review": true,
+              "path": "src/mcp/client/auth/oauth2.py",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 423,
+              "to": "# OIDC requires prompt=consent when offline_access is requested"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 426,
+              "evidence_id": "ev_22c3c46ffc574a43e0ff141c11d22e1c79729c8027695102fb7ad52cb5315141",
+              "from": "file",
+              "needs_review": true,
+              "path": "src/mcp/client/auth/oauth2.py",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 426,
+              "to": "auth_params[\"prompt\"] = \"consent\""
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 86,
+              "evidence_id": "ev_5c53f37c459d1efa4efc4ee274da60ed594bfaf50784a32729a15e4eb1a69e36",
+              "from": "parsed",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 86,
+              "to": "urllib.parse.urlparse"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 91,
+              "evidence_id": "ev_537619a9cfa593b6c7617c00371e86da4f01ee2bc8f2feffb78a6528cfa99bfa",
+              "from": "path_based_url",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 91,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 95,
+              "evidence_id": "ev_87d1ed942286e93dca1ef83a7654bc3f3463922e57f7aa1bfc69083d760a971b",
+              "from": "root_based_url",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 95,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 170,
+              "evidence_id": "ev_7a76b98f64f8b0389c926e64625f8dbec9490fe20c34d9f28bfdd57ee0a18778",
+              "from": "parsed",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 170,
+              "to": "urllib.parse.urlparse"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 174,
+              "evidence_id": "ev_97e5372196d2409a3f0885fb9e73908b5d3317b095b5ea55bf83a81556419358",
+              "from": "parsed",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 174,
+              "to": "urllib.parse.urlparse"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 180,
+              "evidence_id": "ev_329aaf392bf2dd67d2467cd570f838fb615383ea8649330d6020478cdc751e0a",
+              "from": "urls.append",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 180,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 185,
+              "evidence_id": "ev_644b70a42e13c17a098456966b14ed5dfacff141b9fb8a018a92e09c217efdf7",
+              "from": "urls.append",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 185,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 189,
+              "evidence_id": "ev_6a971402fb397a0af0a7da395d437c0b28d47ed6ee734fd6963a2e30d88c6ecb",
+              "from": "urls.append",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 189,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 193,
+              "evidence_id": "ev_28fd40446d80a05aa30858c1e88fe6d13a0b30399c27f45bb360cdeec9c0a186",
+              "from": "urls.append",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 193,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 197,
+              "evidence_id": "ev_e301e8af0cb02a0f33a7feda0b476577f92e32432d357e1c439fd19cbb23b633",
+              "from": "urls.append",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 197,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 290,
+              "evidence_id": "ev_543d1e49886f475a1c5d05af81130b64394dc8c222ecddf1ab3e85efe5930759",
+              "from": "registration_url",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 290,
+              "to": "urllib.parse.urljoin"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 334,
+              "evidence_id": "ev_c086ed56edcc77c974f36f6068ac987e1b313848252b6b52cfe8cf3e5e490e0c",
+              "from": "parsed",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 334,
+              "to": "urllib.parse.urlparse"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "env_and_network",
+              "context_complete": true,
+              "end_line": 368,
+              "evidence_id": "ev_7242acf74a9eda2b19dbf584f20ad9ba445a401f48b62790161ebc71ecd8a397",
+              "from": "parsed",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/auth/utils.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 368,
+              "to": "urllib.parse.urlparse"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 866,
+              "evidence_id": "ev_4253805766dfa99fd272eae9a3c1428286cd413790ac814fd01a23c249d896b8",
+              "from": "self.session.validate_tool_result",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/client.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 866,
+              "to": "self.session.validate_tool_result"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 883,
+              "evidence_id": "ev_161fbb3ad8a89b6866427b77fa07c20122e8f6be4110e196d8f6cc4ba7dfef30",
+              "from": "self._cached_fetch",
+              "keywords": [
+                "params"
+              ],
+              "needs_review": true,
+              "path": "src/mcp/client/client.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 877,
+              "to": "self.session.list_prompts"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 922,
+              "evidence_id": "ev_db1414cf87fe770674dc1f0bcd59da26c733953bbba942827a56543f9e584fb1",
+              "from": "self.session.get_prompt",
+              "keywords": [
+                "input_responses",
+                "request_state",
+                "meta",
+                "allow_input_required"
+              ],
+              "needs_review": true,
+              "path": "src/mcp/client/client.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 920,
+              "to": "self.session.get_prompt"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 817,
+              "evidence_id": "ev_68125f044cd2ed2f03a8909b8ffc963510ccce27ab0712db670e0867e89ea3e8",
+              "from": "file",
+              "needs_review": true,
+              "path": "src/mcp/client/client.py",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 817,
+              "to": "The tool result."
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 894,
+              "evidence_id": "ev_353afbfc9336e43a3353f1c3beaa8ae51dfaa5300c841534239264dcd0c85d9b",
+              "from": "file",
+              "needs_review": true,
+              "path": "src/mcp/client/client.py",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 894,
+              "to": "\"\"\"Get a prompt from the server."
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 902,
+              "evidence_id": "ev_4fd69bbc69b9a3d04b303fb7758db88ac4a1b7a24a64a8fb09de86709884eb4f",
+              "from": "file",
+              "needs_review": true,
+              "path": "src/mcp/client/client.py",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 902,
+              "to": "name: The name of the prompt."
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 903,
+              "evidence_id": "ev_d17314b65faf4ae7269fcf621af5a5abf113ea2d124cde77de974261d54bce22",
+              "from": "file",
+              "needs_review": true,
+              "path": "src/mcp/client/client.py",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 903,
+              "to": "arguments: Arguments to pass to the prompt."
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 910,
+              "evidence_id": "ev_366de1b4711490c713d5d0962abec857585fbdbaf6152bb24a94f847b12bf317",
+              "from": "file",
+              "needs_review": true,
+              "path": "src/mcp/client/client.py",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 910,
+              "to": "The prompt content."
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 955,
+              "evidence_id": "ev_768ff09735c7243b195b2b14e41d2551412719cb8cbbc0918ef7148baf9d7355",
+              "from": "file",
+              "needs_review": true,
+              "path": "src/mcp/client/client.py",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 955,
+              "to": "\"\"\"Get completions for a prompt or resource template argument."
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 958,
+              "evidence_id": "ev_4ce895e9ab5b20d6a468f373a673c728ecb536c950e601d8f180813933c03340",
+              "from": "file",
+              "needs_review": true,
+              "path": "src/mcp/client/client.py",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 958,
+              "to": "ref: Reference to the prompt or resource template"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "prompt_injection",
+              "context_complete": true,
+              "end_line": 1102,
+              "evidence_id": "ev_be340ca3d3ba035afbed9b8a2ef8ba3d8c9c319e0e92b4f3ba608a8b5e26c89d",
+              "from": "self.validate_tool_result",
+              "keywords": [],
+              "needs_review": true,
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 1102,
+              "to": "self.validate_tool_result"
+            }
+          ],
+          "repo": "modelcontextprotocol/python-sdk"
+        },
+        {
+          "artifact_id": "security_scan_67585c882306a1d352eb954e86ecc10daf5e99d091c6b94e9e8f83f08e166561",
+          "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+          "findings": [],
+          "repo": "modelcontextprotocol/python-sdk"
+        }
+      ],
+      "summary": "仅提供 modelcontextprotocol/python-sdk（77001c9）的结果，无法进行跨仓库比较。C1 与 C2 均为未验证，现有证据既不能确认漏洞，也不足以判定整体无风险。C1：stdio.py 将命令、参数、环境及工作目录分别传给平台辅助函数，正常启动本身不构成漏洞；实际进程创建、可执行文件解析及其他启动路径尚未核查。C2：默认环境按名单读取，并过滤以“()”开头的值，server.env 可覆盖默认值；这些机制本身不构成漏洞，但显式环境配置的信任边界、最终平台传递行为及其他相关路径尚未核查。相较而言，C2 已有局部过滤措施的证据，C1 的证据主要限于启动入口。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 8,
+      "turn_tool_calls": 6,
+      "turn_usage": {
+        "input_tokens": 29802,
+        "output_tokens": 1554,
+        "total_tokens": 31356
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 29802,
+        "output_tokens": 1554,
+        "total_tokens": 31356
+      },
+      "workflow_mode": "sec_sentinel"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "架构与安全工作流使用完整流程",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "C1",
+            "title": "src/mcp/client 目录中的子进程启动逻辑是否存在安全风险，重点核查 src/mcp/client/stdio.py；正常的进程启动本身不构成漏洞。"
+          },
+          {
+            "id": "C2",
+            "title": "src/mcp/client 目录中的环境变量读取与向子进程传递逻辑是否存在安全风险，重点核查 src/mcp/client/stdio.py；正常的环境变量读取或传递本身不构成漏洞。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\": \"src/mcp/client\", \"mode\": \"all\"}",
+        "automatic": true,
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "scan_security_and_risk_sinks"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "security_scan_6c7039eb6955c9d2e85f2e2d48f7f42357a4b0bcc5542bc5230a3a39bec2a912",
+          "ev_96843a965de3fe9ba6bbadc3a837812eb127da2ea568ddec3325e8cdc10e1698",
+          "ev_037cce577d974ac7c41f974955dd439c3e9883aaa5d63bbdbfbabefc3ede2db3",
+          "ev_582491e9d4ecf334034b748d08d9bb6fe19ae5e85fa53d4d1fc1f5631abbeb58",
+          "ev_0eb8b1436bd0f278c7d816f2ff1a166ec47205e0cccd5366ea02eb4c305ee794",
+          "ev_3e084943434a00897e3080e8820ef5ffe65ef21db1a4a56b558455299119b6f8",
+          "ev_aec35b5a985f21e905769ce5d0605dd388c3f575610a286f45eb1d213ccd3973",
+          "ev_434d0275ca85595002956c88a8e8de46cbabe4d3134e079e86c6c04915921a7e",
+          "ev_fd10a09c6b68d4dcb07351966b777a0ac602da16ba31182da8be203418c413fa",
+          "ev_10601f057b2746dd834a7fdf5e04a27defc47c8e06eddfafff6fe67200b6de0c",
+          "ev_0ce7cab766c1fd10105a6db47858e3a930c1b0499fbda2e2cf51e1390592dfea",
+          "ev_de4d12555adcd8cec001c43fb20ace1a7cc14aa08abf25a0270f5ea95289030a",
+          "ev_975ae4f87c4bf7b00fd41940add71b2acfcc9dea41b3ec776d9591d1689edaa3",
+          "ev_ede13040cf9cc1c77497b616ee071edadf9cc056515fd2ed5bc1510943b9fe11",
+          "ev_1a9b87577583a4e2f200789500cd5a620ca7246ec909da68a7f106ce24d479b7",
+          "ev_b07a548ccc70a412e21ccb76218df505170979b128fbd73117e686c283cc398b",
+          "ev_22c3c46ffc574a43e0ff141c11d22e1c79729c8027695102fb7ad52cb5315141",
+          "ev_5c53f37c459d1efa4efc4ee274da60ed594bfaf50784a32729a15e4eb1a69e36",
+          "ev_537619a9cfa593b6c7617c00371e86da4f01ee2bc8f2feffb78a6528cfa99bfa",
+          "ev_87d1ed942286e93dca1ef83a7654bc3f3463922e57f7aa1bfc69083d760a971b",
+          "ev_7a76b98f64f8b0389c926e64625f8dbec9490fe20c34d9f28bfdd57ee0a18778",
+          "ev_97e5372196d2409a3f0885fb9e73908b5d3317b095b5ea55bf83a81556419358",
+          "ev_329aaf392bf2dd67d2467cd570f838fb615383ea8649330d6020478cdc751e0a",
+          "ev_644b70a42e13c17a098456966b14ed5dfacff141b9fb8a018a92e09c217efdf7",
+          "ev_6a971402fb397a0af0a7da395d437c0b28d47ed6ee734fd6963a2e30d88c6ecb",
+          "ev_28fd40446d80a05aa30858c1e88fe6d13a0b30399c27f45bb360cdeec9c0a186",
+          "ev_e301e8af0cb02a0f33a7feda0b476577f92e32432d357e1c439fd19cbb23b633",
+          "ev_543d1e49886f475a1c5d05af81130b64394dc8c222ecddf1ab3e85efe5930759",
+          "ev_c086ed56edcc77c974f36f6068ac987e1b313848252b6b52cfe8cf3e5e490e0c",
+          "ev_7242acf74a9eda2b19dbf584f20ad9ba445a401f48b62790161ebc71ecd8a397",
+          "ev_4253805766dfa99fd272eae9a3c1428286cd413790ac814fd01a23c249d896b8",
+          "ev_161fbb3ad8a89b6866427b77fa07c20122e8f6be4110e196d8f6cc4ba7dfef30",
+          "ev_db1414cf87fe770674dc1f0bcd59da26c733953bbba942827a56543f9e584fb1",
+          "ev_68125f044cd2ed2f03a8909b8ffc963510ccce27ab0712db670e0867e89ea3e8",
+          "ev_353afbfc9336e43a3353f1c3beaa8ae51dfaa5300c841534239264dcd0c85d9b",
+          "ev_4fd69bbc69b9a3d04b303fb7758db88ac4a1b7a24a64a8fb09de86709884eb4f",
+          "ev_d17314b65faf4ae7269fcf621af5a5abf113ea2d124cde77de974261d54bce22",
+          "ev_366de1b4711490c713d5d0962abec857585fbdbaf6152bb24a94f847b12bf317",
+          "ev_768ff09735c7243b195b2b14e41d2551412719cb8cbbc0918ef7148baf9d7355",
+          "ev_4ce895e9ab5b20d6a468f373a673c728ecb536c950e601d8f180813933c03340",
+          "ev_be340ca3d3ba035afbed9b8a2ef8ba3d8c9c319e0e92b4f3ba608a8b5e26c89d"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "scan_security_and_risk_sinks"
+      }
+    },
+    {
+      "id": 8,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 9,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\":\"src/mcp/client/stdio.py\",\"mode\":\"all\"}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "scan_security_and_risk_sinks"
+      }
+    },
+    {
+      "id": 10,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "security_scan_67585c882306a1d352eb954e86ecc10daf5e99d091c6b94e9e8f83f08e166561"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "scan_security_and_risk_sinks"
+      }
+    },
+    {
+      "id": 11,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 12,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"symbol_or_param_hint\":null}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 13,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_6359ea346e46ea19466f36dc90ff17e947972f22f1a64c20e570022e38958a0d"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 14,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 15,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\":\"src/mcp/client\",\"mode\":\"all\"}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "scan_security_and_risk_sinks"
+      }
+    },
+    {
+      "id": 16,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "security_scan_6c7039eb6955c9d2e85f2e2d48f7f42357a4b0bcc5542bc5230a3a39bec2a912",
+          "ev_96843a965de3fe9ba6bbadc3a837812eb127da2ea568ddec3325e8cdc10e1698",
+          "ev_037cce577d974ac7c41f974955dd439c3e9883aaa5d63bbdbfbabefc3ede2db3",
+          "ev_582491e9d4ecf334034b748d08d9bb6fe19ae5e85fa53d4d1fc1f5631abbeb58",
+          "ev_0eb8b1436bd0f278c7d816f2ff1a166ec47205e0cccd5366ea02eb4c305ee794",
+          "ev_3e084943434a00897e3080e8820ef5ffe65ef21db1a4a56b558455299119b6f8",
+          "ev_aec35b5a985f21e905769ce5d0605dd388c3f575610a286f45eb1d213ccd3973",
+          "ev_434d0275ca85595002956c88a8e8de46cbabe4d3134e079e86c6c04915921a7e",
+          "ev_fd10a09c6b68d4dcb07351966b777a0ac602da16ba31182da8be203418c413fa",
+          "ev_10601f057b2746dd834a7fdf5e04a27defc47c8e06eddfafff6fe67200b6de0c",
+          "ev_0ce7cab766c1fd10105a6db47858e3a930c1b0499fbda2e2cf51e1390592dfea",
+          "ev_de4d12555adcd8cec001c43fb20ace1a7cc14aa08abf25a0270f5ea95289030a",
+          "ev_975ae4f87c4bf7b00fd41940add71b2acfcc9dea41b3ec776d9591d1689edaa3",
+          "ev_ede13040cf9cc1c77497b616ee071edadf9cc056515fd2ed5bc1510943b9fe11",
+          "ev_1a9b87577583a4e2f200789500cd5a620ca7246ec909da68a7f106ce24d479b7",
+          "ev_b07a548ccc70a412e21ccb76218df505170979b128fbd73117e686c283cc398b",
+          "ev_22c3c46ffc574a43e0ff141c11d22e1c79729c8027695102fb7ad52cb5315141",
+          "ev_5c53f37c459d1efa4efc4ee274da60ed594bfaf50784a32729a15e4eb1a69e36",
+          "ev_537619a9cfa593b6c7617c00371e86da4f01ee2bc8f2feffb78a6528cfa99bfa",
+          "ev_87d1ed942286e93dca1ef83a7654bc3f3463922e57f7aa1bfc69083d760a971b",
+          "ev_7a76b98f64f8b0389c926e64625f8dbec9490fe20c34d9f28bfdd57ee0a18778",
+          "ev_97e5372196d2409a3f0885fb9e73908b5d3317b095b5ea55bf83a81556419358",
+          "ev_329aaf392bf2dd67d2467cd570f838fb615383ea8649330d6020478cdc751e0a",
+          "ev_644b70a42e13c17a098456966b14ed5dfacff141b9fb8a018a92e09c217efdf7",
+          "ev_6a971402fb397a0af0a7da395d437c0b28d47ed6ee734fd6963a2e30d88c6ecb",
+          "ev_28fd40446d80a05aa30858c1e88fe6d13a0b30399c27f45bb360cdeec9c0a186",
+          "ev_e301e8af0cb02a0f33a7feda0b476577f92e32432d357e1c439fd19cbb23b633",
+          "ev_543d1e49886f475a1c5d05af81130b64394dc8c222ecddf1ab3e85efe5930759",
+          "ev_c086ed56edcc77c974f36f6068ac987e1b313848252b6b52cfe8cf3e5e490e0c",
+          "ev_7242acf74a9eda2b19dbf584f20ad9ba445a401f48b62790161ebc71ecd8a397",
+          "ev_4253805766dfa99fd272eae9a3c1428286cd413790ac814fd01a23c249d896b8",
+          "ev_161fbb3ad8a89b6866427b77fa07c20122e8f6be4110e196d8f6cc4ba7dfef30",
+          "ev_db1414cf87fe770674dc1f0bcd59da26c733953bbba942827a56543f9e584fb1",
+          "ev_68125f044cd2ed2f03a8909b8ffc963510ccce27ab0712db670e0867e89ea3e8",
+          "ev_353afbfc9336e43a3353f1c3beaa8ae51dfaa5300c841534239264dcd0c85d9b",
+          "ev_4fd69bbc69b9a3d04b303fb7758db88ac4a1b7a24a64a8fb09de86709884eb4f",
+          "ev_d17314b65faf4ae7269fcf621af5a5abf113ea2d124cde77de974261d54bce22",
+          "ev_366de1b4711490c713d5d0962abec857585fbdbaf6152bb24a94f847b12bf317",
+          "ev_768ff09735c7243b195b2b14e41d2551412719cb8cbbc0918ef7148baf9d7355",
+          "ev_4ce895e9ab5b20d6a468f373a673c728ecb536c950e601d8f180813933c03340",
+          "ev_be340ca3d3ba035afbed9b8a2ef8ba3d8c9c319e0e92b4f3ba608a8b5e26c89d"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "scan_security_and_risk_sinks"
+      }
+    },
+    {
+      "id": 17,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 18,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"symbol_or_param_hint\":null}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 19,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_6359ea346e46ea19466f36dc90ff17e947972f22f1a64c20e570022e38958a0d"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 20,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 21,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"start_line\":40,\"end_line\":159}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 22,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_ae43ca84919582be909ae8f295e0e675a3aa867361fc99860b83f8623383336d"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 23,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 24,
+      "type": "repository_complete",
+      "data": {
+        "repo": "modelcontextprotocol/python-sdk"
+      }
+    },
+    {
+      "id": 25,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 26,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 27,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 28,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "usage": {
+    "input_tokens": 29802,
+    "output_tokens": 1554,
+    "total_tokens": 31356
+  },
+  "metrics": {
+    "model_calls": 8,
+    "lead_calls": 2,
+    "lead_input_peak": 1203,
+    "known_input_tokens": 29802,
+    "known_output_tokens": 1554,
+    "unknown_calls": 0
+  },
+  "duration_seconds": 57.986,
+  "request_records": [
+    {
+      "id": "8aaec5efe3564be49f4941b3756525d8",
+      "label": "recording/mcp-security-signals/20261114T064247769301Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:42:47.795181+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1284,
+      "request_sha256": "034e46a84fb36f6f207d14950244c476e5aeb9017ebd71d9a258917ea1021789",
+      "elapsed_ms": 7755,
+      "estimated_usd": 0.00317,
+      "usage": {
+        "input_tokens": 272,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 249,
+        "output_tokens_details": {
+          "reasoning_tokens": 128
+        },
+        "total_tokens": 521
+      }
+    },
+    {
+      "id": "2c5f681e0d6e4040a8d38fc659bbfb12",
+      "label": "recording/mcp-security-signals/20261114T064247769301Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:43:00.123900+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 18781,
+      "request_sha256": "626bfa7b288c296c445e34f8d2c886538b9aecadf51c1f21dc28765dfaec8207",
+      "elapsed_ms": 4572,
+      "estimated_usd": 0.012415,
+      "usage": {
+        "input_tokens": 4830,
+        "input_tokens_details": {
+          "cache_write_tokens": 3786,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 3786
+          },
+          "cached_tokens": 1041
+        },
+        "output_tokens": 34,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4864
+      }
+    },
+    {
+      "id": "43d51805a75d4919addd282e3305bc5b",
+      "label": "recording/mcp-security-signals/20261114T064247769301Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:43:04.720291+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 21734,
+      "request_sha256": "f5abd00fc9384e7423af0d76094cdc336debea61b5fab1c88df50c5df036ba8c",
+      "elapsed_ms": 6318,
+      "estimated_usd": 0.014390000000000002,
+      "usage": {
+        "input_tokens": 5624,
+        "input_tokens_details": {
+          "cache_write_tokens": 4580,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4580
+          },
+          "cached_tokens": 1041
+        },
+        "output_tokens": 33,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5657
+      }
+    },
+    {
+      "id": "6aadd88c20964694abedf8d378177f89",
+      "label": "recording/mcp-security-signals/20261114T064247769301Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:43:11.077363+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 13075,
+      "request_sha256": "b51c18fb841b29529beb271c05458ca62ea7cd63ce19b9d909d07ac029f77327",
+      "elapsed_ms": 4603,
+      "estimated_usd": 0.0082,
+      "usage": {
+        "input_tokens": 3156,
+        "input_tokens_details": {
+          "cache_write_tokens": 2112,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 2112
+          },
+          "cached_tokens": 1041
+        },
+        "output_tokens": 31,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 3187
+      }
+    },
+    {
+      "id": "c8b1905c9c7b4ac7a86fe48e262b61f6",
+      "label": "recording/mcp-security-signals/20261114T064247769301Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:43:20.366441+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 19214,
+      "request_sha256": "17387d072f1196a77aef7c514cd5244fc33a5668cb813d0bc4d693fa61adfc2f",
+      "elapsed_ms": 3217,
+      "estimated_usd": 0.012580000000000001,
+      "usage": {
+        "input_tokens": 4900,
+        "input_tokens_details": {
+          "cache_write_tokens": 3856,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 3856
+          },
+          "cached_tokens": 1041
+        },
+        "output_tokens": 33,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4933
+      }
+    },
+    {
+      "id": "1ace45708fed4a06a8c8160e05ae10f3",
+      "label": "recording/mcp-security-signals/20261114T064247769301Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:43:23.614317+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 22925,
+      "request_sha256": "6edf27bacde624f3c801b6b3bddf17262692e2e76cd6f31ef77a759590376b02",
+      "elapsed_ms": 2866,
+      "estimated_usd": 0.01528,
+      "usage": {
+        "input_tokens": 5972,
+        "input_tokens_details": {
+          "cache_write_tokens": 4928,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4928
+          },
+          "cached_tokens": 1041
+        },
+        "output_tokens": 35,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6007
+      }
+    },
+    {
+      "id": "854feded94dc4b589b5df3a77bf4cc3b",
+      "label": "recording/mcp-security-signals/20261114T064247769301Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:43:26.505297+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 16375,
+      "request_sha256": "54d6ec639111e39e055ea93597e50a638301c44204af502d7ed0306bb56bcace",
+      "elapsed_ms": 12597,
+      "estimated_usd": 0.019042500000000004,
+      "usage": {
+        "input_tokens": 3845,
+        "input_tokens_details": {
+          "cache_write_tokens": 3770,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 3770
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 943,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4788
+      }
+    },
+    {
+      "id": "02c1bfb3a3fc470e8098b0c85e91bad8",
+      "label": "recording/mcp-security-signals/20261114T064247769301Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:43:39.122436+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 4606,
+      "request_sha256": "c4724567e4c069bd990b0829f5e266ca9614e8d7a3bb9d6e1b121ca47fb8c759",
+      "elapsed_ms": 6589,
+      "estimated_usd": 0.0049675000000000006,
+      "usage": {
+        "input_tokens": 1203,
+        "input_tokens_details": {
+          "cache_write_tokens": 1200,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1200
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 196,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1399
+      }
+    }
+  ],
+  "export": {
+    "path": "web/replays/v3-mcp-security-signals.json",
+    "sha256": "530727e68b0515654ced2a1d864a839378c5f0d07fb58273bbd524ff78876745",
+    "bytes": 281978,
+    "schema_version": "2.0"
+  }
+}

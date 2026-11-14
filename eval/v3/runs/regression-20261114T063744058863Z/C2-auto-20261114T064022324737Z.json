@@ -1,0 +1,552 @@
+{
+  "id": "C2",
+  "attempt": "20261114T064022324737Z",
+  "batch": "regression-20261114T063744058863Z",
+  "route_requested": "auto",
+  "origin": "synthetic",
+  "query": "现有资料是否证明项目在 Kubernetes 生产环境通过稳定性压测？缺少运行记录时不要推测。",
+  "repo": "eval/c2",
+  "commit": "e2be230ba78c6eaa67d630e2a650b0d648e08187",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T064022324737Z",
+  "code_version": {
+    "commit": "3710bc3a1938d195a524ce7eccf0a1cab5c64507",
+    "evidence_source_sha256": "3a0f5d0e7d72fb2e03d3ebe63a7aee094d5ce82e64fd74dc14d6af0dc374b642"
+  },
+  "input_fixture_sha256": "5d6d021e47bfce986c07e4abef70c9ce65a3688ead21491609d4de4457a7c964",
+  "session_id": "fd92b1c7bbe74d44a6a488b174252b99",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "C1",
+          "title": "现有资料中是否有运行记录证明该项目已在 Kubernetes 生产环境通过稳定性压测；缺少运行记录时不得推测通过。"
+        }
+      ],
+      "execution_route": {
+        "reason": "包含部署、架构、安全或性能约束",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "现有资料是否证明项目在 Kubernetes 生产环境通过稳定性压测？缺少运行记录时不要推测。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "e2be230ba78c6eaa67d630e2a650b0d648e08187",
+            "repo": "eval/c2"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_f27044b3d9e8a1999365ef2a1a37648e46310c295719ebea8d2e821bfdcb0549",
+                  "quote": "# Deploy\nRun python app.py locally.\n"
+                },
+                {
+                  "evidence_id": "ev_a67509d5af400e978fc28b7abedb5ac77285b6bddd5383905d827e1cf172f063",
+                  "quote": "print(\"example\")\n"
+                }
+              ],
+              "commit": "e2be230ba78c6eaa67d630e2a650b0d648e08187",
+              "criterion_id": "C1",
+              "gap_reason": "缺少关联该 commit 的 Kubernetes 生产环境压测记录，包括环境、负载、持续时间、稳定性指标、通过标准与实际结果；本地运行说明不能证明生产压测通过。",
+              "next_step": "提供可追溯至该 commit 的生产 Kubernetes 稳定性压测报告及原始日志、监控指标，并核对实际结果是否达到预先定义的通过标准。",
+              "original_status": "UNVERIFIED",
+              "repo": "eval/c2",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "现有文件仅提供本地运行说明和示例打印代码，未提供 Kubernetes 生产环境稳定性压测运行记录，不能据此判定已通过。[ev_f27044b3d9e8a1999365ef2a1a37648e46310c295719ebea8d2e821bfdcb0549] [ev_a67509d5af400e978fc28b7abedb5ac77285b6bddd5383905d827e1cf172f063]",
+              "support_relation": "insufficient",
+              "verification_basis": "insufficient"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_a67509d5af400e978fc28b7abedb5ac77285b6bddd5383905d827e1cf172f063",
+            "ev_f27044b3d9e8a1999365ef2a1a37648e46310c295719ebea8d2e821bfdcb0549",
+            "meta_509eef522215e341794aec007f2156a857f3d6567b93ac4d8307b5e583a76387",
+            "tree_309f13c6bee14341e39ec32ed823fdbb3abe4521fbda55eb4c657e1abab64323"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "仅提供了 eval/c2 仓库，无法进行跨仓库比较。针对 C1，该仓库现有资料仅含本地运行说明和示例打印代码，缺少关联指定 commit 的 Kubernetes 生产环境稳定性压测运行记录，因此结论为未验证（UNVERIFIED），不能判定已通过，也不代表压测失败。需补充可追溯的压测报告、原始日志及监控指标，并核对环境、负载、持续时间、通过标准与实际结果。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 7,
+      "turn_tool_calls": 4,
+      "turn_usage": {
+        "input_tokens": 11239,
+        "output_tokens": 726,
+        "total_tokens": 11965
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 11239,
+        "output_tokens": 726,
+        "total_tokens": 11965
+      },
+      "workflow_mode": "deploy_readiness"
+    }
+  ],
+  "usage": {
+    "input_tokens": 11239,
+    "output_tokens": 726,
+    "total_tokens": 11965
+  },
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "UNVERIFIED"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/c2",
+      "name": "inspect_deployment_artifacts",
+      "args": {}
+    },
+    {
+      "repo": "eval/c2",
+      "name": "get_repo_overview_and_tree",
+      "args": {
+        "path": ""
+      }
+    },
+    {
+      "repo": "eval/c2",
+      "name": "read_file_lines",
+      "args": {
+        "path": "README.md",
+        "start_line": 1,
+        "end_line": 10
+      }
+    },
+    {
+      "repo": "eval/c2",
+      "name": "read_file_lines",
+      "args": {
+        "path": "app.py",
+        "start_line": 1,
+        "end_line": 1
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 7,
+    "lead_calls": 2,
+    "lead_input_peak": 759,
+    "known_input_tokens": 11239,
+    "known_output_tokens": 726,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "包含部署、架构、安全或性能约束",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "C1",
+            "title": "现有资料中是否有运行记录证明该项目已在 Kubernetes 生产环境通过稳定性压测；缺少运行记录时不得推测通过。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_requested",
+      "data": {
+        "args": "{}",
+        "repo": "eval/c2",
+        "tool": "inspect_deployment_artifacts"
+      }
+    },
+    {
+      "id": 8,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [],
+        "repo": "eval/c2",
+        "status": "CACHE_HIT",
+        "tool": "inspect_deployment_artifacts"
+      }
+    },
+    {
+      "id": 9,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 10,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"\"}",
+        "repo": "eval/c2",
+        "tool": "get_repo_overview_and_tree"
+      }
+    },
+    {
+      "id": 11,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "meta_509eef522215e341794aec007f2156a857f3d6567b93ac4d8307b5e583a76387",
+          "tree_309f13c6bee14341e39ec32ed823fdbb3abe4521fbda55eb4c657e1abab64323"
+        ],
+        "repo": "eval/c2",
+        "status": "CACHE_HIT",
+        "tool": "get_repo_overview_and_tree"
+      }
+    },
+    {
+      "id": 12,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 13,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"README.md\",\"start_line\":1,\"end_line\":10}",
+        "repo": "eval/c2",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 14,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_f27044b3d9e8a1999365ef2a1a37648e46310c295719ebea8d2e821bfdcb0549"
+        ],
+        "repo": "eval/c2",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 15,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 16,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"app.py\",\"start_line\":1,\"end_line\":1}",
+        "repo": "eval/c2",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 17,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_a67509d5af400e978fc28b7abedb5ac77285b6bddd5383905d827e1cf172f063"
+        ],
+        "repo": "eval/c2",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 18,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 19,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/c2"
+      }
+    },
+    {
+      "id": 20,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 21,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 22,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 23,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 26.57,
+  "request_records": [
+    {
+      "id": "0deace4d40b44bfeb0b81b327ed87467",
+      "label": "regression-20261114T063744058863Z/C2/auto/20261114T064022324737Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:40:22.334272+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1111,
+      "request_sha256": "104f288d3daf752db17812038c9c605e2f2a9937b5364cbc8a3f19488eba4cd9",
+      "elapsed_ms": 4088,
+      "estimated_usd": 0.0010925000000000002,
+      "usage": {
+        "input_tokens": 225,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 53,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 278
+      }
+    },
+    {
+      "id": "21f312f1ea6543c5a658256bd419f20b",
+      "label": "regression-20261114T063744058863Z/C2/auto/20261114T064022324737Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:40:26.433082+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 5969,
+      "request_sha256": "8f0c390b0d71ea613b89fc67b56dc4fc7403927cec1748568289c1badea3c8c6",
+      "elapsed_ms": 2311,
+      "estimated_usd": 0.0030925,
+      "usage": {
+        "input_tokens": 1169,
+        "input_tokens_details": {
+          "cache_write_tokens": 112,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 112
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 17,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1186
+      }
+    },
+    {
+      "id": "d01e6dbf75424b4eb8be55a43140a584",
+      "label": "regression-20261114T063744058863Z/C2/auto/20261114T064022324737Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:40:28.757841+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 6747,
+      "request_sha256": "f3b2268d102dbb604b8017866c2813f08b92061ed62e577db989d4104fbd4335",
+      "elapsed_ms": 2089,
+      "estimated_usd": 0.0035700000000000003,
+      "usage": {
+        "input_tokens": 1340,
+        "input_tokens_details": {
+          "cache_write_tokens": 283,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 283
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 22,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1362
+      }
+    },
+    {
+      "id": "fbd67d097f39466b914d20fdba59e528",
+      "label": "regression-20261114T063744058863Z/C2/auto/20261114T064022324737Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:40:30.862805+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 9423,
+      "request_sha256": "96c283baf2ee130c3450aed28825eea033b9a62df4803d6823fbf63243165361",
+      "elapsed_ms": 3842,
+      "estimated_usd": 0.0057825,
+      "usage": {
+        "input_tokens": 2193,
+        "input_tokens_details": {
+          "cache_write_tokens": 1136,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1136
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2223
+      }
+    },
+    {
+      "id": "e5137fa59dc946aeb066713b4489239a",
+      "label": "regression-20261114T063744058863Z/C2/auto/20261114T064022324737Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:40:34.724074+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 10834,
+      "request_sha256": "44e1a8814777b4b144062dc11cf421b2b71b66db332fe5352692d3d3eb8ff7db",
+      "elapsed_ms": 3125,
+      "estimated_usd": 0.006770000000000001,
+      "usage": {
+        "input_tokens": 2588,
+        "input_tokens_details": {
+          "cache_write_tokens": 1531,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1531
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2618
+      }
+    },
+    {
+      "id": "d52ca3438b4643d3a9b6f08664b76cd8",
+      "label": "regression-20261114T063744058863Z/C2/auto/20261114T064022324737Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:40:37.867437+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 12167,
+      "request_sha256": "2656a2716f5de1bc1e75091610b84beb66e008f261accc60affc12597ff7c91b",
+      "elapsed_ms": 6173,
+      "estimated_usd": 0.011912500000000001,
+      "usage": {
+        "input_tokens": 2965,
+        "input_tokens_details": {
+          "cache_write_tokens": 1908,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1908
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 450,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 3415
+      }
+    },
+    {
+      "id": "e2c608a0bad34884b93a54c8483c28bc",
+      "label": "regression-20261114T063744058863Z/C2/auto/20261114T064022324737Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:40:44.055876+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 2527,
+      "request_sha256": "d4e203423f4dcf271363e095827c6038682fcf8c4fb73bb8c1667faeba6489ef",
+      "elapsed_ms": 4809,
+      "estimated_usd": 0.0031375,
+      "usage": {
+        "input_tokens": 759,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 124,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 883
+      }
+    }
+  ]
+}

@@ -5,8 +5,10 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 import pathlib
+import re
 import shutil
 import sys
 from typing import Any, Dict
@@ -49,6 +51,20 @@ def enrich_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     return enriched
 
 
+def version_assets(out_dir: pathlib.Path) -> None:
+    """Keep cached browsers from mixing a new workbench with old CSS/JS."""
+    for page in out_dir.glob("*.html"):
+        def replace(match: re.Match[str]) -> str:
+            asset = out_dir / match.group(2)
+            if not asset.is_file() or asset.parent != out_dir:
+                return match.group(0)
+            digest = hashlib.sha256(asset.read_bytes()).hexdigest()[:12]
+            return f'{match.group(1)}="{match.group(2)}?v={digest}"'
+
+        page.write_text(re.sub(r'(href|src)="([^"/?]+\.(?:css|js))"', replace,
+                               page.read_text(encoding="utf-8")), encoding="utf-8")
+
+
 def cli() -> int:
     parser = argparse.ArgumentParser(description="Build static site bundle for GitHub Pages")
     parser.add_argument("--state-dir", default="data", help="State directory containing reports/")
@@ -70,6 +86,7 @@ def cli() -> int:
         shutil.rmtree(out_dir)
 
     copy_tree_contents(web_dir, out_dir)
+    version_assets(out_dir)
     # The API and static workbench share the exact same workflow definitions.
     workflow_source = pathlib.Path(__file__).resolve().parents[2] / 'evidence' / 'workflows.json'
     shutil.copy2(workflow_source, out_dir / 'workflows.json')

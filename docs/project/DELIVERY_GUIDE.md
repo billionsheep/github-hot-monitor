@@ -1,57 +1,54 @@
-# RepoAudit-Agent 演示与交付指南
+# RepoAudit-Agent v3 演示与交付指南
 
-## 当前可打开的入口
+## 打开工作台
 
-- 本机实时工作台：<http://127.0.0.1:8774/>
-- 本机纯静态回放：<http://127.0.0.1:8780/>
-- 项目目录：`/Users/moon/Documents/ai agent/github-hot-monitor`
+- 本机实时验收入口：<http://127.0.0.1:8775/>
+- 本机纯静态回放：<http://127.0.0.1:8781/>
+- 仓库：`/Users/moon/Documents/ai agent/github-hot-monitor`
 
-这些是当前预览进程；关闭后按下方命令启动。源码已固化为本地提交与标签 `repoaudit-demo-2026-11-13`，线上 GitHub Pages 尚未更新为此版。交付包的 `VERSION.json` 记录对应提交。
+预览进程关闭后，按 [RUNBOOK.md](RUNBOOK.md) 启动。普通实时入口使用 `python3 ops/scripts/start_local.py --port 8775`；本次费用受控的验收入口使用 `.venv/bin/python eval/v3_preview.py --port 8775`。
 
-## 三分钟演示
+## 五分钟演示
 
-**第 1 分钟：说明问题与选型差异。** 打开静态入口，进入“尽调”，选择“Pydantic AI / Agno · Python 选型与升级追问”，点击“跳到结果”，在“报告轮次”选择第 1 轮。展示 Python 3.10 条件下 Pydantic AI 的 FAIL 和 Agno 的 PASS。
+1. **需求与入口（30秒）**：从发现榜加入候选，或直接输入 GitHub 仓库。三种场景分别回答“怎么实现”“哪些位置值得安全复核”“接入环境需要改什么”。
+2. **架构调查（90秒）**：选择“Pydantic AI / Agno · 模型接入架构与地址传递”回放，跳到结果。沿 `base_url` 定义、参数字典与客户端构造核对矩阵、组件关系和原文。问题没有提供行号，行范围由工具定位。
+3. **安全线索（60秒）**：切换“Python MCP SDK · 进程与环境传递线索”。先看覆盖范围，再点进程和环境线索。区分规则命中、上下文复核与待补查；正常进程启动或环境读取本身不能证明漏洞。
+4. **部署适配（60秒）**：选择“Pydantic AI · Python 环境和模型网关适配”，展示版本矩阵、带来源的配置示例、用户自填项和待运行步骤。复制文本不会执行或修改项目。
+5. **工程闭环（60秒）**：切换报告轮次，打开固定提交原文，导出 Markdown 或 Replay JSON。静态入口保留同一套图、卡片和证据交互，演示无需模型密钥。
 
-**第 2 分钟：说明证据如何可信。** 点击 Pydantic AI 的“查看原文”，展示 `pyproject.toml` 第 48 行、完整 commit、片段哈希和固定来源；打开 GitHub 对照同一行。说明工具只读文件，静态声明与实际安装分别判断。
+早期三份 v2 回放仍在列表中，可展示 Python 3.10 双仓选型差异，以及当时需要人工指定行号的补查流程。新旧录制分别保留。
 
-**第 3 分钟：说明 Agent 工程能力。** 切换第 2 轮，展示用户追问升级 Python 3.11 后两仓 PASS；查看工具 CACHE_HIT 和公开轨迹。补充可以导出报告和自包含 JSON、关闭后端后仍可回放；历史会话和检查点用于恢复。
+## 自己发起实时核查
 
-如需展示信息不足与补查，切换“Pydantic AI · 模型服务地址源码补查”：第一轮资料不足，第二轮收窄问题并指定原文位置后完成参数转交核查。该演示保留真实过程。
+选择部署适配，添加 `pydantic/pydantic-ai`，输入：
 
-## 本机实时演示
+> 请核查 pyproject.toml 中声明的 Python 版本是否允许 Python 3.11，给出原文；这里只判断版本声明。
 
-首次安装与配置见 [RUNBOOK.md](RUNBOOK.md)。本机 `.env.local` 已有配置时直接启动：
+完成后点原文，追问：
+
+> 引用同一提交的版本声明，列出本机安装前还需要验证的事项。
+
+架构研报给出关注的源码路径和符号即可，无需行号。安全审计可写明 `src/mcp/client` 等仓库内目录，减少无关扫描。实时任务固定运行当时的默认分支提交；复现录制中的确切资料应选择回放。
+
+## 交付物
+
+| 内容 | 入口 |
+|---|---|
+| 当前实现与实际交付状态 | [DELIVERY_STATUS.md](DELIVERY_STATUS.md) |
+| 安装、API配置与恢复 | [RUNBOOK.md](RUNBOOK.md) |
+| 数据流、模块与学习练习 | [CODE_GUIDE.md](CODE_GUIDE.md) |
+| 简历项目经历 | [RESUME_PROJECT.md](RESUME_PROJECT.md) |
+| 逐阶段独立复核 | [V3_VALIDATION.md](V3_VALIDATION.md) |
+| 实测与原始运行记录 | [v3评测报告](../../eval/v3/eval_report.md) |
+| 真实回放清单 | [examples/manifest.json](examples/manifest.json) |
+| 回放格式与校验规则 | [REPLAY_BUNDLE_SCHEMA.md](REPLAY_BUNDLE_SCHEMA.md) |
+
+准确提交和标签见 [RELEASE_BASELINE.md](RELEASE_BASELINE.md)。交付包 `RepoAudit-Agent-v3-交付包-2026-11-14.zip` 包含源码、静态站点、回放、文档和评测；本机密钥与运行数据库不随包分发。
+
+解压后在包目录运行：
 
 ```bash
-cd '/Users/moon/Documents/ai agent/github-hot-monitor'
-python3 ops/scripts/start_local.py --port 8774
+python3 -m http.server 8000 --bind 127.0.0.1 --directory site
 ```
 
-在候选池输入 `pydantic/pydantic-ai` 和 `agno-agi/agno`，问题可复制：
-
-> 我们的现有项目暂时只能使用 Python 3.10。请核查两个仓库当前包声明是否允许 Python 3.10，分别引用原文并比较。仅判断声明，不要求安装运行。
-
-完成后追问：
-
-> 如果升级到 Python 3.11，两个仓库是否都满足？沿用本次固定提交并引用 requires-python 原文。
-
-实时任务会固定当时最新提交，后续仓库变化可能改变结果；需要复现本次确切版本时选录制回放。矩阵上方提供 Markdown 和 Replay JSON 下载。
-
-## 交付内容
-
-| 内容 | 位置 |
-|---|---|
-| 产品现状、架构、验收和实际问题 | `docs/project/DELIVERY_STATUS.md` |
-| 运行与本机 API 配置 | `docs/project/RUNBOOK.md` |
-| 数据流、模块与学习练习 | `docs/project/CODE_GUIDE.md` |
-| 可用于简历的项目经历 | `docs/project/RESUME_PROJECT.md` |
-| 三份真实回放、冻结版本与用量 | `web/replays/`、`docs/project/examples/manifest.json` |
-| 可阅读的真实报告 | `docs/project/examples/*.md` |
-| 冻结案例、评测脚本与实测结果 | `eval/` |
-| 可部署的静态站点 | 构建后的 `public/` |
-
-另提供“RepoAudit-Agent-交付包-2026-11-13.zip”。解压后在目录内运行 `python3 -m http.server 8000 --bind 127.0.0.1 --directory site`，打开 <http://127.0.0.1:8000/>。压缩包包含源码、静态页面、原始回放、项目文档和评测记录；本机凭证、运行数据库不在包中。
-
-## 分享给面试官
-
-优先发静态站点链接或上述压缩包，附一句说明：“这是开源 Agent 框架工程约束核查工具；演示展示 Python 环境选型、固定源码证据和同一会话追问。”仓库推送并完成 Pages 工作流后才能使用线上新版链接；当前本地入口不能供他人在公网访问。
+打开 <http://127.0.0.1:8000/> 即可演示。`VERSION.json` 记录提交和标签，`MANIFEST.json` 记录逐文件 SHA-256。代码按任务要求保留本地提交，新版线上 Pages 需后续推送发布。

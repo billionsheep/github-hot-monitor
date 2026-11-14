@@ -1,0 +1,69 @@
+{
+  "checks": [
+    {
+      "check": "v2_original_bytes",
+      "path": "web/replays/agents-python-comparison.json",
+      "passed": true
+    },
+    {
+      "check": "v2_original_bytes",
+      "path": "web/replays/pydantic-model-endpoint.json",
+      "passed": true
+    },
+    {
+      "check": "v2_original_bytes",
+      "path": "web/replays/fastapi-python311.json",
+      "passed": true
+    },
+    {
+      "check": "three_workflows",
+      "passed": true
+    }
+  ],
+  "recordings": [
+    {
+      "file": "web/replays/v3-architecture-gateway.json",
+      "session_id": "d5eb2968848644bcb12b9f12200c0ec7",
+      "workflow_mode": "arch_research",
+      "reports": 2,
+      "file_evidence": 125,
+      "matches_frozen_blob": 125,
+      "graph_edges": 200,
+      "security_findings": 0,
+      "context_reviews": 0,
+      "blueprints": 0,
+      "passed": true,
+      "workflow_contract": true
+    },
+    {
+      "file": "web/replays/v3-mcp-security-signals.json",
+      "session_id": "6baee84db13f4c4bb2e4fc5d7723f8f3",
+      "workflow_mode": "sec_sentinel",
+      "reports": 2,
+      "file_evidence": 46,
+      "matches_frozen_blob": 46,
+      "graph_edges": 0,
+      "security_findings": 116,
+      "context_reviews": 3,
+      "blueprints": 0,
+      "passed": true,
+      "workflow_contract": true
+    },
+    {
+      "file": "web/replays/v3-pydantic-deploy-blueprint.json",
+      "session_id": "d4c99beacbd8443d9b9fbe7cf091ae58",
+      "workflow_mode": "deploy_readiness",
+      "reports": 2,
+      "file_evidence": 13,
+      "matches_frozen_blob": 13,
+      "graph_edges": 0,
+      "security_findings": 0,
+      "context_reviews": 0,
+      "blueprints": 1,
+      "passed": true,
+      "workflow_contract": true
+    }
+  ],
+  "passed": true,
+  "verification_scope": "Bundle contracts plus comparison to locally cached fixed-commit blobs; semantic judgments reviewed separately."
+}

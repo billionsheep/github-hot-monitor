@@ -1,0 +1,721 @@
+{
+  "id": "M3",
+  "attempt": "20261114T062902905958Z",
+  "batch": "multifile-20261114T062812876194Z",
+  "route_requested": "auto",
+  "origin": "synthetic_security_contrast",
+  "query": "对整个冻结仓库做进程执行线索审计，对比 safe_exec.py 与 review_exec.py，并结合 app.py 的调用条件，说明哪些调用使用固定参数，哪些接收输入并开启 shell。保留调用者信任边界仍不明确的部分。",
+  "repo": "eval/v3-exec",
+  "commit": "7e8cf57d7d7e1a52a968ec52792efd4c77401030",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T062902905958Z",
+  "code_version": {
+    "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+    "evidence_source_sha256": "0de5482d545e8dae0292ae30ffc9c3ee8d85ad996b66fc77defff41bcd1e7a46"
+  },
+  "input_fixture_sha256": "d764cabe353b230983ebacf1622da4959764c1e9df668419e21918cfe4ee9601",
+  "session_id": "6ba75db5ce4c4899a58a8a1c2d000129",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [
+        {
+          "artifact_id": "security_scan_c36de7493d873ee512326a3c20073b79212e3a8a9f7d9fa74aad29952de88cd9",
+          "commit": "7e8cf57d7d7e1a52a968ec52792efd4c77401030",
+          "repo": "eval/v3-exec",
+          "scope": {
+            "attempted_directories": 1,
+            "attempted_files": 4,
+            "bytes_read": 461,
+            "complete": true,
+            "continuation": null,
+            "continuations": [],
+            "directories": [
+              "/"
+            ],
+            "file_categories": {
+              "config": 0,
+              "denominator": 4,
+              "doc": 1,
+              "other": 0,
+              "src": 3
+            },
+            "files": [
+              "app.py",
+              "review_exec.py",
+              "safe_exec.py",
+              "README.md"
+            ],
+            "mode": "all",
+            "notes": [],
+            "path_prefix": ""
+          }
+        }
+      ],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "C1",
+          "title": "整个冻结仓库中的进程执行调用（包括 safe_exec.py 与 review_exec.py 中的调用）分别使用固定参数，还是接收输入作为执行参数。"
+        },
+        {
+          "id": "C2",
+          "title": "各进程执行调用是否开启 shell，尤其是否存在接收输入并通过 shell 执行的调用。"
+        },
+        {
+          "id": "C3",
+          "title": "app.py 在哪些条件下触发相关进程执行调用，以及这些条件是否限制了输入来源和调用者权限；无法确定的调用者信任边界应保留为不明确。"
+        }
+      ],
+      "execution_route": {
+        "reason": "架构与安全工作流使用完整流程",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "对整个冻结仓库做进程执行线索审计，对比 safe_exec.py 与 review_exec.py，并结合 app.py 的调用条件，说明哪些调用使用固定参数，哪些接收输入并开启 shell。保留调用者信任边界仍不明确的部分。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "7e8cf57d7d7e1a52a968ec52792efd4c77401030",
+            "repo": "eval/v3-exec"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_a5d98c801a426ce6caf8772d6f864c41f7a6575b7a7b9e64993eea0949f0c15b",
+                  "quote": "import subprocess\n\ndef inspect_version():\n    return subprocess.run([\"python\", \"--version\"], shell=False, capture_output=True)\n"
+                },
+                {
+                  "evidence_id": "ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9",
+                  "quote": "import subprocess as proc\n\ndef launch(command_from_user):\n    return proc.run(\n        command_from_user,\n        shell=True,\n        capture_output=True,\n    )\n"
+                }
+              ],
+              "commit": "7e8cf57d7d7e1a52a968ec52792efd4c77401030",
+              "criterion_id": "C1",
+              "gap_reason": "判断与声明的证据支持关系不一致。",
+              "next_step": "补充可核对的证据并重新判断。",
+              "original_status": "RISK",
+              "repo": "eval/v3-exec",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": true,
+              "summary": "资料不足，无法确认。 [ev_a5d98c801a426ce6caf8772d6f864c41f7a6575b7a7b9e64993eea0949f0c15b] [ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9]",
+              "support_relation": "supports",
+              "verification_basis": "insufficient"
+            },
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_a5d98c801a426ce6caf8772d6f864c41f7a6575b7a7b9e64993eea0949f0c15b",
+                  "quote": "    return subprocess.run([\"python\", \"--version\"], shell=False, capture_output=True)"
+                },
+                {
+                  "evidence_id": "ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9",
+                  "quote": "def launch(command_from_user):\n    return proc.run(\n        command_from_user,\n        shell=True,\n        capture_output=True,\n    )"
+                }
+              ],
+              "commit": "7e8cf57d7d7e1a52a968ec52792efd4c77401030",
+              "criterion_id": "C2",
+              "gap_reason": "判断与声明的证据支持关系不一致。",
+              "next_step": "补充可核对的证据并重新判断。",
+              "original_status": "RISK",
+              "repo": "eval/v3-exec",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": true,
+              "summary": "资料不足，无法确认。 [ev_a5d98c801a426ce6caf8772d6f864c41f7a6575b7a7b9e64993eea0949f0c15b] [ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9]",
+              "support_relation": "supports",
+              "verification_basis": "insufficient"
+            },
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_bc1a701729d7c5ca229e8a94e1bba0e7b13545da4ed59a37d30fb8c64248dc0a",
+                  "quote": "from review_exec import launch\n\ndef route(request):\n    return launch(request[\"command\"])\n"
+                },
+                {
+                  "evidence_id": "ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9",
+                  "quote": "def launch(command_from_user):\n    return proc.run(\n        command_from_user,\n        shell=True,\n        capture_output=True,\n    )"
+                }
+              ],
+              "commit": "7e8cf57d7d7e1a52a968ec52792efd4c77401030",
+              "criterion_id": "C3",
+              "gap_reason": "代码足以确定局部触发条件和输入传递关系，但未提供 route 的实际调用方、部署入口或调用者身份与权限证据，无法确定完整信任边界及外部可达性。",
+              "next_step": "补充实际入口、调用方及认证授权配置，核实 request 的产生方式和执行进程权限；在此之前保留调用者信任边界不明确，不执行这些静态审查样例。",
+              "original_status": "RISK",
+              "repo": "eval/v3-exec",
+              "runtime_validation_required": true,
+              "status": "RISK",
+              "status_calibrated": false,
+              "summary": "app.py 仅定义 route(request)，未在模块顶层执行进程：当该函数被调用且 request[\"command\"] 能成功取值时，该值直接传入 review_exec.launch，继而进入 shell=True 的执行调用。函数内没有认证、授权、输入来源或内容检查；app.py 也没有导入或调用 inspect_version。谁调用 route、request 是否来自外部及调用者权限均不明确，不能据函数名认定它是公开 HTTP 端点。[ev_bc1a701729d7c5ca229e8a94e1bba0e7b13545da4ed59a37d30fb8c64248dc0a] [ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9]",
+              "support_relation": "partial",
+              "verification_basis": "static_config"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9",
+            "ev_81c27192822c845e774bc56e085a3d39949f08d7234dfd88bc58ce2b43f1e7fe",
+            "ev_a5d98c801a426ce6caf8772d6f864c41f7a6575b7a7b9e64993eea0949f0c15b",
+            "ev_bc1a701729d7c5ca229e8a94e1bba0e7b13545da4ed59a37d30fb8c64248dc0a",
+            "security_scan_c36de7493d873ee512326a3c20073b79212e3a8a9f7d9fa74aad29952de88cd9"
+          ]
+        }
+      ],
+      "security_findings": [
+        {
+          "artifact_id": "security_scan_c36de7493d873ee512326a3c20073b79212e3a8a9f7d9fa74aad29952de88cd9",
+          "commit": "7e8cf57d7d7e1a52a968ec52792efd4c77401030",
+          "findings": [
+            {
+              "assessment": "rule_hit",
+              "category": "exec_sinks",
+              "context_complete": true,
+              "end_line": 8,
+              "evidence_id": "ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9",
+              "from": "proc.run",
+              "keywords": [
+                "shell",
+                "capture_output"
+              ],
+              "needs_review": true,
+              "path": "review_exec.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 4,
+              "to": "subprocess.run"
+            },
+            {
+              "assessment": "rule_hit",
+              "category": "exec_sinks",
+              "context_complete": true,
+              "end_line": 4,
+              "evidence_id": "ev_a5d98c801a426ce6caf8772d6f864c41f7a6575b7a7b9e64993eea0949f0c15b",
+              "from": "subprocess.run",
+              "keywords": [
+                "shell",
+                "capture_output"
+              ],
+              "needs_review": true,
+              "path": "safe_exec.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 4,
+              "to": "subprocess.run"
+            }
+          ],
+          "repo": "eval/v3-exec"
+        }
+      ],
+      "summary": "仅提供 eval/v3-exec 一个仓库，无法作跨仓库比较。就所给摘录而言，safe_exec.py 的 inspect_version 使用固定参数 [\"python\", \"--version\"]，且 shell=False；review_exec.py 的 launch 接收传入参数作为执行参数，且 shell=True。不过，C1、C2 的已校验状态均为 UNVERIFIED，不能据此认定已完整确认整个冻结仓库的所有执行调用。C3 已标记为 RISK：app.py 不在模块顶层执行进程，仅在 route(request) 被调用且 request[\"command\"] 成功取值时，将该值直接传入 launch 并通过 shell 执行；函数内未见认证、授权、输入来源或内容检查，也未调用 inspect_version。实际调用方、输入是否来自外部及调用者权限仍不明确，不能认定其为公开 HTTP 端点。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 6,
+      "turn_tool_calls": 4,
+      "turn_usage": {
+        "input_tokens": 20116,
+        "output_tokens": 2099,
+        "total_tokens": 22215
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 20116,
+        "output_tokens": 2099,
+        "total_tokens": 22215
+      },
+      "workflow_mode": "sec_sentinel"
+    }
+  ],
+  "usage": {
+    "input_tokens": 20116,
+    "output_tokens": 2099,
+    "total_tokens": 22215
+  },
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "UNVERIFIED",
+      "UNVERIFIED",
+      "RISK"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/v3-exec",
+      "name": "scan_security_and_risk_sinks",
+      "args": {
+        "path_prefix": "",
+        "mode": "all"
+      }
+    },
+    {
+      "repo": "eval/v3-exec",
+      "name": "scan_security_and_risk_sinks",
+      "args": {
+        "path_prefix": "",
+        "mode": "all"
+      }
+    },
+    {
+      "repo": "eval/v3-exec",
+      "name": "read_file_lines",
+      "args": {
+        "path": "app.py",
+        "start_line": 1,
+        "end_line": 120
+      }
+    },
+    {
+      "repo": "eval/v3-exec",
+      "name": "read_file_lines",
+      "args": {
+        "path": "README.md",
+        "start_line": 1,
+        "end_line": 20
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 6,
+    "lead_calls": 2,
+    "lead_input_peak": 1852,
+    "known_input_tokens": 20116,
+    "known_output_tokens": 2099,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "架构与安全工作流使用完整流程",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "C1",
+            "title": "整个冻结仓库中的进程执行调用（包括 safe_exec.py 与 review_exec.py 中的调用）分别使用固定参数，还是接收输入作为执行参数。"
+          },
+          {
+            "id": "C2",
+            "title": "各进程执行调用是否开启 shell，尤其是否存在接收输入并通过 shell 执行的调用。"
+          },
+          {
+            "id": "C3",
+            "title": "app.py 在哪些条件下触发相关进程执行调用，以及这些条件是否限制了输入来源和调用者权限；无法确定的调用者信任边界应保留为不明确。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\": \"\", \"mode\": \"all\"}",
+        "automatic": true,
+        "repo": "eval/v3-exec",
+        "tool": "scan_security_and_risk_sinks"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "security_scan_c36de7493d873ee512326a3c20073b79212e3a8a9f7d9fa74aad29952de88cd9",
+          "ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9",
+          "ev_a5d98c801a426ce6caf8772d6f864c41f7a6575b7a7b9e64993eea0949f0c15b"
+        ],
+        "repo": "eval/v3-exec",
+        "status": "CACHE_HIT",
+        "tool": "scan_security_and_risk_sinks"
+      }
+    },
+    {
+      "id": 8,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 9,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\":\"\",\"mode\":\"all\"}",
+        "repo": "eval/v3-exec",
+        "tool": "scan_security_and_risk_sinks"
+      }
+    },
+    {
+      "id": 10,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "security_scan_c36de7493d873ee512326a3c20073b79212e3a8a9f7d9fa74aad29952de88cd9",
+          "ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9",
+          "ev_a5d98c801a426ce6caf8772d6f864c41f7a6575b7a7b9e64993eea0949f0c15b"
+        ],
+        "repo": "eval/v3-exec",
+        "status": "CACHE_HIT",
+        "tool": "scan_security_and_risk_sinks"
+      }
+    },
+    {
+      "id": 11,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 12,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"app.py\",\"start_line\":1,\"end_line\":120}",
+        "repo": "eval/v3-exec",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 13,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_bc1a701729d7c5ca229e8a94e1bba0e7b13545da4ed59a37d30fb8c64248dc0a"
+        ],
+        "repo": "eval/v3-exec",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 14,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 15,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"README.md\",\"start_line\":1,\"end_line\":20}",
+        "repo": "eval/v3-exec",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 16,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_81c27192822c845e774bc56e085a3d39949f08d7234dfd88bc58ce2b43f1e7fe"
+        ],
+        "repo": "eval/v3-exec",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 17,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 18,
+      "type": "guardrail_triggered",
+      "data": {
+        "criterion_id": "C1",
+        "reasons": [
+          "判断与声明的证据支持关系不一致。"
+        ],
+        "repo": "eval/v3-exec"
+      }
+    },
+    {
+      "id": 19,
+      "type": "status_calibrated",
+      "data": {
+        "calibrated_status": "UNVERIFIED",
+        "criterion_id": "C1",
+        "original_status": "RISK",
+        "reason_type": "support_insufficient",
+        "reasons": [
+          "判断与声明的证据支持关系不一致。"
+        ],
+        "repo": "eval/v3-exec"
+      }
+    },
+    {
+      "id": 20,
+      "type": "guardrail_triggered",
+      "data": {
+        "criterion_id": "C2",
+        "reasons": [
+          "判断与声明的证据支持关系不一致。"
+        ],
+        "repo": "eval/v3-exec"
+      }
+    },
+    {
+      "id": 21,
+      "type": "status_calibrated",
+      "data": {
+        "calibrated_status": "UNVERIFIED",
+        "criterion_id": "C2",
+        "original_status": "RISK",
+        "reason_type": "support_insufficient",
+        "reasons": [
+          "判断与声明的证据支持关系不一致。"
+        ],
+        "repo": "eval/v3-exec"
+      }
+    },
+    {
+      "id": 22,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/v3-exec"
+      }
+    },
+    {
+      "id": 23,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 24,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 25,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 26,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 42.398,
+  "request_records": [
+    {
+      "id": "2333c5c0fb74498ba02eb3809d760cdb",
+      "label": "multifile-20261114T062812876194Z/M3/auto/20261114T062902905958Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:29:02.915607+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1247,
+      "request_sha256": "95756cbcdc2682a3e5e5f0be556f852fe09ccd2e46d6fb885bb9eb8f5c3be120",
+      "elapsed_ms": 7794,
+      "estimated_usd": 0.0029250000000000005,
+      "usage": {
+        "input_tokens": 258,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 228,
+        "output_tokens_details": {
+          "reasoning_tokens": 89
+        },
+        "total_tokens": 486
+      }
+    },
+    {
+      "id": "4e9ffdd36c0544b8ae087cf8b78d641a",
+      "label": "multifile-20261114T062812876194Z/M3/auto/20261114T062902905958Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:10.730194+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 11592,
+      "request_sha256": "dc5e53f786a9fd74ca29857250f59151e0936729cc9823ca8930871b2fa47423",
+      "elapsed_ms": 2721,
+      "estimated_usd": 0.0075575,
+      "usage": {
+        "input_tokens": 2919,
+        "input_tokens_details": {
+          "cache_write_tokens": 2916,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 2916
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 26,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2945
+      }
+    },
+    {
+      "id": "2fee67a0c7544b76ae543e5bc76d5b73",
+      "label": "multifile-20261114T062812876194Z/M3/auto/20261114T062902905958Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:13.471370+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 17164,
+      "request_sha256": "791ec5548b8516754fdf2d017517fe45381ef06a320fc856f549a388f2a59e46",
+      "elapsed_ms": 3525,
+      "estimated_usd": 0.011832500000000001,
+      "usage": {
+        "input_tokens": 4613,
+        "input_tokens_details": {
+          "cache_write_tokens": 4610,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4610
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4643
+      }
+    },
+    {
+      "id": "5f3ea3172bd34d4192e3046a1cd52d89",
+      "label": "multifile-20261114T062812876194Z/M3/auto/20261114T062902905958Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:17.011985+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 18644,
+      "request_sha256": "57a2f071f279f3c41dfc8d1c67ae39c77df6d191cbc4ec7676dd89c43c172905",
+      "elapsed_ms": 3491,
+      "estimated_usd": 0.01288,
+      "usage": {
+        "input_tokens": 5032,
+        "input_tokens_details": {
+          "cache_write_tokens": 5029,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 5029
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5062
+      }
+    },
+    {
+      "id": "96f660c5ef0c4d7ca658b7339c6fa7e3",
+      "label": "multifile-20261114T062812876194Z/M3/auto/20261114T062902905958Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:20.516186+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 20117,
+      "request_sha256": "9dc246f00a0fac432ee7d33063241f0fec41d9f377ca4912b69f04f045e067c8",
+      "elapsed_ms": 19191,
+      "estimated_usd": 0.029365000000000002,
+      "usage": {
+        "input_tokens": 5442,
+        "input_tokens_details": {
+          "cache_write_tokens": 5439,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 5439
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 1576,
+        "output_tokens_details": {
+          "reasoning_tokens": 31
+        },
+        "total_tokens": 7018
+      }
+    },
+    {
+      "id": "9dc20dcb1aba4820a05acaf8a66d76f8",
+      "label": "multifile-20261114T062812876194Z/M3/auto/20261114T062902905958Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:29:39.724236+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 5805,
+      "request_sha256": "b5f15ec905be1e7daadda5a169c70629ceb7b6b5ddbe7c6a613d4a1b97e16b40",
+      "elapsed_ms": 5559,
+      "estimated_usd": 0.00672,
+      "usage": {
+        "input_tokens": 1852,
+        "input_tokens_details": {
+          "cache_write_tokens": 1849,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1849
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 209,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2061
+      }
+    }
+  ]
+}

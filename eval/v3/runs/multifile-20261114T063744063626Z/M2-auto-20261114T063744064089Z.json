@@ -1,0 +1,1413 @@
+{
+  "id": "M2",
+  "attempt": "20261114T063744064089Z",
+  "batch": "multifile-20261114T063744063626Z",
+  "route_requested": "auto",
+  "origin": "real_public_repository",
+  "query": "分析 Python MCP SDK 的 stdio 客户端与服务端通信架构。重点检查 src/mcp/client/stdio.py 和 src/mcp/server/stdio.py，找出进程创建、输入输出流以及资源关闭机制，引用实现片段并标明冻结资料覆盖范围。",
+  "repo": "modelcontextprotocol/python-sdk",
+  "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T063744064089Z",
+  "code_version": {
+    "commit": "3710bc3a1938d195a524ce7eccf0a1cab5c64507",
+    "evidence_source_sha256": "3a0f5d0e7d72fb2e03d3ebe63a7aee094d5ce82e64fd74dc14d6af0dc374b642"
+  },
+  "input_fixture_sha256": "58d27f0e45ee4477f80c5610058d8be4dbe92dd1b7b48bad2e74d588af7747bb",
+  "session_id": "bd416406a9dd4702a58a12df5d2d27d0",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [
+        {
+          "artifact_id": "arch_profile_0958068aa785cf7bee0d152e564ed5c9ee70148a45ab9893123f2f2a47cc905f",
+          "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+          "repo": "modelcontextprotocol/python-sdk",
+          "scope": {
+            "attempted_directories": 5,
+            "attempted_files": 7,
+            "bytes_read": 133080,
+            "complete": false,
+            "continuation": "",
+            "continuations": [
+              {
+                "kind": "directory",
+                "path": "/",
+                "path_prefix": ""
+              },
+              {
+                "kind": "directory",
+                "path": "src",
+                "path_prefix": "src"
+              },
+              {
+                "kind": "directory",
+                "path": "src/mcp",
+                "path_prefix": "src/mcp"
+              },
+              {
+                "kind": "directory",
+                "path": "src/mcp/server",
+                "path_prefix": "src/mcp/server"
+              },
+              {
+                "kind": "directory",
+                "path": "src/mcp/client",
+                "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "pyproject.toml",
+                "path_prefix": ""
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/client/session.py",
+                "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/client/stdio.py",
+                "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/server/session.py",
+                "path_prefix": "src/mcp/server"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/server/stdio.py",
+                "path_prefix": "src/mcp/server"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/server/transport_security.py",
+                "path_prefix": "src/mcp/server"
+              }
+            ],
+            "directories": [
+              "/",
+              "src",
+              "src/mcp",
+              "src/mcp/server",
+              "src/mcp/client"
+            ],
+            "file_categories": {
+              "config": 1,
+              "denominator": 7,
+              "doc": 1,
+              "other": 0,
+              "src": 5
+            },
+            "files": [
+              "pyproject.toml",
+              "src/mcp/client/session.py",
+              "src/mcp/client/stdio.py",
+              "src/mcp/server/session.py",
+              "src/mcp/server/stdio.py",
+              "src/mcp/server/transport_security.py",
+              "LICENSE"
+            ],
+            "mode": null,
+            "notes": [
+              "/ 目录截断；未列出的项目未扫描。",
+              "src 目录截断；未列出的项目未扫描。",
+              "src/mcp 目录截断；未列出的项目未扫描。",
+              "src/mcp/server 目录截断；未列出的项目未扫描。",
+              "src/mcp/client 目录截断；未列出的项目未扫描。",
+              "线索超过 40 项，仅保留前 40 项，其他线索未展开。"
+            ],
+            "path_prefix": ""
+          }
+        }
+      ],
+      "architecture_graph": [
+        {
+          "artifact_id": "arch_profile_0958068aa785cf7bee0d152e564ed5c9ee70148a45ab9893123f2f2a47cc905f",
+          "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+          "edges": [
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 67,
+              "evidence_id": "ev_b235775baa9e5860acbebd8f2cfbf44e10fe9d6b8536d819e81377b63c51c336",
+              "from": "DEFAULT_CLIENT_INFO",
+              "keywords": [
+                "name",
+                "version"
+              ],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 67,
+              "to": "mcp_types.Implementation"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 88,
+              "evidence_id": "ev_34afe8f51ceb64c8814044a4d0a0269242344c21cf0b045a7075a988df7730f1",
+              "from": "fields.update",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 88,
+              "to": "model.model_fields.items"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 101,
+              "evidence_id": "ev_d6c9a49fb77ac6f8116d3532d10e0994268b38ff0f62d3bf4b3cda334b0884bf",
+              "from": "current",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 101,
+              "to": "mcp_types.methods.SERVER_RESULTS.get"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 104,
+              "evidence_id": "ev_fdf1a05e59701284286b3f20cb0c7d0fc56c3a31d3d9dc54e0e373b7a4919c2b",
+              "from": "newer",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 104,
+              "to": "mcp_types.version.KNOWN_PROTOCOL_VERSIONS.index"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 107,
+              "evidence_id": "ev_0af22b6a29e54e1c2ed3e7a68e95bfb8676609134e7d7975a339b29ae7965e4b",
+              "from": "row",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 107,
+              "to": "mcp_types.methods.SERVER_RESULTS.get"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 141,
+              "evidence_id": "ev_7c02365ddbd8ff22721e3930976d07c42d81bddd5951e63ef4b403f3defa8b60",
+              "from": "types.Implementation.model_validate",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 141,
+              "to": "mcp_types.Implementation.model_validate"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 185,
+              "evidence_id": "ev_18fada5d9a757d9df687cccec128dac309b305f7cd2e66ef0d2773fd4673374d",
+              "from": "name_key",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 185,
+              "to": "mcp.shared.inbound.NAME_BEARING_METHODS.get"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 187,
+              "evidence_id": "ev_31a09881e4bee503a4eadf3cde60ea48018020e0d7eab14f2b22175666a63dc2",
+              "from": "headers",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 187,
+              "to": "mcp.shared.inbound.encode_header_value"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 175,
+              "evidence_id": "ev_a70bf26fcef4445c0192b74a89b3c2ee821f3c494f55b954b2a43957ed9f109e",
+              "from": "json",
+              "keywords": [
+                "by_alias",
+                "exclude_unset"
+              ],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 175,
+              "to": "session_message.message.model_dump_json"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 214,
+              "evidence_id": "ev_f9acf7b8fc247fb87ec797777ceb340c221d02a34406f8059915bf4beccab4bf",
+              "from": "anyio.create_task_group",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 201,
+              "to": "anyio.create_task_group"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 222,
+              "evidence_id": "ev_78a4e02759477f99d04fb1b57f635f8814d33988b56a1f9f049124d939f23f02",
+              "from": "message",
+              "keywords": [
+                "by_name"
+              ],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 222,
+              "to": "mcp_types.jsonrpc_message_adapter.validate_json"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 226,
+              "evidence_id": "ev_d0b08a16f4d4244de1b239d0104057295f91cf2dc9a17f498026f3d2e94e969e",
+              "from": "SessionMessage",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 226,
+              "to": "mcp.shared.message.SessionMessage"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 265,
+              "evidence_id": "ev_8483134ff992e0613e14b07683da3dddb1dc38ee65f46413e9b09c91bbc04887",
+              "from": "mcp.os.win32.utilities.close_process_job",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 265,
+              "to": "mcp.os.win32.utilities.close_process_job"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 287,
+              "evidence_id": "ev_0d252b89e4f038293215dabdbb96e2c9d35ae0862e595887e51f327efcd43ece",
+              "from": "anyio.sleep",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 287,
+              "to": "anyio.sleep"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 298,
+              "evidence_id": "ev_d62971cd6f7a230ee32d76a452dc802c8262072ee4abed7cc90d4a84d96794e2",
+              "from": "mcp.os.win32.utilities.terminate_windows_process_tree",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 298,
+              "to": "mcp.os.win32.utilities.terminate_windows_process_tree"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 302,
+              "evidence_id": "ev_365b4fdcf00119362a8035c9c7e833a1a56ed41ee43afb51a526cfa879def1ec",
+              "from": "mcp.os.posix.utilities.terminate_posix_process_tree",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 302,
+              "to": "mcp.os.posix.utilities.terminate_posix_process_tree"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 62,
+              "evidence_id": "ev_bd36d481da300676050243582d85d0e252141f5b8198ffabe609f3c39df50489",
+              "from": "self._allowed_log_levels",
+              "keywords": [],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 62,
+              "to": "mcp.server.connection.allowed_log_levels"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 111,
+              "evidence_id": "ev_2165c5d2462628761df92fb9eb20668b8217cad48fbc666a00c6c18ba6ee3faa",
+              "from": "data",
+              "keywords": [
+                "by_alias",
+                "mode",
+                "exclude_none"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 111,
+              "to": "request.model_dump"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 119,
+              "evidence_id": "ev_1573277814214d516851df876502aee9aec6f0e1fd25477850b444fd531294d5",
+              "from": "mcp_types.methods.validate_client_result",
+              "keywords": [],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 119,
+              "to": "mcp_types.methods.validate_client_result"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 122,
+              "evidence_id": "ev_dacbac3e2185ee70e1672378059d6a1686e9da01dedbbbdae3ad76bcca22809c",
+              "from": "result_type.model_validate",
+              "keywords": [
+                "by_name"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 122,
+              "to": "result_type.model_validate"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 134,
+              "evidence_id": "ev_ec856a37f62d8f7c2c018f3d098039abb582e64f280d1123eca3de6984306514",
+              "from": "data",
+              "keywords": [
+                "by_alias",
+                "mode",
+                "exclude_none"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 134,
+              "to": "notification.model_dump"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 171,
+              "evidence_id": "ev_02dca11cf7b8ceb8fceee7361f123dc32ccdab3509309e4a4a0f1c7511b08fbb",
+              "from": "self._notify",
+              "keywords": [
+                "params"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 162,
+              "to": "mcp_types.LoggingMessageNotification"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 171,
+              "evidence_id": "ev_02dca11cf7b8ceb8fceee7361f123dc32ccdab3509309e4a4a0f1c7511b08fbb",
+              "from": "self._notify",
+              "keywords": [
+                "level",
+                "data",
+                "logger"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 162,
+              "to": "mcp_types.LoggingMessageNotificationParams"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 179,
+              "evidence_id": "ev_d02cc5feefcd4e6d06f294453d7f18c41dceb112976433516944da493d4d89c3",
+              "from": "self.send_notification",
+              "keywords": [
+                "params"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 175,
+              "to": "mcp_types.ResourceUpdatedNotification"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 43,
+              "evidence_id": "ev_257b96046b3f9322d77665420aa5328312c064966847a20dae44f722a7fd53ee",
+              "from": "_claims_lock",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 43,
+              "to": "threading.Lock"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 102,
+              "evidence_id": "ev_ab95dc7c978063da33d10520792f9da74d2138896c71b2ab9857e25029531a83",
+              "from": "mcp.os.win32.utilities.rebind_std_handle_to_fd",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 102,
+              "to": "mcp.os.win32.utilities.rebind_std_handle_to_fd"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 122,
+              "evidence_id": "ev_ea97b0ecd0bb0b76d4f8d9fe31d59e018228c61a74b5d8c5bbb7961646a6ef1a",
+              "from": "RuntimeError",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 122,
+              "to": "RuntimeError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 154,
+              "evidence_id": "ev_911f55cb65c54e189fdad1b501eca5b2334a2d62da121611630dcbe5d2b95419",
+              "from": "mcp.os.win32.utilities.rebind_std_handle_to_fd",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 154,
+              "to": "mcp.os.win32.utilities.rebind_std_handle_to_fd"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 189,
+              "evidence_id": "ev_f01764939d0e844a6c0e9278c195f015444b23f80aeb5d9060043d2be0ca2bb8",
+              "from": "message",
+              "keywords": [
+                "by_name"
+              ],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 189,
+              "to": "mcp_types.jsonrpc_message_adapter.validate_json"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 194,
+              "evidence_id": "ev_722e8af68130891563a77f6b101e3c07b94acdada1ce1d6b468182fe17c865d6",
+              "from": "session_message",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 194,
+              "to": "mcp.shared.message.SessionMessage"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 203,
+              "evidence_id": "ev_a950b0b622d261939661dc70f3990c2117c188ce8a5214f4bf1812cdefa0a8f9",
+              "from": "json",
+              "keywords": [
+                "by_alias",
+                "exclude_unset"
+              ],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 203,
+              "to": "session_message.message.model_dump_json"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 204,
+              "evidence_id": "ev_b8b03fa82737692062e231c7bf773b8b2a7c233d540687e02ba53d2d3853bf6a",
+              "from": "stdout.write",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "write",
+              "signal": "ast_call",
+              "start_line": 204,
+              "to": "stdout.write"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 107,
+              "evidence_id": "ev_5855c278c35e86fb3ad01d0c764693e99d5448f9e5d103efe675ebd8079ab8ed",
+              "from": "Response",
+              "keywords": [
+                "status_code"
+              ],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 107,
+              "to": "starlette.responses.Response"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 116,
+              "evidence_id": "ev_5eee09beec535cfc40626283bb74a379e75da423c032a1eb3fba675ab07bbb1e",
+              "from": "Response",
+              "keywords": [
+                "status_code"
+              ],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 116,
+              "to": "starlette.responses.Response"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 121,
+              "evidence_id": "ev_2392e7b1c9cea9f072efc33d54038252aa07d1bb2d00bd448abff8dcc12eefd1",
+              "from": "Response",
+              "keywords": [
+                "status_code"
+              ],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 121,
+              "to": "starlette.responses.Response"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 147,
+              "evidence_id": "ev_836b18ef1ae309794f2273ef49b08f1ea9f388da868e45207c49dd907c03b1b3",
+              "from": "response",
+              "keywords": [
+                "status_code"
+              ],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 147,
+              "to": "starlette.responses.Response"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 163,
+              "evidence_id": "ev_c8c38a4bd2f7c37a7890be9ba1e1cdc3e9cb87886f7a78fe1e3618234377ae84",
+              "from": "response",
+              "keywords": [
+                "status_code"
+              ],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 163,
+              "to": "starlette.responses.Response"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 174,
+              "evidence_id": "ev_336abaefd61a58c77d05dced5244d0d0fa9863755ccb43eadf062e1471664491",
+              "from": "cached_messages.append",
+              "keywords": [],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 172,
+              "to": "cached_messages.append"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 176,
+              "evidence_id": "ev_7eb1300615ce3bea1e0dd686a6ac57ea0a887a0f7be8c6aa15cfbf4cbe24aa7f",
+              "from": "cached_messages.append",
+              "keywords": [],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 176,
+              "to": "cached_messages.append"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 180,
+              "evidence_id": "ev_0bbfc007f52f394e35f0b752af0db3e81afe7c4698061cba665584ff722f1d4f",
+              "from": "cached_messages.popleft",
+              "keywords": [],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 180,
+              "to": "cached_messages.popleft"
+            }
+          ],
+          "repo": "modelcontextprotocol/python-sdk"
+        }
+      ],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "process_creation",
+          "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 中 stdio 通信的进程创建及客户端、服务端角色分工机制是什么"
+        },
+        {
+          "id": "input_output_streams",
+          "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 如何组织标准输入输出流，实现客户端与服务端之间的消息传输"
+        },
+        {
+          "id": "resource_cleanup",
+          "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 如何关闭输入输出流、清理相关进程及其他通信资源"
+        }
+      ],
+      "execution_route": {
+        "reason": "架构与安全工作流使用完整流程",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "分析 Python MCP SDK 的 stdio 客户端与服务端通信架构。重点检查 src/mcp/client/stdio.py 和 src/mcp/server/stdio.py，找出进程创建、输入输出流以及资源关闭机制，引用实现片段并标明冻结资料覆盖范围。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+            "repo": "modelcontextprotocol/python-sdk"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_dd4c496bd2e81a680e19c16a0ae907ab02e9d74bb012dad6cab40641d6211905",
+                  "quote": "    process = await _create_platform_compatible_process(\n        command=command,\n        args=server.args,\n        env=get_default_environment() | (server.env or {}),\n        errlog=errlog,\n        cwd=server.cwd,\n    )\n"
+                }
+              ],
+              "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+              "criterion_id": "process_creation",
+              "gap_reason": "仅确认客户端进程创建调用；未读取平台创建函数实现及服务端入口原文。",
+              "next_step": "补读客户端平台进程创建实现和 src/mcp/server/stdio.py，核对实际创建方式及服务端是否仅使用已有标准流。",
+              "original_status": "UNVERIFIED",
+              "repo": "modelcontextprotocol/python-sdk",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "客户端通过平台兼容进程创建函数启动进程，传入命令、服务端参数、默认环境与指定环境的合并结果、错误日志和工作目录 [ev_dd4c496bd2e81a680e19c16a0ae907ab02e9d74bb012dad6cab40641d6211905]。尚无服务端源码原文，不能完整确认双方角色分工。",
+              "support_relation": "partial",
+              "verification_basis": "static_config"
+            },
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_8614b4d0433521daf61feb6cbc8e4708cc8453760e87c3d7e52d6e1e628bae89",
+                  "quote": "def _parse_line(line: str) -> SessionMessage | Exception:\n    \"\"\"Parses one stdout line, returning parse errors as values for the session to surface.\"\"\"\n    try:\n        message = types.jsonrpc_message_adapter.validate_json(line, by_name=False)\n    except ValueError as exc:\n        logger.exception(\"Failed to parse JSONRPC message from server\")\n        return exc\n    return SessionMessage(message)"
+                }
+              ],
+              "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+              "criterion_id": "input_output_streams",
+              "gap_reason": "未取得客户端读写任务、消息序列化及服务端标准输入输出适配的源码原文。",
+              "next_step": "补读两个文件中的流初始化、读写协程和上下文管理器，核对换行分帧、编码及消息通道连接。",
+              "original_status": "UNVERIFIED",
+              "repo": "modelcontextprotocol/python-sdk",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "客户端存在逐行解析逻辑：将 stdout 行作为 JSON-RPC 消息校验，解析失败返回异常，成功包装为 SessionMessage [ev_8614b4d0433521daf61feb6cbc8e4708cc8453760e87c3d7e52d6e1e628bae89]。目前不足以说明双方完整的收发流组织。",
+              "support_relation": "partial",
+              "verification_basis": "static_config"
+            },
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_8614b4d0433521daf61feb6cbc8e4708cc8453760e87c3d7e52d6e1e628bae89",
+                  "quote": "    await _close_pipe(process.stdin)\n    if not await _wait_for_process_exit(process, PROCESS_TERMINATION_TIMEOUT):\n        await _terminate_process_tree(process)\n        # Until the event loop observes the death, the transport cannot close.\n        if not await _wait_for_process_exit(process, _KILL_REAP_TIMEOUT):\n            logger.warning(\"MCP server process %d is still alive after the kill escalation; abandoning it\", process.pid)\n\n    # Reaps surviving Windows job members now, not at GC; no-op on POSIX.\n    close_process_job(process)\n    # A kill survivor can hold the stdout pipe open; poison the reader anyway.\n    await _close_pipe(process.stdout)\n    _close_subprocess_transport(process)"
+                }
+              ],
+              "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+              "criterion_id": "resource_cleanup",
+              "gap_reason": "已确认客户端停止函数的静态顺序，但尚未核实上下文退出到该函数的调用链、平台终止实现及服务端资源关闭行为。",
+              "next_step": "补读双方上下文退出路径及平台终止函数；通过正常退出、取消和子进程不退出场景验证清理行为。",
+              "original_status": "UNVERIFIED",
+              "repo": "modelcontextprotocol/python-sdk",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "客户端停止函数先关闭 stdin，等待退出，超时则调用进程树终止并再次等待；随后关闭进程作业资源、stdout 和子进程 transport。持续存活时仅记录警告并放弃等待 [ev_8614b4d0433521daf61feb6cbc8e4708cc8453760e87c3d7e52d6e1e628bae89]。尚不能确认服务端清理及完整调用链。",
+              "support_relation": "partial",
+              "verification_basis": "static_config"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_8614b4d0433521daf61feb6cbc8e4708cc8453760e87c3d7e52d6e1e628bae89",
+            "ev_dd4c496bd2e81a680e19c16a0ae907ab02e9d74bb012dad6cab40641d6211905"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "仅提供 modelcontextprotocol/python-sdk 一个仓库，且三项结论均标为未验证，只能依据摘录概括，无法完整比较客户端与服务端。进程创建方面：客户端调用平台兼容函数启动进程，传入命令、服务端参数、合并后的环境变量、错误日志及工作目录；未提供服务端入口和平台创建函数实现，双方角色分工尚不能确认。消息传输方面：客户端将 stdout 的单行内容校验为 JSON-RPC 消息，成功则包装为 SessionMessage，失败则返回异常；双方完整的输入输出流组织、写入方式和消息通道连接尚无充分证据。资源清理方面：客户端停止函数先关闭 stdin 并等待退出，超时则调用进程树终止并再次等待，随后关闭进程作业资源、stdout 和子进程 transport；若进程仍存活则记录警告并放弃等待。该停止函数的完整调用链、平台终止行为及服务端清理机制仍未核实。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 8,
+      "turn_tool_calls": 7,
+      "turn_usage": {
+        "input_tokens": 26485,
+        "output_tokens": 1939,
+        "total_tokens": 28424
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 26485,
+        "output_tokens": 1939,
+        "total_tokens": 28424
+      },
+      "workflow_mode": "arch_research"
+    }
+  ],
+  "usage": {
+    "input_tokens": 26485,
+    "output_tokens": 1939,
+    "total_tokens": 28424
+  },
+  "grading": {
+    "score": 1,
+    "reason": "key_evidence_missing",
+    "observed": [
+      "UNVERIFIED",
+      "UNVERIFIED",
+      "UNVERIFIED"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "analyze_architecture_profile",
+      "args": {
+        "path_prefix": ""
+      }
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "get_markdown_outline",
+      "args": {
+        "path": "src/mcp/client/stdio.py",
+        "symbol_or_param_hint": null
+      }
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "read_file_lines",
+      "args": {
+        "path": "src/mcp/client/stdio.py",
+        "start_line": 95,
+        "end_line": 210
+      }
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "read_file_lines",
+      "args": {
+        "path": "src/mcp/client/stdio.py",
+        "start_line": 211,
+        "end_line": 330
+      }
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "get_markdown_outline",
+      "args": {
+        "path": "src/mcp/client/stdio.py",
+        "symbol_or_param_hint": "_create_platform_compatible_process"
+      }
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "read_file_lines",
+      "args": {
+        "path": "src/mcp/client/stdio.py",
+        "start_line": 126,
+        "end_line": 132
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 8,
+    "lead_calls": 2,
+    "lead_input_peak": 1624,
+    "known_input_tokens": 26485,
+    "known_output_tokens": 1939,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "架构与安全工作流使用完整流程",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "process_creation",
+            "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 中 stdio 通信的进程创建及客户端、服务端角色分工机制是什么"
+          },
+          {
+            "id": "input_output_streams",
+            "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 如何组织标准输入输出流，实现客户端与服务端之间的消息传输"
+          },
+          {
+            "id": "resource_cleanup",
+            "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 如何关闭输入输出流、清理相关进程及其他通信资源"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\": \"\"}",
+        "automatic": true,
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "arch_profile_0958068aa785cf7bee0d152e564ed5c9ee70148a45ab9893123f2f2a47cc905f",
+          "ev_b235775baa9e5860acbebd8f2cfbf44e10fe9d6b8536d819e81377b63c51c336",
+          "ev_34afe8f51ceb64c8814044a4d0a0269242344c21cf0b045a7075a988df7730f1",
+          "ev_d6c9a49fb77ac6f8116d3532d10e0994268b38ff0f62d3bf4b3cda334b0884bf",
+          "ev_fdf1a05e59701284286b3f20cb0c7d0fc56c3a31d3d9dc54e0e373b7a4919c2b",
+          "ev_0af22b6a29e54e1c2ed3e7a68e95bfb8676609134e7d7975a339b29ae7965e4b",
+          "ev_7c02365ddbd8ff22721e3930976d07c42d81bddd5951e63ef4b403f3defa8b60",
+          "ev_18fada5d9a757d9df687cccec128dac309b305f7cd2e66ef0d2773fd4673374d",
+          "ev_31a09881e4bee503a4eadf3cde60ea48018020e0d7eab14f2b22175666a63dc2",
+          "ev_a70bf26fcef4445c0192b74a89b3c2ee821f3c494f55b954b2a43957ed9f109e",
+          "ev_f9acf7b8fc247fb87ec797777ceb340c221d02a34406f8059915bf4beccab4bf",
+          "ev_78a4e02759477f99d04fb1b57f635f8814d33988b56a1f9f049124d939f23f02",
+          "ev_d0b08a16f4d4244de1b239d0104057295f91cf2dc9a17f498026f3d2e94e969e",
+          "ev_8483134ff992e0613e14b07683da3dddb1dc38ee65f46413e9b09c91bbc04887",
+          "ev_0d252b89e4f038293215dabdbb96e2c9d35ae0862e595887e51f327efcd43ece",
+          "ev_d62971cd6f7a230ee32d76a452dc802c8262072ee4abed7cc90d4a84d96794e2",
+          "ev_365b4fdcf00119362a8035c9c7e833a1a56ed41ee43afb51a526cfa879def1ec",
+          "ev_bd36d481da300676050243582d85d0e252141f5b8198ffabe609f3c39df50489",
+          "ev_2165c5d2462628761df92fb9eb20668b8217cad48fbc666a00c6c18ba6ee3faa",
+          "ev_1573277814214d516851df876502aee9aec6f0e1fd25477850b444fd531294d5",
+          "ev_dacbac3e2185ee70e1672378059d6a1686e9da01dedbbbdae3ad76bcca22809c",
+          "ev_ec856a37f62d8f7c2c018f3d098039abb582e64f280d1123eca3de6984306514",
+          "ev_02dca11cf7b8ceb8fceee7361f123dc32ccdab3509309e4a4a0f1c7511b08fbb",
+          "ev_d02cc5feefcd4e6d06f294453d7f18c41dceb112976433516944da493d4d89c3",
+          "ev_257b96046b3f9322d77665420aa5328312c064966847a20dae44f722a7fd53ee",
+          "ev_ab95dc7c978063da33d10520792f9da74d2138896c71b2ab9857e25029531a83",
+          "ev_ea97b0ecd0bb0b76d4f8d9fe31d59e018228c61a74b5d8c5bbb7961646a6ef1a",
+          "ev_911f55cb65c54e189fdad1b501eca5b2334a2d62da121611630dcbe5d2b95419",
+          "ev_f01764939d0e844a6c0e9278c195f015444b23f80aeb5d9060043d2be0ca2bb8",
+          "ev_722e8af68130891563a77f6b101e3c07b94acdada1ce1d6b468182fe17c865d6",
+          "ev_a950b0b622d261939661dc70f3990c2117c188ce8a5214f4bf1812cdefa0a8f9",
+          "ev_b8b03fa82737692062e231c7bf773b8b2a7c233d540687e02ba53d2d3853bf6a",
+          "ev_5855c278c35e86fb3ad01d0c764693e99d5448f9e5d103efe675ebd8079ab8ed",
+          "ev_5eee09beec535cfc40626283bb74a379e75da423c032a1eb3fba675ab07bbb1e",
+          "ev_2392e7b1c9cea9f072efc33d54038252aa07d1bb2d00bd448abff8dcc12eefd1",
+          "ev_836b18ef1ae309794f2273ef49b08f1ea9f388da868e45207c49dd907c03b1b3",
+          "ev_c8c38a4bd2f7c37a7890be9ba1e1cdc3e9cb87886f7a78fe1e3618234377ae84",
+          "ev_336abaefd61a58c77d05dced5244d0d0fa9863755ccb43eadf062e1471664491",
+          "ev_7eb1300615ce3bea1e0dd686a6ac57ea0a887a0f7be8c6aa15cfbf4cbe24aa7f",
+          "ev_0bbfc007f52f394e35f0b752af0db3e81afe7c4698061cba665584ff722f1d4f"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 8,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 9,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"symbol_or_param_hint\":null}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 10,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_6359ea346e46ea19466f36dc90ff17e947972f22f1a64c20e570022e38958a0d"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 11,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 12,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"start_line\":95,\"end_line\":210}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 13,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_5eb053a20d46f0f7468d965ae8cd498b0eec203bb79ade1140e7cf6babaf5009"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 14,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 15,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"start_line\":211,\"end_line\":330}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 16,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_8614b4d0433521daf61feb6cbc8e4708cc8453760e87c3d7e52d6e1e628bae89"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 17,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 18,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"symbol_or_param_hint\":\"_create_platform_compatible_process\"}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 19,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_da1884a55084073203d2aeb43755110fec46ca83b1bf229446bff119b9f94630",
+          "ev_dd4c496bd2e81a680e19c16a0ae907ab02e9d74bb012dad6cab40641d6211905"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 20,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 21,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/server/stdio.py\",\"start_line\":1,\"end_line\":120}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 22,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "ERROR",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 23,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 24,
+      "type": "repository_complete",
+      "data": {
+        "repo": "modelcontextprotocol/python-sdk"
+      }
+    },
+    {
+      "id": 25,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 26,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 27,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 28,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 53.347,
+  "request_records": [
+    {
+      "id": "26af96564308489e839f70256bf588e4",
+      "label": "multifile-20261114T063744063626Z/M2/auto/20261114T063744064089Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:37:44.077924+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1246,
+      "request_sha256": "4aaab267a04151aa8c8470a5022de29350e2bf5722e5151ab8f3ce77f8bcc8aa",
+      "elapsed_ms": 7667,
+      "estimated_usd": 0.00266,
+      "usage": {
+        "input_tokens": 260,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 201,
+        "output_tokens_details": {
+          "reasoning_tokens": 66
+        },
+        "total_tokens": 461
+      }
+    },
+    {
+      "id": "6798cf1d477047d48e0d6e7bcc51ec48",
+      "label": "multifile-20261114T063744063626Z/M2/auto/20261114T063744064089Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:37:51.868329+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 19725,
+      "request_sha256": "accfee5ef27d6084aa15fcaec4e7df0e02d12da9be3c9e91653a96d596a8c7e9",
+      "elapsed_ms": 10258,
+      "estimated_usd": 0.013490000000000002,
+      "usage": {
+        "input_tokens": 5264,
+        "input_tokens_details": {
+          "cache_write_tokens": 5261,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 5261
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 33,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5297
+      }
+    },
+    {
+      "id": "95942a4c76f44caebb28d9827d4478cf",
+      "label": "multifile-20261114T063744063626Z/M2/auto/20261114T063744064089Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:38:02.151051+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 10153,
+      "request_sha256": "c5ee5c317915479d3f15befd4c275a81cef17e8a96fe61f0dcaf8d0000cefee9",
+      "elapsed_ms": 2700,
+      "estimated_usd": 0.006262500000000001,
+      "usage": {
+        "input_tokens": 2365,
+        "input_tokens_details": {
+          "cache_write_tokens": 2362,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 2362
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 35,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2400
+      }
+    },
+    {
+      "id": "980c05aa6caa4c7591147cbe42102a18",
+      "label": "multifile-20261114T063744063626Z/M2/auto/20261114T063744064089Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:38:04.867987+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 17394,
+      "request_sha256": "8f78e535bc30521f11a63c94a7fb98329e4e2492016124bf9cbc8ba732277646",
+      "elapsed_ms": 3556,
+      "estimated_usd": 0.010325,
+      "usage": {
+        "input_tokens": 3990,
+        "input_tokens_details": {
+          "cache_write_tokens": 3987,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 3987
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 35,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4025
+      }
+    },
+    {
+      "id": "9fb5c2160de643e4a0622ea8c8224ea5",
+      "label": "multifile-20261114T063744063626Z/M2/auto/20261114T063744064089Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:38:08.441817+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 20613,
+      "request_sha256": "f5ccdf41d4c61262b177aac57fc893c66c0b7d1fd04b72cc0e4138f8f718fd40",
+      "elapsed_ms": 4508,
+      "estimated_usd": 0.012085000000000002,
+      "usage": {
+        "input_tokens": 4582,
+        "input_tokens_details": {
+          "cache_write_tokens": 4579,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4579
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 63,
+        "output_tokens_details": {
+          "reasoning_tokens": 23
+        },
+        "total_tokens": 4645
+      }
+    },
+    {
+      "id": "f375944b34ec400b81c6ad0fe1aa1ef8",
+      "label": "multifile-20261114T063744063626Z/M2/auto/20261114T063744064089Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:38:12.977819+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 21184,
+      "request_sha256": "54d89b4d42dbeb498e917390d85dca1761da46cbfdc647f11256a50588628004",
+      "elapsed_ms": 2373,
+      "estimated_usd": 0.0107475,
+      "usage": {
+        "input_tokens": 4159,
+        "input_tokens_details": {
+          "cache_write_tokens": 4156,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4156
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 35,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4194
+      }
+    },
+    {
+      "id": "085c353e6d13480dbf516e14fb4adc50",
+      "label": "multifile-20261114T063744063626Z/M2/auto/20261114T063744064089Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:38:15.364444+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 21706,
+      "request_sha256": "c3a514d4138cc5e5ccccf9b678447cb80fe7b52e7ab20ed7697cd3d554ec3da2",
+      "elapsed_ms": 15620,
+      "estimated_usd": 0.023572500000000003,
+      "usage": {
+        "input_tokens": 4241,
+        "input_tokens_details": {
+          "cache_write_tokens": 4166,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4166
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 1297,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5538
+      }
+    },
+    {
+      "id": "8400f490f8b4437c9c4cd86cfa6f8090",
+      "label": "multifile-20261114T063744063626Z/M2/auto/20261114T063744064089Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:38:31.001196+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 6116,
+      "request_sha256": "7eb3ca258f91a5dfca97fe0a98ec6dcb48d028758d116071bb37f3f10a828a0b",
+      "elapsed_ms": 6368,
+      "estimated_usd": 0.0064600000000000005,
+      "usage": {
+        "input_tokens": 1624,
+        "input_tokens_details": {
+          "cache_write_tokens": 1621,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1621
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 240,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1864
+      }
+    }
+  ]
+}

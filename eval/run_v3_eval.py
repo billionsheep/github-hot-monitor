@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import sys
 import time
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -19,6 +20,8 @@ from eval.run_eval import FrozenProvider, full_text_baseline, register, score, s
 from eval.v3_budget import V3BudgetAdapter, DEFAULT_PATH
 
 HERE = ROOT / 'eval'
+CODE_VERSION = {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+                'evidence_source_sha256': hashlib.sha256(b''.join(p.name.encode() + p.read_bytes() for p in sorted((ROOT / 'evidence').glob('*.py')))).hexdigest()}
 
 
 def stamp():
@@ -49,7 +52,7 @@ async def run_case(case, fixtures, route, output_dir, batch_id):
     provider = FrozenProvider(db, fixtures)
     item = {'id': case['id'], 'attempt': attempt, 'batch': batch_id, 'route_requested': route,
             'origin': case.get('origin', 'synthetic'), 'query': case['query'], 'repo': case['repo'], 'commit': case['commit'],
-            'model': adapter.config['model'], 'effort': adapter.config['effort'], 'db_path': str(db_path),
+            'model': adapter.config['model'], 'effort': adapter.config['effort'], 'db_path': str(db_path), 'code_version': CODE_VERSION,
             'input_fixture_sha256': hashlib.sha256(json.dumps(fixtures[case['repo']], sort_keys=True).encode()).hexdigest()}
     started = time.monotonic()
     try:

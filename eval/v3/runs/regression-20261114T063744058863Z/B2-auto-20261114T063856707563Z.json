@@ -1,0 +1,386 @@
+{
+  "id": "B2",
+  "attempt": "20261114T063856707563Z",
+  "batch": "regression-20261114T063744058863Z",
+  "route_requested": "auto",
+  "origin": "synthetic",
+  "query": "README.md 宣称模型地址可配置，但 client.py 中 BASE_URL 的赋值是否读取 MODEL_BASE_URL 环境变量？只核查这个赋值。",
+  "repo": "eval/b2",
+  "commit": "fed5a16389df5490a3961eb1e594dd7555efd90a",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T063856707563Z",
+  "code_version": {
+    "commit": "3710bc3a1938d195a524ce7eccf0a1cab5c64507",
+    "evidence_source_sha256": "3a0f5d0e7d72fb2e03d3ebe63a7aee094d5ce82e64fd74dc14d6af0dc374b642"
+  },
+  "input_fixture_sha256": "963c90b5ef9ddc98c5978b31d1f2a472eab6fcecd7f8227e9440c0a5ec3804ff",
+  "session_id": "f1a15e9d6c5f431fafcbcc53b7a52252",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "C1",
+          "title": "client.py 中 BASE_URL 的赋值是否读取 MODEL_BASE_URL 环境变量（仅核查该赋值）"
+        }
+      ],
+      "execution_route": {
+        "reason": "问题涉及多个文件，使用完整流程",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "README.md 宣称模型地址可配置，但 client.py 中 BASE_URL 的赋值是否读取 MODEL_BASE_URL 环境变量？只核查这个赋值。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "fed5a16389df5490a3961eb1e594dd7555efd90a",
+            "repo": "eval/b2"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_0984c6f82d3db8d689825fccdfd0981ef828c3818761efa68b99883ef8e32f81",
+                  "quote": "BASE_URL = \"https://api.openai.com/v1\"\n"
+                }
+              ],
+              "commit": "fed5a16389df5490a3961eb1e594dd7555efd90a",
+              "criterion_id": "C1",
+              "gap_reason": null,
+              "next_step": "如需满足此项要求，将该赋值改为读取 MODEL_BASE_URL 环境变量；本项仅核查该赋值，无需运行验证。",
+              "original_status": "FAIL",
+              "repo": "eval/b2",
+              "runtime_validation_required": false,
+              "status": "FAIL",
+              "status_calibrated": false,
+              "summary": "client.py 中 BASE_URL 直接赋值为固定字符串，未读取 MODEL_BASE_URL 环境变量。[ev_0984c6f82d3db8d689825fccdfd0981ef828c3818761efa68b99883ef8e32f81]",
+              "support_relation": "contradicts",
+              "verification_basis": "static_config"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_0984c6f82d3db8d689825fccdfd0981ef828c3818761efa68b99883ef8e32f81"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "eval/b2 在 C1 项检查中未通过：client.py 中 BASE_URL 被直接赋值为固定字符串 \"https://api.openai.com/v1\"，未读取 MODEL_BASE_URL 环境变量。该结论仅针对该赋值，依据静态核查，无需运行验证；当前仅提供一个仓库，无跨仓库比较。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 4,
+      "turn_tool_calls": 3,
+      "turn_usage": {
+        "input_tokens": 4110,
+        "output_tokens": 448,
+        "total_tokens": 4558
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 4110,
+        "output_tokens": 448,
+        "total_tokens": 4558
+      },
+      "workflow_mode": "deploy_readiness"
+    }
+  ],
+  "usage": {
+    "input_tokens": 4110,
+    "output_tokens": 448,
+    "total_tokens": 4558
+  },
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "FAIL"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/b2",
+      "name": "get_markdown_outline",
+      "args": {
+        "path": "client.py",
+        "symbol_or_param_hint": "BASE_URL"
+      }
+    },
+    {
+      "repo": "eval/b2",
+      "name": "read_file_lines",
+      "args": {
+        "path": "client.py",
+        "start_line": 1,
+        "end_line": 1
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 4,
+    "lead_calls": 2,
+    "lead_input_peak": 475,
+    "known_input_tokens": 4110,
+    "known_output_tokens": 448,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "问题涉及多个文件，使用完整流程",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "C1",
+            "title": "client.py 中 BASE_URL 的赋值是否读取 MODEL_BASE_URL 环境变量（仅核查该赋值）"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\": \"client.py\", \"symbol_or_param_hint\": \"BASE_URL\"}",
+        "automatic": true,
+        "repo": "eval/b2",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_78f1fd549bb5f51e7e70e1f7ccd6678307556df8a3c71b8302fe1f67b793c662",
+          "ev_0984c6f82d3db8d689825fccdfd0981ef828c3818761efa68b99883ef8e32f81"
+        ],
+        "repo": "eval/b2",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 8,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 9,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"client.py\",\"start_line\":1,\"end_line\":1}",
+        "repo": "eval/b2",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 10,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [],
+        "repo": "eval/b2",
+        "status": "DEDUP_BLOCKED",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 11,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 12,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/b2"
+      }
+    },
+    {
+      "id": 13,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 14,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 15,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 16,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 15.396,
+  "request_records": [
+    {
+      "id": "9b67975200cf46899f9663448ea93ca4",
+      "label": "regression-20261114T063744058863Z/B2/auto/20261114T063856707563Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:38:56.717631+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1137,
+      "request_sha256": "d8b718851c94d541b23d71da270c7a3c1645ac21b0b14d5098374a3e14d02da4",
+      "elapsed_ms": 2739,
+      "estimated_usd": 0.00102,
+      "usage": {
+        "input_tokens": 232,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 44,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 276
+      }
+    },
+    {
+      "id": "9fadc2ce7b6147c3b4f0d33c85c1e1bd",
+      "label": "regression-20261114T063744058863Z/B2/auto/20261114T063856707563Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:38:59.476627+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 7440,
+      "request_sha256": "2e5fd521b5bc7f735b17db48ac74475c4147c4dcb6fab08789fe2e784cc74d0e",
+      "elapsed_ms": 3310,
+      "estimated_usd": 0.0044275,
+      "usage": {
+        "input_tokens": 1651,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 1648
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1681
+      }
+    },
+    {
+      "id": "8cb0dc86805946789b053f4be6fa10fb",
+      "label": "regression-20261114T063744058863Z/B2/auto/20261114T063856707563Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:39:02.800593+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 7999,
+      "request_sha256": "96ebbb09e043435b93d5fc6dbe81ae6e51e2ca0d756513a1d8eed5aa49b966bc",
+      "elapsed_ms": 4952,
+      "estimated_usd": 0.007260000000000001,
+      "usage": {
+        "input_tokens": 1752,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 1749
+        },
+        "output_tokens": 288,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2040
+      }
+    },
+    {
+      "id": "8473a39e85e94203b3d36759c85a83a7",
+      "label": "regression-20261114T063744058863Z/B2/auto/20261114T063856707563Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:39:07.766201+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1745,
+      "request_sha256": "27a11bb18f0c8d4dd5be2b2cac6c6ee1848c7ca6ad9ee96e5be2c5e24a0ba160",
+      "elapsed_ms": 4327,
+      "estimated_usd": 0.0020475000000000003,
+      "usage": {
+        "input_tokens": 475,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 86,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 561
+      }
+    }
+  ]
+}

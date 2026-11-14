@@ -1,0 +1,3536 @@
+{
+  "case": "architecture-gateway",
+  "attempt": "20261114T062811818934Z",
+  "session_id": "37e5707b8aa849c2ab22f078cc06bb58",
+  "workflow_mode": "arch_research",
+  "followup": false,
+  "code_version": {
+    "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+    "evidence_source_sha256": "0de5482d545e8dae0292ae30ffc9c3ee8d85ad996b66fc77defff41bcd1e7a46"
+  },
+  "status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [
+        {
+          "artifact_id": "arch_profile_9fb76c6ae58294d734e1caa47bf85d13e88a1b13c537a7b62d1dae9b72c3e24e",
+          "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+          "repo": "pydantic/pydantic-ai",
+          "scope": {
+            "attempted_directories": 4,
+            "attempted_files": 24,
+            "bytes_read": 270101,
+            "complete": false,
+            "continuation": "pydantic_ai_slim/pydantic_ai/providers",
+            "continuations": [
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/huggingface.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/litellm.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/meta.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/mistral.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/moonshotai.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/nebius.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/ollama.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/openai_chatgpt.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/openai_codex.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/openai_compatible.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/openai_decisions.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/openrouter.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/ovhcloud.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/sambanova.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/sentence_transformers.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/snowflake.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/system_one.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/together.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/typesafe.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/vercel.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/vllm.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/voyageai.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/xai.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/zai.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/AGENTS.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/_openai_compatible.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/alibaba.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/anthropic.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/azure.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/bedrock.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/bedrock_mantle.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/cerebras.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/cohere.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/crusoe.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/deepseek.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/fireworks.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/gateway.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/github.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/github_copilot.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/google.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/google_cloud.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/groq.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/providers/heroku.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              }
+            ],
+            "directories": [
+              "/",
+              "pydantic_ai_slim",
+              "pydantic_ai_slim/pydantic_ai",
+              "pydantic_ai_slim/pydantic_ai/providers"
+            ],
+            "file_categories": {
+              "config": 0,
+              "denominator": 24,
+              "doc": 0,
+              "other": 0,
+              "src": 24
+            },
+            "files": [
+              "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "pydantic_ai_slim/pydantic_ai/providers/_bedrock_model_names.py",
+              "pydantic_ai_slim/pydantic_ai/providers/_github_copilot_oauth.py",
+              "pydantic_ai_slim/pydantic_ai/providers/_oauth.py",
+              "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "pydantic_ai_slim/pydantic_ai/providers/_openai_compatible.py",
+              "pydantic_ai_slim/pydantic_ai/providers/alibaba.py",
+              "pydantic_ai_slim/pydantic_ai/providers/anthropic.py",
+              "pydantic_ai_slim/pydantic_ai/providers/azure.py",
+              "pydantic_ai_slim/pydantic_ai/providers/bedrock.py",
+              "pydantic_ai_slim/pydantic_ai/providers/bedrock_mantle.py",
+              "pydantic_ai_slim/pydantic_ai/providers/cerebras.py",
+              "pydantic_ai_slim/pydantic_ai/providers/cohere.py",
+              "pydantic_ai_slim/pydantic_ai/providers/crusoe.py",
+              "pydantic_ai_slim/pydantic_ai/providers/deepseek.py",
+              "pydantic_ai_slim/pydantic_ai/providers/elevenlabs.py",
+              "pydantic_ai_slim/pydantic_ai/providers/fireworks.py",
+              "pydantic_ai_slim/pydantic_ai/providers/gateway.py",
+              "pydantic_ai_slim/pydantic_ai/providers/github.py",
+              "pydantic_ai_slim/pydantic_ai/providers/github_copilot.py",
+              "pydantic_ai_slim/pydantic_ai/providers/google.py",
+              "pydantic_ai_slim/pydantic_ai/providers/google_cloud.py",
+              "pydantic_ai_slim/pydantic_ai/providers/groq.py",
+              "pydantic_ai_slim/pydantic_ai/providers/heroku.py"
+            ],
+            "mode": null,
+            "notes": [
+              "文本文件尝试次数达到 24 上限，仍有文件未扫描。",
+              "线索超过 40 项，仅保留前 40 项，其他线索未展开。"
+            ],
+            "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+          }
+        },
+        {
+          "artifact_id": "arch_profile_7b65aa3f9b843b24fc3a8f0adb9143acad940072cd9002b2162e91723e39e80a",
+          "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+          "repo": "pydantic/pydantic-ai",
+          "scope": {
+            "attempted_directories": 24,
+            "attempted_files": 24,
+            "bytes_read": 533439,
+            "complete": false,
+            "continuation": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-openai-agents-sdk-to-pydantic-ai/references",
+            "continuations": [
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-openai-agents-sdk-to-pydantic-ai/references",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-openai-agents-sdk-to-pydantic-ai/references"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-pi-to-pydantic-ai",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-pi-to-pydantic-ai"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-vercel-ai-sdk-and-eve-to-pydantic-ai",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-vercel-ai-sdk-and-eve-to-pydantic-ai"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/_cli",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/_cli"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/agent",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/agent"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/capabilities",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/capabilities"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/common_tools",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/common_tools"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/durable_exec",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/durable_exec"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/embeddings",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/embeddings"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/ext",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/ext"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/images",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/images"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/models",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/models"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/native_tools",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/native_tools"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/profiles",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/profiles"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/providers",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/realtime",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/realtime"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/toolsets",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/toolsets"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/ui",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/ui"
+              },
+              {
+                "kind": "directory",
+                "path": "pydantic_ai_slim/pydantic_ai/workspaces",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/workspaces"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_history_processor.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_http.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_instructions.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_instrumentation.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_json_schema.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_mcp.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_mcp_apps.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_mcp_compat.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_model_errors.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_model_request_attempts.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_otel_messages.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_output.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_parts_manager.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_removed_names.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_run_context.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_spec.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_special_tokens.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_ssrf.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_sync_stream.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_system_prompt.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_template.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_thinking_part.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_tool_execution.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_tool_search.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_unsupported_settings.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_usage_attribution.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_utils.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_uuid.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_warnings.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/concurrency.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/conversation.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/conversation_store.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/direct.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/exceptions.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/external_events.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/format_prompt.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/framing.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/function_signature.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/mcp.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/messages.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/output.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/prices.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/result.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/retries.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/run.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/settings.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/template.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/tool_manager.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/tools.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/usage.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai/agents/openai.yaml",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai/agents"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai/agents/openai.yaml",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai/agents"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/agents/openai.yaml",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/agents"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/agents/openai.yaml",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/agents"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai/agents/openai.yaml",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai/agents"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-openai-agents-sdk-to-pydantic-ai/agents/openai.yaml",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-openai-agents-sdk-to-pydantic-ai/agents"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/AGENTS-CORE.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/ARCHITECTURE.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/CAPABILITIES-AND-HOOKS.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/COMMON-TASKS.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/INPUT-AND-HISTORY.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/NATIVE-TOOLS.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/ON-DEMAND-CAPABILITIES.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/ORCHESTRATION-AND-INTEGRATIONS.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/TESTING-AND-DEBUGGING.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/TOOLS-ADVANCED.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/TOOLS-CORE.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references/WORKSPACES.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/SKILL.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai/references/RESEARCH-AND-MAPPING.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai/references/VERIFICATION-AND-CUTOVER.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai/SKILL.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai/references/RESEARCH-AND-MAPPING.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai/references/VERIFICATION-AND-CUTOVER.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai/SKILL.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/references/CONCEPT-MAPPING.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/references/SEMANTIC-GAPS.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/references/VERIFICATION-AND-CUTOVER.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/SKILL.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references/CONCEPT-MAPPING.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references/DEEP-AGENTS-MAPPING.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references/LOGFIRE-VERIFICATION.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references/SEMANTIC-GAPS.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references/VERIFICATION-AND-CUTOVER.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references/WORKAROUND-RECIPES.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/SKILL.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai/references/RESEARCH-AND-MAPPING.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai/references/VERIFICATION-AND-CUTOVER.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai/references"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai/SKILL.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-openai-agents-sdk-to-pydantic-ai/SKILL.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-openai-agents-sdk-to-pydantic-ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/AGENTS.md",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_agent_graph.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_cache_health.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_cancel.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_canonical_system.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_context_size.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_conversation_marks.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_deferred.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_deferred_capabilities.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_display.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_enqueue.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_event_registry.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_fallback.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_file_input.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_framing.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_function_schema.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_gateway_cost.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_genai_prices.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_griffe.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              },
+              {
+                "kind": "file",
+                "path": "pydantic_ai_slim/pydantic_ai/_history_mirroring.py",
+                "path_prefix": "pydantic_ai_slim/pydantic_ai"
+              }
+            ],
+            "directories": [
+              "/",
+              "pydantic_ai_slim",
+              "pydantic_ai_slim/pydantic_ai",
+              "pydantic_ai_slim/pydantic_ai/.agents",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/building-pydantic-ai-agents/references",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai/agents",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-agno-to-pydantic-ai/references",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai/agents",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-claude-agent-sdk-to-pydantic-ai/references",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/agents",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-google-adk-to-pydantic-ai/references",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/agents",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-langchain-to-pydantic-ai/references",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai/agents",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-mastra-to-pydantic-ai/references",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-openai-agents-sdk-to-pydantic-ai",
+              "pydantic_ai_slim/pydantic_ai/.agents/skills/migrating-openai-agents-sdk-to-pydantic-ai/agents"
+            ],
+            "file_categories": {
+              "config": 0,
+              "denominator": 24,
+              "doc": 0,
+              "other": 0,
+              "src": 24
+            },
+            "files": [
+              "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "pydantic_ai_slim/pydantic_ai/__main__.py",
+              "pydantic_ai_slim/pydantic_ai/_agent_graph.py",
+              "pydantic_ai_slim/pydantic_ai/_cache_health.py",
+              "pydantic_ai_slim/pydantic_ai/_cancel.py",
+              "pydantic_ai_slim/pydantic_ai/_canonical_system.py",
+              "pydantic_ai_slim/pydantic_ai/_content_filter.py",
+              "pydantic_ai_slim/pydantic_ai/_context_size.py",
+              "pydantic_ai_slim/pydantic_ai/_conversation_marks.py",
+              "pydantic_ai_slim/pydantic_ai/_deferred.py",
+              "pydantic_ai_slim/pydantic_ai/_deferred_capabilities.py",
+              "pydantic_ai_slim/pydantic_ai/_display.py",
+              "pydantic_ai_slim/pydantic_ai/_durable_replay.py",
+              "pydantic_ai_slim/pydantic_ai/_enqueue.py",
+              "pydantic_ai_slim/pydantic_ai/_event_registry.py",
+              "pydantic_ai_slim/pydantic_ai/_fallback.py",
+              "pydantic_ai_slim/pydantic_ai/_file_input.py",
+              "pydantic_ai_slim/pydantic_ai/_framework_frame.py",
+              "pydantic_ai_slim/pydantic_ai/_framing.py",
+              "pydantic_ai_slim/pydantic_ai/_function_schema.py",
+              "pydantic_ai_slim/pydantic_ai/_gateway_cost.py",
+              "pydantic_ai_slim/pydantic_ai/_genai_prices.py",
+              "pydantic_ai_slim/pydantic_ai/_griffe.py",
+              "pydantic_ai_slim/pydantic_ai/_history_mirroring.py"
+            ],
+            "mode": null,
+            "notes": [
+              "目录数达到 24 上限，仍有目录未扫描。",
+              "文本文件尝试次数达到 24 上限，仍有文件未扫描。",
+              "线索超过 40 项，仅保留前 40 项，其他线索未展开。"
+            ],
+            "path_prefix": "pydantic_ai_slim/pydantic_ai"
+          }
+        },
+        {
+          "artifact_id": "arch_profile_2e312e580e75bf58a5ec0b5f70f560a4c5c0cbe024457c18f56002e5d84cf95b",
+          "commit": "878151ba85c7bec6f0df7edfa1bbc0e025fdd5c1",
+          "repo": "agno-agi/agno",
+          "scope": {
+            "attempted_directories": 6,
+            "attempted_files": 6,
+            "bytes_read": 123013,
+            "complete": false,
+            "continuation": "libs/agno/agno/models/openai",
+            "continuations": [
+              {
+                "kind": "file",
+                "path": "libs/agno/agno/models/openai/chat.py",
+                "path_prefix": "libs/agno/agno/models/openai"
+              },
+              {
+                "kind": "file",
+                "path": "libs/agno/agno/models/openai/like.py",
+                "path_prefix": "libs/agno/agno/models/openai"
+              },
+              {
+                "kind": "file",
+                "path": "libs/agno/agno/models/openai/open_responses.py",
+                "path_prefix": "libs/agno/agno/models/openai"
+              },
+              {
+                "kind": "file",
+                "path": "libs/agno/agno/models/openai/responses.py",
+                "path_prefix": "libs/agno/agno/models/openai"
+              }
+            ],
+            "directories": [
+              "/",
+              "libs",
+              "libs/agno",
+              "libs/agno/agno",
+              "libs/agno/agno/models",
+              "libs/agno/agno/models/openai"
+            ],
+            "file_categories": {
+              "config": 0,
+              "denominator": 6,
+              "doc": 0,
+              "other": 0,
+              "src": 6
+            },
+            "files": [
+              "libs/agno/agno/models/openai/__init__.py",
+              "libs/agno/agno/models/openai/chat.py",
+              "libs/agno/agno/models/openai/like.py",
+              "libs/agno/agno/models/openai/open_responses.py",
+              "libs/agno/agno/models/openai/responses.py",
+              "libs/agno/agno/models/openai/types.py"
+            ],
+            "mode": null,
+            "notes": [
+              "线索超过 40 项，仅保留前 40 项，其他线索未展开。"
+            ],
+            "path_prefix": "libs/agno/agno/models/openai"
+          }
+        }
+      ],
+      "architecture_graph": [
+        {
+          "artifact_id": "arch_profile_9fb76c6ae58294d734e1caa47bf85d13e88a1b13c537a7b62d1dae9b72c3e24e",
+          "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+          "edges": [
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 9,
+              "evidence_id": "ev_88c57283c5217f0dd8d178d78435c1aee30f94ae7e11d740b0305fd733d51599",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 9,
+              "to": "functools"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 21,
+              "evidence_id": "ev_d824b148f20d3225dce6fe3d7e1abbde9d311155667bc20c3bb157967b22decf",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 21,
+              "to": "..profiles.ModelProfile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 24,
+              "evidence_id": "ev_6c9baaf3472f0ee1d56c0bff327604f529134bedc7107c29f16bb2f2672a08dc",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 24,
+              "to": "..realtime.RealtimeModelProfile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 269,
+              "evidence_id": "ev_9d1b496fde689e0a59605e018699782aab05af956ffe226176a39d92b537d4f5",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 269,
+              "to": ".openai.OpenAIProvider"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 273,
+              "evidence_id": "ev_f1972bcf250cd251a39fcd6d7dfe349e1714c916db2f6bcf9cb9fe454ae215ae",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 273,
+              "to": ".openai_codex.OpenAICodexProvider"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 277,
+              "evidence_id": "ev_2d3fb1daf8008b6d7dbc02ac103d64cbbac78a9de2de85ea783755097cb5715e",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 277,
+              "to": ".openai_chatgpt.OpenAIChatGPTProvider"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "entry_or_route",
+              "end_line": 285,
+              "evidence_id": "ev_55bf712959f0a5dccefbdbca848ced8402c07355dd356a14285f8d544dc7930a",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 285,
+              "to": ".openrouter.OpenRouterProvider"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 317,
+              "evidence_id": "ev_6825ee1ae11d47e964915b487de922e6279cc6b2fd5191e2632d01504061d928",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 317,
+              "to": ".anthropic.AnthropicProvider"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 86,
+              "evidence_id": "ev_852a45a26e0004ef814c1d7ab03e19b233f94024267943951b06d1e1cd79eda3",
+              "from": "anyio.Lock",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 86,
+              "to": "anyio.Lock"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 185,
+              "evidence_id": "ev_468468a1b4c7d9a678f186fad909bb17384df49e12aa01d84fc2df94453ee988",
+              "from": "self.model_profile",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 185,
+              "to": "self.model_profile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 210,
+              "evidence_id": "ev_a7fc760aae62009c923cbc239b1738a0d52de234479ead09df4a1559bbb44b56",
+              "from": "loop",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 210,
+              "to": "asyncio.get_running_loop"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 215,
+              "evidence_id": "ev_6b54d094e289b55a23eb743dde0b9aadc95d9da56bac5f4e2fcaed02806cf54d",
+              "from": "previous_loop",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 215,
+              "to": "previous_loop.is_running"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 231,
+              "evidence_id": "ev_7fe66a71920aeee4d7a34da45f6a594f4ecd7b3e38744856986178e8906e9e24",
+              "from": "self._moved_to_another_event_loop",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/__init__.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 228,
+              "to": "self._moved_to_another_event_loop"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 18,
+              "evidence_id": "ev_f0e363e06bb72296e147481c49097ce31cd588c30d85b5bb96cec15ab6889dc0",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_bedrock_model_names.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 18,
+              "to": "..settings.CacheRetention"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 54,
+              "evidence_id": "ev_5e2b416623a2147a81966440e6d8ea4b761a545d965ce3ac76fa0492486a66db",
+              "from": "model_name.startswith",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_bedrock_model_names.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 53,
+              "to": "model_name.startswith"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 54,
+              "evidence_id": "ev_6ff4cd9324f8b7a8a16408dd20337eb063af0d941fca578743e6a2c96b905160",
+              "from": "model_name.removeprefix",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_bedrock_model_names.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 54,
+              "to": "model_name.removeprefix"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 72,
+              "evidence_id": "ev_d661dab06208a6b9c2d1bb2ec78de7a5fe47aba84f21ff84b6536fc064c12535",
+              "from": "_MODEL_ARN_RE.match",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_bedrock_model_names.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 71,
+              "to": "_MODEL_ARN_RE.match"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 108,
+              "evidence_id": "ev_415ecfd09428d4823224caa49cc1504017acdd2ba580276121eb0292610b9293",
+              "from": "_",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_bedrock_model_names.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 108,
+              "to": "split_bedrock_model_id"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 134,
+              "evidence_id": "ev_e455f12ba9488498928859d9ac0aa5c7c43a5e7b46bf97095c40d5aec42985cc",
+              "from": "_",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_bedrock_model_names.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 134,
+              "to": "split_bedrock_model_id"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 154,
+              "evidence_id": "ev_a4cb080624cdfd8c638a9fbbe1c52e51ac2759b1ec550d3ef1971857abf86470",
+              "from": "_",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_bedrock_model_names.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 154,
+              "to": "split_bedrock_model_id"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 175,
+              "evidence_id": "ev_97fe1b91cda1c8ed522dadeebbead68578134e8daa4784b4ef67bc854b489172",
+              "from": "_",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_bedrock_model_names.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 175,
+              "to": "split_bedrock_model_id"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 109,
+              "evidence_id": "ev_557ef6633f4558eddfc6b0b77713746cae02d963c48492412020789e64c5ba58",
+              "from": "anyio.sleep",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_github_copilot_oauth.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 109,
+              "to": "anyio.sleep"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 13,
+              "evidence_id": "ev_6a837bbd8044edfc81617eb5258f138ccbf7edaf06c5529fefc788eb1b02f348",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 13,
+              "to": "threading"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 112,
+              "evidence_id": "ev_9a033d42ee8e715bd155215a6ea0f73d475a396ad70fd58fb31c9201899f3db0",
+              "from": "self.wfile.write",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth.py",
+              "relation": "write",
+              "signal": "ast_call",
+              "start_line": 112,
+              "to": "self.wfile.write"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 117,
+              "evidence_id": "ev_a8ea5e9ad5d190c7186696e92d42c24c7ed6fe5835b5cb981734f4f0267b75f0",
+              "from": "cancelled",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 117,
+              "to": "threading.Event"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 126,
+              "evidence_id": "ev_1d65c82b9198ba4d9dbd324dcae18a5e7a15c0b19bd4faf0961ec5a2e1d293bc",
+              "from": "anyio.to_thread.run_sync",
+              "keywords": [
+                "abandon_on_cancel"
+              ],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 126,
+              "to": "anyio.to_thread.run_sync"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 19,
+              "evidence_id": "ev_cc6d31437cbe41bebb45672ceaf9bc18758b92921930af01d89579d55535dd90",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 19,
+              "to": "functools.cached_property"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 24,
+              "evidence_id": "ev_5b967bc9dd3251889c1b4e08d668524f1f79bc5c99d6251f824f69180fd0980d",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 24,
+              "to": "openai.AsyncOpenAI"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 24,
+              "evidence_id": "ev_5b967bc9dd3251889c1b4e08d668524f1f79bc5c99d6251f824f69180fd0980d",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 24,
+              "to": "openai.OpenAIError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 28,
+              "evidence_id": "ev_320a0876bfc8b442f468756f55bf872a21fb49cbb7e04d2574fa9664e4c6c2c5",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 28,
+              "to": "pydantic_ai.exceptions.ModelAPIError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 30,
+              "evidence_id": "ev_b97927cd2daa4f5447eb370a8a121f69870bd673c2da7e557f93409220fb4710",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 30,
+              "to": "._openai_compatible.AsyncHTTPClient"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 30,
+              "evidence_id": "ev_b97927cd2daa4f5447eb370a8a121f69870bd673c2da7e557f93409220fb4710",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 30,
+              "to": "._openai_compatible._OpenAISDKProvider"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 128,
+              "evidence_id": "ev_91c76583567ed3a93c9ba0c053d6c4d8e198bdd79a3bfbe0af77d990be0bf805",
+              "from": "claims.validate_python",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 128,
+              "to": "json.loads"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 331,
+              "evidence_id": "ev_60e9ba8e9b59ea18a920a4afd3598632cfb78da9649059775c845a2b2d42bac2",
+              "from": "self._client",
+              "keywords": [
+                "base_url",
+                "api_key",
+                "http_client"
+              ],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 326,
+              "to": "openai.AsyncOpenAI"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 359,
+              "evidence_id": "ev_324d0e721738223e4527157ecd5e42ebd07e4bc51b3b2f6d1f1232cfebcff8a5",
+              "from": "self._load_if_needed",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 359,
+              "to": "self._load_if_needed"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 383,
+              "evidence_id": "ev_70e1330daf81a65f73e155865a9a683bf3d5fb1ffae2b0c83c95bf70a974ca14",
+              "from": "self._credentials",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 383,
+              "to": "self._credential_source.load"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 389,
+              "evidence_id": "ev_16f124ad6d98c0bf9ff89d14c0968e4ce1cd88f5fe763489857fa73f1bdcbb7b",
+              "from": "anyio.Lock",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 389,
+              "to": "anyio.Lock"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 402,
+              "evidence_id": "ev_65f994077033b68060fee6c3c6bb3b3983559986fcaf12210c3b53e5cb57a8d7",
+              "from": "self._refresh_locked",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 402,
+              "to": "self._refresh_locked"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 428,
+              "evidence_id": "ev_e8ab21e764042d001cee1c687772b1613372c10e7335ea04686608119c0dc228",
+              "from": "self._refresh_locked",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 428,
+              "to": "self._refresh_locked"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 436,
+              "evidence_id": "ev_5f962003619c9c28cfaa30dbd59bbacf3fd3fcd0dc2523c73715af809a7f2c40",
+              "from": "self._refresh_lock.locked",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/_oauth_provider.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 436,
+              "to": "self._refresh_lock.locked"
+            }
+          ],
+          "repo": "pydantic/pydantic-ai"
+        },
+        {
+          "artifact_id": "arch_profile_7b65aa3f9b843b24fc3a8f0adb9143acad940072cd9002b2162e91723e39e80a",
+          "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+          "edges": [
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 16,
+              "evidence_id": "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": ".agent.Agent"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 16,
+              "evidence_id": "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": ".agent.AgentModelSettings"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 16,
+              "evidence_id": "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": ".agent.AgentRetries"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 16,
+              "evidence_id": "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": ".agent.AgentRunEvents"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 16,
+              "evidence_id": "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": ".agent.CallToolsNode"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 16,
+              "evidence_id": "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": ".agent.EndStrategy"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 16,
+              "evidence_id": "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": ".agent.InstrumentationSettings"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 16,
+              "evidence_id": "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": ".agent.ModelRequestNode"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 16,
+              "evidence_id": "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": ".agent.UserPromptNode"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 16,
+              "evidence_id": "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": ".agent.capture_run_messages"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 17,
+              "evidence_id": "ev_217233f0e137ee4db3793709c174abbade8d1d98fd65b4782961a046efee485e",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": ".agent.spec.AgentSpec"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 18,
+              "evidence_id": "ev_141d49c5ccd7e107b8b533f1ee55806d2681c02abfa3e238ef07054b479d643a",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 18,
+              "to": ".capabilities.AgentCapability"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 31,
+              "evidence_id": "ev_42847ce0a49106fb91ff324f06dc6d126bf950b2cd89529b483341453404520d",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 26,
+              "to": ".embeddings.EmbeddingModel"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.AgentRunError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.IncompleteToolCall"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelAPIError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelAuthenticationError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelConnectionError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelContextWindowExceededError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelHTTPError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelNotFoundError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelOverloadedError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelQuotaExceededError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelRateLimitError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelRequestRejectedError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelRequestTimeout"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelRetry"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelServerError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelTimeoutError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ModelUnavailableError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.RetryModelRequest"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.RunCancelled"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.RunTimedOut"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.SkipModelRequest"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.SkipToolExecution"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.SkipToolValidation"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.ToolFailed"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 75,
+              "evidence_id": "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": ".exceptions.UnexpectedModelBehavior"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 83,
+              "evidence_id": "ev_14bc862a672a8017f20be7bfebbf6cf1537dcfb7591e5bbdc6c03b299b804541",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 77,
+              "to": ".images.ImageGenerationModel"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 186,
+              "evidence_id": "ev_d6512f2d46e8d05e35ea6744dedb6472ab884e3c8d4e8f3ab875b9c2603e322c",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 84,
+              "to": ".messages.AgentInstructionSource"
+            }
+          ],
+          "repo": "pydantic/pydantic-ai"
+        },
+        {
+          "artifact_id": "arch_profile_2e312e580e75bf58a5ec0b5f70f560a4c5c0cbe024457c18f56002e5d84cf95b",
+          "commit": "878151ba85c7bec6f0df7edfa1bbc0e025fdd5c1",
+          "edges": [
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 1,
+              "evidence_id": "ev_4cd1a5972d0f932253eeaf64ba26095a46b7f0d3e37c99ae0a91bfa23d2b2218",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 1,
+              "to": "agno.models.openai.chat.OpenAIChat"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 2,
+              "evidence_id": "ev_4cd1a5972d0f932253eeaf64ba26095a46b7f0d3e37c99ae0a91bfa23d2b2218",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 2,
+              "to": "agno.models.openai.like.OpenAILike"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 3,
+              "evidence_id": "ev_4cd1a5972d0f932253eeaf64ba26095a46b7f0d3e37c99ae0a91bfa23d2b2218",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 3,
+              "to": "agno.models.openai.open_responses.OpenResponses"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 4,
+              "evidence_id": "ev_4cd1a5972d0f932253eeaf64ba26095a46b7f0d3e37c99ae0a91bfa23d2b2218",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 4,
+              "to": "agno.models.openai.responses.OpenAIResponses"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 5,
+              "evidence_id": "ev_4cd1a5972d0f932253eeaf64ba26095a46b7f0d3e37c99ae0a91bfa23d2b2218",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": "agno.models.openai.types.ReasoningEffort"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 5,
+              "evidence_id": "ev_4cd1a5972d0f932253eeaf64ba26095a46b7f0d3e37c99ae0a91bfa23d2b2218",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": "agno.models.openai.types.ReasoningSummary"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 5,
+              "evidence_id": "ev_4cd1a5972d0f932253eeaf64ba26095a46b7f0d3e37c99ae0a91bfa23d2b2218",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": "agno.models.openai.types.ServiceTier"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 5,
+              "evidence_id": "ev_4cd1a5972d0f932253eeaf64ba26095a46b7f0d3e37c99ae0a91bfa23d2b2218",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/__init__.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": "agno.models.openai.types.Verbosity"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 8,
+              "evidence_id": "ev_ed73c2b611fa32cc3b31442a32a434ac34adb415e20fde14c60f09a768c00aad",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 8,
+              "to": "pydantic.BaseModel"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 10,
+              "evidence_id": "ev_15a24a44ca66827298e85d602b0b7bf7c834a66be5ec41703989eef4b6d4ba55",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 10,
+              "to": "agno.exceptions.ModelAuthenticationError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 10,
+              "evidence_id": "ev_15a24a44ca66827298e85d602b0b7bf7c834a66be5ec41703989eef4b6d4ba55",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 10,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 13,
+              "evidence_id": "ev_c2b3064858eae49f0911dd7e8636b9ce46a385a37ba15f6cf3ca884653ac68b2",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 13,
+              "to": "agno.models.base.Model"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 14,
+              "evidence_id": "ev_81831582828827b84c652002f2e9f7ee115cd49fe4ef730977b472a1091addff",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 14,
+              "to": "agno.models.message.Citations"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 14,
+              "evidence_id": "ev_81831582828827b84c652002f2e9f7ee115cd49fe4ef730977b472a1091addff",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 14,
+              "to": "agno.models.message.Message"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 14,
+              "evidence_id": "ev_81831582828827b84c652002f2e9f7ee115cd49fe4ef730977b472a1091addff",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 14,
+              "to": "agno.models.message.UrlCitation"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 15,
+              "evidence_id": "ev_6cc42591c1659fce06cbf01cee59105353e16c54ceebc565d3fb97b10977c129",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 15,
+              "to": "agno.models.openai.types.ReasoningEffort"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 15,
+              "evidence_id": "ev_6cc42591c1659fce06cbf01cee59105353e16c54ceebc565d3fb97b10977c129",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 15,
+              "to": "agno.models.openai.types.ServiceTier"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 15,
+              "evidence_id": "ev_6cc42591c1659fce06cbf01cee59105353e16c54ceebc565d3fb97b10977c129",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 15,
+              "to": "agno.models.openai.types.Verbosity"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 16,
+              "evidence_id": "ev_28a2114f9b3f87fb109780d9835c0b585fef01089a0c435aa5b7037ea4f3b379",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 16,
+              "to": "agno.models.response.ModelResponse"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 17,
+              "evidence_id": "ev_66f27b9a966e87622ae789121abd753dce010c354d14704073a6c755f2a536a9",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "agno.run.agent.RunOutput"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 18,
+              "evidence_id": "ev_214664b7ed4da2e57bac1842a006a325db382a5cc456a7a556f5ab67b4e1922f",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 18,
+              "to": "agno.run.team.TeamRunOutput"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 20,
+              "evidence_id": "ev_6f2d9492425c14e5d48644a288f085ccb4cb12ae73647337ccd30377411a146a",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 20,
+              "to": "agno.utils.openai._format_file_for_message"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 20,
+              "evidence_id": "ev_6f2d9492425c14e5d48644a288f085ccb4cb12ae73647337ccd30377411a146a",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 20,
+              "to": "agno.utils.openai.audio_to_message"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 20,
+              "evidence_id": "ev_6f2d9492425c14e5d48644a288f085ccb4cb12ae73647337ccd30377411a146a",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 20,
+              "to": "agno.utils.openai.images_to_message"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 24,
+              "evidence_id": "ev_eae41c2e331cf30a2ee8be11c10f6cdf51e3101bad320cd4eab2f71396a6d45c",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 24,
+              "to": "openai.APIConnectionError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 24,
+              "evidence_id": "ev_eae41c2e331cf30a2ee8be11c10f6cdf51e3101bad320cd4eab2f71396a6d45c",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 24,
+              "to": "openai.APIStatusError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 24,
+              "evidence_id": "ev_eae41c2e331cf30a2ee8be11c10f6cdf51e3101bad320cd4eab2f71396a6d45c",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 24,
+              "to": "openai.RateLimitError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 25,
+              "evidence_id": "ev_6aaf3d0b2997de8f0dc033a14ccafb47b154a1c72339b5b9b85db8afe4aa7600",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 25,
+              "to": "openai.AsyncOpenAI"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 26,
+              "evidence_id": "ev_0ec5005177a978e26f97c61257e4e586b01635fd9c1a95c0c92e6a0ed0a277aa",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 26,
+              "to": "openai.OpenAI"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 27,
+              "evidence_id": "ev_9ad1057bd8cc812b471c2262500b0c01f832eb0c2c5fbe5347f6c9ac12ef0381",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 27,
+              "to": "openai.types.CompletionUsage"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 28,
+              "evidence_id": "ev_5b6bb585efdb71a41bc7a64dbf58ab91b6f1d0481e8ed8ddb42b452855f52d8f",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 28,
+              "to": "openai.types.chat.ChatCompletion"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 28,
+              "evidence_id": "ev_5b6bb585efdb71a41bc7a64dbf58ab91b6f1d0481e8ed8ddb42b452855f52d8f",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 28,
+              "to": "openai.types.chat.ChatCompletionAudio"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 28,
+              "evidence_id": "ev_5b6bb585efdb71a41bc7a64dbf58ab91b6f1d0481e8ed8ddb42b452855f52d8f",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 28,
+              "to": "openai.types.chat.ChatCompletionChunk"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_077f034eed852c99ac4f3aee54749bc4593540ede27b2c0d5bc7c39afd83ddc1",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 29,
+              "to": "openai.types.chat.chat_completion_chunk.ChoiceDelta"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_077f034eed852c99ac4f3aee54749bc4593540ede27b2c0d5bc7c39afd83ddc1",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 29,
+              "to": "openai.types.chat.chat_completion_chunk.ChoiceDeltaToolCall"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 385,
+              "evidence_id": "ev_51bd1e1bdad685da58f81cb76dcd0100fbc3f7012ea54fe0d4724f653f3ef4a6",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 385,
+              "to": "agno.utils.message.normalize_tool_messages"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 385,
+              "evidence_id": "ev_51bd1e1bdad685da58f81cb76dcd0100fbc3f7012ea54fe0d4724f653f3ef4a6",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 385,
+              "to": "agno.utils.message.reformat_tool_call_ids"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 231,
+              "evidence_id": "ev_803b648eb5b9e7cdbb534425ec9f7cf43f8994e39fc728e00dcb9961f0a8b2e9",
+              "from": "module",
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 231,
+              "to": "agno.utils.models.schema_utils.get_response_schema_for_provider"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 113,
+              "evidence_id": "ev_336176a0d7028edb324bb9f9d0e639835309fdf7428f4a816c5f2d18323fa973",
+              "from": "agno.exceptions.ModelAuthenticationError",
+              "keywords": [
+                "message",
+                "model_name"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 110,
+              "to": "agno.exceptions.ModelAuthenticationError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 157,
+              "evidence_id": "ev_a05ca4e56a9612dbe8f92f4e02944d385365085696c0c42298cf8d0e16c264c5",
+              "from": "self.client",
+              "keywords": [
+                "**"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 157,
+              "to": "openai.OpenAI"
+            }
+          ],
+          "repo": "agno-agi/agno"
+        }
+      ],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "C1",
+          "title": "该仓库的 OpenAI 模型接入架构包含哪些组件，这些组件之间存在怎样的静态调用关系。"
+        },
+        {
+          "id": "C2",
+          "title": "该仓库中 base_url 在何处定义、经由哪些调用传递，以及自定义服务地址是否最终进入 OpenAI 客户端配置。"
+        }
+      ],
+      "execution_route": {
+        "reason": "架构与安全工作流使用完整流程",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "比较两个框架的 OpenAI 模型接入架构和服务地址参数传递。Pydantic AI 重点查看 pydantic_ai_slim/pydantic_ai/providers/openai.py，Agno 重点查看 libs/agno/agno/models/openai/chat.py。请自行定位 base_url 的定义和传递调用，用完整语句证据说明接入组件及静态调用关系；分别核查自定义地址是否进入客户端配置，并标明尚需运行验证的部分。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+            "repo": "pydantic/pydantic-ai"
+          },
+          "rows": [
+            {
+              "citations": [],
+              "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+              "criterion_id": "C1",
+              "gap_reason": null,
+              "next_step": "补充原文并核查。",
+              "original_status": "UNVERIFIED",
+              "repo": "pydantic/pydantic-ai",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "证据不足。",
+              "support_relation": null,
+              "verification_basis": "insufficient"
+            },
+            {
+              "citations": [],
+              "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+              "criterion_id": "C2",
+              "gap_reason": null,
+              "next_step": "补充原文并核查。",
+              "original_status": "UNVERIFIED",
+              "repo": "pydantic/pydantic-ai",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "证据不足。",
+              "support_relation": null,
+              "verification_basis": "insufficient"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_141d49c5ccd7e107b8b533f1ee55806d2681c02abfa3e238ef07054b479d643a",
+            "ev_217233f0e137ee4db3793709c174abbade8d1d98fd65b4782961a046efee485e",
+            "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13"
+          ]
+        },
+        {
+          "binding": {
+            "commit": "878151ba85c7bec6f0df7edfa1bbc0e025fdd5c1",
+            "repo": "agno-agi/agno"
+          },
+          "rows": [
+            {
+              "citations": [],
+              "commit": "878151ba85c7bec6f0df7edfa1bbc0e025fdd5c1",
+              "criterion_id": "C1",
+              "gap_reason": "索引覆盖不完整，且没有可引用的组件定义和调用语句原文；不能将符号出现视为直接调用证据，也不能据此概括整个仓库。",
+              "next_step": "读取 libs/agno/agno/models/openai/chat.py 中的导入、类定义、客户端构造及模型请求方法，沿实际调用核实相关组件；分别记录导入、直接调用和状态读写关系，并保留扫描覆盖缺口。",
+              "original_status": "UNVERIFIED",
+              "repo": "agno-agi/agno",
+              "runtime_validation_required": false,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "当前可用证据仅有 chat.py 的不完整索引，未取得足以核实组件职责、导入关系及静态调用链的源码原文，无法形成可靠的接入架构结论。",
+              "support_relation": "insufficient",
+              "verification_basis": "insufficient"
+            },
+            {
+              "citations": [],
+              "commit": "878151ba85c7bec6f0df7edfa1bbc0e025fdd5c1",
+              "criterion_id": "C2",
+              "gap_reason": "用户提示的第 81 行及第 116–124 行尚无可引用原文；提示本身不能证明参数定义及其传递关系，客户端注入和参数覆盖行为也未核实。",
+              "next_step": "重新读取 libs/agno/agno/models/openai/chat.py:81 和 116–124，并补读客户端构造及其调用方，追踪 base_url 的定义、参数字典、覆盖条件和 SDK 构造参数；如需确认实际请求地址，再进行受控运行验证。",
+              "original_status": "UNVERIFIED",
+              "repo": "agno-agi/agno",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "当前上下文没有 base_url 定义、参数传递或 OpenAI 客户端构造的源码原文，因此无法确认自定义服务地址是否最终进入客户端配置；这不代表仓库不支持该配置。",
+              "support_relation": "insufficient",
+              "verification_basis": "insufficient"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": []
+        }
+      ],
+      "security_findings": [],
+      "summary": "在所给提交下，pydantic/pydantic-ai 与 agno-agi/agno 的 C1、C2 均为 UNVERIFIED，现有材料不足以比较其 OpenAI 接入组件、静态调用关系或 base_url 传递路径，也无法确认自定义服务地址是否进入 OpenAI 客户端配置。区别在于：pydantic-ai 仅给出“证据不足”，没有可引用源码；agno 明确记录了 chat.py 索引不完整，且缺少组件定义、调用语句、base_url 参数及客户端构造原文。上述结论表示尚未核实，不代表任一仓库不支持自定义服务地址。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 11,
+      "turn_tool_calls": 16,
+      "turn_usage": {
+        "input_tokens": 42573,
+        "output_tokens": 2040,
+        "total_tokens": 44613
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 42573,
+        "output_tokens": 2040,
+        "total_tokens": 44613
+      },
+      "workflow_mode": "arch_research"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "架构与安全工作流使用完整流程",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "C1",
+            "title": "该仓库的 OpenAI 模型接入架构包含哪些组件，这些组件之间存在怎样的静态调用关系。"
+          },
+          {
+            "id": "C2",
+            "title": "该仓库中 base_url 在何处定义、经由哪些调用传递，以及自定义服务地址是否最终进入 OpenAI 客户端配置。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\": \"pydantic_ai_slim/pydantic_ai/providers\"}",
+        "automatic": true,
+        "repo": "pydantic/pydantic-ai",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "arch_profile_9fb76c6ae58294d734e1caa47bf85d13e88a1b13c537a7b62d1dae9b72c3e24e",
+          "ev_88c57283c5217f0dd8d178d78435c1aee30f94ae7e11d740b0305fd733d51599",
+          "ev_d824b148f20d3225dce6fe3d7e1abbde9d311155667bc20c3bb157967b22decf",
+          "ev_6c9baaf3472f0ee1d56c0bff327604f529134bedc7107c29f16bb2f2672a08dc",
+          "ev_9d1b496fde689e0a59605e018699782aab05af956ffe226176a39d92b537d4f5",
+          "ev_f1972bcf250cd251a39fcd6d7dfe349e1714c916db2f6bcf9cb9fe454ae215ae",
+          "ev_2d3fb1daf8008b6d7dbc02ac103d64cbbac78a9de2de85ea783755097cb5715e",
+          "ev_55bf712959f0a5dccefbdbca848ced8402c07355dd356a14285f8d544dc7930a",
+          "ev_6825ee1ae11d47e964915b487de922e6279cc6b2fd5191e2632d01504061d928",
+          "ev_852a45a26e0004ef814c1d7ab03e19b233f94024267943951b06d1e1cd79eda3",
+          "ev_468468a1b4c7d9a678f186fad909bb17384df49e12aa01d84fc2df94453ee988",
+          "ev_a7fc760aae62009c923cbc239b1738a0d52de234479ead09df4a1559bbb44b56",
+          "ev_6b54d094e289b55a23eb743dde0b9aadc95d9da56bac5f4e2fcaed02806cf54d",
+          "ev_7fe66a71920aeee4d7a34da45f6a594f4ecd7b3e38744856986178e8906e9e24",
+          "ev_f0e363e06bb72296e147481c49097ce31cd588c30d85b5bb96cec15ab6889dc0",
+          "ev_5e2b416623a2147a81966440e6d8ea4b761a545d965ce3ac76fa0492486a66db",
+          "ev_6ff4cd9324f8b7a8a16408dd20337eb063af0d941fca578743e6a2c96b905160",
+          "ev_d661dab06208a6b9c2d1bb2ec78de7a5fe47aba84f21ff84b6536fc064c12535",
+          "ev_415ecfd09428d4823224caa49cc1504017acdd2ba580276121eb0292610b9293",
+          "ev_e455f12ba9488498928859d9ac0aa5c7c43a5e7b46bf97095c40d5aec42985cc",
+          "ev_a4cb080624cdfd8c638a9fbbe1c52e51ac2759b1ec550d3ef1971857abf86470",
+          "ev_97fe1b91cda1c8ed522dadeebbead68578134e8daa4784b4ef67bc854b489172",
+          "ev_557ef6633f4558eddfc6b0b77713746cae02d963c48492412020789e64c5ba58",
+          "ev_6a837bbd8044edfc81617eb5258f138ccbf7edaf06c5529fefc788eb1b02f348",
+          "ev_9a033d42ee8e715bd155215a6ea0f73d475a396ad70fd58fb31c9201899f3db0",
+          "ev_a8ea5e9ad5d190c7186696e92d42c24c7ed6fe5835b5cb981734f4f0267b75f0",
+          "ev_1d65c82b9198ba4d9dbd324dcae18a5e7a15c0b19bd4faf0961ec5a2e1d293bc",
+          "ev_cc6d31437cbe41bebb45672ceaf9bc18758b92921930af01d89579d55535dd90",
+          "ev_5b967bc9dd3251889c1b4e08d668524f1f79bc5c99d6251f824f69180fd0980d",
+          "ev_320a0876bfc8b442f468756f55bf872a21fb49cbb7e04d2574fa9664e4c6c2c5",
+          "ev_b97927cd2daa4f5447eb370a8a121f69870bd673c2da7e557f93409220fb4710",
+          "ev_91c76583567ed3a93c9ba0c053d6c4d8e198bdd79a3bfbe0af77d990be0bf805",
+          "ev_60e9ba8e9b59ea18a920a4afd3598632cfb78da9649059775c845a2b2d42bac2",
+          "ev_324d0e721738223e4527157ecd5e42ebd07e4bc51b3b2f6d1f1232cfebcff8a5",
+          "ev_70e1330daf81a65f73e155865a9a683bf3d5fb1ffae2b0c83c95bf70a974ca14",
+          "ev_16f124ad6d98c0bf9ff89d14c0968e4ce1cd88f5fe763489857fa73f1bdcbb7b",
+          "ev_65f994077033b68060fee6c3c6bb3b3983559986fcaf12210c3b53e5cb57a8d7",
+          "ev_e8ab21e764042d001cee1c687772b1613372c10e7335ea04686608119c0dc228",
+          "ev_5f962003619c9c28cfaa30dbd59bbacf3fd3fcd0dc2523c73715af809a7f2c40"
+        ],
+        "repo": "pydantic/pydantic-ai",
+        "status": "SUCCESS",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 8,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\": \"pydantic_ai_slim/pydantic_ai/providers/openai.py\", \"symbol_or_param_hint\": \"base_url\"}",
+        "automatic": true,
+        "repo": "pydantic/pydantic-ai",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 9,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_40f639433a76bbe51281484e7082d3f66834d90f6af86b1f179f1d3322c84bd2",
+          "ev_0d4801e3c637e775a4147b53c47dd708a4ee2fbc8a5519949d7ab7fea1a282f0",
+          "ev_9d10ea444f3e89954564790d7e45e5b9650a8dadb5654010ddd35bad4dd2e091"
+        ],
+        "repo": "pydantic/pydantic-ai",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 10,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 11,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"pydantic_ai_slim/pydantic_ai/providers/openai.py\",\"symbol_or_param_hint\":null}",
+        "repo": "pydantic/pydantic-ai",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 12,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_6026e9caa41ed1c568cd6b12180d6f23ffe2683ea76f895d7f0b85ef02875aa9"
+        ],
+        "repo": "pydantic/pydantic-ai",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 13,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 14,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\":\"pydantic_ai_slim/pydantic_ai\"}",
+        "repo": "pydantic/pydantic-ai",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 15,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "arch_profile_7b65aa3f9b843b24fc3a8f0adb9143acad940072cd9002b2162e91723e39e80a",
+          "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+          "ev_217233f0e137ee4db3793709c174abbade8d1d98fd65b4782961a046efee485e",
+          "ev_141d49c5ccd7e107b8b533f1ee55806d2681c02abfa3e238ef07054b479d643a",
+          "ev_42847ce0a49106fb91ff324f06dc6d126bf950b2cd89529b483341453404520d",
+          "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+          "ev_14bc862a672a8017f20be7bfebbf6cf1537dcfb7591e5bbdc6c03b299b804541",
+          "ev_d6512f2d46e8d05e35ea6744dedb6472ab884e3c8d4e8f3ab875b9c2603e322c"
+        ],
+        "repo": "pydantic/pydantic-ai",
+        "status": "SUCCESS",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 16,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 17,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"pydantic_ai_slim/pydantic_ai/providers/openai.py\",\"start_line\":10,\"end_line\":120}",
+        "repo": "pydantic/pydantic-ai",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 18,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_a195b9cd6310a2cd11801b88e180e0e95595f63c318d575e4061ed6259f52d90"
+        ],
+        "repo": "pydantic/pydantic-ai",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 19,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 20,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\":\"pydantic_ai_slim/pydantic_ai\"}",
+        "repo": "pydantic/pydantic-ai",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 21,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "arch_profile_7b65aa3f9b843b24fc3a8f0adb9143acad940072cd9002b2162e91723e39e80a",
+          "ev_d7ae4ea1d97328be8d7ac914ec3b45211c62df1ec5e196a0d2cc08dcba945b13",
+          "ev_217233f0e137ee4db3793709c174abbade8d1d98fd65b4782961a046efee485e",
+          "ev_141d49c5ccd7e107b8b533f1ee55806d2681c02abfa3e238ef07054b479d643a",
+          "ev_42847ce0a49106fb91ff324f06dc6d126bf950b2cd89529b483341453404520d",
+          "ev_c87007fd2553cdd0a9d3c1ab91fab1d46d4e7eeb2876977c8d076cf7d35344e8",
+          "ev_14bc862a672a8017f20be7bfebbf6cf1537dcfb7591e5bbdc6c03b299b804541",
+          "ev_d6512f2d46e8d05e35ea6744dedb6472ab884e3c8d4e8f3ab875b9c2603e322c"
+        ],
+        "repo": "pydantic/pydantic-ai",
+        "status": "CACHE_HIT",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 22,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 23,
+      "type": "repository_complete",
+      "data": {
+        "repo": "pydantic/pydantic-ai"
+      }
+    },
+    {
+      "id": 24,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\": \"libs/agno/agno/models/openai\"}",
+        "automatic": true,
+        "repo": "agno-agi/agno",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 25,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "arch_profile_2e312e580e75bf58a5ec0b5f70f560a4c5c0cbe024457c18f56002e5d84cf95b",
+          "ev_4cd1a5972d0f932253eeaf64ba26095a46b7f0d3e37c99ae0a91bfa23d2b2218",
+          "ev_ed73c2b611fa32cc3b31442a32a434ac34adb415e20fde14c60f09a768c00aad",
+          "ev_15a24a44ca66827298e85d602b0b7bf7c834a66be5ec41703989eef4b6d4ba55",
+          "ev_c2b3064858eae49f0911dd7e8636b9ce46a385a37ba15f6cf3ca884653ac68b2",
+          "ev_81831582828827b84c652002f2e9f7ee115cd49fe4ef730977b472a1091addff",
+          "ev_6cc42591c1659fce06cbf01cee59105353e16c54ceebc565d3fb97b10977c129",
+          "ev_28a2114f9b3f87fb109780d9835c0b585fef01089a0c435aa5b7037ea4f3b379",
+          "ev_66f27b9a966e87622ae789121abd753dce010c354d14704073a6c755f2a536a9",
+          "ev_214664b7ed4da2e57bac1842a006a325db382a5cc456a7a556f5ab67b4e1922f",
+          "ev_6f2d9492425c14e5d48644a288f085ccb4cb12ae73647337ccd30377411a146a",
+          "ev_eae41c2e331cf30a2ee8be11c10f6cdf51e3101bad320cd4eab2f71396a6d45c",
+          "ev_6aaf3d0b2997de8f0dc033a14ccafb47b154a1c72339b5b9b85db8afe4aa7600",
+          "ev_0ec5005177a978e26f97c61257e4e586b01635fd9c1a95c0c92e6a0ed0a277aa",
+          "ev_9ad1057bd8cc812b471c2262500b0c01f832eb0c2c5fbe5347f6c9ac12ef0381",
+          "ev_5b6bb585efdb71a41bc7a64dbf58ab91b6f1d0481e8ed8ddb42b452855f52d8f",
+          "ev_077f034eed852c99ac4f3aee54749bc4593540ede27b2c0d5bc7c39afd83ddc1",
+          "ev_51bd1e1bdad685da58f81cb76dcd0100fbc3f7012ea54fe0d4724f653f3ef4a6",
+          "ev_803b648eb5b9e7cdbb534425ec9f7cf43f8994e39fc728e00dcb9961f0a8b2e9",
+          "ev_336176a0d7028edb324bb9f9d0e639835309fdf7428f4a816c5f2d18323fa973",
+          "ev_a05ca4e56a9612dbe8f92f4e02944d385365085696c0c42298cf8d0e16c264c5"
+        ],
+        "repo": "agno-agi/agno",
+        "status": "SUCCESS",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 26,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\": \"libs/agno/agno/models/openai/chat.py\", \"symbol_or_param_hint\": \"base_url\"}",
+        "automatic": true,
+        "repo": "agno-agi/agno",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 27,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_e20344a1232789259185503a1be47bf3d95c975ee28137f37a7b8a79ef22a25c",
+          "ev_97ae85358ab105eb4e896b0bedcee571d724b7ca27c2fb40c3933e803af3b7e5",
+          "ev_d06a0b10e7f46106991e55280c9406caa33b550eaf27b434a51ba6e0d55b17ff"
+        ],
+        "repo": "agno-agi/agno",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 28,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 29,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"libs/agno/agno/models/openai/chat.py\",\"start_line\":95,\"end_line\":210}",
+        "repo": "agno-agi/agno",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 30,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_bad05a8dd0ed4633318e6913c6d713081893ea6f52fcb0e9a73143b4f48bbf21",
+          "ev_8aa465ef1e57e3325c4a67ee0390341f09a421b10bece29fbfeb305cb99e5e10"
+        ],
+        "repo": "agno-agi/agno",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 31,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 32,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\":\"libs/agno/agno/models/openai\"}",
+        "repo": "agno-agi/agno",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 33,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "arch_profile_2e312e580e75bf58a5ec0b5f70f560a4c5c0cbe024457c18f56002e5d84cf95b",
+          "ev_4cd1a5972d0f932253eeaf64ba26095a46b7f0d3e37c99ae0a91bfa23d2b2218",
+          "ev_ed73c2b611fa32cc3b31442a32a434ac34adb415e20fde14c60f09a768c00aad",
+          "ev_15a24a44ca66827298e85d602b0b7bf7c834a66be5ec41703989eef4b6d4ba55",
+          "ev_c2b3064858eae49f0911dd7e8636b9ce46a385a37ba15f6cf3ca884653ac68b2",
+          "ev_81831582828827b84c652002f2e9f7ee115cd49fe4ef730977b472a1091addff",
+          "ev_6cc42591c1659fce06cbf01cee59105353e16c54ceebc565d3fb97b10977c129",
+          "ev_28a2114f9b3f87fb109780d9835c0b585fef01089a0c435aa5b7037ea4f3b379",
+          "ev_66f27b9a966e87622ae789121abd753dce010c354d14704073a6c755f2a536a9",
+          "ev_214664b7ed4da2e57bac1842a006a325db382a5cc456a7a556f5ab67b4e1922f",
+          "ev_6f2d9492425c14e5d48644a288f085ccb4cb12ae73647337ccd30377411a146a",
+          "ev_eae41c2e331cf30a2ee8be11c10f6cdf51e3101bad320cd4eab2f71396a6d45c",
+          "ev_6aaf3d0b2997de8f0dc033a14ccafb47b154a1c72339b5b9b85db8afe4aa7600",
+          "ev_0ec5005177a978e26f97c61257e4e586b01635fd9c1a95c0c92e6a0ed0a277aa",
+          "ev_9ad1057bd8cc812b471c2262500b0c01f832eb0c2c5fbe5347f6c9ac12ef0381",
+          "ev_5b6bb585efdb71a41bc7a64dbf58ab91b6f1d0481e8ed8ddb42b452855f52d8f",
+          "ev_077f034eed852c99ac4f3aee54749bc4593540ede27b2c0d5bc7c39afd83ddc1",
+          "ev_51bd1e1bdad685da58f81cb76dcd0100fbc3f7012ea54fe0d4724f653f3ef4a6",
+          "ev_803b648eb5b9e7cdbb534425ec9f7cf43f8994e39fc728e00dcb9961f0a8b2e9",
+          "ev_336176a0d7028edb324bb9f9d0e639835309fdf7428f4a816c5f2d18323fa973",
+          "ev_a05ca4e56a9612dbe8f92f4e02944d385365085696c0c42298cf8d0e16c264c5"
+        ],
+        "repo": "agno-agi/agno",
+        "status": "CACHE_HIT",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 34,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 35,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"libs/agno/agno/models/openai/chat.py\",\"symbol_or_param_hint\":\"base_url get_client invoke\"}",
+        "repo": "agno-agi/agno",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 36,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_d25d13380ec374e4f49810f5fc94185d3985fc023d7570ffc89a8c4d7869cacb"
+        ],
+        "repo": "agno-agi/agno",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 37,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 38,
+      "type": "repository_complete",
+      "data": {
+        "repo": "agno-agi/agno"
+      }
+    },
+    {
+      "id": 39,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 40,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 41,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 42,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "usage": {
+    "input_tokens": 42573,
+    "output_tokens": 2040,
+    "total_tokens": 44613
+  },
+  "metrics": {
+    "model_calls": 11,
+    "lead_calls": 2,
+    "lead_input_peak": 1212,
+    "known_input_tokens": 42573,
+    "known_output_tokens": 2040,
+    "unknown_calls": 0
+  },
+  "duration_seconds": 104.68,
+  "request_records": [
+    {
+      "id": "dfe79b45581944bab9634ed2da100ca2",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:28:11.830926+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1415,
+      "request_sha256": "3c7cc8e2fed99377c73fc7207f1e62f2473a657cdb5662eec37784ce82d6a121",
+      "elapsed_ms": 8250,
+      "estimated_usd": 0.00245,
+      "usage": {
+        "input_tokens": 304,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 169,
+        "output_tokens_details": {
+          "reasoning_tokens": 80
+        },
+        "total_tokens": 473
+      }
+    },
+    {
+      "id": "2c680dbb563245f5930b30cf03497b2e",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:28:31.674090+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 22462,
+      "request_sha256": "4513500d08aca498760c7b733853b96e796baaa77cd3bc608b7b360a83c47988",
+      "elapsed_ms": 3192,
+      "estimated_usd": 0.015755,
+      "usage": {
+        "input_tokens": 6142,
+        "input_tokens_details": {
+          "cache_write_tokens": 6139,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 6139
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 40,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6182
+      }
+    },
+    {
+      "id": "acbf6cc096f1445292939bcb43dbccbb",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:28:34.890235+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 15060,
+      "request_sha256": "41a92075493ee6469d005a6deeae1ce159854dcd3d1049f9b308beef7e9f6681",
+      "elapsed_ms": 3443,
+      "estimated_usd": 0.0098475,
+      "usage": {
+        "input_tokens": 3815,
+        "input_tokens_details": {
+          "cache_write_tokens": 3812,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 3812
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 31,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 3846
+      }
+    },
+    {
+      "id": "3508539016d44b2f84155a65d6f757e6",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:01.304129+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 21358,
+      "request_sha256": "d96082549d9292a043bf87c517ab7e3ef0aff78ddfdb13303d56601cc5a05a00",
+      "elapsed_ms": 3056,
+      "estimated_usd": 0.014830000000000001,
+      "usage": {
+        "input_tokens": 5764,
+        "input_tokens_details": {
+          "cache_write_tokens": 5761,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 5761
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 42,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5806
+      }
+    },
+    {
+      "id": "d1c7d1334785424fa6d05354fbea8f30",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:04.381499+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 14045,
+      "request_sha256": "0e9d9f06926b82a0adce79bfcb9f26cdc7a8a95c51c2b717eb16fd155776b7e6",
+      "elapsed_ms": 3865,
+      "estimated_usd": 0.0084625,
+      "usage": {
+        "input_tokens": 3161,
+        "input_tokens_details": {
+          "cache_write_tokens": 3158,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 3158
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 56,
+        "output_tokens_details": {
+          "reasoning_tokens": 23
+        },
+        "total_tokens": 3217
+      }
+    },
+    {
+      "id": "f5124d1753594892a572bbb5cd177362",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:08.573931+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 20662,
+      "request_sha256": "f0d3177f042b3c2b3364eef9e4776b2ebedc5b912d092d4ce64acc52890bb14d",
+      "elapsed_ms": 11884,
+      "estimated_usd": 0.019252500000000002,
+      "usage": {
+        "input_tokens": 4697,
+        "input_tokens_details": {
+          "cache_write_tokens": 4622,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4622
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 751,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5448
+      }
+    },
+    {
+      "id": "e745ed5a9e7f48bca704b38d9e58dda7",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:23.059016+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 22102,
+      "request_sha256": "f51fdc2d51fb59d0cac176dbd18ba484093d9f36577e2107b650298a58a93df4",
+      "elapsed_ms": 3848,
+      "estimated_usd": 0.015465000000000001,
+      "usage": {
+        "input_tokens": 6034,
+        "input_tokens_details": {
+          "cache_write_tokens": 6031,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 6031
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 38,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 6072
+      }
+    },
+    {
+      "id": "f0881371896942119794047fa55491c2",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:26.936783+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 18794,
+      "request_sha256": "293558a5cbd4921e8ffe7c81b2cbd57ca9c39cfe00d575a0df30bbe38ab9f6f6",
+      "elapsed_ms": 4687,
+      "estimated_usd": 0.011880000000000002,
+      "usage": {
+        "input_tokens": 4636,
+        "input_tokens_details": {
+          "cache_write_tokens": 4633,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4633
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 29,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4665
+      }
+    },
+    {
+      "id": "ea6730c83c294990952ca2bcd355374c",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:31.743772+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 17257,
+      "request_sha256": "3e9dc46a6d30d4dcb8830cfb8f8549b9196146fbddaed05fc57cc9103ed01ce2",
+      "elapsed_ms": 4286,
+      "estimated_usd": 0.011747500000000001,
+      "usage": {
+        "input_tokens": 4539,
+        "input_tokens_details": {
+          "cache_write_tokens": 4536,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4536
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 40,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4579
+      }
+    },
+    {
+      "id": "da09ff32082848cbb168286532e252a0",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:29:36.076070+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 9966,
+      "request_sha256": "6a086a281a7a7ded0d676694c288428a84e62eb7f79fc10725bb4a667530fc91",
+      "elapsed_ms": 14389,
+      "estimated_usd": 0.012512500000000001,
+      "usage": {
+        "input_tokens": 2269,
+        "input_tokens_details": {
+          "cache_write_tokens": 2194,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 2194
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 684,
+        "output_tokens_details": {
+          "reasoning_tokens": 140
+        },
+        "total_tokens": 2953
+      }
+    },
+    {
+      "id": "8dd32b62884245acb363ab32dbb8d128",
+      "label": "recording/architecture-gateway/20261114T062811818934Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:29:50.477633+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 4392,
+      "request_sha256": "ab972b2e410b6c52ee4ea6ba91fea079d1af52e0613ae773839e52ac5368be04",
+      "elapsed_ms": 5968,
+      "estimated_usd": 0.0046300000000000004,
+      "usage": {
+        "input_tokens": 1212,
+        "input_tokens_details": {
+          "cache_write_tokens": 1209,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1209
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 160,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1372
+      }
+    }
+  ],
+  "export": {
+    "path": "web/replays/v3-architecture-gateway.json",
+    "sha256": "690388ae34a06d823c5b1feebd9114b2e7314970c1454bf5e4722a44c4267f21",
+    "bytes": 616672,
+    "schema_version": "2.0"
+  }
+}

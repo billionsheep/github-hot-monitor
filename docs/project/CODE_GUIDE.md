@@ -9,9 +9,9 @@
 1. `web/app.js` 将榜单卡片动作传给 `workbench.js` 的候选池；直接输入仓库也进入相同流程。
 2. `start()` 为每个候选创建公开快照。`phase1_api.py → github_client.py` 读取默认分支提交，后续文件绑定该完整 SHA。
 3. `POST /api/audit/sessions` 保存统一问题和快照绑定，`harness_api.schedule()` 获取执行租约，再启动异步 `Harness.run()`。
-4. Lead 将需求转成每个仓库可独立判断的共同约束；每仓 Sub 拿自己的绑定、核查项和独立上下文，通过六类工具取证。
+4. `routing.py` 先确定路由并落盘：单仓部署模式的单一版本、协议或指定配置核查跳过两个 Lead 调用，其余由 Lead 拆解共同约束。每仓 Sub 使用独立上下文与固定版本；架构和安全模式先运行对应扫描工具，共有八类取证工具。
 5. `AuditTools` 获取目录/索引/片段；`AuditDB` 保存不可变证据。工具回执、检查点和事件以事务提交，再供下一次模型请求使用。
-6. Sub 提交结构化判断和摘录，`guardrails.verify_verdict()` 验证会话归属、版本、哈希和原文摘录；Lead 只接收紧凑结果进行比较。
+6. `model_view()` 和 `fit_context()` 在请求预算内保留完整关键语句，明确省略范围；AST hint 自动定位参数及调用。Sub 提交判断和摘录，`guardrails.verify_verdict()` 验证会话归属、版本、哈希和原文，再校准四态；Lead 只接收紧凑结果。`report_v3.py` 组装证据绑定的图谱、线索和配置块。
 7. SSE 订阅已持久化事件，页面刷新公开状态，渲染逐项矩阵；点引用从本会话读取原始证据。
 8. 导出时 `replay.py` 打包公开事件、报告、原文和用量。静态页面使用相同渲染路径，导入前再次校验。
 
@@ -19,7 +19,7 @@
 flowchart LR
     UI[候选与约束] --> API[FastAPI]
     API --> H[Lead / 每仓 Sub]
-    H --> T[六类只读工具]
+    H --> T[八类只读工具]
     T --> GH[固定版本 GitHub 数据]
     T --> DB[(SQLite WAL)]
     H <--> DB
@@ -35,7 +35,9 @@ flowchart LR
 |---|---|
 | `config.py` / `schemas.py` | 读取边界与严格证据契约；文件、目录、Issue 分型，避免把动态社区数据当成 commit 内容 |
 | `github_client.py` | HTTPX 异步访问，固定树/文件、限流/超时/重试、缓存；不执行仓库代码 |
-| `tools.py` | 概览、索引、切片、依赖、部署、Issue 六类工具；返回事实和覆盖缺口，不直接判定选型 |
+| `tools.py` / `analysis_v3.py` | 六类基础工具加架构、安全分析；AST 参数与调用索引，24目录/24文件/1MiB 有界扫描，其他语言输出规则线索 |
+| `routing.py` / `report_v3.py` | 确定性轻量路由、扩展报告引用与配置语法校验 |
+| `workflows.json` / `workflows.py` | 实时接口与静态页面共用三种场景模板 |
 | `db.py` | WAL、短事务、不可变产物、缓存与旧库迁移 |
 | `agent_harness.py` | Lead/Sub 状态机；每仓上下文独立，当前按仓顺序执行，便于预算和恢复 |
 | `harness_store.py` | 执行租约、检查点、幂等回执、事件、模型用量；外部调用与数据库事务分开 |
@@ -61,3 +63,14 @@ flowchart LR
 | 4 评测 | `eval/golden_cases.json`, `run_eval.py` | 新增一个“只有 README 宣传、没有实现证据”的样本，先写期望与原文契约，再离线验证 | `.venv/bin/python eval/run_eval.py` |
 
 推荐先完整演示一次，再沿证据按钮反查 API、数据库和工具，最后读模型循环。学习时用独立 fixture 改动；在线评测需显式启用，会产生模型费用。
+
+## v3 的四个学习切片
+
+| 阶段 | 设计问题与练习 | 离线复现 |
+|---|---|---|
+| V3-1 取证 | 在 fixture 中把 `base_url` 调用改为跨行并使用别名，检查 AST 完整语句范围，解释为何固定前后行不能保证完整 | `.venv/bin/python -m unittest discover -s tests -p test_v3_tools.py -v` |
+| V3-2 编排 | 给单仓 Python 版本问题加 Docker 条件，观察快速路由变为完整流程；解释当前请求已读与数据库已缓存的差别 | `.venv/bin/python -m unittest discover -s tests -p test_v3_harness.py -v` |
+| V3-3 表达 | 改回放中的图边并重算外层 Hash，观察底层关系校验仍拒绝载入 | `.venv/bin/python -m unittest discover -s tests -p test_v3_reports.py -v` |
+| V3-4 实测 | 用原始记录核算一个有效配对的总 Tokens，核对报告分母与首次失败 | `.venv/bin/python eval/summarize_v3.py` |
+
+安全工具读到进程调用、环境变量或 URL 后，还需追查输入来源、传播和调用条件；目录扫描不完整时不能宣称全仓安全。练习修改测试 fixture，保留真实录制原文件。

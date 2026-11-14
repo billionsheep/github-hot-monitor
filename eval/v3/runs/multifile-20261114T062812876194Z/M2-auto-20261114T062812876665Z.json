@@ -1,0 +1,1311 @@
+{
+  "id": "M2",
+  "attempt": "20261114T062812876665Z",
+  "batch": "multifile-20261114T062812876194Z",
+  "route_requested": "auto",
+  "origin": "real_public_repository",
+  "query": "分析 Python MCP SDK 的 stdio 客户端与服务端通信架构。重点检查 src/mcp/client/stdio.py 和 src/mcp/server/stdio.py，找出进程创建、输入输出流以及资源关闭机制，引用实现片段并标明冻结资料覆盖范围。",
+  "repo": "modelcontextprotocol/python-sdk",
+  "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T062812876665Z",
+  "code_version": {
+    "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+    "evidence_source_sha256": "0de5482d545e8dae0292ae30ffc9c3ee8d85ad996b66fc77defff41bcd1e7a46"
+  },
+  "input_fixture_sha256": "58d27f0e45ee4477f80c5610058d8be4dbe92dd1b7b48bad2e74d588af7747bb",
+  "session_id": "574aa8e18e5f4993868490d849567b4e",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [
+        {
+          "artifact_id": "arch_profile_3d901cd3a6d85ed3656f310ed142cc309858b52f6ed479fe4f136e96a5da5acd",
+          "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+          "repo": "modelcontextprotocol/python-sdk",
+          "scope": {
+            "attempted_directories": 5,
+            "attempted_files": 7,
+            "bytes_read": 133080,
+            "complete": false,
+            "continuation": "",
+            "continuations": [
+              {
+                "kind": "directory",
+                "path": "/",
+                "path_prefix": ""
+              },
+              {
+                "kind": "directory",
+                "path": "src",
+                "path_prefix": "src"
+              },
+              {
+                "kind": "directory",
+                "path": "src/mcp",
+                "path_prefix": "src/mcp"
+              },
+              {
+                "kind": "directory",
+                "path": "src/mcp/server",
+                "path_prefix": "src/mcp/server"
+              },
+              {
+                "kind": "directory",
+                "path": "src/mcp/client",
+                "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/client/session.py",
+                "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/client/stdio.py",
+                "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/server/session.py",
+                "path_prefix": "src/mcp/server"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/server/stdio.py",
+                "path_prefix": "src/mcp/server"
+              },
+              {
+                "kind": "file",
+                "path": "src/mcp/server/transport_security.py",
+                "path_prefix": "src/mcp/server"
+              }
+            ],
+            "directories": [
+              "/",
+              "src",
+              "src/mcp",
+              "src/mcp/server",
+              "src/mcp/client"
+            ],
+            "file_categories": {
+              "config": 1,
+              "denominator": 7,
+              "doc": 1,
+              "other": 0,
+              "src": 5
+            },
+            "files": [
+              "pyproject.toml",
+              "src/mcp/client/session.py",
+              "src/mcp/client/stdio.py",
+              "src/mcp/server/session.py",
+              "src/mcp/server/stdio.py",
+              "src/mcp/server/transport_security.py",
+              "LICENSE"
+            ],
+            "mode": null,
+            "notes": [
+              "/ 目录截断；未列出的项目未扫描。",
+              "src 目录截断；未列出的项目未扫描。",
+              "src/mcp 目录截断；未列出的项目未扫描。",
+              "src/mcp/server 目录截断；未列出的项目未扫描。",
+              "src/mcp/client 目录截断；未列出的项目未扫描。",
+              "线索超过 40 项，仅保留前 40 项，其他线索未展开。"
+            ],
+            "path_prefix": ""
+          }
+        }
+      ],
+      "architecture_graph": [
+        {
+          "artifact_id": "arch_profile_3d901cd3a6d85ed3656f310ed142cc309858b52f6ed479fe4f136e96a5da5acd",
+          "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+          "edges": [
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 4,
+              "evidence_id": "ev_24bf7537a7122db55c6cf408937f530007faff969c80c26e189829b857da330c",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 4,
+              "to": "description = \"Model Context Protocol SDK\""
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 7,
+              "evidence_id": "ev_5e3e5d56933f964a00f6a71688811f56363689f1570396d9a2bb7e225700fc9a",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 7,
+              "to": "authors = [{ name = \"Model Context Protocol a Series of LF Projects, LLC.\" }]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 34,
+              "evidence_id": "ev_94847e2c36d60f35f9f77a66e827455ea6121cb776b82e53858fea8c3d676d27",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 34,
+              "to": "[tool.uv]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 120,
+              "evidence_id": "ev_0962f81fbcb39dc3a8fef8fd02312c8f1b446fb28675c80fd7e3af2e92cf4a70",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 120,
+              "to": "[tool.hatch.version]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 123,
+              "evidence_id": "ev_ec074fdfc6cf35052e36ab87e6f54b5c5876acd5033450bad941b2b0d46cfa07",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 123,
+              "to": "[tool.uv-dynamic-versioning]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 128,
+              "evidence_id": "ev_49d7c5b9aa0af0f596b734c3115c4d78ca07979d96f3ead938ebbb827241ec06",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 128,
+              "to": "[tool.hatch.metadata.hooks.uv-dynamic-versioning]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 159,
+              "evidence_id": "ev_0910d35b6cb6cf8ed49287644e67effd0490fca09d4227d7383cbaea4470cd24",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 159,
+              "to": "[tool.hatch.build.targets.wheel]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 162,
+              "evidence_id": "ev_f4355a73d264dc5f15b06815e47d6b89d5a1b61d055158882cda1b1f0f46c3ef",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 162,
+              "to": "[tool.pyright]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 202,
+              "evidence_id": "ev_13464c2fe677524ba94d9a3524bdb8dd6c626817da830ace3e2f7fd1725b175a",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 202,
+              "to": "# Decorated (@mcp.tool/...) module-level functions are never called by name."
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 206,
+              "evidence_id": "ev_fb4dd2b8446b33a1212b5265753da998a927ad479853ad4419ad4b79b45f889a",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 206,
+              "to": "[tool.ruff]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 210,
+              "evidence_id": "ev_515ffd814218e519c327b92d0cc978c6da57ac09f33aee6b9beb946247dd8e1f",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 210,
+              "to": "[tool.ruff.lint]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 224,
+              "evidence_id": "ev_d0115ff3161f5954d391fafc1a6ee4e058fd2040541b62e2bb7983c44d747eb0",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 224,
+              "to": "[tool.ruff.lint.flake8-tidy-imports.banned-api]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 229,
+              "evidence_id": "ev_8d674cb6307fa203368552ffc34b491776659dddff0f917b42dab2a0d7385d33",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 229,
+              "to": "[tool.ruff.lint.mccabe]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 232,
+              "evidence_id": "ev_ddffcf6e098df0b0a8f5bdc41878452abb351882b38d993fdc7932c50bf1c76d",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 232,
+              "to": "[tool.ruff.lint.per-file-ignores]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 239,
+              "evidence_id": "ev_e1d8c48f4e3f5b9a21cc23801e1037652f6ca4a44d2b230b269d06fe1389a8f6",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 239,
+              "to": "# Inline snapshots of the translation tool's output carry long status/prompt lines verbatim."
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 243,
+              "evidence_id": "ev_a7ab2991f11659e6190c7ffafc58daa000d2bdb547bc6606c4a8c3a179031222",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 243,
+              "to": "[tool.ruff.lint.pylint]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 250,
+              "evidence_id": "ev_929b8ce5c9ff6e863922c15f1894429e1192b55a454d3942b6c21422fc8d8ed1",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 250,
+              "to": "[tool.uv.workspace]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 253,
+              "evidence_id": "ev_f7e32b387fe182d064f338ac7893d41b7e528548ec703c6d84cbe978f99c378e",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 253,
+              "to": "[tool.uv.sources]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 259,
+              "evidence_id": "ev_37450449bd675a68fa508c7fc4acd51ef1cb404bd4f802c8a9d166534e318697",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 259,
+              "to": "[tool.pytest.ini_options]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 292,
+              "evidence_id": "ev_9a24de64e137cb1ca99b294b253ae5b21a5eb3ccddbad50ccf951a3bef718161",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 292,
+              "to": "[tool.markdown.lint]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 304,
+              "evidence_id": "ev_ef989b51e9cd853f0bc00890e307cdce19c1fb3bb6b7a8cf527cbeddb49cc876",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 304,
+              "to": "[tool.coverage.run]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 317,
+              "evidence_id": "ev_1da950ed7215bd70f4febcc44cdf1727316e0e68e0c257f180030f6530d595e7",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 317,
+              "to": "[tool.coverage.report]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 330,
+              "evidence_id": "ev_fc8eb356d2e3174fbc09da36b571cbd30d19a193de1ff62e9e210c458e340706",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 330,
+              "to": "[tool.coverage.paths]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 337,
+              "evidence_id": "ev_f9b0278d4a7622829f06bd9601f4651e74f70e156a5f851cadc14a2f617b4dab",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 337,
+              "to": "[tool.inline-snapshot]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 7,
+              "evidence_id": "ev_630c5e749a97cbd11bdb6ae6c0202544103496d5afa50c7b4848f8674b4406ab",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 7,
+              "to": "functools.cache"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 7,
+              "evidence_id": "ev_630c5e749a97cbd11bdb6ae6c0202544103496d5afa50c7b4848f8674b4406ab",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 7,
+              "to": "functools.reduce"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 10,
+              "evidence_id": "ev_c1ebac068f213f066d58ba4af687e2dd91c89b319c97821e9ea77d09d67a41d5",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 10,
+              "to": "typing.overload"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 15,
+              "evidence_id": "ev_94b7158a28a43e59edd6ef374e1060e092360ae138323dc3cf3fe191e78e1c5f",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 15,
+              "to": "mcp_types"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.CLIENT_CAPABILITIES_META_KEY"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.CLIENT_INFO_META_KEY"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.CONNECTION_CLOSED"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.INTERNAL_ERROR"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.LOG_LEVEL_META_KEY"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.METHOD_NOT_FOUND"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.PROTOCOL_VERSION_META_KEY"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.SERVER_INFO_META_KEY"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.UNSUPPORTED_PROTOCOL_VERSION"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.RequestId"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 29,
+              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 17,
+              "to": "mcp_types.RequestParamsMeta"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 30,
+              "evidence_id": "ev_69f147aa073faffd93d2bba03566cdc249bf1bbb730419ae8819b6865336384c",
+              "from": "module",
+              "path": "src/mcp/client/session.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 30,
+              "to": "mcp_types.methods"
+            }
+          ],
+          "repo": "modelcontextprotocol/python-sdk"
+        }
+      ],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "process_creation",
+          "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 中 stdio 通信涉及的子进程创建机制及客户端、服务端职责。"
+        },
+        {
+          "id": "io_streams",
+          "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 中标准输入、标准输出及标准错误流的连接、读写与消息传输机制。"
+        },
+        {
+          "id": "resource_cleanup",
+          "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 中进程、输入输出流及相关异步资源在正常退出和异常情况下的关闭与清理机制。"
+        }
+      ],
+      "execution_route": {
+        "reason": "架构与安全工作流使用完整流程",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "分析 Python MCP SDK 的 stdio 客户端与服务端通信架构。重点检查 src/mcp/client/stdio.py 和 src/mcp/server/stdio.py，找出进程创建、输入输出流以及资源关闭机制，引用实现片段并标明冻结资料覆盖范围。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+            "repo": "modelcontextprotocol/python-sdk"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_dd4c496bd2e81a680e19c16a0ae907ab02e9d74bb012dad6cab40641d6211905",
+                  "quote": "    process = await _create_platform_compatible_process(\n        command=command,\n        args=server.args,\n        env=get_default_environment() | (server.env or {}),\n        errlog=errlog,\n        cwd=server.cwd,\n    )\n"
+                }
+              ],
+              "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+              "criterion_id": "process_creation",
+              "gap_reason": "已读取客户端调用点，但未取得平台兼容函数实现及服务端正文，不能据此确认各平台创建细节或断言服务端不创建子进程。",
+              "next_step": "读取客户端平台兼容函数实现和服务端入口，确认进程创建 API、平台差异及双方职责。",
+              "original_status": "UNVERIFIED",
+              "repo": "modelcontextprotocol/python-sdk",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "已确认客户端等待平台兼容进程创建函数，并传入命令、参数、合并后的环境、错误日志流和工作目录；尚不足以核实底层创建机制及服务端职责。[ev_dd4c496bd2e81a680e19c16a0ae907ab02e9d74bb012dad6cab40641d6211905]",
+              "support_relation": "partial",
+              "verification_basis": "insufficient"
+            },
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_dd4c496bd2e81a680e19c16a0ae907ab02e9d74bb012dad6cab40641d6211905",
+                  "quote": "        errlog=errlog,\n"
+                }
+              ],
+              "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+              "criterion_id": "io_streams",
+              "gap_reason": "缺少双方流连接、读写协程、消息编码与分帧的实现正文，以及 errlog 在底层创建函数中的使用证据。",
+              "next_step": "读取客户端和服务端的流初始化及读写循环，核实 stdin、stdout、stderr 的用途和消息序列化、分帧方式。",
+              "original_status": "UNVERIFIED",
+              "repo": "modelcontextprotocol/python-sdk",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "客户端将 errlog 传入进程创建函数，但该调用点不能证明标准错误流的实际连接方式，也不能确定标准输入输出的读写和消息传输机制。[ev_dd4c496bd2e81a680e19c16a0ae907ab02e9d74bb012dad6cab40641d6211905]",
+              "support_relation": "partial",
+              "verification_basis": "insufficient"
+            },
+            {
+              "citations": [],
+              "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+              "criterion_id": "resource_cleanup",
+              "gap_reason": "未取得上下文管理器退出逻辑、任务组关闭、进程等待或终止、流关闭及异常处理的正文；不能由证据缺失推断这些机制不存在。",
+              "next_step": "读取双方上下文管理器及清理辅助函数，追踪正常退出、异常和取消路径；随后用子进程退出及取消测试验证资源释放行为。",
+              "original_status": "UNVERIFIED",
+              "repo": "modelcontextprotocol/python-sdk",
+              "runtime_validation_required": true,
+              "status": "UNVERIFIED",
+              "status_calibrated": false,
+              "summary": "当前取得的正文仅涉及客户端进程创建调用，未覆盖正常退出、异常或取消路径上的资源清理，无法判断清理机制。",
+              "support_relation": "insufficient",
+              "verification_basis": "insufficient"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_dd4c496bd2e81a680e19c16a0ae907ab02e9d74bb012dad6cab40641d6211905"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "仅提供 python-sdk 仓库，无法进行跨仓库比较；客户端与服务端的对照也受证据限制。进程创建方面，仅确认客户端等待平台兼容进程创建函数，传入命令、参数、默认环境与自定义环境的合并结果、errlog 和工作目录；底层创建 API、平台差异及服务端职责均未核实。流通信方面，仅确认 errlog 被传入，不能据此确定 stderr 的实际连接方式，也无法确认 stdin/stdout 的读写、消息编码和分帧机制。资源清理方面，缺少正常退出、异常及取消路径的实现证据，无法判断进程、流和异步资源的关闭方式。三项均为未核实，不能将证据缺失解释为相关机制不存在。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 8,
+      "turn_tool_calls": 7,
+      "turn_usage": {
+        "input_tokens": 27779,
+        "output_tokens": 1567,
+        "total_tokens": 29346
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 27779,
+        "output_tokens": 1567,
+        "total_tokens": 29346
+      },
+      "workflow_mode": "arch_research"
+    }
+  ],
+  "usage": {
+    "input_tokens": 27779,
+    "output_tokens": 1567,
+    "total_tokens": 29346
+  },
+  "grading": {
+    "score": 1,
+    "reason": "key_evidence_missing",
+    "observed": [
+      "UNVERIFIED",
+      "UNVERIFIED",
+      "UNVERIFIED"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "analyze_architecture_profile",
+      "args": {
+        "path_prefix": ""
+      }
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "get_markdown_outline",
+      "args": {
+        "path": "src/mcp/client/stdio.py",
+        "symbol_or_param_hint": null
+      }
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "read_file_lines",
+      "args": {
+        "path": "src/mcp/client/stdio.py",
+        "start_line": 90,
+        "end_line": 209
+      }
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "read_file_lines",
+      "args": {
+        "path": "src/mcp/client/stdio.py",
+        "start_line": 210,
+        "end_line": 329
+      }
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "get_markdown_outline",
+      "args": {
+        "path": "src/mcp/client/stdio.py",
+        "symbol_or_param_hint": "_create_platform_compatible_process"
+      }
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "name": "read_file_lines",
+      "args": {
+        "path": "src/mcp/client/stdio.py",
+        "start_line": 126,
+        "end_line": 132
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 8,
+    "lead_calls": 2,
+    "lead_input_peak": 1233,
+    "known_input_tokens": 27779,
+    "known_output_tokens": 1567,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "架构与安全工作流使用完整流程",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "process_creation",
+            "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 中 stdio 通信涉及的子进程创建机制及客户端、服务端职责。"
+          },
+          {
+            "id": "io_streams",
+            "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 中标准输入、标准输出及标准错误流的连接、读写与消息传输机制。"
+          },
+          {
+            "id": "resource_cleanup",
+            "title": "src/mcp/client/stdio.py 与 src/mcp/server/stdio.py 中进程、输入输出流及相关异步资源在正常退出和异常情况下的关闭与清理机制。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path_prefix\": \"\"}",
+        "automatic": true,
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "arch_profile_3d901cd3a6d85ed3656f310ed142cc309858b52f6ed479fe4f136e96a5da5acd",
+          "ev_24bf7537a7122db55c6cf408937f530007faff969c80c26e189829b857da330c",
+          "ev_5e3e5d56933f964a00f6a71688811f56363689f1570396d9a2bb7e225700fc9a",
+          "ev_94847e2c36d60f35f9f77a66e827455ea6121cb776b82e53858fea8c3d676d27",
+          "ev_0962f81fbcb39dc3a8fef8fd02312c8f1b446fb28675c80fd7e3af2e92cf4a70",
+          "ev_ec074fdfc6cf35052e36ab87e6f54b5c5876acd5033450bad941b2b0d46cfa07",
+          "ev_49d7c5b9aa0af0f596b734c3115c4d78ca07979d96f3ead938ebbb827241ec06",
+          "ev_0910d35b6cb6cf8ed49287644e67effd0490fca09d4227d7383cbaea4470cd24",
+          "ev_f4355a73d264dc5f15b06815e47d6b89d5a1b61d055158882cda1b1f0f46c3ef",
+          "ev_13464c2fe677524ba94d9a3524bdb8dd6c626817da830ace3e2f7fd1725b175a",
+          "ev_fb4dd2b8446b33a1212b5265753da998a927ad479853ad4419ad4b79b45f889a",
+          "ev_515ffd814218e519c327b92d0cc978c6da57ac09f33aee6b9beb946247dd8e1f",
+          "ev_d0115ff3161f5954d391fafc1a6ee4e058fd2040541b62e2bb7983c44d747eb0",
+          "ev_8d674cb6307fa203368552ffc34b491776659dddff0f917b42dab2a0d7385d33",
+          "ev_ddffcf6e098df0b0a8f5bdc41878452abb351882b38d993fdc7932c50bf1c76d",
+          "ev_e1d8c48f4e3f5b9a21cc23801e1037652f6ca4a44d2b230b269d06fe1389a8f6",
+          "ev_a7ab2991f11659e6190c7ffafc58daa000d2bdb547bc6606c4a8c3a179031222",
+          "ev_929b8ce5c9ff6e863922c15f1894429e1192b55a454d3942b6c21422fc8d8ed1",
+          "ev_f7e32b387fe182d064f338ac7893d41b7e528548ec703c6d84cbe978f99c378e",
+          "ev_37450449bd675a68fa508c7fc4acd51ef1cb404bd4f802c8a9d166534e318697",
+          "ev_9a24de64e137cb1ca99b294b253ae5b21a5eb3ccddbad50ccf951a3bef718161",
+          "ev_ef989b51e9cd853f0bc00890e307cdce19c1fb3bb6b7a8cf527cbeddb49cc876",
+          "ev_1da950ed7215bd70f4febcc44cdf1727316e0e68e0c257f180030f6530d595e7",
+          "ev_fc8eb356d2e3174fbc09da36b571cbd30d19a193de1ff62e9e210c458e340706",
+          "ev_f9b0278d4a7622829f06bd9601f4651e74f70e156a5f851cadc14a2f617b4dab",
+          "ev_630c5e749a97cbd11bdb6ae6c0202544103496d5afa50c7b4848f8674b4406ab",
+          "ev_c1ebac068f213f066d58ba4af687e2dd91c89b319c97821e9ea77d09d67a41d5",
+          "ev_94b7158a28a43e59edd6ef374e1060e092360ae138323dc3cf3fe191e78e1c5f",
+          "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
+          "ev_69f147aa073faffd93d2bba03566cdc249bf1bbb730419ae8819b6865336384c"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "analyze_architecture_profile"
+      }
+    },
+    {
+      "id": 8,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 9,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"symbol_or_param_hint\":null}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 10,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_6359ea346e46ea19466f36dc90ff17e947972f22f1a64c20e570022e38958a0d"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 11,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 12,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"start_line\":90,\"end_line\":209}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 13,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_4584a32bc1e4f48508d772e293039b329deb11328c52619adca26dc801dfb71f"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 14,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 15,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"start_line\":210,\"end_line\":329}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 16,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_4eabeeda31a738e8fe4c6da8ee62658070d2206c1056049e4f066d0faf7012c3"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 17,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 18,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/client/stdio.py\",\"symbol_or_param_hint\":\"_create_platform_compatible_process\"}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 19,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_da1884a55084073203d2aeb43755110fec46ca83b1bf229446bff119b9f94630",
+          "ev_dd4c496bd2e81a680e19c16a0ae907ab02e9d74bb012dad6cab40641d6211905"
+        ],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 20,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 21,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"src/mcp/server/stdio.py\",\"start_line\":1,\"end_line\":120}",
+        "repo": "modelcontextprotocol/python-sdk",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 22,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [],
+        "repo": "modelcontextprotocol/python-sdk",
+        "status": "ERROR",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 23,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 24,
+      "type": "repository_complete",
+      "data": {
+        "repo": "modelcontextprotocol/python-sdk"
+      }
+    },
+    {
+      "id": 25,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 26,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 27,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 28,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 50.023,
+  "request_records": [
+    {
+      "id": "d45e46aee44a4b30b260d938d152d46b",
+      "label": "multifile-20261114T062812876194Z/M2/auto/20261114T062812876665Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:28:12.888360+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1246,
+      "request_sha256": "4aaab267a04151aa8c8470a5022de29350e2bf5722e5151ab8f3ce77f8bcc8aa",
+      "elapsed_ms": 8136,
+      "estimated_usd": 0.0029000000000000002,
+      "usage": {
+        "input_tokens": 260,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 225,
+        "output_tokens_details": {
+          "reasoning_tokens": 76
+        },
+        "total_tokens": 485
+      }
+    },
+    {
+      "id": "45175610011047b1b1291743367360f1",
+      "label": "multifile-20261114T062812876194Z/M2/auto/20261114T062812876665Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:28:21.142385+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 18109,
+      "request_sha256": "55bd3230eb44a9d5bfa18137870f3983fc6ac7ba91fd50191242861d52247250",
+      "elapsed_ms": 3956,
+      "estimated_usd": 0.012580000000000001,
+      "usage": {
+        "input_tokens": 4900,
+        "input_tokens_details": {
+          "cache_write_tokens": 4897,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4897
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 33,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4933
+      }
+    },
+    {
+      "id": "b139e8a78ad14e429720744328e868b1",
+      "label": "multifile-20261114T062812876194Z/M2/auto/20261114T062812876665Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:28:25.120390+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 21932,
+      "request_sha256": "c7cbd00313f363cf9eb1293b32daff3492a9a80852380119540c3c56905620b7",
+      "elapsed_ms": 3336,
+      "estimated_usd": 0.0152525,
+      "usage": {
+        "input_tokens": 5961,
+        "input_tokens_details": {
+          "cache_write_tokens": 5958,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 5958
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 35,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 5996
+      }
+    },
+    {
+      "id": "688b996f85f54ec4a7a461c384a24c99",
+      "label": "multifile-20261114T062812876194Z/M2/auto/20261114T062812876665Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:28:28.475780+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 17520,
+      "request_sha256": "46d8c5819a462932049827c2ff50f381c9400a5015ceead71c10851687a493fa",
+      "elapsed_ms": 3818,
+      "estimated_usd": 0.0103225,
+      "usage": {
+        "input_tokens": 3989,
+        "input_tokens_details": {
+          "cache_write_tokens": 3986,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 3986
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 35,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 4024
+      }
+    },
+    {
+      "id": "06118584ac1f40aa8dff23f3dd63a458",
+      "label": "multifile-20261114T062812876194Z/M2/auto/20261114T062812876665Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:28:32.307970+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 20693,
+      "request_sha256": "090dfbad37e837d2400817c218376425827ca0e0263d4c08a2139e9d4c6e3a96",
+      "elapsed_ms": 5162,
+      "estimated_usd": 0.012180000000000002,
+      "usage": {
+        "input_tokens": 4604,
+        "input_tokens_details": {
+          "cache_write_tokens": 4601,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4601
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 67,
+        "output_tokens_details": {
+          "reasoning_tokens": 27
+        },
+        "total_tokens": 4671
+      }
+    },
+    {
+      "id": "19af8a695c66448b932365cb0dc1c805",
+      "label": "multifile-20261114T062812876194Z/M2/auto/20261114T062812876665Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:28:37.494172+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 21326,
+      "request_sha256": "a928247e9a3b63a7121759502ce573bc9b5bc08b23d93285f8ff18f967ceff78",
+      "elapsed_ms": 4221,
+      "estimated_usd": 0.0110325,
+      "usage": {
+        "input_tokens": 4189,
+        "input_tokens_details": {
+          "cache_write_tokens": 4186,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 4186
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 56,
+        "output_tokens_details": {
+          "reasoning_tokens": 19
+        },
+        "total_tokens": 4245
+      }
+    },
+    {
+      "id": "c1a8fb0179344df3a9b5bc92a6844ac7",
+      "label": "multifile-20261114T062812876194Z/M2/auto/20261114T062812876665Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:28:41.729872+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 18248,
+      "request_sha256": "8f6b8dd9c1ea24129c7528ea5cf1b099f632bba5c6c07ac9b31190fcd92caed7",
+      "elapsed_ms": 15144,
+      "estimated_usd": 0.015897500000000002,
+      "usage": {
+        "input_tokens": 2643,
+        "input_tokens_details": {
+          "cache_write_tokens": 2568,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 2568
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 929,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 3572
+      }
+    },
+    {
+      "id": "11493ee6ed684ba389b3954770aee3fc",
+      "label": "multifile-20261114T062812876194Z/M2/auto/20261114T062812876665Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:28:56.894553+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 4709,
+      "request_sha256": "7f16c0a578d9da994ff42939064a92603c338fe39371606c817bc8f882754abb",
+      "elapsed_ms": 5973,
+      "estimated_usd": 0.0049525,
+      "usage": {
+        "input_tokens": 1233,
+        "input_tokens_details": {
+          "cache_write_tokens": 1230,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1230
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 187,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1420
+      }
+    }
+  ]
+}

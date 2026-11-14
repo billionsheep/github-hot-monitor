@@ -1,0 +1,332 @@
+{
+  "pairs": [
+    {
+      "case": "A1",
+      "batch": "comparison-20261114T062509949694Z",
+      "code_version": {
+        "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+        "evidence_source_sha256": "b71a45bfd8b6ad8daa6ebcb103a21cda92120dc1135e2d5c703c2c679c975d83"
+      },
+      "eligible": true,
+      "full_tokens": 4418,
+      "auto_tokens": 3529,
+      "full_text_tokens": 2087,
+      "saved_vs_full_percent": 20.122227252150292,
+      "ratio_vs_full_text": 1.6909439386679443,
+      "measurements": {
+        "full": {
+          "input_tokens": 3976,
+          "output_tokens": 442,
+          "lead_input_peak": 532,
+          "duration_seconds": 15.97,
+          "estimated_usd": 0.014360000000000001
+        },
+        "auto": {
+          "input_tokens": 3217,
+          "output_tokens": 312,
+          "lead_input_peak": 0,
+          "duration_seconds": 9.25,
+          "estimated_usd": 0.011162500000000002
+        },
+        "full_text": {
+          "input_tokens": 1845,
+          "output_tokens": 242,
+          "lead_input_peak": 0,
+          "duration_seconds": 12.423,
+          "estimated_usd": 0.0070325000000000006
+        }
+      },
+      "automatic_route": {
+        "reason": "单仓单项 Python 版本声明",
+        "route": "fast"
+      }
+    },
+    {
+      "case": "A2",
+      "batch": "comparison-20261114T062509949694Z",
+      "code_version": {
+        "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+        "evidence_source_sha256": "b71a45bfd8b6ad8daa6ebcb103a21cda92120dc1135e2d5c703c2c679c975d83"
+      },
+      "eligible": true,
+      "full_tokens": 4850,
+      "auto_tokens": 4852,
+      "full_text_tokens": 2029,
+      "saved_vs_full_percent": -0.04123711340207059,
+      "ratio_vs_full_text": 2.3913257762444555,
+      "measurements": {
+        "full": {
+          "input_tokens": 4390,
+          "output_tokens": 460,
+          "lead_input_peak": 583,
+          "duration_seconds": 16.402,
+          "estimated_usd": 0.015574999999999999
+        },
+        "auto": {
+          "input_tokens": 4387,
+          "output_tokens": 465,
+          "lead_input_peak": 580,
+          "duration_seconds": 18.68,
+          "estimated_usd": 0.015617500000000001
+        },
+        "full_text": {
+          "input_tokens": 1806,
+          "output_tokens": 223,
+          "lead_input_peak": 0,
+          "duration_seconds": 6.282,
+          "estimated_usd": 0.006745000000000001
+        }
+      },
+      "automatic_route": {
+        "reason": "包含部署、架构、安全或性能约束",
+        "route": "full"
+      }
+    },
+    {
+      "case": "A3",
+      "batch": "comparison-20261114T062509949694Z",
+      "code_version": {
+        "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+        "evidence_source_sha256": "b71a45bfd8b6ad8daa6ebcb103a21cda92120dc1135e2d5c703c2c679c975d83"
+      },
+      "eligible": true,
+      "full_tokens": 6640,
+      "auto_tokens": 5786,
+      "full_text_tokens": 1992,
+      "saved_vs_full_percent": 12.861445783132531,
+      "ratio_vs_full_text": 2.9046184738955825,
+      "measurements": {
+        "full": {
+          "input_tokens": 6241,
+          "output_tokens": 399,
+          "lead_input_peak": 515,
+          "duration_seconds": 20.11,
+          "estimated_usd": 0.019592500000000002
+        },
+        "auto": {
+          "input_tokens": 5533,
+          "output_tokens": 253,
+          "lead_input_peak": 0,
+          "duration_seconds": 12.986,
+          "estimated_usd": 0.016362500000000002
+        },
+        "full_text": {
+          "input_tokens": 1796,
+          "output_tokens": 196,
+          "lead_input_peak": 0,
+          "duration_seconds": 6.121,
+          "estimated_usd": 0.006450000000000001
+        }
+      },
+      "automatic_route": {
+        "reason": "单仓单项协议声明",
+        "route": "fast"
+      }
+    },
+    {
+      "case": "A4",
+      "batch": "comparison-20261114T062509949694Z",
+      "code_version": {
+        "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+        "evidence_source_sha256": "b71a45bfd8b6ad8daa6ebcb103a21cda92120dc1135e2d5c703c2c679c975d83"
+      },
+      "eligible": true,
+      "full_tokens": 7306,
+      "auto_tokens": 6444,
+      "full_text_tokens": 2108,
+      "saved_vs_full_percent": 11.798521762934577,
+      "ratio_vs_full_text": 3.0569259962049338,
+      "measurements": {
+        "full": {
+          "input_tokens": 6853,
+          "output_tokens": 453,
+          "lead_input_peak": 526,
+          "duration_seconds": 24.805,
+          "estimated_usd": 0.021662500000000005
+        },
+        "auto": {
+          "input_tokens": 6131,
+          "output_tokens": 313,
+          "lead_input_peak": 0,
+          "duration_seconds": 14.7,
+          "estimated_usd": 0.0184575
+        },
+        "full_text": {
+          "input_tokens": 1856,
+          "output_tokens": 252,
+          "lead_input_peak": 0,
+          "duration_seconds": 5.941,
+          "estimated_usd": 0.00716
+        }
+      },
+      "automatic_route": {
+        "reason": "单仓指定文件的单项配置",
+        "route": "fast"
+      }
+    },
+    {
+      "case": "A1",
+      "batch": "comparison-20261114T065143399509Z",
+      "code_version": {
+        "commit": "99473b56e7f363862bd9ef6a822e388c78436755",
+        "evidence_source_sha256": "becb0c521499ecd906d07e4b4ea99b098170bf6b7481baa2ab8e0e7ded041024"
+      },
+      "eligible": true,
+      "full_tokens": 4453,
+      "auto_tokens": 3531,
+      "full_text_tokens": 2126,
+      "saved_vs_full_percent": 20.705142600494053,
+      "ratio_vs_full_text": 1.660865475070555,
+      "measurements": {
+        "full": {
+          "input_tokens": 4027,
+          "output_tokens": 426,
+          "lead_input_peak": 561,
+          "duration_seconds": 17.0,
+          "estimated_usd": 0.014327500000000003
+        },
+        "auto": {
+          "input_tokens": 3217,
+          "output_tokens": 314,
+          "lead_input_peak": 0,
+          "duration_seconds": 9.153,
+          "estimated_usd": 0.011182500000000001
+        },
+        "full_text": {
+          "input_tokens": 1845,
+          "output_tokens": 281,
+          "lead_input_peak": 0,
+          "duration_seconds": 5.321,
+          "estimated_usd": 0.0074225
+        }
+      },
+      "automatic_route": {
+        "reason": "单仓单项 Python 版本声明",
+        "route": "fast"
+      }
+    },
+    {
+      "case": "A2",
+      "batch": "comparison-20261114T065143399509Z",
+      "code_version": {
+        "commit": "99473b56e7f363862bd9ef6a822e388c78436755",
+        "evidence_source_sha256": "becb0c521499ecd906d07e4b4ea99b098170bf6b7481baa2ab8e0e7ded041024"
+      },
+      "eligible": true,
+      "full_tokens": 4900,
+      "auto_tokens": 4955,
+      "full_text_tokens": 2033,
+      "saved_vs_full_percent": -1.122448979591839,
+      "ratio_vs_full_text": 2.4372848007870145,
+      "measurements": {
+        "full": {
+          "input_tokens": 4449,
+          "output_tokens": 451,
+          "lead_input_peak": 616,
+          "duration_seconds": 17.465,
+          "estimated_usd": 0.0156325
+        },
+        "auto": {
+          "input_tokens": 4463,
+          "output_tokens": 492,
+          "lead_input_peak": 632,
+          "duration_seconds": 15.596,
+          "estimated_usd": 0.0160775
+        },
+        "full_text": {
+          "input_tokens": 1806,
+          "output_tokens": 227,
+          "lead_input_peak": 0,
+          "duration_seconds": 4.885,
+          "estimated_usd": 0.006785000000000001
+        }
+      },
+      "automatic_route": {
+        "reason": "包含部署、架构、安全或性能约束",
+        "route": "full"
+      }
+    },
+    {
+      "case": "A3",
+      "batch": "comparison-20261114T065143399509Z",
+      "code_version": {
+        "commit": "99473b56e7f363862bd9ef6a822e388c78436755",
+        "evidence_source_sha256": "becb0c521499ecd906d07e4b4ea99b098170bf6b7481baa2ab8e0e7ded041024"
+      },
+      "eligible": true,
+      "full_tokens": 6753,
+      "auto_tokens": 5787,
+      "full_text_tokens": 1989,
+      "saved_vs_full_percent": 14.304753442914265,
+      "ratio_vs_full_text": 2.909502262443439,
+      "measurements": {
+        "full": {
+          "input_tokens": 6347,
+          "output_tokens": 406,
+          "lead_input_peak": 559,
+          "duration_seconds": 19.06,
+          "estimated_usd": 0.0199275
+        },
+        "auto": {
+          "input_tokens": 5533,
+          "output_tokens": 254,
+          "lead_input_peak": 0,
+          "duration_seconds": 14.138,
+          "estimated_usd": 0.0163725
+        },
+        "full_text": {
+          "input_tokens": 1796,
+          "output_tokens": 193,
+          "lead_input_peak": 0,
+          "duration_seconds": 3.987,
+          "estimated_usd": 0.00642
+        }
+      },
+      "automatic_route": {
+        "reason": "单仓单项协议声明",
+        "route": "fast"
+      }
+    },
+    {
+      "case": "A4",
+      "batch": "comparison-20261114T065143399509Z",
+      "code_version": {
+        "commit": "99473b56e7f363862bd9ef6a822e388c78436755",
+        "evidence_source_sha256": "becb0c521499ecd906d07e4b4ea99b098170bf6b7481baa2ab8e0e7ded041024"
+      },
+      "eligible": true,
+      "full_tokens": 7383,
+      "auto_tokens": 6444,
+      "full_text_tokens": 2107,
+      "saved_vs_full_percent": 12.718407151564403,
+      "ratio_vs_full_text": 3.058376839107736,
+      "measurements": {
+        "full": {
+          "input_tokens": 6908,
+          "output_tokens": 475,
+          "lead_input_peak": 555,
+          "duration_seconds": 21.187,
+          "estimated_usd": 0.02202
+        },
+        "auto": {
+          "input_tokens": 6131,
+          "output_tokens": 313,
+          "lead_input_peak": 0,
+          "duration_seconds": 12.088,
+          "estimated_usd": 0.0184575
+        },
+        "full_text": {
+          "input_tokens": 1856,
+          "output_tokens": 251,
+          "lead_input_peak": 0,
+          "duration_seconds": 6.256,
+          "estimated_usd": 0.00715
+        }
+      },
+      "automatic_route": {
+        "reason": "单仓指定文件的单项配置",
+        "route": "fast"
+      }
+    }
+  ]
+}

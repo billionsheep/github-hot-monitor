@@ -1,0 +1,94 @@
+{
+  "id": "A4",
+  "attempt": "20261114T062652097529Z",
+  "batch": "comparison-20261114T062509949694Z",
+  "route_requested": "full_text",
+  "origin": "synthetic",
+  "query": "config.py 中的模型服务地址是否读取 MODEL_BASE_URL 环境变量？核对静态代码，不执行。",
+  "repo": "eval/a4",
+  "commit": "f49b3ee8129024b8dc73fb868d68a78b820b3c09",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T062652097529Z",
+  "code_version": {
+    "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+    "evidence_source_sha256": "b71a45bfd8b6ad8daa6ebcb103a21cda92120dc1135e2d5c703c2c679c975d83"
+  },
+  "input_fixture_sha256": "b65d93b432cecc048e437e55e5412f654335fd5373819efc043c482e14dcf494",
+  "usage": {
+    "input_tokens": 1856,
+    "input_tokens_details": {
+      "cache_write_tokens": 1781,
+      "cache_write_tokens_details": {
+        "ttl_12h_tokens": 0,
+        "ttl_30m_tokens": 1781
+      },
+      "cached_tokens": 0
+    },
+    "output_tokens": 252,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 2108
+  },
+  "rows": [
+    {
+      "criterion_id": "c1",
+      "repo": "eval/a4",
+      "commit": "f49b3ee8129024b8dc73fb868d68a78b820b3c09",
+      "status": "PASS",
+      "summary": "是。config.py 使用 os.getenv 读取 MODEL_BASE_URL 环境变量并赋给 BASE_URL；变量未设置时默认使用 https://api.openai.com/v1。本判断仅基于静态代码，未执行。[ev_9ee6d7f936ba5aafdc6a1cc1d35edff26d11c9491d9ff461d32f3bedd9a26680]",
+      "citations": [
+        {
+          "evidence_id": "ev_9ee6d7f936ba5aafdc6a1cc1d35edff26d11c9491d9ff461d32f3bedd9a26680",
+          "quote": "BASE_URL = os.getenv(\"MODEL_BASE_URL\", \"https://api.openai.com/v1\")"
+        }
+      ],
+      "verification_basis": "static_config",
+      "runtime_validation_required": false,
+      "next_step": "静态核查已完成，无需执行代码。",
+      "support_relation": null,
+      "gap_reason": null,
+      "status_calibrated": null,
+      "original_status": null
+    }
+  ],
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "PASS"
+    ]
+  },
+  "duration_seconds": 5.941,
+  "request_records": [
+    {
+      "id": "b2eeeedbc63642c79b15f4571a71089d",
+      "label": "comparison-20261114T062509949694Z/A4/full_text/20261114T062652097529Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:26:52.107706+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 7311,
+      "request_sha256": "b8f091ab23ca2a7a652ccc8f4634ae77ebfe54221e2af31bee62c81ac1458455",
+      "elapsed_ms": 5929,
+      "estimated_usd": 0.00716,
+      "usage": {
+        "input_tokens": 1856,
+        "input_tokens_details": {
+          "cache_write_tokens": 1781,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1781
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 252,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2108
+      }
+    }
+  ]
+}

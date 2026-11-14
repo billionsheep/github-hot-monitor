@@ -1,0 +1,39 @@
+{
+  "created_at": "comparison-20261114T062509949694Z",
+  "shared_ledger": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-budget.json",
+  "planned": [
+    {
+      "id": "A1",
+      "route": "full"
+    },
+    {
+      "id": "A1",
+      "route": "full_text"
+    },
+    {
+      "id": "A2",
+      "route": "full"
+    },
+    {
+      "id": "A2",
+      "route": "full_text"
+    },
+    {
+      "id": "A3",
+      "route": "full"
+    },
+    {
+      "id": "A3",
+      "route": "full_text"
+    },
+    {
+      "id": "A4",
+      "route": "full"
+    },
+    {
+      "id": "A4",
+      "route": "full_text"
+    }
+  ],
+  "status": "planned"
+}

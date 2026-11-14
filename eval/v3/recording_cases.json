@@ -1,0 +1,54 @@
+{
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "cases": [
+    {
+      "id": "architecture-gateway",
+      "workflow_mode": "arch_research",
+      "title": "Pydantic AI / Agno · 模型接入架构与地址传递",
+      "bindings": [
+        {
+          "repo": "pydantic/pydantic-ai",
+          "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a"
+        },
+        {
+          "repo": "agno-agi/agno",
+          "commit": "878151ba85c7bec6f0df7edfa1bbc0e025fdd5c1"
+        }
+      ],
+      "query": "比较两个框架的 OpenAI 模型接入架构和服务地址参数传递。Pydantic AI 重点查看 pydantic_ai_slim/pydantic_ai/providers/openai.py，Agno 重点查看 libs/agno/agno/models/openai/chat.py。请自行定位 base_url 的定义和传递调用，用完整语句证据说明接入组件及静态调用关系；分别核查自定义地址是否进入客户端配置，并标明尚需运行验证的部分。",
+      "followup": "继续沿用固定提交，聚焦文件内直接参数转交：Pydantic AI 的 pydantic_ai_slim/pydantic_ai/providers/openai.py 是否把 base_url 传给客户端创建函数；Agno 的 libs/agno/agno/models/openai/chat.py 是否把 base_url 放入参数字典，并由 OpenAIClient 取得该字典。请自动定位并引用源码，不延伸判断外部 SDK 或远端服务的运行行为。"
+    },
+    {
+      "id": "mcp-security-signals",
+      "workflow_mode": "sec_sentinel",
+      "title": "Python MCP SDK · 进程与环境传递线索",
+      "bindings": [
+        {
+          "repo": "modelcontextprotocol/python-sdk",
+          "commit": "77001c96f9507be0f4d009b83210a384a5e08bda"
+        }
+      ],
+      "query": "对 src/mcp/client 目录做安全线索审计，重点追查 src/mcp/client/stdio.py 的子进程启动与环境变量传递。把规则命中和上下文复核分开，给出对应调用、控制条件和覆盖范围；正常的进程启动或环境变量读取不能直接判为漏洞。",
+      "followup": "结合 src/mcp/client/stdio.py 原文复核：哪些环境变量会传给子进程？仅有该行为能否确认凭据泄露，仍缺哪些调用方或目的地证据？"
+    },
+    {
+      "id": "pydantic-deploy-blueprint",
+      "workflow_mode": "deploy_readiness",
+      "title": "Pydantic AI · Python 环境和模型网关适配",
+      "bindings": [
+        {
+          "repo": "pydantic/pydantic-ai",
+          "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a"
+        }
+      ],
+      "query": "核查 Python 3.11 版本声明和自定义 OpenAI 模型网关地址配置。查看 pyproject.toml 与 pydantic_ai_slim/pydantic_ai/providers/openai.py，给出带证据的约束矩阵、可复制的最小适配配置示例，以及安装和连接仍需运行验证的步骤。",
+      "followup": "把已确认的版本声明与模型地址参数整理为使用前检查清单，指出示例中的用户自填项。"
+    }
+  ],
+  "delivery_contracts": {
+    "architecture-gateway": "图边有来源；报告引用 Pydantic 直接 base_url 转交及 Agno 参数字典进入 OpenAIClient；两轮报告",
+    "mcp-security-signals": "扫描范围、线索、至少一条有效上下文复核及两轮报告",
+    "pydantic-deploy-blueprint": "约束矩阵、带引用与验证步骤的有效配置块及两轮报告"
+  }
+}

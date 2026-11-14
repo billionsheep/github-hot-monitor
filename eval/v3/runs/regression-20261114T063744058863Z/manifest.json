@@ -1,0 +1,67 @@
+{
+  "created_at": "regression-20261114T063744058863Z",
+  "shared_ledger": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-budget.json",
+  "planned": [
+    {
+      "id": "A1",
+      "route": "auto"
+    },
+    {
+      "id": "A2",
+      "route": "auto"
+    },
+    {
+      "id": "A3",
+      "route": "auto"
+    },
+    {
+      "id": "A4",
+      "route": "auto"
+    },
+    {
+      "id": "B1",
+      "route": "auto"
+    },
+    {
+      "id": "B2",
+      "route": "auto"
+    },
+    {
+      "id": "B3",
+      "route": "auto"
+    },
+    {
+      "id": "B4",
+      "route": "auto"
+    },
+    {
+      "id": "C1",
+      "route": "auto"
+    },
+    {
+      "id": "C2",
+      "route": "auto"
+    },
+    {
+      "id": "C3",
+      "route": "auto"
+    },
+    {
+      "id": "E1",
+      "route": "auto"
+    },
+    {
+      "id": "E2",
+      "route": "auto"
+    },
+    {
+      "id": "C3",
+      "route": "auto"
+    },
+    {
+      "id": "C3",
+      "route": "auto"
+    }
+  ],
+  "status": "planned"
+}

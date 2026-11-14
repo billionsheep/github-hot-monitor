@@ -1,0 +1,354 @@
+{
+  "id": "B1",
+  "attempt": "20261114T065233236868Z",
+  "batch": "regression-20261114T065142239586Z",
+  "route_requested": "auto",
+  "origin": "synthetic",
+  "query": "README.md 声称支持 Python 3.11，实际 pyproject.toml 的 requires-python 是否允许 3.11？以实际版本约束为判断依据。",
+  "repo": "eval/b1",
+  "commit": "7782d21453a8656aa546dce01dc8979c24a5fd00",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T065233236868Z",
+  "code_version": {
+    "commit": "99473b56e7f363862bd9ef6a822e388c78436755",
+    "evidence_source_sha256": "becb0c521499ecd906d07e4b4ea99b098170bf6b7481baa2ab8e0e7ded041024"
+  },
+  "input_fixture_sha256": "a4febc11873103618e6f8a70d0f2ca8a37369554eeee75dafbe2606e110f27f6",
+  "session_id": "d5ec36e8ad944b5aa25fa0d3b242f08c",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "C1",
+          "title": "该仓库 pyproject.toml 中的 requires-python 实际版本约束是否允许 Python 3.11（以实际约束而非 README.md 声明为准）"
+        }
+      ],
+      "execution_route": {
+        "reason": "问题涉及多个文件，使用完整流程",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "README.md 声称支持 Python 3.11，实际 pyproject.toml 的 requires-python 是否允许 3.11？以实际版本约束为判断依据。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "7782d21453a8656aa546dce01dc8979c24a5fd00",
+            "repo": "eval/b1"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_c12c78578f3dcdec127dd249cc06d924eaaa670d7c0d42892b256e5380154065",
+                  "quote": "requires-python = \">=3.12\"\n"
+                }
+              ],
+              "commit": "7782d21453a8656aa546dce01dc8979c24a5fd00",
+              "criterion_id": "C1",
+              "gap_reason": null,
+              "next_step": "无需运行验证即可确定该版本约束不允许 Python 3.11；若计划支持 3.11，应先验证代码及依赖兼容性，再调整版本约束。",
+              "original_status": "FAIL",
+              "repo": "eval/b1",
+              "runtime_validation_required": false,
+              "status": "FAIL",
+              "status_calibrated": false,
+              "summary": "pyproject.toml 第 2 行的实际 requires-python 约束为 >=3.12，明确排除 Python 3.11，因此不满足允许 Python 3.11 的核查项。[ev_c12c78578f3dcdec127dd249cc06d924eaaa670d7c0d42892b256e5380154065]",
+              "support_relation": "contradicts",
+              "verification_basis": "static_config"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_c12c78578f3dcdec127dd249cc06d924eaaa670d7c0d42892b256e5380154065"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "eval/b1 的 pyproject.toml 中 requires-python 实际约束为 >=3.12，明确不允许 Python 3.11，因此 C1 核查不通过；该结论可由静态配置直接确定，无需运行验证。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 4,
+      "turn_tool_calls": 1,
+      "turn_usage": {
+        "input_tokens": 3725,
+        "output_tokens": 446,
+        "total_tokens": 4171
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 3725,
+        "output_tokens": 446,
+        "total_tokens": 4171
+      },
+      "workflow_mode": "deploy_readiness"
+    }
+  ],
+  "usage": {
+    "input_tokens": 3725,
+    "output_tokens": 446,
+    "total_tokens": 4171
+  },
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "FAIL"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/b1",
+      "name": "inspect_dependencies_and_env",
+      "args": {}
+    }
+  ],
+  "metrics": {
+    "model_calls": 4,
+    "lead_calls": 2,
+    "lead_input_peak": 534,
+    "known_input_tokens": 3725,
+    "known_output_tokens": 446,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "问题涉及多个文件，使用完整流程",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "C1",
+            "title": "该仓库 pyproject.toml 中的 requires-python 实际版本约束是否允许 Python 3.11（以实际约束而非 README.md 声明为准）"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_requested",
+      "data": {
+        "args": "{}",
+        "repo": "eval/b1",
+        "tool": "inspect_dependencies_and_env"
+      }
+    },
+    {
+      "id": 8,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_c12c78578f3dcdec127dd249cc06d924eaaa670d7c0d42892b256e5380154065",
+          "ev_c12c78578f3dcdec127dd249cc06d924eaaa670d7c0d42892b256e5380154065"
+        ],
+        "repo": "eval/b1",
+        "status": "CACHE_HIT",
+        "tool": "inspect_dependencies_and_env"
+      }
+    },
+    {
+      "id": 9,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 10,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/b1"
+      }
+    },
+    {
+      "id": 11,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 12,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 13,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 14,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 17.757,
+  "request_records": [
+    {
+      "id": "4ecdc971d10f47c2afa87929569de866",
+      "label": "regression-20261114T065142239586Z/B1/auto/20261114T065233236868Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:52:33.255232+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1223,
+      "request_sha256": "887aed5813cf457866be1d09b1ea0b22f7d8c0a17df3f9f87bfbba6b05f076cc",
+      "elapsed_ms": 3733,
+      "estimated_usd": 0.0012325,
+      "usage": {
+        "input_tokens": 261,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 58,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 319
+      }
+    },
+    {
+      "id": "2c50d1b9bcd040ca88e66ecd4f868597",
+      "label": "regression-20261114T065142239586Z/B1/auto/20261114T065233236868Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:52:37.003296+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 5995,
+      "request_sha256": "cac1bb24583fd926fb7920aec2b48c2bb678e444db5156b60d66bb97bbafd6be",
+      "elapsed_ms": 3912,
+      "estimated_usd": 0.0031125000000000002,
+      "usage": {
+        "input_tokens": 1181,
+        "input_tokens_details": {
+          "cache_write_tokens": 124,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 124
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 16,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1197
+      }
+    },
+    {
+      "id": "5ec0b2dcd2c543849f548460e8f7bc66",
+      "label": "regression-20261114T065142239586Z/B1/auto/20261114T065233236868Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:52:40.936164+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 7901,
+      "request_sha256": "0c62caf86b4097ed36f622af488cf6c9c568a258006210313befd785f4a65afd",
+      "elapsed_ms": 6437,
+      "estimated_usd": 0.007452500000000001,
+      "usage": {
+        "input_tokens": 1749,
+        "input_tokens_details": {
+          "cache_write_tokens": 692,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 692
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 308,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2057
+      }
+    },
+    {
+      "id": "cf85bf4973be4863a781fe8d43190e67",
+      "label": "regression-20261114T065142239586Z/B1/auto/20261114T065233236868Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:52:47.390342+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1959,
+      "request_sha256": "4cddc2a98af6771fbabebfae2bc4ea6bfa87552904549c5533f597c24486772b",
+      "elapsed_ms": 3591,
+      "estimated_usd": 0.001975,
+      "usage": {
+        "input_tokens": 534,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 64,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 598
+      }
+    }
+  ]
+}

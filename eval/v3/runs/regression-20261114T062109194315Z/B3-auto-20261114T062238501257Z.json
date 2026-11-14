@@ -1,0 +1,493 @@
+{
+  "id": "B3",
+  "attempt": "20261114T062238501257Z",
+  "batch": "regression-20261114T062109194315Z",
+  "route_requested": "auto",
+  "origin": "synthetic",
+  "query": "README.md 宣称数据库可跨进程重启保留；store.py 中 sqlite3.connect 指定的数据库能否持久保存到磁盘？",
+  "repo": "eval/b3",
+  "commit": "20d21f5e8985103008053474b385751970dea58e",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T062238501257Z",
+  "code_version": {
+    "commit": "a2755bd8c70a8c37db097572585f69698a631b1f",
+    "evidence_source_sha256": "b71a45bfd8b6ad8daa6ebcb103a21cda92120dc1135e2d5c703c2c679c975d83"
+  },
+  "input_fixture_sha256": "597f1af6378da671861640d4074a184ab5ca089782e7bcf81aaaa1b8dd6b6664",
+  "session_id": "a468f9b43b564d21a79b09f3da38c2e2",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "C1",
+          "title": "store.py 中 sqlite3.connect 指定的数据库是否持久保存到磁盘，并在进程重启后保留数据，符合 README.md 的声明。"
+        }
+      ],
+      "execution_route": {
+        "reason": "问题包含多个疑问或范围不明确",
+        "route": "full"
+      },
+      "integration_blueprint": [],
+      "query": "README.md 宣称数据库可跨进程重启保留；store.py 中 sqlite3.connect 指定的数据库能否持久保存到磁盘？",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "20d21f5e8985103008053474b385751970dea58e",
+            "repo": "eval/b3"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_a955f4dd7265d8e3772029fec2791fdf013c2b63041d79b89f17a115f7e44626",
+                  "quote": "# Store\nMemory survives process restarts.\n"
+                },
+                {
+                  "evidence_id": "ev_41c59246988d6852fe287b707e14290e6fd1ece3f187872d51dfe9fafd201171",
+                  "quote": "import sqlite3\nconnection = sqlite3.connect(\":memory:\")\n"
+                }
+              ],
+              "commit": "20d21f5e8985103008053474b385751970dea58e",
+              "criterion_id": "C1",
+              "gap_reason": null,
+              "next_step": "将 :memory: 替换为稳定的磁盘数据库路径；修复后提交测试数据，退出并重启进程，再查询确认数据保留。",
+              "original_status": "FAIL",
+              "repo": "eval/b3",
+              "runtime_validation_required": false,
+              "status": "FAIL",
+              "status_calibrated": false,
+              "summary": "README 声称数据可在进程重启后保留 [ev_a955f4dd7265d8e3772029fec2791fdf013c2b63041d79b89f17a115f7e44626]，但 store.py 使用 sqlite3.connect(\":memory:\") 创建内存数据库，不持久保存到磁盘，进程退出后数据不保留，与声明明确冲突。此结论来自静态代码检查，未进行运行验证 [ev_41c59246988d6852fe287b707e14290e6fd1ece3f187872d51dfe9fafd201171]。",
+              "support_relation": "contradicts",
+              "verification_basis": "static_config"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_41c59246988d6852fe287b707e14290e6fd1ece3f187872d51dfe9fafd201171",
+            "ev_a955f4dd7265d8e3772029fec2791fdf013c2b63041d79b89f17a115f7e44626",
+            "meta_c72d8a8ceac43768273af4c6cd1db44b401e708b96bc600e44d07e3a1c40efbb",
+            "tree_7a090a85d8aaafbdc87244dfd1dacb22abed6c095943166ceb36dc0dd35659f9"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "仅提供了 eval/b3，无法进行跨仓库比较。该仓库 C1 结论为 FAIL：README.md 声称数据可在进程重启后保留，但 store.py 使用 sqlite3.connect(\":memory:\")，数据库不持久保存到磁盘，进程退出后数据不保留，与声明冲突。结论基于静态代码检查，未进行运行验证。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 6,
+      "turn_tool_calls": 3,
+      "turn_usage": {
+        "input_tokens": 9374,
+        "output_tokens": 706,
+        "total_tokens": 10080
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 9374,
+        "output_tokens": 706,
+        "total_tokens": 10080
+      },
+      "workflow_mode": "deploy_readiness"
+    }
+  ],
+  "usage": {
+    "input_tokens": 9374,
+    "output_tokens": 706,
+    "total_tokens": 10080
+  },
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "FAIL"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/b3",
+      "name": "get_repo_overview_and_tree",
+      "args": {
+        "path": ""
+      }
+    },
+    {
+      "repo": "eval/b3",
+      "name": "read_file_lines",
+      "args": {
+        "path": "README.md",
+        "start_line": 1,
+        "end_line": 10
+      }
+    },
+    {
+      "repo": "eval/b3",
+      "name": "read_file_lines",
+      "args": {
+        "path": "store.py",
+        "start_line": 1,
+        "end_line": 10
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 6,
+    "lead_calls": 2,
+    "lead_input_peak": 746,
+    "known_input_tokens": 9374,
+    "known_output_tokens": 706,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "问题包含多个疑问或范围不明确",
+        "route": "full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 5,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "C1",
+            "title": "store.py 中 sqlite3.connect 指定的数据库是否持久保存到磁盘，并在进程重启后保留数据，符合 README.md 的声明。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 7,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"\"}",
+        "repo": "eval/b3",
+        "tool": "get_repo_overview_and_tree"
+      }
+    },
+    {
+      "id": 8,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "meta_c72d8a8ceac43768273af4c6cd1db44b401e708b96bc600e44d07e3a1c40efbb",
+          "tree_7a090a85d8aaafbdc87244dfd1dacb22abed6c095943166ceb36dc0dd35659f9"
+        ],
+        "repo": "eval/b3",
+        "status": "CACHE_HIT",
+        "tool": "get_repo_overview_and_tree"
+      }
+    },
+    {
+      "id": 9,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 10,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"README.md\",\"start_line\":1,\"end_line\":10}",
+        "repo": "eval/b3",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 11,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_a955f4dd7265d8e3772029fec2791fdf013c2b63041d79b89f17a115f7e44626"
+        ],
+        "repo": "eval/b3",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 12,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 13,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"store.py\",\"start_line\":1,\"end_line\":10}",
+        "repo": "eval/b3",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 14,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_41c59246988d6852fe287b707e14290e6fd1ece3f187872d51dfe9fafd201171"
+        ],
+        "repo": "eval/b3",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 15,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 16,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/b3"
+      }
+    },
+    {
+      "id": 17,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 18,
+      "type": "model_started",
+      "data": {
+        "role": "lead"
+      }
+    },
+    {
+      "id": 19,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 20,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 28.763,
+  "request_records": [
+    {
+      "id": "534ddda903b44b2cb069edc3ef7f16c3",
+      "label": "regression-20261114T062109194315Z/B3/auto/20261114T062238501257Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:22:38.510221+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 1123,
+      "request_sha256": "b98249e24c0d2c89303a9eb4db1a4ed1166d7f96e4be9fd4e9af3a918b483ddb",
+      "elapsed_ms": 4342,
+      "estimated_usd": 0.0014500000000000001,
+      "usage": {
+        "input_tokens": 232,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 87,
+        "output_tokens_details": {
+          "reasoning_tokens": 31
+        },
+        "total_tokens": 319
+      }
+    },
+    {
+      "id": "33411150fb1343d38b5d8fec5a92ddcd",
+      "label": "regression-20261114T062109194315Z/B3/auto/20261114T062238501257Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:22:42.857464+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 5991,
+      "request_sha256": "e3ef3702cd59e6b966def9bc4d3ca8a2fdce3241217a35922d6b439396be4d64",
+      "elapsed_ms": 3880,
+      "estimated_usd": 0.0031500000000000005,
+      "usage": {
+        "input_tokens": 1172,
+        "input_tokens_details": {
+          "cache_write_tokens": 115,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 115
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 22,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1194
+      }
+    },
+    {
+      "id": "6faa509e09324629a8fd5d124c365173",
+      "label": "regression-20261114T062109194315Z/B3/auto/20261114T062238501257Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:22:46.752146+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 8671,
+      "request_sha256": "98199112cef394fa721c24e3b387798aebe5f1e314bb02ac5503d311a4bab43c",
+      "elapsed_ms": 3247,
+      "estimated_usd": 0.005365,
+      "usage": {
+        "input_tokens": 2026,
+        "input_tokens_details": {
+          "cache_write_tokens": 969,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 969
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2056
+      }
+    },
+    {
+      "id": "8f5c13e40da14533b112f738ff388571",
+      "label": "regression-20261114T062109194315Z/B3/auto/20261114T062238501257Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:22:50.011045+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 10088,
+      "request_sha256": "c8fc6776323f43e908a89836564525d12318415a70b6b3ef1e47cb835325ee5f",
+      "elapsed_ms": 4642,
+      "estimated_usd": 0.0063175,
+      "usage": {
+        "input_tokens": 2407,
+        "input_tokens_details": {
+          "cache_write_tokens": 2404,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 2404
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2437
+      }
+    },
+    {
+      "id": "c87b1bec8ae54ee8b41ac6a18284d4cd",
+      "label": "regression-20261114T062109194315Z/B3/auto/20261114T062238501257Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:22:54.665318+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 11521,
+      "request_sha256": "33eec7587af5e9d46ba347cc84146748187bd16208a6663b91d68ff3ecdb4243",
+      "elapsed_ms": 7727,
+      "estimated_usd": 0.0113475,
+      "usage": {
+        "input_tokens": 2791,
+        "input_tokens_details": {
+          "cache_write_tokens": 2788,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 2788
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 437,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 3228
+      }
+    },
+    {
+      "id": "0f66aa46c9154e5fa1491c4c5377dab7",
+      "label": "regression-20261114T062109194315Z/B3/auto/20261114T062238501257Z",
+      "role": "lead",
+      "started_at": "2026-11-14T06:23:02.404224+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 2443,
+      "request_sha256": "8c5f85f7f71f9f96581a36571b69b0525f236b9e6af1cb614db0b265159a6f5f",
+      "elapsed_ms": 4852,
+      "estimated_usd": 0.0028650000000000004,
+      "usage": {
+        "input_tokens": 746,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 100,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 846
+      }
+    }
+  ]
+}

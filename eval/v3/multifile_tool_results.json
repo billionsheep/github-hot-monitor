@@ -31,8 +31,8 @@
           },
           "scope": {
             "attempted_directories": 4,
-            "attempted_files": 3,
-            "bytes_read": 59539,
+            "attempted_files": 4,
+            "bytes_read": 60639,
             "complete": false,
             "continuation": "",
             "continuations": [
@@ -58,11 +58,6 @@
               },
               {
                 "kind": "file",
-                "path": "pyproject.toml",
-                "path_prefix": ""
-              },
-              {
-                "kind": "file",
                 "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
                 "path_prefix": "pydantic_ai_slim/pydantic_ai/providers"
               }
@@ -73,10 +68,18 @@
               "pydantic_ai_slim/pydantic_ai",
               "pydantic_ai_slim/pydantic_ai/providers"
             ],
+            "file_categories": {
+              "config": 2,
+              "denominator": 4,
+              "doc": 1,
+              "other": 0,
+              "src": 1
+            },
             "files": [
               "pydantic_ai_slim/pyproject.toml",
               "pyproject.toml",
-              "pydantic_ai_slim/pydantic_ai/providers/openai.py"
+              "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "LICENSE"
             ],
             "mode": null,
             "notes": [
@@ -84,62 +87,16 @@
               "pydantic_ai_slim 目录截断；未列出的项目未扫描。",
               "pydantic_ai_slim/pydantic_ai 目录截断；未列出的项目未扫描。",
               "pydantic_ai_slim/pydantic_ai/providers 目录截断；未列出的项目未扫描。",
-              "线索超过 40 项，仅保留前 40 项，其他线索未展开。"
+              "pydantic_ai_slim/pydantic_ai/providers/openai.py:86-168 完整语句超过字符预算，未生成线索。",
+              "pydantic_ai_slim/pydantic_ai/providers/openai.py:86-168 完整语句超过字符预算，未生成线索。",
+              "pydantic_ai_slim/pydantic_ai/providers/openai.py:86-168 完整语句超过字符预算，未生成线索。"
             ],
             "path_prefix": ""
           },
-          "entry_count": 40,
-          "derived_evidence_id": "arch_profile_aa651326a1b809db4e6ff309e0eb41d2da1229d995f357d9b0c00a26c9ce802e",
-          "artifact_sha256": "ab978102e88d390a802d1eaa7f7501e0b0b563ba2af3d5d950d4eafed052f437",
+          "entry_count": 28,
+          "derived_evidence_id": "arch_profile_a3f75b955fed2cfa136ee83d73560a544e20af5056e7554d7c783ef277862063",
+          "artifact_sha256": "f1b7406b65a9f78f3215b6c4e68087f11471438f766002491c0a88bc328c7235",
           "entries": [
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 5,
-              "evidence_id": "ev_140564151812143f0cc214a82a0409ea3db88d76e0b2ba2af08620b484fdce5e",
-              "from": "file",
-              "path": "pydantic_ai_slim/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 5,
-              "to": "[tool.hatch.version]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 8,
-              "evidence_id": "ev_56c9f6d18a5265747863532e9a6c7f84d2a4b21dce1ebd25af28300c67d897f8",
-              "from": "file",
-              "path": "pydantic_ai_slim/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 8,
-              "to": "[tool.uv-dynamic-versioning]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 57,
-              "evidence_id": "ev_ba0627f4f38eb8ff6a6426fe25dec04384e2961fb162402679ce528b6aa21e04",
-              "from": "file",
-              "path": "pydantic_ai_slim/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 57,
-              "to": "[tool.hatch.metadata.hooks.uv-dynamic-versioning]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 72,
-              "evidence_id": "ev_0b6439caa7c81bc9bce404e2425853d51aa0e100a2281689984ee20e4105f786",
-              "from": "file",
-              "path": "pydantic_ai_slim/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 72,
-              "to": "[tool.hatch.metadata.hooks.uv-dynamic-versioning.optional-dependencies]"
-            },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
@@ -202,306 +159,6 @@
             },
             {
               "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 180,
-              "evidence_id": "ev_9e65f9318450673bfe328c0afe497eb5acaa85c6a9dc864bcd2e663eba6f78c8",
-              "from": "file",
-              "path": "pydantic_ai_slim/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 180,
-              "to": "[tool.hatch.metadata]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 186,
-              "evidence_id": "ev_1c8cfe79baec188af8c2cacaccb0ccce8a6d5ec1f4dd45df432dfec18adabc2d",
-              "from": "file",
-              "path": "pydantic_ai_slim/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 186,
-              "to": "[tool.hatch.build.targets.wheel]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 189,
-              "evidence_id": "ev_0416dfb585754dd9e39e52695e42602d223606c60a535a8d938c7bb3c7e5cd8a",
-              "from": "file",
-              "path": "pydantic_ai_slim/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 189,
-              "to": "[tool.uv.sources]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 5,
-              "evidence_id": "ev_e7831fb111ce68085fd9aa2e9a7511e9b68ea94ed21f8f5bee4ac4ebea14b52d",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 5,
-              "to": "[tool.hatch.version]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 8,
-              "evidence_id": "ev_0bfc4e92a7b241f45593b7d46ad0532e7a399e5f3167181fc849381369a293bd",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 8,
-              "to": "[tool.uv-dynamic-versioning]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 50,
-              "evidence_id": "ev_57ce293aeaa5c056542746f2fa00b5419ea5ea05664fc04a413d409937a0861e",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 50,
-              "to": "[tool.hatch.metadata.hooks.uv-dynamic-versioning]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 55,
-              "evidence_id": "ev_d4e36a8987532dd1822caaed2a62982c2aad9c21aeb941bf54aa6def5a810e15",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 55,
-              "to": "[tool.hatch.metadata.hooks.uv-dynamic-versioning.optional-dependencies]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 100,
-              "evidence_id": "ev_13320f618b32585af772a9617b1f6eb350f8bc64f3ed8c785569b013fa6a2c7b",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 100,
-              "to": "[tool.uv.sources]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 109,
-              "evidence_id": "ev_c46fe996af5d3e423400588388693d9b66f8e1f84e6d0c1757ee17776fa93f02",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 109,
-              "to": "[tool.uv.workspace]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 120,
-              "evidence_id": "ev_325e6670e328c60fa4b9aee1825ef0aebb96fa91139ab1193656a5862144e95a",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 120,
-              "to": "[tool.uv]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 210,
-              "evidence_id": "ev_8e27005f0a8657f74552660beea4926bb2ca350af1376e08848a9dbc0c0bf3a5",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 210,
-              "to": "[tool.uv.exclude-newer-package]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 348,
-              "evidence_id": "ev_498174dda4793904e45021e6b52900ead310ba2619ebe97ef863ac50515e4f36",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 348,
-              "to": "[tool.hatch.build.targets.wheel]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 352,
-              "evidence_id": "ev_de073abc918ab2745b5b904220c9a8ec872cfe801eba663876ba141e3120fad0",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 352,
-              "to": "[tool.hatch.build.targets.sdist]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 358,
-              "evidence_id": "ev_5192accf088e45ce0b72e31fcc4d05fb894758ca5f93c88ceac9575a88ec89e6",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 358,
-              "to": "[tool.ruff]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 417,
-              "evidence_id": "ev_d836e4526fd003f7b107b8951a16945c92474ee4529490b676a7ee00e8e478e4",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 417,
-              "to": "[tool.ruff.lint]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 446,
-              "evidence_id": "ev_baf4d083dc4016f2b0b07587874c0cfe11b7ebcb2f03506ce28c4dc7ec8f9a1d",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 446,
-              "to": "[tool.ruff.lint.isort]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 450,
-              "evidence_id": "ev_7142dfe87c92b030f4b99486b5ac839ff6d8bd7225bb063e5c49e1057e8b42ee",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 450,
-              "to": "[tool.ruff.lint.pydocstyle]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 453,
-              "evidence_id": "ev_67755b5b4aa912e6212b0204c713395143ea96635d25cf2ef5c2d1481a7ce1f6",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 453,
-              "to": "[tool.ruff.lint.flake8-tidy-imports]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 472,
-              "evidence_id": "ev_c2a9bcd07cac43e385e4f83a2e9eaeabe7096d4ef2f020c00d78a2daacb0df76",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 472,
-              "to": "[tool.ruff.lint.flake8-tidy-imports.banned-api]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 476,
-              "evidence_id": "ev_8d8798a3a79d31d6a271a1fe19bc5b96c9714907808af97d759c788b04348126",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 476,
-              "to": "[tool.ruff.format]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 481,
-              "evidence_id": "ev_a4bff0215efbe7423550e956961d04e425e2f5fbd39e2668c442149f896f7bca",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 481,
-              "to": "[tool.ruff.lint.per-file-ignores]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 524,
-              "evidence_id": "ev_c36b52cd7fd8f90e286883f486c938e79fb66084eec4c11f2e8ee9ae7b18ae26",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 524,
-              "to": "[tool.complexipy]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 535,
-              "evidence_id": "ev_bfcc557f23970cba20fd1fe5f7dce7c5b3b7a3f9a1135e2ff6a61a4f16c0386a",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 535,
-              "to": "[tool.pyright]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 585,
-              "evidence_id": "ev_e2702f311636ae362f30101bdba227e650c5f492f8336bbc5bf93112bc4272d7",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 585,
-              "to": "[tool.mypy]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 589,
-              "evidence_id": "ev_b00ec14f959fdb62ed72db2f591fb8af7bfd9241cacf59b6f741d154301e7a24",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 589,
-              "to": "[tool.pytest.ini_options]"
-            },
-            {
-              "assessment": "source_signal",
               "category": "execution_loop",
               "end_line": 590,
               "evidence_id": "ev_b6744d74fa0e2b5e6bc7f038ebdb4c9bf36b06b88e18318b9724f468c5e5e496",
@@ -539,18 +196,6 @@
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 670,
-              "evidence_id": "ev_bc7476475d1edc068084d0adbb605cc08a25594b6047f22c42b413278d196449",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 670,
-              "to": "# which crashes tool execution when filterwarnings=[\"error\"]. The proper upstream fix is for"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
               "end_line": 684,
               "evidence_id": "ev_8e98599ee1e9560ac2ae5fd2c69cf7670455dfc35aeb8295087f629b4b39715f",
               "from": "file",
@@ -571,6 +216,229 @@
               "signal": "text_rule",
               "start_line": 686,
               "to": "\"ignore:The model 'claude-sonnet-4-5(-20250929)?' is deprecated and will reach end-of-life:DeprecationWarning\","
+            },
+            {
+              "assessment": "source_signal",
+              "category": "execution_loop",
+              "end_line": 690,
+              "evidence_id": "ev_483a67bddd37b1ffb3d60090696759952dad0ac3ffbc47ab931a60649303b0f8",
+              "from": "file",
+              "path": "pyproject.toml",
+              "relation": "rule_mention",
+              "signal": "text_rule",
+              "start_line": 690,
+              "to": "[tool.coverage.run]"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 85,
+              "evidence_id": "ev_5713083129377795acef6e543850b34bc6ecee6c493393b943a63bcd13ee54aa",
+              "from": "profile",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 85,
+              "to": "pydantic_ai.profiles.openai.openai_model_profile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 172,
+              "evidence_id": "ev_7a23977513582b253bc761f808516251ed4a174a080fead2bb67c4a7a3397881",
+              "from": "openai_realtime_model_profile",
+              "keywords": [],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 172,
+              "to": "pydantic_ai.profiles.openai.openai_realtime_model_profile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 225,
+              "evidence_id": "ev_f2a4189ddf3d7b435a1b6c52df32ead56b613ed7315d2b8a1ff2430cc84bb017",
+              "from": "self._client",
+              "keywords": [
+                "base_url",
+                "api_key",
+                "http_client"
+              ],
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 225,
+              "to": "self._create_openai_client"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 5,
+              "evidence_id": "ev_66250fa4cb1cd0a9b05642c456aecef98b1e6bce1bb161d2a516acf4fab9f674",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 5,
+              "to": "typing.overload"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 7,
+              "evidence_id": "ev_f4610fa5f7bec7f2742cc9cbbb3cca180d73c13b74403948f20cd099138890a0",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 7,
+              "to": "pydantic_ai.ModelProfile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "entry_or_route",
+              "end_line": 9,
+              "evidence_id": "ev_5b7b7719be8d79dc64cdb219e6c33502dc1135008cc68458c2ed94a1e9971350",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 9,
+              "to": "pydantic_ai.profiles._special_tokens.special_token_route_profile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 18,
+              "evidence_id": "ev_536a1c3e1a64f95f159ad343cc6ccd21d25f3625cc0740633b096d488c420bc8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 10,
+              "to": "pydantic_ai.profiles.openai._GPT_6_MODEL_PREFIXES"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 18,
+              "evidence_id": "ev_536a1c3e1a64f95f159ad343cc6ccd21d25f3625cc0740633b096d488c420bc8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 10,
+              "to": "pydantic_ai.profiles.openai.OpenAIJsonSchemaTransformer"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 18,
+              "evidence_id": "ev_536a1c3e1a64f95f159ad343cc6ccd21d25f3625cc0740633b096d488c420bc8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 10,
+              "to": "pydantic_ai.profiles.openai.OpenAIModelProfile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 18,
+              "evidence_id": "ev_536a1c3e1a64f95f159ad343cc6ccd21d25f3625cc0740633b096d488c420bc8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 10,
+              "to": "pydantic_ai.profiles.openai._OpenAIJsonSchemaTransformer"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 18,
+              "evidence_id": "ev_536a1c3e1a64f95f159ad343cc6ccd21d25f3625cc0740633b096d488c420bc8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 10,
+              "to": "pydantic_ai.profiles.openai.openai_model_profile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 18,
+              "evidence_id": "ev_536a1c3e1a64f95f159ad343cc6ccd21d25f3625cc0740633b096d488c420bc8",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 10,
+              "to": "pydantic_ai.profiles.openai.openai_realtime_model_profile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 35,
+              "evidence_id": "ev_470e23de992616b3a90cea473185491aef2185cfff7b995b09c8926cdd2b368a",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": "._openai_compatible.AsyncHTTPClient"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 35,
+              "evidence_id": "ev_470e23de992616b3a90cea473185491aef2185cfff7b995b09c8926cdd2b368a",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 32,
+              "to": "._openai_compatible._OpenAISDKProvider"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 22,
+              "evidence_id": "ev_ac42ad3828193adacee5a3f613f01469a6f00bd521d18c88b8cb28d32efac6ac",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 22,
+              "to": "pydantic_ai.realtime.RealtimeModelProfile"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 25,
+              "evidence_id": "ev_2b74c044ff2a3d94ced0d3ce24d6727ed0c44605f31baff531a919cabd0ca115",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 25,
+              "to": "openai.AsyncAzureOpenAI"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 25,
+              "evidence_id": "ev_2b74c044ff2a3d94ced0d3ce24d6727ed0c44605f31baff531a919cabd0ca115",
+              "from": "module",
+              "path": "pydantic_ai_slim/pydantic_ai/providers/openai.py",
+              "relation": "import",
+              "signal": "import",
+              "start_line": 25,
+              "to": "openai.AsyncOpenAI"
             }
           ]
         },
@@ -581,8 +449,8 @@
           },
           "scope": {
             "attempted_directories": 6,
-            "attempted_files": 2,
-            "bytes_read": 64768,
+            "attempted_files": 3,
+            "bytes_read": 76111,
             "complete": false,
             "continuation": "",
             "continuations": [
@@ -618,6 +486,11 @@
               },
               {
                 "kind": "file",
+                "path": "libs/agno/pyproject.toml",
+                "path_prefix": "libs/agno"
+              },
+              {
+                "kind": "file",
                 "path": "libs/agno/agno/models/openai/chat.py",
                 "path_prefix": "libs/agno/agno/models/openai"
               }
@@ -630,9 +503,17 @@
               "libs/agno/agno/models",
               "libs/agno/agno/models/openai"
             ],
+            "file_categories": {
+              "config": 1,
+              "denominator": 3,
+              "doc": 1,
+              "other": 0,
+              "src": 1
+            },
             "files": [
               "libs/agno/pyproject.toml",
-              "libs/agno/agno/models/openai/chat.py"
+              "libs/agno/agno/models/openai/chat.py",
+              "LICENSE"
             ],
             "mode": null,
             "notes": [
@@ -647,488 +528,643 @@
             "path_prefix": ""
           },
           "entry_count": 40,
-          "derived_evidence_id": "arch_profile_c17720d0cea538cf98e75bed073b4691554e398036ce96c18535b42ba4b195e3",
-          "artifact_sha256": "5dee6ae3e3630b6537dcf2e4f6395762b6f3f4a58a8f44d57893c7b1b319b96a",
+          "derived_evidence_id": "arch_profile_ca780dbd9aa305d42472eb7986e9c91aedbd0748de3556e9dc584619755cd4b6",
+          "artifact_sha256": "4041057c9a52489064f561c7bc87f16684d4ef1b09d7d19a160147deda41c553",
           "entries": [
             {
               "assessment": "source_signal",
-              "category": "execution_loop",
-              "end_line": 71,
-              "evidence_id": "ev_8ea4d6f0286f7b7d06af8a48fa6d1881e108fdfcee7054fafa9e7d33c2a39d59",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 71,
-              "to": "# they importorskip away and only the SQLite half of each guard is run."
-            },
-            {
-              "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 116,
-              "evidence_id": "ev_55ad412503125c703e083c965f070d357b2318e93e5269da2b2286a76c5a627f",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 116,
-              "to": "openai = [\"openai>=1.106.0\"]  # >=1.106.0: callable api_key (sync+async token provider), openai/openai-python#2588"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "state_persistence",
-              "end_line": 206,
-              "evidence_id": "ev_77feaeb5e2c5afd3fbad1ee15549adcfbedd4b5c151c60e2fe13133740917060",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 206,
-              "to": "sqlite = [\"sqlalchemy[asyncio]\", \"aiosqlite\"]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "concurrency_retry",
-              "end_line": 246,
-              "evidence_id": "ev_725926cc197d53fed5e23b6854affbf8a10b788aed45890bdc0482feb8944bba",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 246,
-              "to": "# nltk!=3.10.1: its inisec import hook blocks site-packages imports from a venv inside the CWD."
-            },
-            {
-              "assessment": "source_signal",
-              "category": "state_persistence",
-              "end_line": 375,
-              "evidence_id": "ev_37cfe1092aadd2d0b77103e3c2de6cff8d857b30f7899fbda7c97f02860c8950",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 375,
-              "to": "\"agno[sqlite]\","
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 418,
-              "evidence_id": "ev_03d4eb0288ff8ef94f777b1dc36ee878c5b1c9191bc72cdc5c106d717755075a",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 418,
-              "to": "\"agno[docling]\",  # also a tool; parses docs for knowledge"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 466,
-              "evidence_id": "ev_967bc5bf54afecca42ddd0fa43ed8b66d9217372c46b4aa5ccaa9f3fbd5c6e91",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 466,
-              "to": "# silent no-op and model-nondeterminism retries never happen."
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 522,
-              "evidence_id": "ev_af48bba2c80c780d5ad6a4c160494184d9356f67e10439129a9d2ac2465e5cb3",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 522,
-              "to": "[tool.setuptools.packages.find]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 525,
-              "evidence_id": "ev_de3617c1b096335eefbca795d90e431b74d8944f8f39e0819fc0624bcc270b20",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 525,
-              "to": "[tool.setuptools.package-data]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 529,
-              "evidence_id": "ev_45a99c3fc6d1eec72480580cf14326f2b119b5eaf5d15c7fec22009f2700d803",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 529,
-              "to": "[tool.pytest.ini_options]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 538,
-              "evidence_id": "ev_44ac2ba649c1d726780929fc3ecd06227eb6ee5b9354958055c392a7b79a030d",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 538,
-              "to": "[tool.ruff]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 542,
-              "evidence_id": "ev_977269137aab536090f6932c3ffcbda2879ab709b8078bff956092cc1629104b",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 542,
-              "to": "[tool.ruff.lint.per-file-ignores]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 545,
-              "evidence_id": "ev_2c3a929e0b91db50485e61290a40fa51603347fb4647a90f23cd17e8007314cd",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 545,
-              "to": "[tool.mypy]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 553,
-              "evidence_id": "ev_942a4c7d6cd7947d3ce00220ff6805d6c72272c58eb170dd3307db396f6c2272",
-              "from": "file",
-              "path": "libs/agno/pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 553,
-              "to": "[[tool.mypy.overrides]]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 8,
-              "evidence_id": "ev_ed73c2b611fa32cc3b31442a32a434ac34adb415e20fde14c60f09a768c00aad",
-              "from": "module",
+              "end_line": 113,
+              "evidence_id": "ev_336176a0d7028edb324bb9f9d0e639835309fdf7428f4a816c5f2d18323fa973",
+              "from": "agno.exceptions.ModelAuthenticationError",
+              "keywords": [
+                "message",
+                "model_name"
+              ],
               "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 8,
-              "to": "pydantic.BaseModel"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 10,
-              "evidence_id": "ev_15a24a44ca66827298e85d602b0b7bf7c834a66be5ec41703989eef4b6d4ba55",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 10,
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 110,
               "to": "agno.exceptions.ModelAuthenticationError"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 10,
-              "evidence_id": "ev_15a24a44ca66827298e85d602b0b7bf7c834a66be5ec41703989eef4b6d4ba55",
-              "from": "module",
+              "end_line": 157,
+              "evidence_id": "ev_a05ca4e56a9612dbe8f92f4e02944d385365085696c0c42298cf8d0e16c264c5",
+              "from": "self.client",
+              "keywords": [
+                "**"
+              ],
               "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 10,
-              "to": "agno.exceptions.ModelProviderError"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 13,
-              "evidence_id": "ev_c2b3064858eae49f0911dd7e8636b9ce46a385a37ba15f6cf3ca884653ac68b2",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 13,
-              "to": "agno.models.base.Model"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 14,
-              "evidence_id": "ev_81831582828827b84c652002f2e9f7ee115cd49fe4ef730977b472a1091addff",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 14,
-              "to": "agno.models.message.Citations"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 14,
-              "evidence_id": "ev_81831582828827b84c652002f2e9f7ee115cd49fe4ef730977b472a1091addff",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 14,
-              "to": "agno.models.message.Message"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 14,
-              "evidence_id": "ev_81831582828827b84c652002f2e9f7ee115cd49fe4ef730977b472a1091addff",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 14,
-              "to": "agno.models.message.UrlCitation"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 15,
-              "evidence_id": "ev_6cc42591c1659fce06cbf01cee59105353e16c54ceebc565d3fb97b10977c129",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 15,
-              "to": "agno.models.openai.types.ReasoningEffort"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 15,
-              "evidence_id": "ev_6cc42591c1659fce06cbf01cee59105353e16c54ceebc565d3fb97b10977c129",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 15,
-              "to": "agno.models.openai.types.ServiceTier"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 15,
-              "evidence_id": "ev_6cc42591c1659fce06cbf01cee59105353e16c54ceebc565d3fb97b10977c129",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 15,
-              "to": "agno.models.openai.types.Verbosity"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 16,
-              "evidence_id": "ev_28a2114f9b3f87fb109780d9835c0b585fef01089a0c435aa5b7037ea4f3b379",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 16,
-              "to": "agno.models.response.ModelResponse"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "execution_loop",
-              "end_line": 17,
-              "evidence_id": "ev_66f27b9a966e87622ae789121abd753dce010c354d14704073a6c755f2a536a9",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "agno.run.agent.RunOutput"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "execution_loop",
-              "end_line": 18,
-              "evidence_id": "ev_214664b7ed4da2e57bac1842a006a325db382a5cc456a7a556f5ab67b4e1922f",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 18,
-              "to": "agno.run.team.TeamRunOutput"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 20,
-              "evidence_id": "ev_6f2d9492425c14e5d48644a288f085ccb4cb12ae73647337ccd30377411a146a",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 20,
-              "to": "agno.utils.openai._format_file_for_message"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 20,
-              "evidence_id": "ev_6f2d9492425c14e5d48644a288f085ccb4cb12ae73647337ccd30377411a146a",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 20,
-              "to": "agno.utils.openai.audio_to_message"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 20,
-              "evidence_id": "ev_6f2d9492425c14e5d48644a288f085ccb4cb12ae73647337ccd30377411a146a",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 20,
-              "to": "agno.utils.openai.images_to_message"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 24,
-              "evidence_id": "ev_eae41c2e331cf30a2ee8be11c10f6cdf51e3101bad320cd4eab2f71396a6d45c",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 24,
-              "to": "openai.APIConnectionError"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 24,
-              "evidence_id": "ev_eae41c2e331cf30a2ee8be11c10f6cdf51e3101bad320cd4eab2f71396a6d45c",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 24,
-              "to": "openai.APIStatusError"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 24,
-              "evidence_id": "ev_eae41c2e331cf30a2ee8be11c10f6cdf51e3101bad320cd4eab2f71396a6d45c",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 24,
-              "to": "openai.RateLimitError"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 25,
-              "evidence_id": "ev_6aaf3d0b2997de8f0dc033a14ccafb47b154a1c72339b5b9b85db8afe4aa7600",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 25,
-              "to": "openai.AsyncOpenAI"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 26,
-              "evidence_id": "ev_0ec5005177a978e26f97c61257e4e586b01635fd9c1a95c0c92e6a0ed0a277aa",
-              "from": "module",
-              "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 26,
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 157,
               "to": "openai.OpenAI"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 27,
-              "evidence_id": "ev_9ad1057bd8cc812b471c2262500b0c01f832eb0c2c5fbe5347f6c9ac12ef0381",
-              "from": "module",
+              "end_line": 185,
+              "evidence_id": "ev_e05c96ee9a98e5f3631814881e3d83f8172400d17566f079650e66eb5da90aa9",
+              "from": "self.async_client",
+              "keywords": [
+                "**"
+              ],
               "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 27,
-              "to": "openai.types.CompletionUsage"
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 185,
+              "to": "openai.AsyncOpenAI"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 28,
-              "evidence_id": "ev_5b6bb585efdb71a41bc7a64dbf58ab91b6f1d0481e8ed8ddb42b452855f52d8f",
-              "from": "module",
+              "end_line": 233,
+              "evidence_id": "ev_1151439f0ffa79a3e5c8a910fe357e8809141ff90d142344d84635d7295997e0",
+              "from": "schema",
+              "keywords": [],
               "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 28,
-              "to": "openai.types.chat.ChatCompletion"
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 233,
+              "to": "agno.utils.models.schema_utils.get_response_schema_for_provider"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 28,
-              "evidence_id": "ev_5b6bb585efdb71a41bc7a64dbf58ab91b6f1d0481e8ed8ddb42b452855f52d8f",
-              "from": "module",
+              "end_line": 303,
+              "evidence_id": "ev_723cb90f4a02215f86dc6309ec9c7ec076ba591da07a438facd3ae27ce4aca29",
+              "from": "model_dict.update",
+              "keywords": [],
               "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 28,
-              "to": "openai.types.chat.ChatCompletionAudio"
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 279,
+              "to": "model_dict.update"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 28,
-              "evidence_id": "ev_5b6bb585efdb71a41bc7a64dbf58ab91b6f1d0481e8ed8ddb42b452855f52d8f",
-              "from": "module",
+              "end_line": 304,
+              "evidence_id": "ev_bcc912c5443bb66011473b12a72eeb7134be3bdb4d03b11b0771c31668321a97",
+              "from": "cleaned_dict",
+              "keywords": [],
               "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 28,
-              "to": "openai.types.chat.ChatCompletionChunk"
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 304,
+              "to": "model_dict.items"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_077f034eed852c99ac4f3aee54749bc4593540ede27b2c0d5bc7c39afd83ddc1",
-              "from": "module",
+              "end_line": 346,
+              "evidence_id": "ev_af8b780ae1446c767632146a82205402ae2141513e025106415fe15a9f4d6e60",
+              "from": "extend",
+              "keywords": [
+                "images"
+              ],
               "path": "libs/agno/agno/models/openai/chat.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 29,
-              "to": "openai.types.chat.chat_completion_chunk.ChoiceDelta"
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 346,
+              "to": "agno.utils.openai.images_to_message"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 349,
+              "evidence_id": "ev_ba509ee282e9ab759d210584af4f85867b8879cc8171a79fe17ae72d13f95e00",
+              "from": "extend",
+              "keywords": [
+                "audio"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 349,
+              "to": "agno.utils.openai.audio_to_message"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 372,
+              "evidence_id": "ev_792c5fbc028f24fa4c4183f0f27da746c03f786a15cd437ef5ad959388594a4e",
+              "from": "file_part",
+              "keywords": [],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 372,
+              "to": "agno.utils.openai._format_file_for_message"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 389,
+              "evidence_id": "ev_dcc0c323a5d601f8bdd6a7cd555b5d4a0b045e6297f0c3f8ddff7edac190e2bd",
+              "from": "normalized",
+              "keywords": [
+                "provider"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 389,
+              "to": "agno.utils.message.reformat_tool_call_ids"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 425,
+              "evidence_id": "ev_ce3f08f672a279bbb9a5924326e586fb19b3c803831a5c34eb6c631dc5a4ea75",
+              "from": "provider_response",
+              "keywords": [
+                "model",
+                "messages",
+                "**"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 419,
+              "to": "chat.completions.create"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 449,
+              "evidence_id": "ev_d8d630dd5b6ebaac3b279e73ffb0c6d05fe04dbc218aec919221cfd99926884c",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "status_code",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 444,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 452,
+              "evidence_id": "ev_707a481d27153799ced2687c55a268fdec7d82b4f0a5a7b0d78ccba863383c54",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 452,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 475,
+              "evidence_id": "ev_0f8ae22435b85e555364769073f41f3b5420e23c98bbbae1182ea06bb460cea7",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "status_code",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 470,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 481,
+              "evidence_id": "ev_948645847ce1eaf467a4c768e72a814c165d5df4cdea49dee8446e05bafbe2a9",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 481,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 515,
+              "evidence_id": "ev_8e151cb26a31cca5cfe009c2ddb097fc1674ddfc88d13dbd8ad0a8dc740e3d00",
+              "from": "response",
+              "keywords": [
+                "model",
+                "messages",
+                "**"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 509,
+              "to": "chat.completions.create"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 539,
+              "evidence_id": "ev_918bb8e6914a20cffda51423614a68a88155d2a3851a535b0bcda9d45a49534d",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "status_code",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 534,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 542,
+              "evidence_id": "ev_d8269169fdd9144b0b17d1e88e7b2bc1b7e08745826cd01785da102fe9f93d18",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 542,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 565,
+              "evidence_id": "ev_70017f9a44bdf785eed0ea7464b812943eebf89f7791dbb1657325d8a83f33d8",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "status_code",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 560,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 571,
+              "evidence_id": "ev_eee2e5354ac8034a0d9edfeebc3a693a702b59d3de7d26bd2b65b7fe5bf24bf1",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 571,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 606,
+              "evidence_id": "ev_cf51d630bbb44cfdf09ac7691113ac7cffddde2b34e7a7117d34e212794db864",
+              "from": "chat.completions.create",
+              "keywords": [
+                "model",
+                "messages",
+                "stream",
+                "stream_options",
+                "**"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 597,
+              "to": "chat.completions.create"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 626,
+              "evidence_id": "ev_0e3e9853bce1d26cc0d816a29f32be6a0ae56df6ff46187bda8856829f622619",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "status_code",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 621,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 629,
+              "evidence_id": "ev_52844d5c2bc562d2132a3716f1456ea2ff8404da3a35ec501933d874f294bb23",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 629,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 652,
+              "evidence_id": "ev_783ebdb18264f1e395054b634c9cb1c211c2095494abca1ffa36acd9b11953cd",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "status_code",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 647,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 658,
+              "evidence_id": "ev_119e60c04429565f373fb31bdc35d19a64885af525e4d0544ab18ef3a92f396b",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 658,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 692,
+              "evidence_id": "ev_dd1b8e26c44df90d7964fabbb9922b96fb7a7b194ccf0dd5e483e2691273069f",
+              "from": "async_stream",
+              "keywords": [
+                "model",
+                "messages",
+                "stream",
+                "stream_options",
+                "**"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 684,
+              "to": "chat.completions.create"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 715,
+              "evidence_id": "ev_e96e41b1ad073a2747490896e9f93450984b423da6d459e222b483f698ea8d5d",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "status_code",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 710,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 718,
+              "evidence_id": "ev_f1b6c4931f61597a9cb81873949861ea9c199f8bda3a9eee117be34722aea04a",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 718,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 741,
+              "evidence_id": "ev_7186f99162366f2db325b2c47e18d7a3e7bb4407657b7e3806197bb8c063bb0b",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "status_code",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 736,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 747,
+              "evidence_id": "ev_19259390faff7c07cba2acf343bef36d65f9246372413645bad2102be8dfe41f",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 747,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 769,
+              "evidence_id": "ev_f27b53974d4f369ba37b509f701edc3cf892d833de2543b43497d21409373ff3",
+              "from": "tool_calls.extend",
+              "keywords": [],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 769,
+              "to": "tool_calls.extend"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 812,
+              "evidence_id": "ev_9c453a4f9bdd550908cd0f0f86f35546b3ea87f3fca31ed55cd1e8b5e74fc223",
+              "from": "model_response",
+              "keywords": [],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 812,
+              "to": "agno.models.response.ModelResponse"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 819,
+              "evidence_id": "ev_b6470eb2585dec48c8e751fad5cee6b04fd416bd3010fac8ffbd562846c48cdb",
+              "from": "agno.exceptions.ModelProviderError",
+              "keywords": [
+                "message",
+                "model_name",
+                "model_id"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 815,
+              "to": "agno.exceptions.ModelProviderError"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 840,
+              "evidence_id": "ev_1378d23d902cff6d2cf1d6035f707f038ef0137e65226c85e365bc7477fcd608",
+              "from": "model_response.tool_calls",
+              "keywords": [],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 840,
+              "to": "t.model_dump"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 847,
+              "evidence_id": "ev_1ff8c0a28ade144a13060698e148bd10b49de5f8d8e9deab5aa4df86f851c1ff",
+              "from": "citations",
+              "keywords": [],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 847,
+              "to": "agno.models.message.Citations"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 848,
+              "evidence_id": "ev_f4e5fb9af7b938201cab482f5c23f5b04a20f74d302b8dac40b68f5f4d27344d",
+              "from": "citations.raw",
+              "keywords": [],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 848,
+              "to": "annotation.model_dump"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 855,
+              "evidence_id": "ev_6b32ad5bfe0cd67fb67952885f6ff867a146e5a526a0e21f00f264604ea1e931",
+              "from": "citations.urls.append",
+              "keywords": [
+                "url",
+                "title"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 853,
+              "to": "agno.models.message.UrlCitation"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 915,
+              "evidence_id": "ev_0df170c7e02cfbb535f5ee51483a6b30d6bcc856fdccccbd45f73d26336a1dc7",
+              "from": "model_response",
+              "keywords": [],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 915,
+              "to": "agno.models.response.ModelResponse"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 942,
+              "evidence_id": "ev_b66a42c3971a92dc4ac44c9beb0c550d0b8190c162019124cb6c2299c08929d5",
+              "from": "citations",
+              "keywords": [],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 942,
+              "to": "agno.models.message.Citations"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 951,
+              "evidence_id": "ev_86514938bad2dff3d5724c16cd5eac7391e513a5a8f312581fe48d19f819cd62",
+              "from": "citations.urls.append",
+              "keywords": [
+                "url",
+                "title"
+              ],
+              "path": "libs/agno/agno/models/openai/chat.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 949,
+              "to": "agno.models.message.UrlCitation"
             }
           ]
         }
@@ -1157,8 +1193,8 @@
           },
           "scope": {
             "attempted_directories": 5,
-            "attempted_files": 6,
-            "bytes_read": 132009,
+            "attempted_files": 7,
+            "bytes_read": 133080,
             "complete": false,
             "continuation": "",
             "continuations": [
@@ -1186,6 +1222,11 @@
                 "kind": "directory",
                 "path": "src/mcp/client",
                 "path_prefix": "src/mcp/client"
+              },
+              {
+                "kind": "file",
+                "path": "pyproject.toml",
+                "path_prefix": ""
               },
               {
                 "kind": "file",
@@ -1220,13 +1261,21 @@
               "src/mcp/server",
               "src/mcp/client"
             ],
+            "file_categories": {
+              "config": 1,
+              "denominator": 7,
+              "doc": 1,
+              "other": 0,
+              "src": 5
+            },
             "files": [
               "pyproject.toml",
               "src/mcp/client/session.py",
               "src/mcp/client/stdio.py",
               "src/mcp/server/session.py",
               "src/mcp/server/stdio.py",
-              "src/mcp/server/transport_security.py"
+              "src/mcp/server/transport_security.py",
+              "LICENSE"
             ],
             "mode": null,
             "notes": [
@@ -1240,488 +1289,569 @@
             "path_prefix": ""
           },
           "entry_count": 40,
-          "derived_evidence_id": "arch_profile_04b324be568572bebe14497c13d67c192a4ab65c428c9d7c68782086d42bc7d8",
-          "artifact_sha256": "7aadc28ba2954df137e22996b9d778022b37335e363f2a63083ca539ee7eab82",
+          "derived_evidence_id": "arch_profile_0958068aa785cf7bee0d152e564ed5c9ee70148a45ab9893123f2f2a47cc905f",
+          "artifact_sha256": "7311515472216940c7d9dec9cbeac7c7cb2d69a12cfeef72939ac029cb5ec05a",
           "entries": [
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 4,
-              "evidence_id": "ev_24bf7537a7122db55c6cf408937f530007faff969c80c26e189829b857da330c",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 4,
-              "to": "description = \"Model Context Protocol SDK\""
+              "end_line": 67,
+              "evidence_id": "ev_b235775baa9e5860acbebd8f2cfbf44e10fe9d6b8536d819e81377b63c51c336",
+              "from": "DEFAULT_CLIENT_INFO",
+              "keywords": [
+                "name",
+                "version"
+              ],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 67,
+              "to": "mcp_types.Implementation"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 7,
-              "evidence_id": "ev_5e3e5d56933f964a00f6a71688811f56363689f1570396d9a2bb7e225700fc9a",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 7,
-              "to": "authors = [{ name = \"Model Context Protocol a Series of LF Projects, LLC.\" }]"
+              "end_line": 88,
+              "evidence_id": "ev_34afe8f51ceb64c8814044a4d0a0269242344c21cf0b045a7075a988df7730f1",
+              "from": "fields.update",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 88,
+              "to": "model.model_fields.items"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 34,
-              "evidence_id": "ev_94847e2c36d60f35f9f77a66e827455ea6121cb776b82e53858fea8c3d676d27",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 34,
-              "to": "[tool.uv]"
+              "end_line": 101,
+              "evidence_id": "ev_d6c9a49fb77ac6f8116d3532d10e0994268b38ff0f62d3bf4b3cda334b0884bf",
+              "from": "current",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 101,
+              "to": "mcp_types.methods.SERVER_RESULTS.get"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 120,
-              "evidence_id": "ev_0962f81fbcb39dc3a8fef8fd02312c8f1b446fb28675c80fd7e3af2e92cf4a70",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 120,
-              "to": "[tool.hatch.version]"
+              "end_line": 104,
+              "evidence_id": "ev_fdf1a05e59701284286b3f20cb0c7d0fc56c3a31d3d9dc54e0e373b7a4919c2b",
+              "from": "newer",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 104,
+              "to": "mcp_types.version.KNOWN_PROTOCOL_VERSIONS.index"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 123,
-              "evidence_id": "ev_ec074fdfc6cf35052e36ab87e6f54b5c5876acd5033450bad941b2b0d46cfa07",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 123,
-              "to": "[tool.uv-dynamic-versioning]"
+              "end_line": 107,
+              "evidence_id": "ev_0af22b6a29e54e1c2ed3e7a68e95bfb8676609134e7d7975a339b29ae7965e4b",
+              "from": "row",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 107,
+              "to": "mcp_types.methods.SERVER_RESULTS.get"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 128,
-              "evidence_id": "ev_49d7c5b9aa0af0f596b734c3115c4d78ca07979d96f3ead938ebbb827241ec06",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 128,
-              "to": "[tool.hatch.metadata.hooks.uv-dynamic-versioning]"
+              "end_line": 141,
+              "evidence_id": "ev_7c02365ddbd8ff22721e3930976d07c42d81bddd5951e63ef4b403f3defa8b60",
+              "from": "types.Implementation.model_validate",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 141,
+              "to": "mcp_types.Implementation.model_validate"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 159,
-              "evidence_id": "ev_0910d35b6cb6cf8ed49287644e67effd0490fca09d4227d7383cbaea4470cd24",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 159,
-              "to": "[tool.hatch.build.targets.wheel]"
+              "end_line": 185,
+              "evidence_id": "ev_18fada5d9a757d9df687cccec128dac309b305f7cd2e66ef0d2773fd4673374d",
+              "from": "name_key",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 185,
+              "to": "mcp.shared.inbound.NAME_BEARING_METHODS.get"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 162,
-              "evidence_id": "ev_f4355a73d264dc5f15b06815e47d6b89d5a1b61d055158882cda1b1f0f46c3ef",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
+              "end_line": 187,
+              "evidence_id": "ev_31a09881e4bee503a4eadf3cde60ea48018020e0d7eab14f2b22175666a63dc2",
+              "from": "headers",
+              "keywords": [],
+              "path": "src/mcp/client/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 187,
+              "to": "mcp.shared.inbound.encode_header_value"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 175,
+              "evidence_id": "ev_a70bf26fcef4445c0192b74a89b3c2ee821f3c494f55b954b2a43957ed9f109e",
+              "from": "json",
+              "keywords": [
+                "by_alias",
+                "exclude_unset"
+              ],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 175,
+              "to": "session_message.message.model_dump_json"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 214,
+              "evidence_id": "ev_f9acf7b8fc247fb87ec797777ceb340c221d02a34406f8059915bf4beccab4bf",
+              "from": "anyio.create_task_group",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 201,
+              "to": "anyio.create_task_group"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 222,
+              "evidence_id": "ev_78a4e02759477f99d04fb1b57f635f8814d33988b56a1f9f049124d939f23f02",
+              "from": "message",
+              "keywords": [
+                "by_name"
+              ],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 222,
+              "to": "mcp_types.jsonrpc_message_adapter.validate_json"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 226,
+              "evidence_id": "ev_d0b08a16f4d4244de1b239d0104057295f91cf2dc9a17f498026f3d2e94e969e",
+              "from": "SessionMessage",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 226,
+              "to": "mcp.shared.message.SessionMessage"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 265,
+              "evidence_id": "ev_8483134ff992e0613e14b07683da3dddb1dc38ee65f46413e9b09c91bbc04887",
+              "from": "mcp.os.win32.utilities.close_process_job",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 265,
+              "to": "mcp.os.win32.utilities.close_process_job"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 287,
+              "evidence_id": "ev_0d252b89e4f038293215dabdbb96e2c9d35ae0862e595887e51f327efcd43ece",
+              "from": "anyio.sleep",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 287,
+              "to": "anyio.sleep"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 298,
+              "evidence_id": "ev_d62971cd6f7a230ee32d76a452dc802c8262072ee4abed7cc90d4a84d96794e2",
+              "from": "mcp.os.win32.utilities.terminate_windows_process_tree",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 298,
+              "to": "mcp.os.win32.utilities.terminate_windows_process_tree"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 302,
+              "evidence_id": "ev_365b4fdcf00119362a8035c9c7e833a1a56ed41ee43afb51a526cfa879def1ec",
+              "from": "mcp.os.posix.utilities.terminate_posix_process_tree",
+              "keywords": [],
+              "path": "src/mcp/client/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 302,
+              "to": "mcp.os.posix.utilities.terminate_posix_process_tree"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 62,
+              "evidence_id": "ev_bd36d481da300676050243582d85d0e252141f5b8198ffabe609f3c39df50489",
+              "from": "self._allowed_log_levels",
+              "keywords": [],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 62,
+              "to": "mcp.server.connection.allowed_log_levels"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 111,
+              "evidence_id": "ev_2165c5d2462628761df92fb9eb20668b8217cad48fbc666a00c6c18ba6ee3faa",
+              "from": "data",
+              "keywords": [
+                "by_alias",
+                "mode",
+                "exclude_none"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 111,
+              "to": "request.model_dump"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 119,
+              "evidence_id": "ev_1573277814214d516851df876502aee9aec6f0e1fd25477850b444fd531294d5",
+              "from": "mcp_types.methods.validate_client_result",
+              "keywords": [],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 119,
+              "to": "mcp_types.methods.validate_client_result"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 122,
+              "evidence_id": "ev_dacbac3e2185ee70e1672378059d6a1686e9da01dedbbbdae3ad76bcca22809c",
+              "from": "result_type.model_validate",
+              "keywords": [
+                "by_name"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 122,
+              "to": "result_type.model_validate"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 134,
+              "evidence_id": "ev_ec856a37f62d8f7c2c018f3d098039abb582e64f280d1123eca3de6984306514",
+              "from": "data",
+              "keywords": [
+                "by_alias",
+                "mode",
+                "exclude_none"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 134,
+              "to": "notification.model_dump"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "model_tool_protocol",
+              "end_line": 171,
+              "evidence_id": "ev_02dca11cf7b8ceb8fceee7361f123dc32ccdab3509309e4a4a0f1c7511b08fbb",
+              "from": "self._notify",
+              "keywords": [
+                "params"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
               "start_line": 162,
-              "to": "[tool.pyright]"
+              "to": "mcp_types.LoggingMessageNotification"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 202,
-              "evidence_id": "ev_13464c2fe677524ba94d9a3524bdb8dd6c626817da830ace3e2f7fd1725b175a",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 202,
-              "to": "# Decorated (@mcp.tool/...) module-level functions are never called by name."
+              "end_line": 171,
+              "evidence_id": "ev_02dca11cf7b8ceb8fceee7361f123dc32ccdab3509309e4a4a0f1c7511b08fbb",
+              "from": "self._notify",
+              "keywords": [
+                "level",
+                "data",
+                "logger"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 162,
+              "to": "mcp_types.LoggingMessageNotificationParams"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 206,
-              "evidence_id": "ev_fb4dd2b8446b33a1212b5265753da998a927ad479853ad4419ad4b79b45f889a",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 206,
-              "to": "[tool.ruff]"
+              "end_line": 179,
+              "evidence_id": "ev_d02cc5feefcd4e6d06f294453d7f18c41dceb112976433516944da493d4d89c3",
+              "from": "self.send_notification",
+              "keywords": [
+                "params"
+              ],
+              "path": "src/mcp/server/session.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 175,
+              "to": "mcp_types.ResourceUpdatedNotification"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "concurrency_retry",
+              "end_line": 43,
+              "evidence_id": "ev_257b96046b3f9322d77665420aa5328312c064966847a20dae44f722a7fd53ee",
+              "from": "_claims_lock",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 43,
+              "to": "threading.Lock"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 210,
-              "evidence_id": "ev_515ffd814218e519c327b92d0cc978c6da57ac09f33aee6b9beb946247dd8e1f",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 210,
-              "to": "[tool.ruff.lint]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 224,
-              "evidence_id": "ev_d0115ff3161f5954d391fafc1a6ee4e058fd2040541b62e2bb7983c44d747eb0",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 224,
-              "to": "[tool.ruff.lint.flake8-tidy-imports.banned-api]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 229,
-              "evidence_id": "ev_8d674cb6307fa203368552ffc34b491776659dddff0f917b42dab2a0d7385d33",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 229,
-              "to": "[tool.ruff.lint.mccabe]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 232,
-              "evidence_id": "ev_ddffcf6e098df0b0a8f5bdc41878452abb351882b38d993fdc7932c50bf1c76d",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 232,
-              "to": "[tool.ruff.lint.per-file-ignores]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 239,
-              "evidence_id": "ev_e1d8c48f4e3f5b9a21cc23801e1037652f6ca4a44d2b230b269d06fe1389a8f6",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 239,
-              "to": "# Inline snapshots of the translation tool's output carry long status/prompt lines verbatim."
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 243,
-              "evidence_id": "ev_a7ab2991f11659e6190c7ffafc58daa000d2bdb547bc6606c4a8c3a179031222",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 243,
-              "to": "[tool.ruff.lint.pylint]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 250,
-              "evidence_id": "ev_929b8ce5c9ff6e863922c15f1894429e1192b55a454d3942b6c21422fc8d8ed1",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 250,
-              "to": "[tool.uv.workspace]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 253,
-              "evidence_id": "ev_f7e32b387fe182d064f338ac7893d41b7e528548ec703c6d84cbe978f99c378e",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 253,
-              "to": "[tool.uv.sources]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 259,
-              "evidence_id": "ev_37450449bd675a68fa508c7fc4acd51ef1cb404bd4f802c8a9d166534e318697",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 259,
-              "to": "[tool.pytest.ini_options]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 292,
-              "evidence_id": "ev_9a24de64e137cb1ca99b294b253ae5b21a5eb3ccddbad50ccf951a3bef718161",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 292,
-              "to": "[tool.markdown.lint]"
+              "end_line": 102,
+              "evidence_id": "ev_ab95dc7c978063da33d10520792f9da74d2138896c71b2ab9857e25029531a83",
+              "from": "mcp.os.win32.utilities.rebind_std_handle_to_fd",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 102,
+              "to": "mcp.os.win32.utilities.rebind_std_handle_to_fd"
             },
             {
               "assessment": "source_signal",
               "category": "execution_loop",
-              "end_line": 304,
-              "evidence_id": "ev_ef989b51e9cd853f0bc00890e307cdce19c1fb3bb6b7a8cf527cbeddb49cc876",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 304,
-              "to": "[tool.coverage.run]"
+              "end_line": 122,
+              "evidence_id": "ev_ea97b0ecd0bb0b76d4f8d9fe31d59e018228c61a74b5d8c5bbb7961646a6ef1a",
+              "from": "RuntimeError",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 122,
+              "to": "RuntimeError"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 317,
-              "evidence_id": "ev_1da950ed7215bd70f4febcc44cdf1727316e0e68e0c257f180030f6530d595e7",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 317,
-              "to": "[tool.coverage.report]"
+              "end_line": 154,
+              "evidence_id": "ev_911f55cb65c54e189fdad1b501eca5b2334a2d62da121611630dcbe5d2b95419",
+              "from": "mcp.os.win32.utilities.rebind_std_handle_to_fd",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 154,
+              "to": "mcp.os.win32.utilities.rebind_std_handle_to_fd"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 330,
-              "evidence_id": "ev_fc8eb356d2e3174fbc09da36b571cbd30d19a193de1ff62e9e210c458e340706",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 330,
-              "to": "[tool.coverage.paths]"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 337,
-              "evidence_id": "ev_f9b0278d4a7622829f06bd9601f4651e74f70e156a5f851cadc14a2f617b4dab",
-              "from": "file",
-              "path": "pyproject.toml",
-              "relation": "rule_mention",
-              "signal": "text_rule",
-              "start_line": 337,
-              "to": "[tool.inline-snapshot]"
+              "end_line": 189,
+              "evidence_id": "ev_f01764939d0e844a6c0e9278c195f015444b23f80aeb5d9060043d2be0ca2bb8",
+              "from": "message",
+              "keywords": [
+                "by_name"
+              ],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 189,
+              "to": "mcp_types.jsonrpc_message_adapter.validate_json"
             },
             {
               "assessment": "source_signal",
               "category": "state_persistence",
-              "end_line": 7,
-              "evidence_id": "ev_630c5e749a97cbd11bdb6ae6c0202544103496d5afa50c7b4848f8674b4406ab",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 7,
-              "to": "functools.cache"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 7,
-              "evidence_id": "ev_630c5e749a97cbd11bdb6ae6c0202544103496d5afa50c7b4848f8674b4406ab",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 7,
-              "to": "functools.reduce"
+              "end_line": 194,
+              "evidence_id": "ev_722e8af68130891563a77f6b101e3c07b94acdada1ce1d6b468182fe17c865d6",
+              "from": "session_message",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 194,
+              "to": "mcp.shared.message.SessionMessage"
             },
             {
               "assessment": "source_signal",
               "category": "state_persistence",
-              "end_line": 10,
-              "evidence_id": "ev_c1ebac068f213f066d58ba4af687e2dd91c89b319c97821e9ea77d09d67a41d5",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 10,
-              "to": "typing.overload"
+              "end_line": 203,
+              "evidence_id": "ev_a950b0b622d261939661dc70f3990c2117c188ce8a5214f4bf1812cdefa0a8f9",
+              "from": "json",
+              "keywords": [
+                "by_alias",
+                "exclude_unset"
+              ],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 203,
+              "to": "session_message.message.model_dump_json"
+            },
+            {
+              "assessment": "source_signal",
+              "category": "state_persistence",
+              "end_line": 204,
+              "evidence_id": "ev_b8b03fa82737692062e231c7bf773b8b2a7c233d540687e02ba53d2d3853bf6a",
+              "from": "stdout.write",
+              "keywords": [],
+              "path": "src/mcp/server/stdio.py",
+              "relation": "write",
+              "signal": "ast_call",
+              "start_line": 204,
+              "to": "stdout.write"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 15,
-              "evidence_id": "ev_94b7158a28a43e59edd6ef374e1060e092360ae138323dc3cf3fe191e78e1c5f",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 15,
-              "to": "mcp_types"
+              "end_line": 107,
+              "evidence_id": "ev_5855c278c35e86fb3ad01d0c764693e99d5448f9e5d103efe675ebd8079ab8ed",
+              "from": "Response",
+              "keywords": [
+                "status_code"
+              ],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 107,
+              "to": "starlette.responses.Response"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.CLIENT_CAPABILITIES_META_KEY"
+              "end_line": 116,
+              "evidence_id": "ev_5eee09beec535cfc40626283bb74a379e75da423c032a1eb3fba675ab07bbb1e",
+              "from": "Response",
+              "keywords": [
+                "status_code"
+              ],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 116,
+              "to": "starlette.responses.Response"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.CLIENT_INFO_META_KEY"
+              "end_line": 121,
+              "evidence_id": "ev_2392e7b1c9cea9f072efc33d54038252aa07d1bb2d00bd448abff8dcc12eefd1",
+              "from": "Response",
+              "keywords": [
+                "status_code"
+              ],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 121,
+              "to": "starlette.responses.Response"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.CONNECTION_CLOSED"
+              "end_line": 147,
+              "evidence_id": "ev_836b18ef1ae309794f2273ef49b08f1ea9f388da868e45207c49dd907c03b1b3",
+              "from": "response",
+              "keywords": [
+                "status_code"
+              ],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 147,
+              "to": "starlette.responses.Response"
             },
             {
               "assessment": "source_signal",
               "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.INTERNAL_ERROR"
+              "end_line": 163,
+              "evidence_id": "ev_c8c38a4bd2f7c37a7890be9ba1e1cdc3e9cb87886f7a78fe1e3618234377ae84",
+              "from": "response",
+              "keywords": [
+                "status_code"
+              ],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 163,
+              "to": "starlette.responses.Response"
             },
             {
               "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.LOG_LEVEL_META_KEY"
+              "category": "state_persistence",
+              "end_line": 174,
+              "evidence_id": "ev_336abaefd61a58c77d05dced5244d0d0fa9863755ccb43eadf062e1471664491",
+              "from": "cached_messages.append",
+              "keywords": [],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 172,
+              "to": "cached_messages.append"
             },
             {
               "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.METHOD_NOT_FOUND"
+              "category": "state_persistence",
+              "end_line": 176,
+              "evidence_id": "ev_7eb1300615ce3bea1e0dd686a6ac57ea0a887a0f7be8c6aa15cfbf4cbe24aa7f",
+              "from": "cached_messages.append",
+              "keywords": [],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 176,
+              "to": "cached_messages.append"
             },
             {
               "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.PROTOCOL_VERSION_META_KEY"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.SERVER_INFO_META_KEY"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.UNSUPPORTED_PROTOCOL_VERSION"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.RequestId"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 29,
-              "evidence_id": "ev_6dd9b600ded09450672ed35bc24d6bdef6ff86caf8d464840080b29cd85ba000",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 17,
-              "to": "mcp_types.RequestParamsMeta"
-            },
-            {
-              "assessment": "source_signal",
-              "category": "model_tool_protocol",
-              "end_line": 30,
-              "evidence_id": "ev_69f147aa073faffd93d2bba03566cdc249bf1bbb730419ae8819b6865336384c",
-              "from": "module",
-              "path": "src/mcp/client/session.py",
-              "relation": "import",
-              "signal": "import",
-              "start_line": 30,
-              "to": "mcp_types.methods"
+              "category": "state_persistence",
+              "end_line": 180,
+              "evidence_id": "ev_0bbfc007f52f394e35f0b752af0db3e81afe7c4698061cba665584ff722f1d4f",
+              "from": "cached_messages.popleft",
+              "keywords": [],
+              "path": "src/mcp/server/transport_security.py",
+              "relation": "call",
+              "signal": "ast_call",
+              "start_line": 180,
+              "to": "cached_messages.popleft"
             }
           ]
         }
@@ -1762,6 +1892,13 @@
             "directories": [
               "/"
             ],
+            "file_categories": {
+              "config": 0,
+              "denominator": 4,
+              "doc": 1,
+              "other": 0,
+              "src": 3
+            },
             "files": [
               "app.py",
               "review_exec.py",
@@ -1773,8 +1910,8 @@
             "path_prefix": ""
           },
           "entry_count": 2,
-          "derived_evidence_id": "security_scan_15e9965fac0c0bbd4597dd3f4454c4f43fec392f432917576160ac557227e58b",
-          "artifact_sha256": "7393f2294b532a8b9a8675225a5e2a9341ca8809634661c7b741bc589d57517e",
+          "derived_evidence_id": "security_scan_c36de7493d873ee512326a3c20073b79212e3a8a9f7d9fa74aad29952de88cd9",
+          "artifact_sha256": "6c6eba41811e8934245bb79f7272a901145b3ad6392f04d6c08b972f7182f498",
           "entries": [
             {
               "assessment": "rule_hit",
@@ -1782,7 +1919,7 @@
               "context_complete": true,
               "end_line": 8,
               "evidence_id": "ev_0d68767bb73424f12b08c16d3b73038eebe9b660c98c8c1efe606788bf87f6f9",
-              "from": "subprocess.run",
+              "from": "proc.run",
               "keywords": [
                 "shell",
                 "capture_output"
@@ -1851,6 +1988,13 @@
             "directories": [
               "/"
             ],
+            "file_categories": {
+              "config": 0,
+              "denominator": 4,
+              "doc": 1,
+              "other": 0,
+              "src": 3
+            },
             "files": [
               "client.py",
               "env_local.py",
@@ -1862,8 +2006,8 @@
             "path_prefix": ""
           },
           "entry_count": 6,
-          "derived_evidence_id": "security_scan_9619b0b758f9586e068742351de4813679b8d2cf27398430cea5b2d78d4bbaf9",
-          "artifact_sha256": "66202e453a7e79bf82d086369bec8b3b3363b450833a1be1c1d70432aa0a7d3a",
+          "derived_evidence_id": "security_scan_7db5f55d107d7c56c6538472962c1a97fffbbe9070a65982a9bb26697524095c",
+          "artifact_sha256": "0f84f6d9eb1437009008b8552e770a75ac7aa068a8c997a8826bb0d8bb6de513",
           "entries": [
             {
               "assessment": "rule_hit",
@@ -1886,7 +2030,7 @@
               "context_complete": true,
               "end_line": 5,
               "evidence_id": "ev_027d46720e4a47e10a6d9ba7d3f7372ab17ad1a7859e8eb158d702e22e12f1a3",
-              "from": "os.getenv",
+              "from": "credential",
               "keywords": [],
               "needs_review": true,
               "path": "network_review.py",

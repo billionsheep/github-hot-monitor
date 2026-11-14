@@ -1,0 +1,386 @@
+{
+  "id": "E2",
+  "attempt": "20261114T064112805286Z",
+  "batch": "regression-20261114T063744058863Z",
+  "route_requested": "auto",
+  "origin": "synthetic",
+  "query": "根据 config.py 判断 MODEL_BASE_URL 是否可从环境变量读取；只检查仓库内文件。",
+  "repo": "eval/e2",
+  "commit": "e7edbc4bb4c392928bf7b81c623ad7c991cb05f4",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T064112805286Z",
+  "code_version": {
+    "commit": "3710bc3a1938d195a524ce7eccf0a1cab5c64507",
+    "evidence_source_sha256": "3a0f5d0e7d72fb2e03d3ebe63a7aee094d5ce82e64fd74dc14d6af0dc374b642"
+  },
+  "input_fixture_sha256": "aecc029e363c621707fda618876cfa237ce913355f095354f166d6326be51156",
+  "session_id": "ec9fa5dd97d74f8da12d56846ed9d0c6",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "requirement",
+          "title": "根据 config.py 判断 MODEL_BASE_URL 是否可从环境变量读取；只检查仓库内文件。"
+        }
+      ],
+      "execution_route": {
+        "reason": "单仓指定文件的单项配置",
+        "route": "fast"
+      },
+      "integration_blueprint": [],
+      "query": "根据 config.py 判断 MODEL_BASE_URL 是否可从环境变量读取；只检查仓库内文件。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "e7edbc4bb4c392928bf7b81c623ad7c991cb05f4",
+            "repo": "eval/e2"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_ebaa56931d1a521e513ae41026546398b55e446346ff5f068a8bd148eddaf304",
+                  "quote": "import os\n"
+                },
+                {
+                  "evidence_id": "ev_9f1318025c5d01d5a2eb1672be6d192bf6ddf5cc7fd6285a5a391e0a6efc22cf",
+                  "quote": "BASE_URL = os.getenv(\"MODEL_BASE_URL\")\n"
+                }
+              ],
+              "commit": "e7edbc4bb4c392928bf7b81c623ad7c991cb05f4",
+              "criterion_id": "requirement",
+              "gap_reason": null,
+              "next_step": "无需进一步核查；本项仅要求根据仓库内 config.py 判断读取能力。",
+              "original_status": "PASS",
+              "repo": "eval/e2",
+              "runtime_validation_required": false,
+              "status": "PASS",
+              "status_calibrated": false,
+              "summary": "config.py 导入 os，并通过 os.getenv(\"MODEL_BASE_URL\") 读取环境变量，结果赋给 BASE_URL；因此支持从环境变量读取 MODEL_BASE_URL。这是静态代码判断，非运行验证。[ev_ebaa56931d1a521e513ae41026546398b55e446346ff5f068a8bd148eddaf304] [ev_9f1318025c5d01d5a2eb1672be6d192bf6ddf5cc7fd6285a5a391e0a6efc22cf]",
+              "support_relation": "supports",
+              "verification_basis": "static_config"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_9f1318025c5d01d5a2eb1672be6d192bf6ddf5cc7fd6285a5a391e0a6efc22cf",
+            "ev_ebaa56931d1a521e513ae41026546398b55e446346ff5f068a8bd148eddaf304"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "单仓单项核查结果见下方。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 3,
+      "turn_tool_calls": 4,
+      "turn_usage": {
+        "input_tokens": 6099,
+        "output_tokens": 477,
+        "total_tokens": 6576
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 6099,
+        "output_tokens": 477,
+        "total_tokens": 6576
+      },
+      "workflow_mode": "deploy_readiness"
+    }
+  ],
+  "usage": {
+    "input_tokens": 6099,
+    "output_tokens": 477,
+    "total_tokens": 6576
+  },
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "PASS"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/e2",
+      "name": "get_markdown_outline",
+      "args": {
+        "path": "config.py",
+        "symbol_or_param_hint": "MODEL_BASE_URL"
+      }
+    },
+    {
+      "repo": "eval/e2",
+      "name": "read_file_lines",
+      "args": {
+        "path": "config.py",
+        "start_line": 2,
+        "end_line": 2
+      }
+    },
+    {
+      "repo": "eval/e2",
+      "name": "read_file_lines",
+      "args": {
+        "path": "config.py",
+        "start_line": 1,
+        "end_line": 1
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 3,
+    "lead_calls": 0,
+    "lead_input_peak": 0,
+    "known_input_tokens": 6099,
+    "known_output_tokens": 477,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "单仓指定文件的单项配置",
+        "route": "fast"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "requirement",
+            "title": "根据 config.py 判断 MODEL_BASE_URL 是否可从环境变量读取；只检查仓库内文件。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\": \"config.py\", \"symbol_or_param_hint\": \"MODEL_BASE_URL\"}",
+        "automatic": true,
+        "repo": "eval/e2",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 6,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_9c32268e67f543e7f36be2af3075662817a7718d299b0d37f6557f5bc55dccef",
+          "ev_9f1318025c5d01d5a2eb1672be6d192bf6ddf5cc7fd6285a5a391e0a6efc22cf"
+        ],
+        "repo": "eval/e2",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 7,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 8,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"config.py\",\"start_line\":1,\"end_line\":2}",
+        "repo": "eval/e2",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 9,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_ebaa56931d1a521e513ae41026546398b55e446346ff5f068a8bd148eddaf304"
+        ],
+        "repo": "eval/e2",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 10,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 11,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"config.py\",\"start_line\":2,\"end_line\":2}",
+        "repo": "eval/e2",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 12,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [],
+        "repo": "eval/e2",
+        "status": "DEDUP_BLOCKED",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 13,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 14,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/e2"
+      }
+    },
+    {
+      "id": 15,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 16,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 17,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 12.583,
+  "request_records": [
+    {
+      "id": "cdbbc3b0fea443e9b7fd798700d0fbfb",
+      "label": "regression-20261114T063744058863Z/E2/auto/20261114T064112805286Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:41:12.823343+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 7758,
+      "request_sha256": "e65eb73097968dea3c09f40e48f47002548fe9b93c9bc72a18ad42717aa4c432",
+      "elapsed_ms": 2584,
+      "estimated_usd": 0.004665,
+      "usage": {
+        "input_tokens": 1746,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 1743
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1776
+      }
+    },
+    {
+      "id": "cc4b8a2c89384a47a1d32722a65c7e15",
+      "label": "regression-20261114T063744058863Z/E2/auto/20261114T064112805286Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:41:15.422619+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 9090,
+      "request_sha256": "e3a141775657a98216603b9a672dff7e304b54bfd77b4c599570a7357330cbf8",
+      "elapsed_ms": 3684,
+      "estimated_usd": 0.005772500000000001,
+      "usage": {
+        "input_tokens": 2117,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 2114
+        },
+        "output_tokens": 48,
+        "output_tokens_details": {
+          "reasoning_tokens": 16
+        },
+        "total_tokens": 2165
+      }
+    },
+    {
+      "id": "50204ba882864958bc742fc00450b609",
+      "label": "regression-20261114T063744058863Z/E2/auto/20261114T064112805286Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:41:19.121269+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 12790,
+      "request_sha256": "3692e255c5c91829ea79edca206d1272061dc1ab6622c3cfd9631a711056f83e",
+      "elapsed_ms": 6247,
+      "estimated_usd": 0.009580000000000002,
+      "usage": {
+        "input_tokens": 2236,
+        "input_tokens_details": {
+          "cache_write_tokens": 1179,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 1179
+          },
+          "cached_tokens": 1054
+        },
+        "output_tokens": 399,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2635
+      }
+    }
+  ]
+}

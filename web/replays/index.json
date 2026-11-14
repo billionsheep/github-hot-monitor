@@ -2,6 +2,18 @@
   "schema_version": "1.0",
   "replays": [
     {
+      "title": "Pydantic AI / Agno · 模型接入架构与地址传递",
+      "path": "replays/v3-architecture-gateway.json"
+    },
+    {
+      "title": "Python MCP SDK · 进程与环境传递线索",
+      "path": "replays/v3-mcp-security-signals.json"
+    },
+    {
+      "title": "Pydantic AI · Python 环境和模型网关适配",
+      "path": "replays/v3-pydantic-deploy-blueprint.json"
+    },
+    {
       "title": "Pydantic AI / Agno · Python 选型与升级追问",
       "path": "replays/agents-python-comparison.json"
     },

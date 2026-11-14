@@ -55,6 +55,9 @@ jobs:
       - name: Check frozen evidence contracts
         run: python eval/run_eval.py
 
+      - name: Check v3 multi-file evidence contracts
+        run: python eval/v3_tool_cases.py
+
       - name: Run monitor scan
         env:
           GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}

@@ -1,0 +1,456 @@
+{
+  "id": "E2",
+  "attempt": "20261114T065501907004Z",
+  "batch": "regression-20261114T065142239586Z",
+  "route_requested": "auto",
+  "origin": "synthetic",
+  "query": "根据 config.py 判断 MODEL_BASE_URL 是否可从环境变量读取；只检查仓库内文件。",
+  "repo": "eval/e2",
+  "commit": "e7edbc4bb4c392928bf7b81c623ad7c991cb05f4",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "db_path": "/Users/moon/Documents/ai agent/github-hot-monitor/.evidence-data/v3-eval/20261114T065501907004Z",
+  "code_version": {
+    "commit": "99473b56e7f363862bd9ef6a822e388c78436755",
+    "evidence_source_sha256": "becb0c521499ecd906d07e4b4ea99b098170bf6b7481baa2ab8e0e7ded041024"
+  },
+  "input_fixture_sha256": "aecc029e363c621707fda618876cfa237ce913355f095354f166d6326be51156",
+  "session_id": "07cf93d7b9ae49aa8c65003abb3fb814",
+  "execution_status": "COMPLETED",
+  "reports": [
+    {
+      "analysis_gaps": [],
+      "analysis_metrics": [],
+      "architecture_graph": [],
+      "budget_reason": null,
+      "citation_check": "身份、哈希和原文摘录；语义支持需单独评估",
+      "criteria": [
+        {
+          "id": "requirement",
+          "title": "根据 config.py 判断 MODEL_BASE_URL 是否可从环境变量读取；只检查仓库内文件。"
+        }
+      ],
+      "execution_route": {
+        "reason": "单仓指定文件的单项配置",
+        "route": "fast"
+      },
+      "integration_blueprint": [],
+      "query": "根据 config.py 判断 MODEL_BASE_URL 是否可从环境变量读取；只检查仓库内文件。",
+      "repositories": [
+        {
+          "binding": {
+            "commit": "e7edbc4bb4c392928bf7b81c623ad7c991cb05f4",
+            "repo": "eval/e2"
+          },
+          "rows": [
+            {
+              "citations": [
+                {
+                  "evidence_id": "ev_9f1318025c5d01d5a2eb1672be6d192bf6ddf5cc7fd6285a5a391e0a6efc22cf",
+                  "quote": "BASE_URL = os.getenv(\"MODEL_BASE_URL\")\n"
+                }
+              ],
+              "commit": "e7edbc4bb4c392928bf7b81c623ad7c991cb05f4",
+              "criterion_id": "requirement",
+              "gap_reason": null,
+              "next_step": "无需进一步核查即可确认具备环境变量读取逻辑。",
+              "original_status": "PASS",
+              "repo": "eval/e2",
+              "runtime_validation_required": false,
+              "status": "PASS",
+              "status_calibrated": false,
+              "summary": "config.py 使用 os.getenv(\"MODEL_BASE_URL\") 从环境变量读取值并赋给 BASE_URL，满足核查项；此结论仅基于静态代码，未进行运行验证。[ev_9f1318025c5d01d5a2eb1672be6d192bf6ddf5cc7fd6285a5a391e0a6efc22cf]",
+              "support_relation": "supports",
+              "verification_basis": "static_config"
+            }
+          ],
+          "stop_reason": "完成",
+          "visible_evidence": [
+            "ev_9f1318025c5d01d5a2eb1672be6d192bf6ddf5cc7fd6285a5a391e0a6efc22cf",
+            "ev_ebaa56931d1a521e513ae41026546398b55e446346ff5f068a8bd148eddaf304"
+          ]
+        }
+      ],
+      "security_findings": [],
+      "summary": "单仓单项核查结果见下方。",
+      "summary_evidence_ids": [],
+      "turn_budget": {
+        "input_tokens": 60000,
+        "model_requests": 20,
+        "output_tokens": 16384,
+        "tool_calls": 24
+      },
+      "turn_model_calls": 4,
+      "turn_tool_calls": 6,
+      "turn_usage": {
+        "input_tokens": 9014,
+        "output_tokens": 437,
+        "total_tokens": 9451
+      },
+      "unknown_calls": 0,
+      "usage": {
+        "input_tokens": 9014,
+        "output_tokens": 437,
+        "total_tokens": 9451
+      },
+      "workflow_mode": "deploy_readiness"
+    }
+  ],
+  "usage": {
+    "input_tokens": 9014,
+    "output_tokens": 437,
+    "total_tokens": 9451
+  },
+  "grading": {
+    "score": 2,
+    "reason": "label_and_evidence",
+    "observed": [
+      "PASS"
+    ]
+  },
+  "tool_calls": [
+    {
+      "repo": "eval/e2",
+      "name": "get_markdown_outline",
+      "args": {
+        "path": "config.py",
+        "symbol_or_param_hint": "MODEL_BASE_URL"
+      }
+    },
+    {
+      "repo": "eval/e2",
+      "name": "read_file_lines",
+      "args": {
+        "path": "config.py",
+        "start_line": 2,
+        "end_line": 2
+      }
+    },
+    {
+      "repo": "eval/e2",
+      "name": "read_file_lines",
+      "args": {
+        "path": "config.py",
+        "start_line": 1,
+        "end_line": 1
+      }
+    },
+    {
+      "repo": "eval/e2",
+      "name": "get_markdown_outline",
+      "args": {
+        "path": "config.py",
+        "symbol_or_param_hint": "MODEL_BASE_URL"
+      }
+    },
+    {
+      "repo": "eval/e2",
+      "name": "read_file_lines",
+      "args": {
+        "path": "config.py",
+        "start_line": 2,
+        "end_line": 2
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 4,
+    "lead_calls": 0,
+    "lead_input_peak": 0,
+    "known_input_tokens": 9014,
+    "known_output_tokens": 437,
+    "unknown_calls": 0
+  },
+  "events": [
+    {
+      "id": 1,
+      "type": "created",
+      "data": {
+        "status": "INIT"
+      }
+    },
+    {
+      "id": 2,
+      "type": "route_selected",
+      "data": {
+        "reason": "单仓指定文件的单项配置",
+        "route": "fast"
+      }
+    },
+    {
+      "id": 3,
+      "type": "phase_change",
+      "data": {
+        "status": "PLANNING"
+      }
+    },
+    {
+      "id": 4,
+      "type": "plan_created",
+      "data": {
+        "criteria": [
+          {
+            "id": "requirement",
+            "title": "根据 config.py 判断 MODEL_BASE_URL 是否可从环境变量读取；只检查仓库内文件。"
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\": \"config.py\", \"symbol_or_param_hint\": \"MODEL_BASE_URL\"}",
+        "automatic": true,
+        "repo": "eval/e2",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 6,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_9c32268e67f543e7f36be2af3075662817a7718d299b0d37f6557f5bc55dccef",
+          "ev_9f1318025c5d01d5a2eb1672be6d192bf6ddf5cc7fd6285a5a391e0a6efc22cf"
+        ],
+        "repo": "eval/e2",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 7,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 8,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"config.py\",\"start_line\":1,\"end_line\":2}",
+        "repo": "eval/e2",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 9,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "ev_ebaa56931d1a521e513ae41026546398b55e446346ff5f068a8bd148eddaf304"
+        ],
+        "repo": "eval/e2",
+        "status": "CACHE_HIT",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 10,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 11,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"config.py\",\"start_line\":2,\"end_line\":2}",
+        "repo": "eval/e2",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 12,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [],
+        "repo": "eval/e2",
+        "status": "DEDUP_BLOCKED",
+        "tool": "read_file_lines"
+      }
+    },
+    {
+      "id": 13,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 14,
+      "type": "tool_requested",
+      "data": {
+        "args": "{\"path\":\"config.py\",\"symbol_or_param_hint\":\"MODEL_BASE_URL\"}",
+        "repo": "eval/e2",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 15,
+      "type": "tool_completed",
+      "data": {
+        "evidence_ids": [
+          "outline_9c32268e67f543e7f36be2af3075662817a7718d299b0d37f6557f5bc55dccef",
+          "ev_9f1318025c5d01d5a2eb1672be6d192bf6ddf5cc7fd6285a5a391e0a6efc22cf"
+        ],
+        "repo": "eval/e2",
+        "status": "CACHE_HIT",
+        "tool": "get_markdown_outline"
+      }
+    },
+    {
+      "id": 16,
+      "type": "model_started",
+      "data": {
+        "role": "sub"
+      }
+    },
+    {
+      "id": 17,
+      "type": "repository_complete",
+      "data": {
+        "repo": "eval/e2"
+      }
+    },
+    {
+      "id": 18,
+      "type": "phase_change",
+      "data": {
+        "status": "SYNTHESIZING"
+      }
+    },
+    {
+      "id": 19,
+      "type": "phase_change",
+      "data": {
+        "status": "VERIFYING"
+      }
+    },
+    {
+      "id": 20,
+      "type": "report_ready",
+      "data": {
+        "version": 1
+      }
+    }
+  ],
+  "duration_seconds": 18.176,
+  "request_records": [
+    {
+      "id": "20f771025bc441bb87731e4caeb5a25e",
+      "label": "regression-20261114T065142239586Z/E2/auto/20261114T065501907004Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:55:01.925429+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 7758,
+      "request_sha256": "e65eb73097968dea3c09f40e48f47002548fe9b93c9bc72a18ad42717aa4c432",
+      "elapsed_ms": 2912,
+      "estimated_usd": 0.004665,
+      "usage": {
+        "input_tokens": 1746,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 1743
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1776
+      }
+    },
+    {
+      "id": "4c8b5305e9884c75ab5f3e0b954581a3",
+      "label": "regression-20261114T065142239586Z/E2/auto/20261114T065501907004Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:55:04.857843+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 9090,
+      "request_sha256": "8d22782c4db2709d8475e1f5693270f32a27d353403726ade69c213c7a5e1dfd",
+      "elapsed_ms": 4173,
+      "estimated_usd": 0.0055925,
+      "usage": {
+        "input_tokens": 2117,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 2114
+        },
+        "output_tokens": 30,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2147
+      }
+    },
+    {
+      "id": "14d99784659942ecb355ebcf3dcea70c",
+      "label": "regression-20261114T065142239586Z/E2/auto/20261114T065501907004Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:55:09.049243+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 9649,
+      "request_sha256": "1d38616b0c6c63573a4edbe4bc87fceb3f96d580e4e043ee25c3c998d24f0fbb",
+      "elapsed_ms": 6363,
+      "estimated_usd": 0.006785,
+      "usage": {
+        "input_tokens": 2218,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          },
+          "cached_tokens": 2215
+        },
+        "output_tokens": 124,
+        "output_tokens_details": {
+          "reasoning_tokens": 92
+        },
+        "total_tokens": 2342
+      }
+    },
+    {
+      "id": "31afdcbbac0e45dc8aef9d6d26663fa5",
+      "label": "regression-20261114T065142239586Z/E2/auto/20261114T065501907004Z",
+      "role": "sub",
+      "started_at": "2026-11-14T06:55:15.434833+00:00",
+      "status": "completed",
+      "reserved_usd": 0.0,
+      "request_bytes": 16180,
+      "request_sha256": "4c9d916e615a2c8e11ccfe1c78034b50068c5636266c646bedb3310ffc6640a8",
+      "elapsed_ms": 4608,
+      "estimated_usd": 0.0098625,
+      "usage": {
+        "input_tokens": 2933,
+        "input_tokens_details": {
+          "cache_write_tokens": 2930,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 2930
+          },
+          "cached_tokens": 0
+        },
+        "output_tokens": 253,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 3186
+      }
+    }
+  ]
+}

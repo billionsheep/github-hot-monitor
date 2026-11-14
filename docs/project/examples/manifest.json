@@ -151,5 +151,177 @@
       "reasoning_effort": "low"
     },
     "tool_cache_hits": 4
+  },
+  {
+    "title": "Pydantic AI / Agno · 模型接入架构与地址传递",
+    "path": "replays/v3-architecture-gateway.json",
+    "schema_version": "2.0",
+    "workflow_mode": "arch_research",
+    "session_id": "d5eb2968848644bcb12b9f12200c0ec7",
+    "recorded_at": "2026-11-14T06:54:10.820273+00:00",
+    "bindings": [
+      {
+        "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+        "repo": "pydantic/pydantic-ai"
+      },
+      {
+        "commit": "878151ba85c7bec6f0df7edfa1bbc0e025fdd5c1",
+        "repo": "agno-agi/agno"
+      }
+    ],
+    "reports": [
+      {
+        "query": "比较两个框架的 OpenAI 模型接入架构和服务地址参数传递。Pydantic AI 重点查看 pydantic_ai_slim/pydantic_ai/providers/openai.py，Agno 重点查看 libs/agno/agno/models/openai/chat.py。请自行定位 base_url 的定义和传递调用，用完整语句证据说明接入组件及静态调用关系；分别核查自定义地址是否进入客户端配置，并标明尚需运行验证的部分。",
+        "statuses": {
+          "pydantic/pydantic-ai": [
+            "UNVERIFIED",
+            "UNVERIFIED"
+          ],
+          "agno-agi/agno": [
+            "UNVERIFIED",
+            "PASS"
+          ]
+        },
+        "usage": {
+          "input_tokens": 29742,
+          "output_tokens": 2897,
+          "total_tokens": 32639
+        },
+        "model_calls": 11,
+        "tool_calls": 16
+      },
+      {
+        "query": "继续沿用固定提交，聚焦文件内直接参数转交：Pydantic AI 的 pydantic_ai_slim/pydantic_ai/providers/openai.py 是否把 base_url 传给客户端创建函数；Agno 的 libs/agno/agno/models/openai/chat.py 是否把 base_url 放入参数字典，并由 OpenAIClient 取得该字典。请自动定位并引用源码，不延伸判断外部 SDK 或远端服务的运行行为。",
+        "statuses": {
+          "pydantic/pydantic-ai": [
+            "PASS"
+          ],
+          "agno-agi/agno": [
+            "PASS"
+          ]
+        },
+        "usage": {
+          "input_tokens": 30020,
+          "output_tokens": 1552,
+          "total_tokens": 31572
+        },
+        "model_calls": 7,
+        "tool_calls": 15
+      }
+    ],
+    "sha256": "510d7d110ab89ec3918e648ae4c8fa7e7c9d03759aadaa67d4101c974df492d4",
+    "model": {
+      "name": "gpt-6.1-sol",
+      "reasoning_effort": "low"
+    },
+    "evidence_count": 131
+  },
+  {
+    "title": "Python MCP SDK · 进程与环境传递线索",
+    "path": "replays/v3-mcp-security-signals.json",
+    "schema_version": "2.0",
+    "workflow_mode": "sec_sentinel",
+    "session_id": "6baee84db13f4c4bb2e4fc5d7723f8f3",
+    "recorded_at": "2026-11-14T06:54:31.963427+00:00",
+    "bindings": [
+      {
+        "commit": "77001c96f9507be0f4d009b83210a384a5e08bda",
+        "repo": "modelcontextprotocol/python-sdk"
+      }
+    ],
+    "reports": [
+      {
+        "query": "对 src/mcp/client 目录做安全线索审计，重点追查 src/mcp/client/stdio.py 的子进程启动与环境变量传递。把规则命中和上下文复核分开，给出对应调用、控制条件和覆盖范围；正常的进程启动或环境变量读取不能直接判为漏洞。",
+        "statuses": {
+          "modelcontextprotocol/python-sdk": [
+            "UNVERIFIED",
+            "UNVERIFIED"
+          ]
+        },
+        "usage": {
+          "input_tokens": 29822,
+          "output_tokens": 2073,
+          "total_tokens": 31895
+        },
+        "model_calls": 8,
+        "tool_calls": 7
+      },
+      {
+        "query": "结合 src/mcp/client/stdio.py 原文复核：哪些环境变量会传给子进程？仅有该行为能否确认凭据泄露，仍缺哪些调用方或目的地证据？",
+        "statuses": {
+          "modelcontextprotocol/python-sdk": [
+            "UNVERIFIED",
+            "UNVERIFIED"
+          ]
+        },
+        "usage": {
+          "input_tokens": 30124,
+          "output_tokens": 1322,
+          "total_tokens": 31446
+        },
+        "model_calls": 8,
+        "tool_calls": 6
+      }
+    ],
+    "sha256": "ea15cf8f25268e4628539937a460d3dfe63d5f60acb738137dda875d587ea3d6",
+    "model": {
+      "name": "gpt-6.1-sol",
+      "reasoning_effort": "low"
+    },
+    "evidence_count": 51
+  },
+  {
+    "title": "Pydantic AI · Python 环境和模型网关适配",
+    "path": "replays/v3-pydantic-deploy-blueprint.json",
+    "schema_version": "2.0",
+    "workflow_mode": "deploy_readiness",
+    "session_id": "d4c99beacbd8443d9b9fbe7cf091ae58",
+    "recorded_at": "2026-11-14T06:59:02.036035+00:00",
+    "bindings": [
+      {
+        "commit": "e65f5e9ac8ca01ffd1ad8c91d6f5a006d10d250a",
+        "repo": "pydantic/pydantic-ai"
+      }
+    ],
+    "reports": [
+      {
+        "query": "核查 Python 3.11 版本声明和自定义 OpenAI 模型网关地址配置。查看 pyproject.toml 与 pydantic_ai_slim/pydantic_ai/providers/openai.py，给出带证据的约束矩阵、可复制的最小适配配置示例，以及安装和连接仍需运行验证的步骤。",
+        "statuses": {
+          "pydantic/pydantic-ai": [
+            "PASS",
+            "PASS"
+          ]
+        },
+        "usage": {
+          "input_tokens": 15292,
+          "output_tokens": 1764,
+          "total_tokens": 17056
+        },
+        "model_calls": 6,
+        "tool_calls": 3
+      },
+      {
+        "query": "把已确认的版本声明与模型地址参数整理为使用前检查清单，指出示例中的用户自填项。",
+        "statuses": {
+          "pydantic/pydantic-ai": [
+            "PASS",
+            "PASS"
+          ]
+        },
+        "usage": {
+          "input_tokens": 21667,
+          "output_tokens": 2450,
+          "total_tokens": 24117
+        },
+        "model_calls": 6,
+        "tool_calls": 3
+      }
+    ],
+    "sha256": "aed0e785a4a6feb7c0306dde291b90c7aa6dca2e482ec483340af88ad2645c4f",
+    "model": {
+      "name": "gpt-6.1-sol",
+      "reasoning_effort": "low"
+    },
+    "evidence_count": 14
   }
 ]

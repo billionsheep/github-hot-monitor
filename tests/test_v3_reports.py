@@ -9,7 +9,7 @@ from evidence.agent_harness import Harness, model_view
 from evidence.config import Settings
 from evidence.db import AuditDB
 from evidence.harness_schemas import IntegrationBlueprint
-from evidence.report_v3 import valid_blueprint, validate_report_extras, visible_texts
+from evidence.report_v3 import valid_blueprint, validate_report_extras, visible_texts, normalize_env_placeholders, config_syntax
 from evidence.replay import make_bundle, read_bundle, sha, markdown
 from evidence.tools import AuditTools
 from evidence.workflows import workflows
@@ -59,7 +59,7 @@ class ReportsV3Tests(unittest.IsolatedAsyncioTestCase):
                 initial=json.loads(inputs[0]['content']);visible=visible_texts(inputs);requested=initial['requested_outputs'];output={'rows':[]}
                 if 'integration_blueprint' in requested:
                     eid=next(k for k,v in visible.items() if 'MODEL_BASE_URL' in v)
-                    output['integration_blueprint']={'format':'env','content':'MODEL_BASE_URL="<user-supplied>"','applicability':'设置模型服务地址','verification_steps':['检查连接'],'citations':[{'evidence_id':eid,'quote':'MODEL_BASE_URL'}]}
+                    output['integration_blueprint']={'format':'env','content':'MODEL_BASE_URL=<user-supplied>','applicability':'设置模型服务地址','verification_steps':['检查连接'],'citations':[{'evidence_id':eid,'quote':'MODEL_BASE_URL'}]}
                 else:
                     views=[]
                     for item in inputs:
@@ -72,7 +72,8 @@ class ReportsV3Tests(unittest.IsolatedAsyncioTestCase):
                 return {'output':[message(output)],'usage':{'input_tokens':10,'output_tokens':3}}
         files={'settings.py':'MODEL_BASE_URL = "http://localhost"\n'};fixture={self.repo:{'files':files,'selected_files_only':False}}
         h=Harness(self.db,OutputModel(),FrozenProvider(self.db,fixture));id=h.create(['one'],'检查 settings.py 的 MODEL_BASE_URL 并给配置示例');await h.run(id)
-        r=h.store.public(id)['reports'][0];self.assertEqual(len(r['integration_blueprint']),1);self.assertFalse(r['analysis_gaps'])
+        public=h.store.public(id);r=public['reports'][0];self.assertEqual(len(r['integration_blueprint']),1);self.assertFalse(r['analysis_gaps'])
+        self.assertEqual(r['integration_blueprint'][0]['blueprint']['content'],'MODEL_BASE_URL="<user-supplied>"');self.assertTrue(any(e['type']=='blueprint_format_normalized' and e['data']['lines']==1 for e in public['events']))
         h=Harness(self.db,OutputModel(),self.provider);id=h.create(['one'],'审计进程并进行上下文复核',workflow_mode='sec_sentinel');await h.run(id)
         r=h.store.public(id)['reports'][0];self.assertTrue(any(f.get('assessment')=='context_reviewed' for g in r['security_findings'] for f in g['findings']));self.assertFalse(r['analysis_gaps'])
     async def test_architecture_graph_and_replay_v2_reject_tampered_edge(self):
@@ -91,6 +92,16 @@ class ReportsV3Tests(unittest.IsolatedAsyncioTestCase):
         bad={**b,'content':'MODEL_BASE_URL ='};self.assertFalse(valid_blueprint(bad,self.binding,self.db.get_evidence,{e.evidence_id:e.text}))
         self.assertFalse(valid_blueprint(b,{**self.binding,'repo':'other/repo'},self.db.get_evidence,{e.evidence_id:e.text}))
         self.assertFalse(valid_blueprint(b,self.binding,self.db.get_evidence,{e.evidence_id:'omitted'}))
+    async def test_env_placeholder_normalization_is_narrow_and_keeps_evidence_gate(self):
+        raw='OPENAI_BASE_URL=<user-supplied>\nOPENAI_API_KEY=<user-supplied>\n';fixed,count=normalize_env_placeholders(raw)
+        self.assertEqual(count,2);self.assertEqual(fixed,'OPENAI_BASE_URL="<user-supplied>"\nOPENAI_API_KEY="<user-supplied>"\n')
+        self.assertFalse(config_syntax('env',raw));self.assertTrue(config_syntax('env',fixed))
+        for line in ('KEY=<x>suffix','KEY=<x>; echo bad','KEY="<x>"','KEY=<$(danger)>','KEY=<x> # trailing','KEY=prefix<x>'):
+            self.assertEqual(normalize_env_placeholders(line),(line,0))
+        fixture={'files':{'settings.py':'OPENAI_BASE_URL = "http://localhost"\n'}};e=(await AuditTools(self.binding,FrozenClient(self.db,fixture)).read_file_lines({**self.binding,'path':'settings.py','start_line':1,'end_line':1})).evidence[0]
+        b={'format':'env','content':fixed,'applicability':'配置服务','verification_steps':['检查连接'],'citations':[{'evidence_id':e.evidence_id,'quote':'OPENAI_BASE_URL'}]}
+        self.assertFalse(valid_blueprint(b,self.binding,self.db.get_evidence,{e.evidence_id:e.text}))
+        b['content']='OPENAI_BASE_URL="<user-supplied>"';self.assertFalse(valid_blueprint(b,self.binding,self.db.get_evidence,{e.evidence_id:'omitted'}))
     async def test_blueprint_identifiers_and_markdown_provenance(self):
         fixture={'files':{'settings.py':'NOT_MODEL_BASE_URL = "http://localhost"\nMODEL_BASE_URL = "http://localhost"\n'}}
         e=(await AuditTools(self.binding,FrozenClient(self.db,fixture)).read_file_lines({**self.binding,'path':'settings.py','start_line':1,'end_line':2})).evidence[0]

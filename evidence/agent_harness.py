@@ -12,7 +12,7 @@ from evidence.harness_store import HarnessStore, Conflict
 from evidence.github_client import GitHubClient
 from evidence.tools import AuditTools, lines_of
 from evidence.routing import MODES, source_hints, scoped_source_hints
-from evidence.report_v3 import valid_blueprint, valid_citation, visible_texts, collect_report_extras, validate_report_extras
+from evidence.report_v3 import valid_blueprint, valid_citation, visible_texts, collect_report_extras, validate_report_extras, normalize_env_placeholders
 
 class BudgetExceeded(Exception): pass
 class DefiniteModelError(Exception): pass
@@ -418,7 +418,7 @@ class Harness:
                         if state.get('workflow_mode')=='arch_research':prompt+='\n架构研报：优先使用 analyze_architecture_profile，按调用、导入、状态读写区分直接证据与推断；保留扫描覆盖缺口。'
                         elif state.get('workflow_mode')=='sec_sentinel':prompt+='\n安全线索审计：优先使用 scan_security_and_risk_sinks，规则命中不是漏洞、无命中不是整体安全。仅实际核对上下文时可输出 security_reviews 数组，每项含 evidence_id、path、start_line、end_line、quote、explanation。'
                         elif state.get('workflow_mode')=='deploy_readiness':prompt+='\n如有原文支持且示例语法可检查，可选输出 integration_blueprint：format（python/json/env）、content、applicability、verification_steps 数组和 citations。python 格式仅支持每行一个简单字面量赋值；未确定值使用明确占位符，并单列待运行验证步骤；没有依据则省略。'
-                        if 'integration_blueprint' in requested:prompt+='\n本任务要求配置示例：若原文支持，请输出 integration_blueprint，用最小 python、json 或 env 配置，键名须完整出现在 citations 的源码原文摘录中，未知值用 <user-supplied>；简短注明适用条件和验证步骤。证据不足则省略并在判断中说明缺口。'
+                        if 'integration_blueprint' in requested:prompt+='\n本任务要求配置示例：若原文支持，请输出 integration_blueprint，用最小 python、json 或 env 配置，键名须完整出现在 citations 的源码原文摘录中，未知值用 "<user-supplied>"（包括 env 格式）；简短注明适用条件和验证步骤。证据不足则省略并在判断中说明缺口。'
                         if 'security_reviews' in requested:prompt+='\n本任务要求区分规则命中和上下文复核：实际读过命中原文时，输出 security_reviews；每项的 evidence_id、path、start_line、end_line 必须与扫描命中一致，quote 须含命中范围内的完整代码行，explanation 简述控制条件和未确认处。优先用户指定文件，没读到原文则不虚构复核。'
                         if state.get('v3') and getattr(self.adapter,'v3_tools',False):self.fit_context(state,initial,prompt+'\n'+remaining,allow_tools)
                         response,meta=await self.model(id,owner,row,state,'sub',prompt+'\n'+remaining,[initial]+state['history'],allow_tools)
@@ -471,7 +471,11 @@ class Harness:
                                 with self.db.connect() as c:r=c.execute('SELECT e.payload FROM evidence_artifacts e JOIN session_evidence s ON s.evidence_id=e.id WHERE s.session_id=? AND e.id=?',(id,ref)).fetchone()
                                 e=json.loads(r['payload']) if r else None
                                 return e if e and (e.get('source_type')!='file_lines' or source_matches_blob(e,self.db)) else None
-                            if sub.integration_blueprint and valid_blueprint(sub.integration_blueprint.model_dump(),binding,lookup,visible):blueprint=sub.integration_blueprint.model_dump()
+                            candidate=sub.integration_blueprint.model_dump() if sub.integration_blueprint else None
+                            if candidate and candidate['format']=='env':
+                                candidate['content'],count=normalize_env_placeholders(candidate['content'])
+                                if count:guard_events.append({'event_type':'blueprint_format_normalized','repo':repo,'reason':'已为完整的 env 占位符值添加引号，继续执行语法和来源校验。','lines':count})
+                            if candidate and valid_blueprint(candidate,binding,lookup,visible):blueprint=candidate
                             elif sub.integration_blueprint:guard_events.append({'repo':repo,'reason':'配置示例语法、来源或当前上下文校验未通过。'})
                             for review in sub.security_reviews:
                                 data=review.model_dump();citation={'evidence_id':data['evidence_id'],'quote':data['quote']}

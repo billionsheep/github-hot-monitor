@@ -82,7 +82,7 @@ test('graph uses safe text nodes and mobile uses a source-linked component list'
   const desktop=document.createElement('div');context.window.matchMedia=()=>({matches:false});context.renderExtras(desktop,report);assert.ok(flatten(desktop).some(n=>n.tag==='svg'));
 });
 test('portable blueprint syntax rejects executable env and invalid python',()=>{
-  const c=makeContext();assert.equal(c.blueprintSyntax('python','BASE_URL = "https://example.test"'),true);assert.equal(c.blueprintSyntax('python','BASE_URL ='),false);assert.equal(c.blueprintSyntax('env','BASE_URL=https://example.test'),true);assert.equal(c.blueprintSyntax('env','X=a; echo bad'),false);assert.equal(c.blueprintSyntax('json','{"base_url":"x"}'),true);
+  const c=makeContext();assert.equal(c.blueprintSyntax('python','BASE_URL = "https://example.test"'),true);assert.equal(c.blueprintSyntax('python','BASE_URL ='),false);assert.equal(c.blueprintSyntax('env','BASE_URL=https://example.test'),true);assert.equal(c.blueprintSyntax('env','BASE_URL=<user-supplied>'),false);assert.equal(c.blueprintSyntax('env','BASE_URL="<user-supplied>"'),true);assert.equal(c.blueprintSyntax('env','X=a; echo bad'),false);assert.equal(c.blueprintSyntax('json','{"base_url":"x"}'),true);
 });
 test('blueprint keys require identifier boundaries and applicability is scoped as unverified',()=>{
   const c=makeContext(),b={format:'env',content:'MODEL_BASE_URL="<user-supplied>"',citations:[{quote:'NOT_MODEL_BASE_URL'}]};

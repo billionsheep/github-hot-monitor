@@ -8,6 +8,18 @@ from evidence.guardrails import expected_id, sha, validate_derived, source_match
 from evidence.harness_schemas import IntegrationBlueprint, ArchitectureGraph, SecurityFindings, AnalysisMetrics, V3ReportExtensions
 
 
+def normalize_env_placeholders(content):
+    """Quote only whole, unquoted placeholder values on valid-looking env lines."""
+    pattern=re.compile(r'''([ \t]*(?:export[ \t]+)?[A-Za-z_][A-Za-z0-9_]*=)(<[^<>"\\$`\r\n]{1,100}>)([ \t]*(?:\r\n|\n|\r)?)''')
+    count=0;result=[]
+    for line in content.splitlines(keepends=True):
+        match=pattern.fullmatch(line)
+        if match:
+            line=match.group(1)+'"'+match.group(2)+'"'+match.group(3);count+=1
+        result.append(line)
+    return ''.join(result),count
+
+
 def config_syntax(fmt,content):
     try:
         if fmt=='python':

@@ -375,16 +375,17 @@ class AuditTools:
                         matches=rule_signals(path,text,kind)
                 else: matches=rule_signals(path,text,kind)
                 matches_by_path[path]=matches
-            if kind=='arch_profile':
+            if kind in ('arch_profile','security_scan'):
                 # Select direct calls across files before imports and text mentions.
                 # A busy file must not consume the entire graph budget.
-                queues={p:sorted(items,key=lambda x:0 if x['signal']=='ast_call' else 1 if x['signal']=='import' else 2) for p,items in matches_by_path.items()}
+                def signal_rank(item):return 0 if item['signal'] in ('ast_call','ast_access') else 1 if item['signal']=='import' else 2
+                queues={p:sorted((x for x in items if kind!='security_scan' or mode=='all' or x['category']==mode),key=signal_rank) for p,items in matches_by_path.items()}
                 selected={p:[] for p in queues};remaining=40
                 for priority in (0,1,2):
                     while remaining:
                         advanced=False
                         for path,items in queues.items():
-                            if items and (0 if items[0]['signal']=='ast_call' else 1 if items[0]['signal']=='import' else 2)==priority:
+                            if items and signal_rank(items[0])==priority:
                                 selected[path].append(items.pop(0));remaining-=1;advanced=True
                                 if not remaining:break
                         if not advanced:break

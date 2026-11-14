@@ -65,6 +65,51 @@ class V3HarnessTests(unittest.IsolatedAsyncioTestCase):
         outputs=[x['content'] for x in subs[0][2][1:] if x.get('role')=='user'];self.assertTrue(outputs)
         self.assertIn('VERIFY_AFTER_240',outputs[-1]);self.assertIn('x'*350,outputs[-1])
         self.assertTrue(any(c['name']=='read_file_lines' and c['args']['start_line']<=226<=c['args']['end_line'] for c in self.provider.calls))
+    async def test_auto_prefetch_injects_complete_kwargs_transfer_chain(self):
+        self.files['src/gateway.py']='''class Provider:
+    base_url: str | None = None
+    def _get_client_params(self):
+        base_params = {
+            "base_url": self.base_url,
+        }
+        client_params = {k: v for k, v in base_params.items() if v is not None}
+        return client_params
+    def client(self):
+        client_params = self._get_client_params()
+        self.client = OpenAIClient(**client_params)
+'''
+        model=ScriptedModel();h=Harness(self.db,model,self.provider);id=h.create(['a'],'检查 src/gateway.py 中 base_url 如何传递。',workflow_mode='arch_research');await h.run(id)
+        inputs=next(x[2] for x in model.calls if x[0]=='sub');joined='\n'.join(json.dumps(json.loads(x['content'][x['content'].index('>')+1:x['content'].rindex('</untrusted>')]),ensure_ascii=False) for x in inputs if x.get('role')=='user' and x.get('content','').startswith('<untrusted ')).replace('\\"','"')
+        for text in ('base_url: str','"base_url": self.base_url','client_params = {k: v','return client_params','client_params = self._get_client_params()','OpenAIClient(**client_params)'):self.assertIn(text,joined)
+        reads=[x for x in self.provider.calls if x['name']=='read_file_lines'];self.assertLessEqual(len(reads),3)
+    async def test_source_hints_extra_is_removed_but_citations_still_checked(self):
+        self.files['compose.yaml']='services:\n  app:\n    ports:\n      - "8080:8000"\n'
+        for invalid_quote in (False,True):
+            class EchoModel(ScriptedModel):
+                async def complete(model,role,instructions,inputs,allow_tools):
+                    if role=='lead':return await super().complete(role,instructions,inputs,allow_tools)
+                    responses=[x for x in inputs if x.get('type')=='function_call_output']
+                    if not responses:return {'output':[function('read_file_lines',{'path':'compose.yaml','start_line':1,'end_line':4},'read')],'usage':{'input_tokens':5,'output_tokens':2}}
+                    raw=responses[-1]['output'];data=json.loads(raw[raw.index('>')+1:raw.rindex('</untrusted>')]);e=data['parts'][0]['evidence'][0];initial=json.loads(inputs[0]['content'])
+                    row={'criterion_id':initial['criteria'][0]['id'],**initial['binding'],'status':'PASS','summary':'端口声明 ['+e['evidence_id']+']','citations':[{'evidence_id':e['evidence_id'],'quote':'missing' if invalid_quote else '8080:8000'}],'verification_basis':'static_config','runtime_validation_required':False,'next_step':'检查配置','support_relation':'supports','gap_reason':None,'source_hints':{'paths':['compose.yaml'],'symbols':[]}}
+                    return {'output':[message({'rows':[row]})],'usage':{'input_tokens':5,'output_tokens':2}}
+            h=Harness(self.db,EchoModel(),self.provider);id=h.create(['a'],'核查 compose.yaml 端口声明',force_full=True);await h.run(id);public=h.store.public(id)
+            self.assertEqual(public['reports'][0]['repositories'][0]['rows'][0]['status'],'UNVERIFIED' if invalid_quote else 'PASS')
+            self.assertTrue(any(e['type']=='schema_repaired' for e in public['events']))
+    async def test_truncated_json_gets_one_bounded_retry(self):
+        for always_broken in (False,True):
+            class TruncatedModel(ScriptedModel):
+                def __init__(model):super().__init__();model.sub_count=0
+                async def complete(model,role,instructions,inputs,allow_tools):
+                    if role=='sub':
+                        model.sub_count+=1
+                        if always_broken or model.sub_count==1:
+                            return {'output':[{'type':'message','role':'assistant','content':[{'type':'output_text','text':'{"rows":[{"summary":"截断'}]}],'usage':{'input_tokens':10,'output_tokens':5}}
+                        self.assertIn('短摘要',inputs[-1]['content'])
+                    return await super().complete(role,instructions,inputs,allow_tools)
+            model=TruncatedModel();h=Harness(self.db,model,self.provider);id=h.create(['a'],'检查安全线索',workflow_mode='sec_sentinel');await h.run(id);events=h.store.public(id)['events']
+            self.assertEqual(model.sub_count,2);self.assertEqual(sum(e['type']=='schema_retry' for e in events),1)
+            self.assertEqual(any(e['type']=='sub_schema_error' for e in events),always_broken)
     async def test_ast_hints_follow_field_dictionary_and_kwargs_call(self):
         self.files['chat.py']='class Provider:\n    base_url: str | None = None\n    def params(self):\n        base_params = {\n            "base_url": self.base_url,\n        }\n        client_params = {k: v for k, v in base_params.items() if v is not None}\n        return client_params\n    def client(self):\n        client_params = self.params()\n        return OpenAIClient(**client_params)\n'
         tools=AuditTools(self.binding,FrozenClient(self.db,{'files':self.files}))

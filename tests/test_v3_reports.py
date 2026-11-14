@@ -5,11 +5,11 @@ from dataclasses import replace
 from pathlib import Path
 from fastapi.testclient import TestClient
 from evidence.app import app
-from evidence.agent_harness import Harness
+from evidence.agent_harness import Harness, model_view
 from evidence.config import Settings
 from evidence.db import AuditDB
 from evidence.harness_schemas import IntegrationBlueprint
-from evidence.report_v3 import valid_blueprint, validate_report_extras
+from evidence.report_v3 import valid_blueprint, validate_report_extras, visible_texts
 from evidence.replay import make_bundle, read_bundle, sha, markdown
 from evidence.tools import AuditTools
 from evidence.workflows import workflows
@@ -37,6 +37,44 @@ class ReportsV3Tests(unittest.IsolatedAsyncioTestCase):
         report=h.store.public(id)['reports'][0];self.assertEqual(report['workflow_mode'],'sec_sentinel');self.assertTrue(report['security_findings']);self.assertTrue(report['analysis_metrics'])
         self.assertTrue(all(x['assessment']=='rule_hit' for x in report['security_findings'][0]['findings']))
         h.store.followup(id,'继续核对上下文');_,state=h.store.get(id);self.assertEqual(state['workflow_mode'],'sec_sentinel')
+    async def test_requested_outputs_reach_model_and_missing_output_is_reported(self):
+        for mode,query,key,expected in [
+            ('deploy_readiness','检查配置并给出可复制的最小配置示例','integration_blueprint','配置示例未生成'),
+            ('sec_sentinel','检查进程调用并给出上下文复核','security_reviews','上下文复核未形成')]:
+            model=ScriptedModel();h=Harness(self.db,model,self.provider);id=h.create(['one'],query,workflow_mode=mode);await h.run(id)
+            sub=next(x for x in model.calls if x[0]=='sub');initial=json.loads(sub[2][0]['content']);self.assertIn(key,initial['requested_outputs']);self.assertIn(key,sub[1])
+            report=h.store.public(id)['reports'][0];self.assertTrue(any(expected in gap for gap in report['analysis_gaps']))
+    async def test_security_cap_spreads_files_and_preferred_source_reaches_model(self):
+        files={f'src/mcp/client/a{i}.py':'import os\n'+''.join(f'v{j} = os.getenv("KEY{j}")\n' for j in range(12)) for i in range(7)}
+        path='src/mcp/client/stdio.py';files[path]='import os\nvalue = os.getenv("STDIO_KEY")\n'
+        tools=AuditTools(self.binding,FrozenClient(self.db,{'files':files,'selected_files_only':False}));result=await tools.scan_security_and_risk_sinks({**self.binding,'path_prefix':'src/mcp/client','mode':'all'})
+        artifact=next(e for e in result.evidence if e.source_type=='security_scan');data=json.loads(artifact.text)
+        self.assertLessEqual(len(data['findings']),40);self.assertTrue(any(x['path']==path for x in data['findings']))
+        view,_=model_view(result.model_dump(),14000,[path]);self.assertEqual(view['derived_summary']['entries'][0]['path'],path)
+        self.assertTrue(any(x.get('path')==path and 'STDIO_KEY' in x.get('text','') for x in view['evidence']))
+    async def test_requested_outputs_accept_evidence_backed_model_responses(self):
+        class OutputModel(ScriptedModel):
+            async def complete(model,role,instructions,inputs,allow_tools):
+                if role=='lead':return await super().complete(role,instructions,inputs,allow_tools)
+                initial=json.loads(inputs[0]['content']);visible=visible_texts(inputs);requested=initial['requested_outputs'];output={'rows':[]}
+                if 'integration_blueprint' in requested:
+                    eid=next(k for k,v in visible.items() if 'MODEL_BASE_URL' in v)
+                    output['integration_blueprint']={'format':'env','content':'MODEL_BASE_URL="<user-supplied>"','applicability':'设置模型服务地址','verification_steps':['检查连接'],'citations':[{'evidence_id':eid,'quote':'MODEL_BASE_URL'}]}
+                else:
+                    views=[]
+                    for item in inputs:
+                        raw=item.get('content','')
+                        if raw.startswith('<untrusted '):views.append(json.loads(raw[raw.index('>')+1:raw.rindex('</untrusted>')]))
+                    view=next(x for x in views if x.get('derived_summary'));f=next(x for x in view['derived_summary']['entries'] if x['evidence_id'] in visible)
+                    e=next(x for x in view['evidence'] if x['evidence_id']==f['evidence_id']);lines=e['text'].splitlines();quote=lines[f['start_line']-e['start_line']].strip()
+                    output['security_reviews']=[{k:f[k] for k in ('evidence_id','path','start_line','end_line')}|{'quote':quote,'explanation':'该调用的上下文仍需要检查实际输入来源。'}]
+                from test_harness import message
+                return {'output':[message(output)],'usage':{'input_tokens':10,'output_tokens':3}}
+        files={'settings.py':'MODEL_BASE_URL = "http://localhost"\n'};fixture={self.repo:{'files':files,'selected_files_only':False}}
+        h=Harness(self.db,OutputModel(),FrozenProvider(self.db,fixture));id=h.create(['one'],'检查 settings.py 的 MODEL_BASE_URL 并给配置示例');await h.run(id)
+        r=h.store.public(id)['reports'][0];self.assertEqual(len(r['integration_blueprint']),1);self.assertFalse(r['analysis_gaps'])
+        h=Harness(self.db,OutputModel(),self.provider);id=h.create(['one'],'审计进程并进行上下文复核',workflow_mode='sec_sentinel');await h.run(id)
+        r=h.store.public(id)['reports'][0];self.assertTrue(any(f.get('assessment')=='context_reviewed' for g in r['security_findings'] for f in g['findings']));self.assertFalse(r['analysis_gaps'])
     async def test_architecture_graph_and_replay_v2_reject_tampered_edge(self):
         h=Harness(self.db,ScriptedModel(),self.provider);id=h.create(['one'],'分析架构',workflow_mode='arch_research');await h.run(id)
         self.assertEqual(self.provider.calls[0]['name'],'analyze_architecture_profile')

@@ -166,4 +166,9 @@ def collect_report_extras(db,session_id,turn_id,summaries):
     blueprints=[]
     for item in summaries:
         if item.get('integration_blueprint'):blueprints.append({**item['binding'],'blueprint':item['integration_blueprint']})
+        requested=item.get('requested_outputs',[]);repo=item['binding']['repo'];commit=item['binding']['commit']
+        if 'integration_blueprint' in requested and not item.get('integration_blueprint'):
+            warnings.append(f'{repo}：请求的配置示例未生成，现有来源或结果不足以形成可引用示例。')
+        if 'security_reviews' in requested and not any(g['repo'].lower()==repo.lower() and g['commit']==commit and any(f.get('review') for f in g['findings']) for g in security):
+            warnings.append(f'{repo}：请求的安全线索上下文复核未形成可引用结果，请继续核对命中原文。')
     return {'architecture_graph':graph,'security_findings':security,'analysis_metrics':metrics,'integration_blueprint':blueprints,'analysis_gaps':warnings}

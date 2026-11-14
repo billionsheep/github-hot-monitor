@@ -4,6 +4,7 @@ import json
 import re
 import time
 import uuid
+from pydantic import ValidationError
 from evidence.agent import configuration, ready, response_request
 from evidence.guardrails import missing_ranges, verify_verdict, calibrate_verdict, source_matches_blob, wrap_untrusted, REF
 from evidence.harness_schemas import CriteriaPlan, SubReport, LeadSummary, Verdict, TurnBudget
@@ -30,7 +31,7 @@ def compact_value(value, depth=0):
     if isinstance(value,dict): return {k:compact_value(v,depth+1) for k,v in list(value.items())[:12]}
     return value
 
-def model_view(result,max_bytes=MAX_MODEL_VIEW_BYTES):
+def model_view(result,max_bytes=MAX_MODEL_VIEW_BYTES,preferred_paths=()):
     """Keep complete results in traces; inject bounded, explicitly marked excerpts."""
     included=set()
     def one(item):
@@ -94,7 +95,7 @@ def model_view(result,max_bytes=MAX_MODEL_VIEW_BYTES):
                     scope=body['scope'];summary={'kind':artifact['source_type'],'artifact_id':artifact['evidence_id'],
                         'scope':{k:scope.get(k) for k in ('path_prefix','complete','notes','continuation','file_categories','bytes_read')},
                         'entries':[],'notice':'规则线索和证据索引不等于已读原文；请按路径和范围补查。'}
-                    entries=body[kind]
+                    entries=sorted(body[kind],key=lambda x:0 if x.get('path') in preferred_paths else 1)
                     for entry in entries:
                         brief={k:entry[k] for k in ('category','relation','from','to','path','start_line','end_line','evidence_id','assessment','context_complete','needs_review') if k in entry}
                         if len(json.dumps({**summary,'entries':summary['entries']+[brief]},ensure_ascii=False).encode())>min(4500,max_bytes//2):break
@@ -164,6 +165,40 @@ def current_injections(state):
         except (ValueError,TypeError):continue
     state['ranges']=ranges;state['outlines']=sorted(outlines);state['visible_evidence']=sorted(visible)
 
+def source_ranges(entries,hint):
+    """Select a bounded hinted statement and, when indexed, its kwargs chain."""
+    concrete=[x for x in entries if x.get('kind') in ('Call','Assign','AnnAssign','AugAssign','Return') and type(x.get('start_line')) is int and type(x.get('end_line')) is int and 1<=x['start_line']<=x['end_line'] and x['end_line']-x['start_line']<120]
+    matches=[x for x in concrete if str(hint).casefold() in json.dumps(x,ensure_ascii=False).casefold()]
+    ranges=[]
+    for seed in matches:
+        name=seed.get('title');symbols=seed.get('symbols') or []
+        if seed.get('kind')!='Assign' or not isinstance(name,str) or name.casefold()==str(hint).casefold() or not any(str(hint).casefold() in str(s).casefold() for s in symbols):continue
+        for step in concrete:
+            target=step.get('title')
+            if step.get('kind') not in ('Assign','AnnAssign') or not isinstance(target,str) or target==name or name not in (step.get('symbols') or []):continue
+            for call in concrete:
+                if call.get('kind')!='Call' or not any(a.get('name')=='**' and a.get('value')==target for c in call.get('calls',[]) for a in c.get('keyword_arguments',[])):continue
+                bridges=[x for x in concrete if x.get('kind') in ('Assign','AnnAssign') and x.get('title')==target and step['start_line']<x['start_line']<=call['start_line']]
+                if not bridges:continue
+                bridge=max(bridges,key=lambda x:x['start_line'])
+                earlier=[x for x in concrete if x.get('kind')=='Return' and x.get('title')==target and step['start_line']<=x['start_line']<bridge['start_line']]
+                end=max([step['end_line']]+[x['end_line'] for x in earlier]);a,b=seed['start_line'],end;d,e=bridge['start_line'],call['end_line']
+                if not (a<=b<d<=e and b-a<120 and e-d<120):continue
+                definition=next((x for x in matches if x.get('kind')=='AnnAssign' and x.get('title','').casefold()==str(hint).casefold() and x['start_line']<a),None)
+                if definition:ranges.append((definition['start_line'],definition['end_line']))
+                ranges.extend([(a,b),(d,e)])
+                return ranges
+    for x in matches:
+        pair=(x['start_line'],x['end_line'])
+        if pair not in ranges:ranges.append(pair)
+    return ranges
+
+def requested_outputs(query,mode):
+    outputs=[]
+    if mode=='deploy_readiness' and re.search(r'(?:配置|适配|接入).{0,16}(?:示例|样例|模板|蓝图)|(?:示例|样例|模板|蓝图).{0,16}(?:配置|适配|接入)',query,re.I):outputs.append('integration_blueprint')
+    if mode=='sec_sentinel' and re.search(r'复核|上下文|context.{0,12}review',query,re.I):outputs.append('security_reviews')
+    return outputs
+
 NAMES={'get_repo_overview_and_tree','get_markdown_outline','read_file_lines','inspect_dependencies_and_env','inspect_deployment_artifacts','search_repo_issues_and_risks','analyze_architecture_profile','scan_security_and_risk_sinks'}
 PROPERTIES={
  'get_repo_overview_and_tree':{'path':{'type':'string'}},
@@ -187,7 +222,7 @@ TOOL_DEFS=[{'type':'function','name':name,'description':DESCRIPTIONS[name],'stri
 LEGACY_PROPERTIES={k:({'path':{'type':'string'}} if k=='get_markdown_outline' else v) for k,v in PROPERTIES.items() if k not in ('analyze_architecture_profile','scan_security_and_risk_sinks')}
 LEGACY_TOOL_DEFS=[{'type':'function','name':name,'description':DESCRIPTIONS[name],'strict':True,
                    'parameters':{'type':'object','properties':props,'required':list(props),'additionalProperties':False}} for name,props in LEGACY_PROPERTIES.items()]
-PLAN_PROMPT=('将用户希望作出判断的业务约束拆成最多 8 项共同核查项，每一项必须能对单个仓库独立判断，适用于每个候选仓库。'
+PLAN_PROMPT=('将用户希望作出判断的业务约束拆成最多 8 项共同核查项，每一项必须能对单个仓库独立判断，适用于每个候选仓库。优先将相关内容合并为 1–3 项核心约束，确需更多时保留必要项目。'
              '当问题要求比较多个仓库时，提取共同约束，移除跨仓比较和具体仓库名称；比较各仓结果由汇总阶段完成。'
              '例如“比较 A 和 B 是否支持 Python 3.11”应形成一项“该仓库声明的 Python 版本范围是否包含 Python 3.11”。'
              '保留版本、部署等具体条件；证据引用、输出格式、说明规则和验证方法不是独立核查项。一个实际约束只需一项。'
@@ -200,7 +235,7 @@ SUB_PROMPT=('你是独立仓库核查员。只检查绑定的仓库及固定 com
             '"status":"PASS|RISK|FAIL|UNVERIFIED","summary":"判断 [证据ID]","citations":[{"evidence_id":"ID","quote":"原文逐字摘录"}],'
             '"verification_basis":"declaration|static_config|community_report|insufficient","runtime_validation_required":true,"next_step":"下一步"}]}。'
             '正文引用必须与 citations 完全一致；不能从缺失资料推断不支持，不能把静态声明说成运行验证。')
-LEAD_PROMPT='仅依据各仓库给出的已校验结论和必要摘录，概括比较。仅输出 JSON：{"summary":"简要比较"}；不要声称未提供的事实。'
+LEAD_PROMPT='仅依据各仓库给出的已校验结论和必要摘录总结：单仓概括该仓库结论，多仓再比较各仓库；不要提及单仓无法比较。仅输出 JSON：{"summary":"简要总结"}；不要声称未提供的事实。'
 
 def extract_text(response):
     return ''.join(part.get('text','') for item in response.get('output',[]) if item.get('type')=='message' for part in item.get('content',[]) if part.get('type')=='output_text')
@@ -368,9 +403,12 @@ class Harness:
                     prior_repo=next((p for p in prior.get('repositories',[]) if p['binding']==binding),None)
                     initial_data={'binding':binding,'criteria':state['criteria'],
                         'previous':{'query':prior.get('query'),'criteria':prior.get('criteria'),'repository':prior_repo} if prior else None}
-                    if state.get('v3'):initial_data['source_hints']=scoped_source_hints(state['query'],binding,state['bindings'])
+                    requested=requested_outputs(state['query'],state.get('workflow_mode'))
+                    if state.get('v3'):
+                        initial_data['source_hints']=scoped_source_hints(state['query'],binding,state['bindings'])
+                        if requested:initial_data['requested_outputs']=requested
                     initial={'role':'user','content':json.dumps(initial_data,ensure_ascii=False)}
-                    allow_tools=calls<5 and tools<8 and state['turn_tool_calls']<state['budget']['tool_calls'] and state['turn_model_calls']+1<state['budget']['model_requests']
+                    allow_tools=not state.get('schema_retry_used') and calls<5 and tools<8 and state['turn_tool_calls']<state['budget']['tool_calls'] and state['turn_model_calls']+1<state['budget']['model_requests']
                     remaining=f"剩余总模型请求（含本次）{state['budget']['model_requests']-state['turn_model_calls']} 次，仓库工具调用 {8-tools} 次，总工具调用 {state['budget']['tool_calls']-state['turn_tool_calls']} 次。" + (' 本次必须依据已有证据输出最终报告。' if not allow_tools else ' 证据足够即输出报告。')
                     try:
                         prompt=SUB_PROMPT.replace('六个工具是唯一读取途径。','提供的工具是唯一读取途径。') if getattr(self.adapter,'v3_tools',False) else SUB_PROMPT
@@ -380,6 +418,8 @@ class Harness:
                         if state.get('workflow_mode')=='arch_research':prompt+='\n架构研报：优先使用 analyze_architecture_profile，按调用、导入、状态读写区分直接证据与推断；保留扫描覆盖缺口。'
                         elif state.get('workflow_mode')=='sec_sentinel':prompt+='\n安全线索审计：优先使用 scan_security_and_risk_sinks，规则命中不是漏洞、无命中不是整体安全。仅实际核对上下文时可输出 security_reviews 数组，每项含 evidence_id、path、start_line、end_line、quote、explanation。'
                         elif state.get('workflow_mode')=='deploy_readiness':prompt+='\n如有原文支持且示例语法可检查，可选输出 integration_blueprint：format（python/json/env）、content、applicability、verification_steps 数组和 citations。python 格式仅支持每行一个简单字面量赋值；未确定值使用明确占位符，并单列待运行验证步骤；没有依据则省略。'
+                        if 'integration_blueprint' in requested:prompt+='\n本任务要求配置示例：若原文支持，请输出 integration_blueprint，用最小 python、json 或 env 配置，键名须完整出现在 citations 的源码原文摘录中，未知值用 <user-supplied>；简短注明适用条件和验证步骤。证据不足则省略并在判断中说明缺口。'
+                        if 'security_reviews' in requested:prompt+='\n本任务要求区分规则命中和上下文复核：实际读过命中原文时，输出 security_reviews；每项的 evidence_id、path、start_line、end_line 必须与扫描命中一致，quote 须含命中范围内的完整代码行，explanation 简述控制条件和未确认处。优先用户指定文件，没读到原文则不虚构复核。'
                         if state.get('v3') and getattr(self.adapter,'v3_tools',False):self.fit_context(state,initial,prompt+'\n'+remaining,allow_tools)
                         response,meta=await self.model(id,owner,row,state,'sub',prompt+'\n'+remaining,[initial]+state['history'],allow_tools)
                     except BudgetExceeded as exc:
@@ -400,12 +440,31 @@ class Harness:
                         guard_events=[]
                         blueprint=None;reviews=[]
                         try:
-                            raw_sub=json.loads(extract_text(response))
+                            parsed_sub=json.loads(extract_text(response))
+                        except json.JSONDecodeError:
+                            parsed_sub=None
+                            if not state.get('schema_retry_used') and calls<5 and state['turn_model_calls']<state['budget']['model_requests']:
+                                state['schema_retry_used']=True
+                                state['history'].append({'role':'user','content':'上次结果 JSON 不完整或格式错误。请只输出完整 JSON，逐项保留判断与引用，使用短摘要和足以定位原文的短引用，去除重复解释；不要增加核查项或调用工具。'})
+                                await asyncio.to_thread(self.store.transition,id,owner,row['revision'],'INVESTIGATING',state,'schema_retry',{'repo':repo,'reason':'模型结果 JSON 不完整或格式错误，使用剩余预算重试一次。'},model_result=meta)
+                                continue
+                        try:
+                            if parsed_sub is None:raise ValueError('模型结果不是完整 JSON')
+                            raw_sub=parsed_sub
                             try:sub=SubReport.model_validate(raw_sub)
-                            except Exception:
-                                # A malformed optional extension must not erase valid verdict rows.
-                                sub=SubReport.model_validate({'rows':raw_sub['rows']})
-                                guard_events.append({'repo':repo,'reason':'可选配置或上下文复核格式无效，已排除。'})
+                            except ValidationError as exc:
+                                errors=exc.errors(include_input=False,include_url=False)
+                                # Models occasionally echo input-only source_hints into each row.
+                                # Remove only that known extra field, then run the full schema
+                                # and the unchanged evidence verification on the result.
+                                if errors and all(e['type']=='extra_forbidden' and len(e['loc'])==3 and e['loc'][0]=='rows' and e['loc'][2]=='source_hints' for e in errors):
+                                    corrected={**raw_sub,'rows':[{k:v for k,v in x.items() if k!='source_hints'} for x in raw_sub['rows']]}
+                                    sub=SubReport.model_validate(corrected)
+                                    guard_events.append({'event_type':'schema_repaired','repo':repo,'reason':'结果行包含输入专用的 source_hints，已移除该字段并重新校验。'})
+                                else:
+                                    # A malformed optional extension must not erase valid verdict rows.
+                                    sub=SubReport.model_validate({'rows':raw_sub['rows']})
+                                    guard_events.append({'repo':repo,'reason':'可选配置或上下文复核格式无效，已排除。'})
                             rows=self.verify_rows(id,state,binding,sub,guard_events=guard_events)
                             visible=visible_texts(state['history'])
                             def lookup(ref):
@@ -417,8 +476,10 @@ class Harness:
                             for review in sub.security_reviews:
                                 data=review.model_dump();citation={'evidence_id':data['evidence_id'],'quote':data['quote']}
                                 if data['evidence_id'] in visible and data['quote'] in visible[data['evidence_id']] and valid_citation(citation,binding,lookup):reviews.append(data)
-                        except Exception: rows=self.fallback(state,binding)
-                        state['summaries'].append({'binding':binding,'rows':rows,'visible_evidence':list(state['visible_evidence']),'stop_reason':'完成','integration_blueprint':blueprint,'security_reviews':reviews});self.advance(state)
+                        except Exception as exc:
+                            guard_events.append({'event_type':'sub_schema_error','repo':repo,'reason':'模型结果解析或结构校验失败，已按证据不足处理。','error_type':type(exc).__name__})
+                            rows=self.fallback(state,binding)
+                        state['summaries'].append({'binding':binding,'rows':rows,'visible_evidence':list(state['visible_evidence']),'stop_reason':'完成','integration_blueprint':blueprint,'security_reviews':reviews,'requested_outputs':requested});self.advance(state)
                         await asyncio.to_thread(self.store.transition,id,owner,row['revision'],'INVESTIGATING',state,'repository_complete',{'repo':repo},model_result=meta,guardrail_events=guard_events)
                         await self.checkpoint('repository_committed',session_id=id,repo=repo)
                 elif stage=='synthesis':
@@ -445,13 +506,14 @@ class Harness:
                     allowed={c['evidence_id'] for item in state['summaries'] for r in item['rows'] for c in r['citations']}
                     summary_refs=set(REF.findall(state['summary']))
                     if not summary_refs.issubset(allowed): state['summary']='请查看各仓库逐项核查结果。';summary_refs=set()
-                    clean_summaries=[{k:v for k,v in item.items() if k not in ('integration_blueprint','security_reviews')} for item in state['summaries']]
+                    clean_summaries=[{k:v for k,v in item.items() if k not in ('integration_blueprint','security_reviews','requested_outputs')} for item in state['summaries']]
                     report={'summary_evidence_ids':sorted(summary_refs),'budget_reason':state.get('budget_reason'), 'query':state['query'],'criteria':state['criteria'],'repositories':clean_summaries,
                             'summary':state['summary'],'usage':state['usage'],'turn_usage':state['turn_usage'],'turn_budget':state['budget'],'turn_model_calls':state['turn_model_calls'],'turn_tool_calls':state['turn_tool_calls'],'unknown_calls':state['unknown_calls'],
                             'citation_check':'身份、哈希和原文摘录；语义支持需单独评估'}
                     if state.get('v3'):report.update(workflow_mode=state['workflow_mode'],execution_route=state['execution_route'])
                     if state.get('v3'):
-                        extras=await asyncio.to_thread(collect_report_extras,self.db,id,row['turn_id'],state['summaries']);report.update(extras)
+                        summaries_for_extras=[{**item,'requested_outputs':requested_outputs(state['query'],state.get('workflow_mode'))} for item in state['summaries']]
+                        extras=await asyncio.to_thread(collect_report_extras,self.db,id,row['turn_id'],summaries_for_extras);report.update(extras)
                         with self.db.connect() as c:
                             records=c.execute('SELECT e.id,e.payload FROM evidence_artifacts e JOIN session_evidence s ON s.evidence_id=e.id WHERE s.session_id=?',(id,)).fetchall()
                         pool={x['id']:json.loads(x['payload']) for x in records}
@@ -471,7 +533,7 @@ class Harness:
             if not await asyncio.to_thread(self.store.renew,id,owner): return
     @staticmethod
     def advance(state):
-        state['repo_index']+=1;state['history']=[];state['ranges']={};state['outlines']=[];state['context_id']=uuid.uuid4().hex;state['visible_evidence']=[];state.pop('pending_tool',None);state.pop('auto_prefetch_done',None);state.pop('context_pruned',None);state.pop('prefetch_expected',None);state.pop('workflow_scan_done',None)
+        state['repo_index']+=1;state['history']=[];state['ranges']={};state['outlines']=[];state['context_id']=uuid.uuid4().hex;state['visible_evidence']=[];state.pop('pending_tool',None);state.pop('auto_prefetch_done',None);state.pop('context_pruned',None);state.pop('prefetch_expected',None);state.pop('workflow_scan_done',None);state.pop('schema_retry_used',None)
     @staticmethod
     def fallback(state,binding):
         return [Verdict(criterion_id=x['id'],repo=binding['repo'],commit=binding['commit'],status='UNVERIFIED',summary='证据不足。',citations=[],verification_basis='insufficient',runtime_validation_required=True,next_step='补充原文并核查。').model_dump() for x in state['criteria']]
@@ -541,14 +603,7 @@ class Harness:
                 entries=[]
                 for fact in result.get('facts',[]):
                     if fact.get('kind')=='python_ast':entries.extend(fact.get('entries',[]))
-                choices=[]
-                for entry in entries:
-                    if entry.get('kind') not in ('Call','Assign','AnnAssign','AugAssign','Return'):continue
-                    if str(hint).casefold() not in json.dumps(entry,ensure_ascii=False).casefold():continue
-                    a=entry.get('start_line');b=entry.get('end_line')
-                    if type(a) is not int or type(b) is not int or not (1<=a<=b) or b-a+1>120:continue
-                    if any(a==x[0] and b==x[1] for x in choices):continue
-                    choices.append((a,b))
+                choices=source_ranges(entries,hint)
                 if call.get('_automatic') is True:
                     state['prefetch_expected']=[{'path':path,'start_line':a,'end_line':b,'hint':str(hint)} for a,b in choices[:3]]
                 auto=[];omissions=[];selected=choices[:3]
@@ -567,7 +622,8 @@ class Harness:
         # All tool data, including facts, is escaped as untrusted material.
         view_limit=MAX_V3_VIEW_BYTES if state.get('v3') and getattr(self.adapter,'v3_tools',False) else MAX_MODEL_VIEW_BYTES
         while True:
-            view,included=model_view(result,view_limit)
+            preferred=scoped_source_hints(state.get('query',''),binding,state['bindings'])['paths'] if state.get('v3') else ()
+            view,included=model_view(result,view_limit,preferred)
             content=wrap_untrusted(json.dumps(view,ensure_ascii=False),'tool-result')
             if len(content.encode())<=MAX_V3_VIEW_BYTES or view_limit<=1000:break
             view_limit=max(1000,view_limit//2)

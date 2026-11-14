@@ -38,7 +38,7 @@ function renderExtras(target,report){
     for(const f of group.findings){const card=el('article',undefined,'verdict');card.append(el('strong',names[f.assessment]||f.assessment),el('p',`${f.category} · ${f.path}:${f.start_line}–${f.end_line}`));if(f.review)card.append(el('p',f.review.explanation));else card.append(el('p','规则线索需要结合原文和调用上下文继续核对。','hint'));card.append(evidenceButton(f.evidence_id,'查看线索原文'));target.append(card)}
   }
   for(const item of report.analysis_metrics||[]){const scope=item.scope||{},counts=scope.file_categories||{};addHeading(`扫描范围 · ${item.repo}`);target.append(el('p',`已扫描 ${counts.denominator??(scope.files||[]).length} 个文件：源码 ${counts.src??0} / 文档 ${counts.doc??0} / 配置 ${counts.config??0} / 其他 ${counts.other??0}；${scope.complete?'扫描范围完整':'存在覆盖缺口'}`));for(const note of scope.notes||[])target.append(el('p',note,'hint'));if(scope.continuation!==null&&scope.continuation!==undefined)target.append(el('p',`继续位置：${scope.continuation||'仓库根目录'}`,'hint'))}
-  for(const group of report.integration_blueprint||[]){const b=group.blueprint;addHeading(`配置示例 · ${group.repo}`);target.append(el('p',b.applicability,'hint'));const code=el('pre',b.content,'source-code');target.append(code);const copy=el('button','复制配置');copy.onclick=async()=>{try{await navigator.clipboard.writeText(b.content);copy.textContent='已复制'}catch{copy.textContent='复制失败，请手动选择'}};target.append(copy);for(const step of b.verification_steps)target.append(el('p',`验证：${step}`,'hint'));for(const c of b.citations)target.append(evidenceButton(c.evidence_id,'查看配置依据'))}
+  for(const group of report.integration_blueprint||[]){const b=group.blueprint;addHeading(`配置示例 · ${group.repo}`);target.append(el('p',`依据范围：${group.repo} @ ${group.commit}`,'hint'),el('p',`模型提出的适用条件（待核验）：${b.applicability}`,'hint'));const code=el('pre',b.content,'source-code');target.append(code);const copy=el('button','复制配置');copy.onclick=async()=>{try{await navigator.clipboard.writeText(b.content);copy.textContent='已复制'}catch{copy.textContent='复制失败，请手动选择'}};target.append(copy);for(const step of b.verification_steps)target.append(el('p',`验证：${step}`,'hint'));for(const c of b.citations)target.append(evidenceButton(c.evidence_id,'查看配置依据'))}
   for(const gap of report.analysis_gaps||[])target.append(el('p',gap,'hint'));
 }
 
@@ -94,7 +94,14 @@ function blueprintSupported(b){
   const source=b.citations.map(c=>c.quote).join('\n'),keys=[],values=[];
   const add=v=>{if(v&&typeof v==='object'){if(Array.isArray(v))v.forEach(add);else for(const [k,x] of Object.entries(v)){keys.push(k);add(x)}}else values.push(v)};
   if(b.format==='json')add(JSON.parse(b.content));else for(let line of b.content.split('\n')){line=line.trim();if(!line||line.startsWith('#'))continue;line=line.replace(/^export\s+/,'');const at=line.indexOf('=');keys.push(line.slice(0,at).trim());let value=line.slice(at+1).trim();if((value.startsWith('"')&&value.endsWith('"'))||(value.startsWith("'")&&value.endsWith("'"))){value=value.slice(1,-1).replace(/\\([\\'"nrt])/g,(_,x)=>({n:'\n',r:'\r',t:'\t'}[x]??x))}else if(value==='True')value=true;else if(value==='False')value=false;else if(value==='None')value=null;values.push(value)}
-  return keys.every(k=>source.includes(k))&&values.every(v=>typeof v==='string'&&/^<[^<>\r\n]{1,100}>$/.test(v)||source.includes(String(v)));
+  return keys.every(k=>typeof k==='string'&&k.length>0&&new RegExp('(?<![A-Za-z0-9_])'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![A-Za-z0-9_])').test(source))&&values.every(v=>typeof v==='string'&&/^<[^<>\r\n]{1,100}>$/.test(v)||source.includes(String(v)));
+}
+
+function reviewQuotesFinding(quote,finding,e){
+  if(typeof quote!=='string'||!quote||!e||![e.start_line,e.end_line,finding.start_line,finding.end_line].every(Number.isInteger)||finding.start_line<e.start_line||finding.end_line>e.end_line||finding.start_line>finding.end_line)return false;
+  const raw=e.text,lines=raw.match(/[^\n]*\n|[^\n]+$/g)||[],start=lines.slice(0,finding.start_line-e.start_line).join('').length,end=lines.slice(0,finding.end_line-e.start_line+1).join('').length;
+  const hitLines=lines.slice(finding.start_line-e.start_line,finding.end_line-e.start_line+1).map(x=>x.trim().replace(/^[ ,;:()\[\]{}]+|[ ,;:()\[\]{}]+$/g,''));
+  for(let pos=raw.indexOf(quote);pos!==-1;pos=raw.indexOf(quote,pos+1)){const a=Math.max(pos,start),b=Math.min(pos+quote.length,end),overlap=a<b?raw.slice(a,b):'';if(hitLines.some(line=>/[A-Za-z0-9_]{3,}|[\u4e00-\u9fff]{2,}/.test(line)&&overlap.includes(line)))return true}return false;
 }
 
 function validateReportExtras(report,evidence){
@@ -106,7 +113,7 @@ function validateReportExtras(report,evidence){
     for(const group of groups){const key=`${group.repo.toLowerCase()}@${group.commit}`,e=evidence[group.artifact_id];if(!bindings.has(key)||!e||`${e.repo.toLowerCase()}@${e.commit}`!==key||!['arch_profile','security_scan'].includes(e.source_type)||(kind&&e.source_type!==kind))throw Error('Invalid report source');const data=JSON.parse(e.text);
       if(field==='analysis_metrics'){if(!same(group.scope,data.scope))throw Error('Invalid metrics scope')}
       else if(field==='architecture_graph'){if(!same(group.edges,data.edges))throw Error('Invalid graph edges')}
-      else{if(!Array.isArray(group.findings)||group.findings.length!==data.findings.length)throw Error('Invalid findings');for(let i=0;i<group.findings.length;i++){const item={...group.findings[i]},source=data.findings[i],review=item.review;delete item.review;if(item.assessment==='context_reviewed'){item.assessment=source.assessment;if(!review||typeof review.explanation!=='string'||review.explanation.length<10||!citationOk({evidence_id:source.evidence_id,quote:review.quote},key))throw Error('Invalid reviewed finding')}else if(review!==undefined)throw Error('Invalid review status');if(!same(item,source))throw Error('Invalid finding source')}}
+      else{if(!Array.isArray(group.findings)||group.findings.length!==data.findings.length)throw Error('Invalid findings');for(let i=0;i<group.findings.length;i++){const item={...group.findings[i]},source=data.findings[i],review=item.review;delete item.review;if(item.assessment==='context_reviewed'){item.assessment=source.assessment;if(!review||typeof review.explanation!=='string'||review.explanation.length<10||!citationOk({evidence_id:source.evidence_id,quote:review.quote},key)||!reviewQuotesFinding(review.quote,source,evidence[source.evidence_id]))throw Error('Invalid reviewed finding')}else if(review!==undefined)throw Error('Invalid review status');if(!same(item,source))throw Error('Invalid finding source')}}
     }
   }
   const blueprints=report.integration_blueprint||[];if(!Array.isArray(blueprints)||blueprints.length>24)throw Error('Invalid blueprint groups');

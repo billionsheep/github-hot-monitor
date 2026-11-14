@@ -10,7 +10,7 @@ from evidence.config import Settings
 from evidence.db import AuditDB
 from evidence.harness_schemas import IntegrationBlueprint
 from evidence.report_v3 import valid_blueprint, validate_report_extras
-from evidence.replay import make_bundle, read_bundle, sha
+from evidence.replay import make_bundle, read_bundle, sha, markdown
 from evidence.tools import AuditTools
 from evidence.workflows import workflows
 from eval.run_eval import FrozenClient, FrozenProvider
@@ -53,6 +53,28 @@ class ReportsV3Tests(unittest.IsolatedAsyncioTestCase):
         bad={**b,'content':'MODEL_BASE_URL ='};self.assertFalse(valid_blueprint(bad,self.binding,self.db.get_evidence,{e.evidence_id:e.text}))
         self.assertFalse(valid_blueprint(b,{**self.binding,'repo':'other/repo'},self.db.get_evidence,{e.evidence_id:e.text}))
         self.assertFalse(valid_blueprint(b,self.binding,self.db.get_evidence,{e.evidence_id:'omitted'}))
+    async def test_blueprint_identifiers_and_markdown_provenance(self):
+        fixture={'files':{'settings.py':'NOT_MODEL_BASE_URL = "http://localhost"\nMODEL_BASE_URL = "http://localhost"\n'}}
+        e=(await AuditTools(self.binding,FrozenClient(self.db,fixture)).read_file_lines({**self.binding,'path':'settings.py','start_line':1,'end_line':2})).evidence[0]
+        b={'format':'env','content':'MODEL_BASE_URL="<user-supplied>"','applicability':'适用于任何生产项目','verification_steps':['检查连接'],'citations':[{'evidence_id':e.evidence_id,'quote':'NOT_MODEL_BASE_URL'}]}
+        self.assertFalse(valid_blueprint(b,self.binding,self.db.get_evidence,{e.evidence_id:e.text}))
+        b['citations'][0]['quote']='MODEL_BASE_URL = "http://localhost"'
+        self.assertTrue(valid_blueprint(b,self.binding,self.db.get_evidence,{e.evidence_id:e.text}))
+        session={'id':'test','status':'COMPLETED','reports':[{'repositories':[],'integration_blueprint':[{**self.binding,'blueprint':b}]}]}
+        output=markdown(session,{e.evidence_id:e.model_dump()})
+        self.assertIn(f"依据范围：{self.repo} @ {self.binding['commit']}",output)
+        self.assertIn('模型提出的适用条件（待核验）',output)
+        self.assertIn(e.source_url,output);self.assertIn(e.evidence_id,output)
+    async def test_review_must_quote_the_finding_range(self):
+        h=Harness(self.db,ScriptedModel(),self.provider);id=h.create(['one'],'检查进程线索',workflow_mode='sec_sentinel');await h.run(id)
+        p=read_bundle(json.dumps(make_bundle(self.db,id),ensure_ascii=False).encode());r=p['session']['reports'][0]
+        f=next(x for x in r['security_findings'][0]['findings'] if x['path']=='review_exec.py');e=p['evidence'][f['evidence_id']]
+        self.assertGreater(f['start_line'],e['start_line'])
+        f['assessment']='context_reviewed';f['review']={'quote':'import subprocess as proc','explanation':'已经核查相关代码上下文。'}
+        with self.assertRaises(ValueError):validate_report_extras(r,p['evidence'].get)
+        f['review']['quote']='return'
+        with self.assertRaises(ValueError):validate_report_extras(r,p['evidence'].get)
+        f['review']['quote']='shell=True';self.assertTrue(validate_report_extras(r,p['evidence'].get))
     async def test_license_candidates_are_scanned_as_docs(self):
         fixture={'files':{'LICENSE':'MIT License\nPermission is hereby granted.\n'},'selected_files_only':False}
         result=await AuditTools(self.binding,FrozenClient(self.db,fixture)).analyze_architecture_profile(self.binding)

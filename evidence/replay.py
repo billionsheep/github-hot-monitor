@@ -100,5 +100,9 @@ def markdown(session,evidence=None):
         for item in report.get('analysis_metrics') or []:
             scope=item['scope'];result += ['',f"### 扫描范围 · {item['repo']}",f"文件 {len(scope.get('files',[]))}，覆盖完整：{scope.get('complete')}；缺口：{'；'.join(scope.get('notes',[])) or '无'}"]
         for group in report.get('integration_blueprint') or []:
-            b=group['blueprint'];result += ['',f"### 配置示例 · {group['repo']}",b['applicability'],'',f"```{b['format']}",b['content'],'```','',*['- '+step for step in b['verification_steps']]]
+            b=group['blueprint'];result += ['',f"### 配置示例 · {group['repo']}",f"依据范围：{group['repo']} @ {group['commit']}",f"模型提出的适用条件（待核验）：{b['applicability']}",'',f"```{b['format']}",b['content'],'```','',*['- '+step for step in b['verification_steps']]]
+            for citation in b['citations']:
+                item=evidence.get(citation['evidence_id'],{});url=item.get('source_url','');label=citation['evidence_id']
+                source=f'[{label}]({url})' if url else label
+                result.append(f"- 配置依据：{source}：`{citation['quote'].strip()}`")
     return '\n'.join(result)+'\n'

@@ -60,7 +60,9 @@ def valid_blueprint(blueprint,binding,lookup,visible=None):
             if isinstance(value,str) and re.fullmatch(r'<[^<>\r\n]{1,100}>',value):return True
             token=json.dumps(value,ensure_ascii=False) if value is None or isinstance(value,bool) else str(value)
             return token in source
-        return all(isinstance(k,str) and k in source for k in keys) and all(supplied(v) for v in values)
+        def identifier_present(key):
+            return isinstance(key,str) and bool(key) and bool(re.search(r'(?<![A-Za-z0-9_])'+re.escape(key)+r'(?![A-Za-z0-9_])',source))
+        return all(identifier_present(k) for k in keys) and all(supplied(v) for v in values)
     except (ValueError,TypeError):return False
 
 
@@ -78,6 +80,23 @@ def visible_texts(history):
         try:walk(json.loads(raw[raw.index('>')+1:raw.rindex('</untrusted>')]))
         except (ValueError,TypeError):continue
     return found
+
+
+def review_quotes_finding(quote,finding,evidence):
+    """Require an actual, substantive part of the quote to overlap the hit lines."""
+    if not isinstance(quote,str) or not quote or not evidence:return False
+    raw=evidence.get('text','');start=evidence.get('start_line');end=evidence.get('end_line')
+    first=finding.get('start_line');last=finding.get('end_line')
+    if not all(isinstance(n,int) for n in (start,end,first,last)) or not (start<=first<=last<=end):return False
+    lines=raw.splitlines(keepends=True)
+    hit_start=sum(map(len,lines[:first-start]));hit_end=sum(map(len,lines[:last-start+1]))
+    hit_lines=[line.strip().strip(' ,;:()[]{}') for line in lines[first-start:last-start+1]]
+    pos=raw.find(quote)
+    while pos>=0:
+        overlap=raw[max(pos,hit_start):min(pos+len(quote),hit_end)]
+        if any(line in overlap and re.search(r'[A-Za-z0-9_]{3,}|[\u4e00-\u9fff]{2,}',line) for line in hit_lines):return True
+        pos=raw.find(quote,pos+1)
+    return False
 
 
 def validate_report_extras(report,lookup):
@@ -104,7 +123,7 @@ def validate_report_extras(report,lookup):
                     candidate=dict(item);review=candidate.pop('review',None)
                     if candidate.get('assessment')=='context_reviewed':
                         candidate['assessment']=source['assessment']
-                        if not review or len(review.get('explanation',''))<10 or not valid_citation({'evidence_id':source['evidence_id'],'quote':review.get('quote','')},b,lookup):raise ValueError('review lacks source support')
+                        if not review or len(review.get('explanation',''))<10 or not valid_citation({'evidence_id':source['evidence_id'],'quote':review.get('quote','')},b,lookup) or not review_quotes_finding(review.get('quote',''),source,lookup(source['evidence_id'])):raise ValueError('review lacks source support')
                     elif review is not None:raise ValueError('review status mismatch')
                     if candidate!=source:raise ValueError('finding does not match scan')
     for group in report.get('integration_blueprint') or []:
@@ -139,7 +158,7 @@ def collect_report_extras(db,session_id,turn_id,summaries):
                     out=dict(finding)
                     for review in reviews.get((e['repo'].lower(),e['commit']),[]):
                         if (review['evidence_id'],review['path'],review['start_line'],review['end_line'])==(finding['evidence_id'],finding['path'],finding['start_line'],finding['end_line']):
-                            if valid_citation({'evidence_id':review['evidence_id'],'quote':review['quote']},group,source):
+                            if valid_citation({'evidence_id':review['evidence_id'],'quote':review['quote']},group,source) and review_quotes_finding(review['quote'],finding,source(review['evidence_id'])):
                                 out['assessment']='context_reviewed';out['review']={'quote':review['quote'],'explanation':review['explanation']}
                             break
                     findings.append(out)

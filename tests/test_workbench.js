@@ -84,6 +84,20 @@ test('graph uses safe text nodes and mobile uses a source-linked component list'
 test('portable blueprint syntax rejects executable env and invalid python',()=>{
   const c=makeContext();assert.equal(c.blueprintSyntax('python','BASE_URL = "https://example.test"'),true);assert.equal(c.blueprintSyntax('python','BASE_URL ='),false);assert.equal(c.blueprintSyntax('env','BASE_URL=https://example.test'),true);assert.equal(c.blueprintSyntax('env','X=a; echo bad'),false);assert.equal(c.blueprintSyntax('json','{"base_url":"x"}'),true);
 });
+test('blueprint keys require identifier boundaries and applicability is scoped as unverified',()=>{
+  const c=makeContext(),b={format:'env',content:'MODEL_BASE_URL="<user-supplied>"',citations:[{quote:'NOT_MODEL_BASE_URL'}]};
+  assert.equal(c.blueprintSupported(b),false);b.citations[0].quote='MODEL_BASE_URL = "http://localhost"';assert.equal(c.blueprintSupported(b),true);
+  const {context,document}=uiContext(),target=document.createElement('div'),commit='a'.repeat(40);
+  context.renderExtras(target,{integration_blueprint:[{repo:'a/b',commit,blueprint:{...b,applicability:'所有生产项目',verification_steps:[]}}]});
+  const text=target.children.map(n=>n.textContent).join('\n');assert.match(text,new RegExp(`依据范围：a/b @ ${commit}`));assert.match(text,/模型提出的适用条件（待核验）：所有生产项目/);
+});
+test('security review quotes must overlap meaningful content in the hit lines',()=>{
+  const c=makeContext(),e={text:'import subprocess as proc\n\ndef launch():\n    return proc.run(\n        shell=True,\n    )\n',start_line:1,end_line:6};
+  const finding={start_line:4,end_line:6};assert.equal(c.reviewQuotesFinding('import subprocess as proc',finding,e),false);assert.equal(c.reviewQuotesFinding('return',finding,e),false);assert.equal(c.reviewQuotesFinding('shell=True',finding,e),true);assert.equal(c.reviewQuotesFinding('\n    ',finding,e),false);
+  const key='ev_x',source={...finding,path:'x.py',evidence_id:key,assessment:'rule_hit'},artifact={repo:'a/b',commit:'a'.repeat(40),source_type:'security_scan',text:JSON.stringify({findings:[source]})};
+  const report={repositories:[{binding:{repo:artifact.repo,commit:artifact.commit}}],security_findings:[{repo:artifact.repo,commit:artifact.commit,artifact_id:'scan',findings:[{...source,assessment:'context_reviewed',review:{quote:'import subprocess as proc',explanation:'这里是足够长的上下文解释'}}]}]};
+  const evidence={scan:artifact,[key]:{...e,repo:artifact.repo,commit:artifact.commit}};assert.throws(()=>c.validateReportExtras(report,evidence));report.security_findings[0].findings[0].review.quote='shell=True';assert.doesNotThrow(()=>c.validateReportExtras(report,evidence));
+});
 test('complete workbench initialization loads canonical workflow templates',async()=>{
   const elements=new Map();function node(){return {value:'',textContent:'',disabled:false,hidden:false,children:[],style:{},dataset:{},classList:{toggle(){}},replaceChildren(...x){this.children=x},append(...x){this.children.push(...x)},addEventListener(type,fn){(this.listeners??={})[type]=fn}}}
   const document={getElementById(id){if(!elements.has(id))elements.set(id,node());return elements.get(id)},createElement:node,querySelector(){return node()},querySelectorAll(){return []}};

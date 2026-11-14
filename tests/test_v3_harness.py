@@ -81,6 +81,39 @@ class V3HarnessTests(unittest.IsolatedAsyncioTestCase):
         current_injections(state);self.assertEqual(len(state['ranges']['f.py']),3)
         initial={'role':'user','content':'{}'};h.fit_context(state,initial,'instructions',True)
         self.assertTrue(state['context_pruned']);self.assertEqual(missing_ranges(1,1,state['ranges'].get('f.py',[])),[(1,1)]);self.assertIn('移出',initial['content'])
+    async def test_pruning_preserves_automatic_source_reads_for_final_request(self):
+        h=Harness(self.db,ScriptedModel(),self.provider)
+        e={'source_type':'file_lines','evidence_id':'ev_auto','path':'chat.py','start_line':4,'end_line':4,'partial_line':False,'text':'base_url = value\n','context_excerpt':False}
+        auto=wrap_untrusted(json.dumps({'automatic_source_reads':1,'parts':[{'facts':[{'kind':'python_ast','path':'chat.py','entries':[{'title':'base_url'}]}]},{'evidence':[e]}]}),'tool-result')
+        def pair(n):
+            ev={'source_type':'file_lines','evidence_id':f'ev_{n}','path':'f.py','start_line':n,'end_line':n,'partial_line':False,'text':'x'*9000,'context_excerpt':False}
+            return [{'type':'function_call','name':'read_file_lines','call_id':str(n),'arguments':'{}'},{'type':'function_call_output','call_id':str(n),'output':wrap_untrusted(json.dumps({'evidence':[ev]}),'tool-result')}]
+        state={'history':[{'role':'user','content':auto},*pair(1),*pair(2),*pair(3)],'budget':{'input_tokens':60000},'turn_usage':{'input_tokens':0},'reserved_input':0}
+        h.fit_context(state,{'role':'user','content':'{}'},'instructions',True)
+        self.assertIn('ev_auto',state['visible_evidence']);self.assertEqual(state['ranges']['chat.py'],[[4,4]])
+        self.assertTrue(any('base_url = value' in x.get('content','') for x in state['history']))
+    async def test_real_stdio_outline_in_request_unlocks_source_read(self):
+        fixtures=json.loads(Path('eval/v3/mcp_fixture.json').read_text());repo='modelcontextprotocol/python-sdk';fixture=fixtures[repo]
+        self.db.put_snapshot({'id':'mcp','repo':repo,'sha':fixture['commit'],'created_at':'now'});provider=FrozenProvider(self.db,fixtures);h=Harness(self.db,ScriptedModel(),provider)
+        id=h.create(['mcp'],'分析 stdio',workflow_mode='arch_research');owner='test-stdio';self.assertTrue(h.store.acquire(id,owner));binding={'repo':repo,'commit':fixture['commit']}
+        path='src/mcp/server/stdio.py';row,state=h.store.get(id)
+        call={'name':'get_markdown_outline','arguments':json.dumps({'path':path,'symbol_or_param_hint':None}),'call_id':'outline'}
+        await h.run_tool(id,owner,row,state,binding,call);row,state=h.store.get(id)
+        self.assertIn(path,state['outlines']);self.assertIn('python_ast',state['history'][-1]['output'])
+        call={'name':'read_file_lines','arguments':json.dumps({'path':path,'start_line':1,'end_line':20}),'call_id':'read'}
+        await h.run_tool(id,owner,row,state,binding,call);_,state=h.store.get(id)
+        self.assertNotIn('当前上下文尚未读取大纲',state['history'][-1]['output']);self.assertIn(path,state['ranges']);h.store.release(id,owner)
+    async def test_large_structured_outline_is_registered_without_raw_json_excerpt(self):
+        entries=[{'kind':'FunctionDef','title':'function_'+str(i),'start_line':i+1,'end_line':i+1,'symbols':['x'*350 for _ in range(12)]} for i in range(30)]
+        result={'tool':'get_markdown_outline','facts':[{'kind':'python_ast','path':'long.py','total_lines':200,'entries':entries}],'evidence':[{'source_type':'file_outline','evidence_id':'outline_x','path':'long.py','text':'X'*50000}],'coverage':{}}
+        view,_=model_view(result,14000);self.assertEqual(view['facts'][0]['path'],'long.py');self.assertTrue(view['facts'][0]['entries']);self.assertGreater(view['facts'][0]['omitted_entries'],0)
+        state={'history':[{'type':'function_call_output','call_id':'x','output':wrap_untrusted(json.dumps(view,ensure_ascii=False),'tool-result')}]};current_injections(state);self.assertIn('long.py',state['outlines'])
+    async def test_real_mcp_architecture_scan_prioritizes_calls_across_files(self):
+        fixtures=json.loads(Path('eval/v3/mcp_fixture.json').read_text());repo='modelcontextprotocol/python-sdk';fixture=fixtures[repo];binding={'repo':repo,'commit':fixture['commit']}
+        result=await AuditTools(binding,FrozenClient(self.db,fixture)).analyze_architecture_profile(binding)
+        data=json.loads(result.evidence[0].text);edges=data['edges'];paths={e['path'] for e in edges if e['signal']=='ast_call'}
+        self.assertIn('src/mcp/client/stdio.py',paths);self.assertIn('src/mcp/server/stdio.py',paths)
+        self.assertFalse(any(e['path']=='pyproject.toml' and '[tool.' in e['to'] for e in edges));self.assertLessEqual(len(edges),40)
     async def test_evicted_source_range_is_actually_reloaded(self):
         h=Harness(self.db,ScriptedModel(),self.provider);id=h.create(['a'],'核查文件',force_full=True);owner='test-owner';self.assertTrue(h.store.acquire(id,owner))
         call={'name':'read_file_lines','arguments':json.dumps({'path':'README.md','start_line':1,'end_line':1}),'call_id':'first'}
@@ -150,6 +183,12 @@ class V3HarnessTests(unittest.IsolatedAsyncioTestCase):
         artifact=result.evidence[0];row=Verdict(criterion_id='x',**self.binding,status='PASS',summary='无命中 ['+artifact.evidence_id+']',citations=[{'evidence_id':artifact.evidence_id,'quote':'"findings":[]'}],verification_basis='static_config',runtime_validation_required=False,next_step='核对',support_relation='supports')
         result,_=calibrate_verdict(row,'项目是否安全？',self.db,criterion='整个项目是否安全？',require_relation=True);self.assertEqual(result.status,'UNVERIFIED')
         result,_=calibrate_verdict(row,'扫描范围内是否命中？',self.db,criterion='扫描范围内是否有安全线索命中？',require_relation=True);self.assertEqual(result.status,'PASS')
+    async def test_supported_security_risk_keeps_fact_and_runtime_gap(self):
+        e=(await AuditTools(self.binding,FrozenClient(self.db,{'files':{'code.py':'run(command, shell=True)\n'}})).read_file_lines({**self.binding,'path':'code.py','start_line':1,'end_line':1})).evidence[0]
+        row=Verdict(criterion_id='x',**self.binding,status='RISK',summary='存在 shell 执行路径 ['+e.evidence_id+']',citations=[{'evidence_id':e.evidence_id,'quote':'shell=True'}],verification_basis='static_config',runtime_validation_required=True,next_step='核查调用方',support_relation='supports',gap_reason='实际调用与信任边界尚未确认')
+        result,why=calibrate_verdict(row,'审计进程执行安全',self.db,criterion='检查执行风险',require_relation=True);self.assertEqual(result.status,'RISK');self.assertFalse(why);self.assertEqual(result.gap_reason,row.gap_reason)
+        for relation in ('insufficient','unknown'):
+            result,_=calibrate_verdict(row.model_copy(update={'support_relation':relation}),'审计进程执行安全',self.db,criterion='检查执行风险',require_relation=True);self.assertEqual(result.status,'UNVERIFIED')
     async def test_missing_required_statement_downgrades_and_records_reason(self):
         fragment=(await AuditTools(self.binding,FrozenClient(self.db,{'files':self.files})).read_file_lines({**self.binding,'path':'README.md','start_line':1,'end_line':1})).evidence[0]
         h=Harness(self.db,ScriptedModel(),self.provider);id=h.create(['a'],'核查 base_url');

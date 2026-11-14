@@ -191,7 +191,7 @@ def architecture_kind(name):
     if any(x in n for x in ('run','execute','invoke','dispatch','loop','agent')): return 'execution_loop'
     if any(x in n for x in ('sqlite','database','session','persist','cache','save','load')): return 'state_persistence'
     if any(x in n for x in ('gather','create_task','retry','semaphore','thread','lock','sleep')): return 'concurrency_retry'
-    if any(x in n for x in ('openai','anthropic','model','completion','tool','responses','mcp')): return 'model_tool_protocol'
+    if any(x in n for x in ('openai','anthropic','model','completion','tool_call','tool_result','tool_registry','tool_schema','tools.','responses','mcp')): return 'model_tool_protocol'
     return None
 
 def security_kind(name,keywords=()):

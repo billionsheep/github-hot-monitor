@@ -126,7 +126,12 @@ def calibrate_verdict(row,query,db,*,criterion='',require_relation=False):
         if row.verification_basis=='insufficient':reason='证据基础不足。'
         elif relation in ('insufficient','unknown'):reason=row.gap_reason or '证据支持关系不足。'
         elif relation=='partial' and row.status=='PASS' and row.gap_reason and row.citations:partial=True
-        elif relation and expected[relation]!=row.status:reason='判断与声明的证据支持关系不一致。'
+        elif relation and expected[relation]!=row.status:
+            # In a security review, supported hazardous behavior is a RISK;
+            # a runtime gap may still be recorded alongside the supported fact.
+            supported_risk=(row.status=='RISK' and relation=='supports' and bool(row.citations) and
+                            bool(re.search(r'安全|漏洞|审计|风险|进程|凭据|命令|shell|security|vulnerab|audit|risk|credential|process',query+' '+criterion,re.I)))
+            if not supported_risk:reason='判断与声明的证据支持关系不一致。'
         elif require_relation and relation is None:reason='未给出可核对的证据支持关系。'
         if not reason and re.search(r'协议|许可|授权|licen[cs]e',criterion,re.I) and re.search(r'缺少.{0,8}(?:授权|许可|协议)文本|without.{0,15}licen[cs]e\s+text',query,re.I):
             has_license_text=False

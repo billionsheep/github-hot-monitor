@@ -43,7 +43,7 @@ def model_view(result,max_bytes=MAX_MODEL_VIEW_BYTES):
                 compact={k:fact[k] for k in ('kind','path','total_lines','content_sha256','evidence_id') if k in fact};compact['entries']=[]
                 for entry in fact.get('entries',[]):
                     brief={k:entry[k] for k in ('kind','title','start_line','end_line','symbols') if k in entry and entry[k] is not None}
-                    if 'symbols' in brief:brief['symbols']=brief['symbols'][:12]
+                    if 'symbols' in brief:brief['symbols']=[s[:80] if isinstance(s,str) else s for s in brief['symbols'][:12]]
                     if entry.get('calls'):brief['calls']=[{k:c[k] for k in ('name','resolved','keywords','keyword_arguments','statement_start','statement_end') if k in c} for c in entry['calls'][:2]]
                     candidate={**compact,'entries':compact['entries']+[brief]}
                     if len(json.dumps(candidate,ensure_ascii=False).encode())>min(2600,max_bytes//3):break
@@ -73,6 +73,18 @@ def model_view(result,max_bytes=MAX_MODEL_VIEW_BYTES):
         view={k:compact_value(item[k]) for k in ('tool','repo','commit','coverage','errors','cache_hit','error','deduplicated','message') if k in item}
         view['facts']=[]; view['evidence']=[]
         facts=item.get('facts',[]); evidence=item.get('evidence',[])
+        # A usable structured outline must survive even when its JSON evidence is
+        # one long line and cannot fit in the bounded source excerpt.
+        for fact in facts:
+            if fact.get('kind') not in ('python_ast','markdown_headings','line_blocks'):continue
+            compact={k:fact[k] for k in ('kind','path','total_lines','content_sha256','evidence_id') if k in fact};compact['entries']=[]
+            for entry in fact.get('entries',[]):
+                brief={k:entry[k] for k in ('kind','title','start_line','end_line','symbols') if k in entry and entry[k] is not None}
+                if 'symbols' in brief:brief['symbols']=[s[:80] if isinstance(s,str) else s for s in brief['symbols'][:12]]
+                if entry.get('calls'):brief['calls']=[{k:c[k] for k in ('name','resolved','keywords','keyword_arguments','statement_start','statement_end') if k in c} for c in entry['calls'][:2]]
+                if len(json.dumps({**compact,'entries':compact['entries']+[brief]},ensure_ascii=False).encode())>min(2600,max_bytes//3):break
+                compact['entries'].append(brief)
+            compact['omitted_entries']=len(fact.get('entries',[]))-len(compact['entries']);view['facts'].append(compact)
         preview_refs=[]
         if max_bytes>MAX_MODEL_VIEW_BYTES:
             for artifact in evidence:
@@ -115,7 +127,7 @@ def model_view(result,max_bytes=MAX_MODEL_VIEW_BYTES):
                 if not excerpt:continue
             view['evidence'].append(entry)
             if excerpt==raw: included.add(e['evidence_id'])
-        for fact in facts[:10]:
+        for fact in [f for f in facts if f.get('kind') not in ('python_ast','markdown_headings','line_blocks')][:10]:
             candidate=compact_value(fact)
             if len(json.dumps({**view,'facts':view['facts']+[candidate]},ensure_ascii=False).encode())>max_bytes-300: break
             view['facts'].append(candidate)
@@ -244,9 +256,15 @@ class Harness:
         while True:
             size=len(json.dumps(make_payload(self.adapter.model,'low','sub',instructions,[initial]+state['history'],allow_tools,getattr(self.adapter,'v3_tools',False)),ensure_ascii=False).encode())
             if size<=limit:break
-            end=next((i for i,x in enumerate(state['history']) if x.get('type')=='function_call_output' or (x.get('role')=='user' and str(x.get('content','')).startswith('<untrusted '))),None)
-            if end is None:break
-            state['history']=state['history'][end+1:];state['context_pruned']=True
+            history=state['history'];spans=[];start=0
+            for i,x in enumerate(history):
+                if x.get('type')=='function_call_output' or (x.get('role')=='user' and str(x.get('content','')).startswith('<untrusted ')):
+                    raw=x.get('content','') if x.get('role')=='user' else ''
+                    protected='"automatic_source_reads"' in raw
+                    spans.append((start,i+1,protected));start=i+1
+            chosen=next((x for x in spans if not x[2]),None) or (spans[0] if spans else None)
+            if chosen is None:break
+            a,b,_=chosen;state['history']=history[:a]+history[b:];state['context_pruned']=True
             data=json.loads(initial['content']);data['context_notice']='部分较早的工具原文已移出本次请求；如仍需要请重新读取。';initial['content']=json.dumps(data,ensure_ascii=False)
         current_injections(state)
         if state.get('context_pruned'):

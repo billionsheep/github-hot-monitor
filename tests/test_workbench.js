@@ -99,11 +99,25 @@ test('security review quotes must overlap meaningful content in the hit lines',(
   const report={repositories:[{binding:{repo:artifact.repo,commit:artifact.commit}}],security_findings:[{repo:artifact.repo,commit:artifact.commit,artifact_id:'scan',findings:[{...source,assessment:'context_reviewed',review:{quote:'import subprocess as proc',explanation:'这里是足够长的上下文解释'}}]}]};
   const evidence={scan:artifact,[key]:{...e,repo:artifact.repo,commit:artifact.commit}};assert.throws(()=>c.validateReportExtras(report,evidence));report.security_findings[0].findings[0].review.quote='shell=True';assert.doesNotThrow(()=>c.validateReportExtras(report,evidence));
 });
-test('complete workbench initialization loads canonical workflow templates',async()=>{
+function initializedWorkbench(hostname='localhost',pendingApi=false){
   const elements=new Map();function node(){return {value:'',textContent:'',disabled:false,hidden:false,children:[],style:{},dataset:{},classList:{toggle(){}},replaceChildren(...x){this.children=x},append(...x){this.children.push(...x)},addEventListener(type,fn){(this.listeners??={})[type]=fn}}}
   const document={getElementById(id){if(!elements.has(id))elements.set(id,node());return elements.get(id)},createElement:node,querySelector(){return node()},querySelectorAll(){return []}};
   const templates=JSON.parse(fs.readFileSync('evidence/workflows.json','utf8'));const response=x=>({ok:true,headers:{get:()=> 'application/json'},json:async()=>x});
-  const fetch=async url=>response(url==='/api/workflows'?templates:url==='./replays/index.json'?{schema_version:'1.0',replays:[]}:url==='/api/health'?{status:'ok',model_ready:true}:[]);
-  const context={document,fetch,window:{addEventListener(){},scrollTo(){}},navigator:{},localStorage:{getItem(){return null},setItem(){},removeItem(){}},URL,TextEncoder,Uint8Array,crypto:webcrypto,EventSource:class{},setInterval,clearInterval};
-  vm.createContext(context);vm.runInContext(code,context);await flush();await flush();assert.equal(document.getElementById('scenario').children.length,3);assert.equal(document.getElementById('scenario').value,'deploy_readiness');assert.equal(document.getElementById('question').value,templates.workflows[0].preset);assert.equal(document.getElementById('startAudit').disabled,false);
+  const requests=[];const fetch=async(url,options)=>{requests.push({url,options});if(pendingApi&&url.startsWith('/api/'))return new Promise(()=>{});return response(['/api/workflows','./workflows.json'].includes(url)?templates:url==='./replays/index.json'?JSON.parse(fs.readFileSync('web/replays/index.json','utf8')):url==='/api/health'?{status:'ok',model_ready:true}:[])};
+  const context={document,fetch,window:{location:{hostname,href:`https://${hostname}/github-hot-monitor/`},addEventListener(){},scrollTo(){}},navigator:{},localStorage:{getItem(){return null},setItem(){},removeItem(){}},URL,AbortSignal,TextEncoder,Uint8Array,crypto:webcrypto,EventSource:class{},setInterval,clearInterval};
+  vm.createContext(context);vm.runInContext(code,context);return {context,document,templates,requests};
+}
+test('complete workbench initialization loads canonical workflow templates',async()=>{
+  const {document,templates,requests}=initializedWorkbench();await flush();await flush();assert.equal(document.getElementById('scenario').children.length,3);assert.equal(document.getElementById('scenario').value,'deploy_readiness');assert.equal(document.getElementById('question').value,templates.workflows[0].preset);assert.equal(document.getElementById('startAudit').disabled,false);
+  assert.ok(requests.filter(r=>r.url==='/api/workflows'||r.url==='/api/health').every(r=>r.options.signal instanceof AbortSignal));
+});
+test('GitHub Pages loads all replay choices and workflows without backend probes',async()=>{
+  const {document,requests}=initializedWorkbench('billionsheep.github.io',true);await flush();await flush();
+  assert.equal(document.getElementById('scenario').children.length,3);assert.equal(document.getElementById('replayList').children.length,6);assert.equal(document.getElementById('startAudit').disabled,true);
+  assert.deepEqual(requests.map(r=>r.url).sort(),['./replays/index.json','./workflows.json']);
+  const base='https://billionsheep.github.io/github-hot-monitor/';assert.ok(requests.every(r=>new URL(r.url,base).pathname.startsWith('/github-hot-monitor/')));
+});
+test('a stalled backend probe cannot block static replay discovery',async()=>{
+  const {document,requests}=initializedWorkbench('localhost',true);await flush();await flush();
+  assert.equal(document.getElementById('replayList').children.length,6);assert.equal(document.getElementById('startAudit').disabled,true);assert.ok(requests.some(r=>r.url==='/api/workflows'));
 });

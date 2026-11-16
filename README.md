@@ -13,7 +13,7 @@
 
 技术栈：Python 3.11、FastAPI、Pydantic v2、HTTPX、SQLite WAL、OpenAI Responses / Function Calling、原生 HTML/CSS/JavaScript。
 
-[在线演示：打开默认工作台](https://billionsheep.github.io/github-hot-monitor/) · [热门趋势候选池](https://billionsheep.github.io/github-hot-monitor/?view=discover)
+[在线演示：打开默认工作台](https://billionsheep.github.io/repoaudit-agent/) · [项目仓库](https://github.com/billionsheep/repoaudit-agent) · [热门趋势候选池](https://billionsheep.github.io/repoaudit-agent/?view=discover)
 
 ## 启动
 

@@ -47,7 +47,7 @@ def main():
         for file in site.rglob('*'):
             if file.is_file(): payloads['site/' + str(file.relative_to(site))] = file.read_bytes()
     payloads['VERSION.json'] = (json.dumps({'commit': commit, 'tag': args.tag, 'product': 'RepoAudit-Agent v3',
-        'source_repository': 'https://github.com/billionsheep/github-hot-monitor'}, ensure_ascii=False, indent=2) + '\n').encode()
+        'source_repository': 'https://github.com/billionsheep/repoaudit-agent'}, ensure_ascii=False, indent=2) + '\n').encode()
     for name, data in payloads.items():
         if SECRET.search(data): raise SystemExit('疑似凭证，停止打包：' + name)
     manifest = {name: {'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)} for name, data in sorted(payloads.items())}

@@ -3,6 +3,8 @@
 **RepoAudit-Agent｜开源框架架构调查与部署适配工作台**
 技术栈：Python 3.11、FastAPI、Pydantic v2、HTTPX、SQLite WAL、OpenAI Responses / Function Calling、SSE、原生 JavaScript、GitHub Actions。
 
+[在线演示](https://billionsheep.github.io/repoaudit-agent/) ｜ [项目源码](https://github.com/billionsheep/repoaudit-agent)
+
 - 针对开源框架引入时实现信息分散、模型配置难追踪和环境要求难比较的问题，构建架构研报、安全线索审计、部署适配三种工作流，打通候选发现、固定版本取证、逐项判断、原文追溯与多轮追问。
 - 设计 Lead/Sub 单仓上下文隔离与确定性快速路由，构建8类只读取证工具；使用 Python AST 定位参数、跨行调用及字典参数转交，按当前请求实际可见原文去重，在固定预算内保留关键语句并自动补查。
 - 基于 commit、原始行号和 SHA-256 构建证据链，校验跨仓引用、摘录与派生产物；区分证据支持、明确冲突、具体风险和资料不足。基于 SQLite WAL、执行租约、幂等工具回执实现检查点恢复与持久化事件流。

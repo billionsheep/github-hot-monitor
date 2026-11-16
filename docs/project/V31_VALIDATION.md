@@ -43,7 +43,7 @@
 
 [技能索引](../../skills/INDEX.md) · [CLI实现](../../evidence/cli.py) · [运行说明](RUNBOOK.md)
 
-本机预览：<http://127.0.0.1:8781/>。实时服务：<http://127.0.0.1:8775/>。预览进程关闭后按RUNBOOK重启。在线主地址沿用 <https://billionsheep.github.io/github-hot-monitor/>；默认首屏为工作台。直接打开部署回放：<https://billionsheep.github.io/github-hot-monitor/?replay=v3-pydantic-deploy-blueprint.json>。
+本机预览：<http://127.0.0.1:8781/>。实时服务：<http://127.0.0.1:8775/>。预览进程关闭后按RUNBOOK重启。在线主地址更新为 <https://billionsheep.github.io/repoaudit-agent/>；默认首屏为工作台。直接打开部署回放：<https://billionsheep.github.io/repoaudit-agent/?replay=v3-pydantic-deploy-blueprint.json>。项目源码：<https://github.com/billionsheep/repoaudit-agent>。
 
 [桌面首屏](images/v31-desktop.png) · [390px首屏](images/v31-mobile.png)
 

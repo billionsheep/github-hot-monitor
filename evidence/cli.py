@@ -14,7 +14,7 @@ from evidence.github_client import GitHubError
 
 ROOT = Path(__file__).resolve().parents[1]
 MODES = ('arch_research', 'sec_sentinel', 'deploy_readiness')
-PUBLIC_WORKBENCH = 'https://billionsheep.github.io/github-hot-monitor/'
+PUBLIC_WORKBENCH = 'https://billionsheep.github.io/repoaudit-agent/'
 
 
 def skill_index(root=ROOT):

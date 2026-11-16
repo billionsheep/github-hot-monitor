@@ -104,7 +104,7 @@ function initializedWorkbench(hostname='localhost',pendingApi=false,search='?vie
   const document={getElementById(id){if(!elements.has(id))elements.set(id,node());return elements.get(id)},createElement:node,createElementNS(ns,tag){return node()},querySelector(){return node()},querySelectorAll(){return []}};
   const templates=JSON.parse(fs.readFileSync('evidence/workflows.json','utf8'));const response=x=>({ok:true,headers:{get:()=> 'application/json'},json:async()=>x,text:async()=>typeof x==='string'?x:JSON.stringify(x)});
   const requests=[];const fetch=async(url,options)=>{requests.push({url,options});if(pendingApi&&url.startsWith('/api/'))return new Promise(()=>{});if(/^\.\/replays\/[a-z0-9-]+\.json$/.test(url)&&url!=='./replays/index.json')return response(fs.readFileSync('web/'+url.slice(2),'utf8'));if(url.startsWith('/api/audit/sessions/'))return response(JSON.parse(JSON.parse(original).payload_json).session);return response(['/api/workflows','./workflows.json'].includes(url)?templates:url==='./replays/index.json'?JSON.parse(fs.readFileSync('web/replays/index.json','utf8')):url==='/api/health'?{status:'ok',model_ready:true}:[])};
-  const context={document,fetch,window:{location:{hostname,search,href:`https://${hostname}/github-hot-monitor/`},addEventListener(){},scrollTo(){}},navigator:{},localStorage:{getItem(){return null},setItem(){},removeItem(){}},URL,URLSearchParams,AbortSignal,TextEncoder,Uint8Array,crypto:webcrypto,EventSource:class{},setInterval,clearInterval};
+  const context={document,fetch,window:{location:{hostname,search,href:`https://${hostname}/repoaudit-agent/`},addEventListener(){},scrollTo(){}},navigator:{},localStorage:{getItem(){return null},setItem(){},removeItem(){}},URL,URLSearchParams,AbortSignal,TextEncoder,Uint8Array,crypto:webcrypto,EventSource:class{},setInterval,clearInterval};
   vm.createContext(context);vm.runInContext(code,context);return {context,document,templates,requests,ready:vm.runInContext('initialization',context)};
 }
 test('complete workbench initialization loads canonical workflow templates',async()=>{
@@ -115,7 +115,7 @@ test('GitHub Pages loads all replay choices and workflows without backend probes
   const {document,requests}=initializedWorkbench('billionsheep.github.io',true);await flush();await flush();
   assert.equal(document.getElementById('scenario').children.length,3);assert.equal(document.getElementById('replayList').children.length,6);assert.equal(document.getElementById('startAudit').disabled,true);
   assert.deepEqual(requests.map(r=>r.url).sort(),['./replays/index.json','./workflows.json']);
-  const base='https://billionsheep.github.io/github-hot-monitor/';assert.ok(requests.every(r=>new URL(r.url,base).pathname.startsWith('/github-hot-monitor/')));
+  const base='https://billionsheep.github.io/repoaudit-agent/';assert.ok(requests.every(r=>new URL(r.url,base).pathname.startsWith('/repoaudit-agent/')));
 });
 test('a stalled backend probe cannot block static replay discovery',async()=>{
   const {document,requests}=initializedWorkbench('localhost',true);await flush();await flush();

@@ -99,13 +99,13 @@ test('security review quotes must overlap meaningful content in the hit lines',(
   const report={repositories:[{binding:{repo:artifact.repo,commit:artifact.commit}}],security_findings:[{repo:artifact.repo,commit:artifact.commit,artifact_id:'scan',findings:[{...source,assessment:'context_reviewed',review:{quote:'import subprocess as proc',explanation:'这里是足够长的上下文解释'}}]}]};
   const evidence={scan:artifact,[key]:{...e,repo:artifact.repo,commit:artifact.commit}};assert.throws(()=>c.validateReportExtras(report,evidence));report.security_findings[0].findings[0].review.quote='shell=True';assert.doesNotThrow(()=>c.validateReportExtras(report,evidence));
 });
-function initializedWorkbench(hostname='localhost',pendingApi=false){
-  const elements=new Map();function node(){return {value:'',textContent:'',disabled:false,hidden:false,children:[],style:{},dataset:{},classList:{toggle(){}},replaceChildren(...x){this.children=x},append(...x){this.children.push(...x)},addEventListener(type,fn){(this.listeners??={})[type]=fn}}}
-  const document={getElementById(id){if(!elements.has(id))elements.set(id,node());return elements.get(id)},createElement:node,querySelector(){return node()},querySelectorAll(){return []}};
-  const templates=JSON.parse(fs.readFileSync('evidence/workflows.json','utf8'));const response=x=>({ok:true,headers:{get:()=> 'application/json'},json:async()=>x});
-  const requests=[];const fetch=async(url,options)=>{requests.push({url,options});if(pendingApi&&url.startsWith('/api/'))return new Promise(()=>{});return response(['/api/workflows','./workflows.json'].includes(url)?templates:url==='./replays/index.json'?JSON.parse(fs.readFileSync('web/replays/index.json','utf8')):url==='/api/health'?{status:'ok',model_ready:true}:[])};
-  const context={document,fetch,window:{location:{hostname,href:`https://${hostname}/github-hot-monitor/`},addEventListener(){},scrollTo(){}},navigator:{},localStorage:{getItem(){return null},setItem(){},removeItem(){}},URL,AbortSignal,TextEncoder,Uint8Array,crypto:webcrypto,EventSource:class{},setInterval,clearInterval};
-  vm.createContext(context);vm.runInContext(code,context);return {context,document,templates,requests};
+function initializedWorkbench(hostname='localhost',pendingApi=false,search='?view=discover'){
+  const elements=new Map();function node(){return {value:'',textContent:'',disabled:false,hidden:false,children:[],style:{},dataset:{},setAttribute(k,v){(this.attributes??={})[k]=v},showModal(){this.open=true},classList:{toggle(){}},replaceChildren(...x){this.children=x},append(...x){this.children.push(...x)},addEventListener(type,fn){(this.listeners??={})[type]=fn}}}
+  const document={getElementById(id){if(!elements.has(id))elements.set(id,node());return elements.get(id)},createElement:node,createElementNS(ns,tag){return node()},querySelector(){return node()},querySelectorAll(){return []}};
+  const templates=JSON.parse(fs.readFileSync('evidence/workflows.json','utf8'));const response=x=>({ok:true,headers:{get:()=> 'application/json'},json:async()=>x,text:async()=>typeof x==='string'?x:JSON.stringify(x)});
+  const requests=[];const fetch=async(url,options)=>{requests.push({url,options});if(pendingApi&&url.startsWith('/api/'))return new Promise(()=>{});if(/^\.\/replays\/[a-z0-9-]+\.json$/.test(url)&&url!=='./replays/index.json')return response(fs.readFileSync('web/'+url.slice(2),'utf8'));if(url.startsWith('/api/audit/sessions/'))return response(JSON.parse(JSON.parse(original).payload_json).session);return response(['/api/workflows','./workflows.json'].includes(url)?templates:url==='./replays/index.json'?JSON.parse(fs.readFileSync('web/replays/index.json','utf8')):url==='/api/health'?{status:'ok',model_ready:true}:[])};
+  const context={document,fetch,window:{location:{hostname,search,href:`https://${hostname}/github-hot-monitor/`},addEventListener(){},scrollTo(){}},navigator:{},localStorage:{getItem(){return null},setItem(){},removeItem(){}},URL,URLSearchParams,AbortSignal,TextEncoder,Uint8Array,crypto:webcrypto,EventSource:class{},setInterval,clearInterval};
+  vm.createContext(context);vm.runInContext(code,context);return {context,document,templates,requests,ready:vm.runInContext('initialization',context)};
 }
 test('complete workbench initialization loads canonical workflow templates',async()=>{
   const {document,templates,requests}=initializedWorkbench();await flush();await flush();assert.equal(document.getElementById('scenario').children.length,3);assert.equal(document.getElementById('scenario').value,'deploy_readiness');assert.equal(document.getElementById('question').value,templates.workflows[0].preset);assert.equal(document.getElementById('startAudit').disabled,false);
@@ -120,4 +120,25 @@ test('GitHub Pages loads all replay choices and workflows without backend probes
 test('a stalled backend probe cannot block static replay discovery',async()=>{
   const {document,requests}=initializedWorkbench('localhost',true);await flush();await flush();
   assert.equal(document.getElementById('replayList').children.length,6);assert.equal(document.getElementById('startAudit').disabled,true);assert.ok(requests.some(r=>r.url==='/api/workflows'));
+});
+
+test('no-parameter landing renders the unchanged flagship and isolated security evidence',async()=>{
+  const {context,document,requests,ready}=initializedWorkbench('billionsheep.github.io',true,'');await ready;
+  assert.equal(document.getElementById('audit').hidden,false);assert.equal(document.getElementById('discover').hidden,true);
+  assert.equal(document.getElementById('sessionState').textContent,'回放完成');assert.equal(document.getElementById('reportSelect').children.length,2);
+  assert.equal(vm.runInContext('w.replay.session.bindings.length',context),2);assert.equal(vm.runInContext('w.timer',context),null);
+  assert.equal(document.getElementById('securityPreview').hidden,false);assert.ok(document.getElementById('securityPreview').children.some(n=>n.textContent.includes('独立案例')));
+  assert.ok(!requests.some(r=>r.url.startsWith('/api/')));
+  const cards=document.getElementById('securityPreview').children.filter(n=>n.children.some(b=>b.textContent==='查看 MCP 原文'));
+  assert.equal(cards.length,2);await cards[0].children.find(b=>b.textContent==='查看 MCP 原文').onclick();
+  assert.match(document.getElementById('evidenceMeta').children[0].textContent,/modelcontextprotocol\/python-sdk/);
+  assert.equal(vm.runInContext('w.replay.session.bindings.length',context),2);
+});
+test('CLI deep links select the requested replay or session and reject foreign replay URLs',async()=>{
+  let ui=initializedWorkbench('billionsheep.github.io',true,'?replay=v3-pydantic-deploy-blueprint.json');await ui.ready;
+  assert.equal(vm.runInContext('w.replay.session.reports[0].workflow_mode',ui.context),'deploy_readiness');assert.equal(ui.document.getElementById('securityPreview').hidden,true);
+  ui=initializedWorkbench('localhost',false,'?session=cli-session');await ui.ready;
+  assert.ok(ui.requests.some(r=>r.url==='/api/audit/sessions/cli-session'));assert.equal(vm.runInContext('w.replay',ui.context),null);
+  ui=initializedWorkbench('billionsheep.github.io',true,'?replay=https://other.test/private');await ui.ready;
+  assert.match(ui.document.getElementById('actionStatus').textContent,/未找到/);assert.ok(!ui.requests.some(r=>r.url.includes('other.test')));
 });

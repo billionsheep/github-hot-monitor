@@ -9,3 +9,20 @@
 .architecture-list summary{cursor:pointer;color:var(--blue);font-weight:600;padding:8px 0}
 .architecture-list .history{margin-top:6px}
 @media(max-width:600px){.architecture-graph,.architecture-graph-note{display:none}.session-heading{flex-direction:column;align-items:flex-start;gap:8px}}
+
+/* v3.1: the evidence workspace is the landing view. */
+.app-header{height:auto;min-height:72px;gap:24px;padding-top:12px;padding-bottom:12px}
+.brand{white-space:normal;line-height:1.35;min-width:0;max-width:620px;letter-spacing:0}
+.brand strong{font-size:19px}.brand span{font-size:13px;font-weight:500}
+.app-header nav{align-self:center;flex-shrink:0}.nav-button{min-height:40px}
+#audit h1{font-size:25px;line-height:1.4;letter-spacing:0}
+#sessionTitle{font-size:15px;line-height:1.55;max-height:7em;overflow:auto}
+.report-summary summary{cursor:pointer;font-weight:600}.report-summary p{margin-top:10px}
+.landing-security .verdict{margin-top:12px}.landing-security .verdict strong{font-size:12px}
+.landing-security .verdict p{overflow-wrap:anywhere}.sidebar>.panel{grid-column:1/-1}
+@media(max-width:850px){.main-column{grid-row:1}.sidebar{grid-row:2}}
+@media(max-width:600px){.app-header{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:10px 14px;position:static}.brand{grid-column:1/-1}.brand strong{font-size:17px}.brand span{font-size:12px}.app-header nav{grid-column:1;justify-self:start}.mode{grid-column:2;grid-row:2}#audit h1{font-size:21px}.view-heading{margin-bottom:16px}}
+
+.session-details{margin:8px 0 12px}.session-details summary{cursor:pointer;color:var(--blue);font-size:12px}.session-details h2{margin-top:10px}
+
+@media(max-width:600px){.session-panel .session-heading{flex-direction:row;align-items:center}}

@@ -35,7 +35,7 @@ python3 ops/scripts/start_local.py
 1. 在“发现”选择项目并加入对比，或在“尽调”输入公开 GitHub 仓库。
 2. 选择架构研报、安全线索审计或部署适配，填写具体问题，点击“开始尽调”；每个仓库固定到当时的完整提交。
 3. 查看逐项矩阵、执行轨迹和原文；完成后可追问及导出 Markdown / Replay JSON。
-4. 刷新页面会恢复最近会话，也可从历史列表重新打开。恢复与追问继续使用原提交，新建会话才刷新版本。
+4. 已有会话通过 `?session=ID` 链接或历史列表打开；刷新该链接保留会话定位。无参数首页展示旗舰录制。恢复与追问继续使用原提交，新建会话才刷新版本。
 
 当前每轮总预算最多 20 次模型、24 次工具、60,000 输入 / 16,384 输出 tokens；每仓 Sub 最多 6 次模型、8 次工具，Lead 最多 2 次模型。达到预算保留证据并给出缺口。实时执行会产生模型费用，页面显示实际 usage。
 
@@ -46,9 +46,35 @@ python3 ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir publ
 python3 -m http.server 8781 --bind 127.0.0.1 --directory public
 ```
 
-访问 <http://127.0.0.1:8781/>，在“尽调”的录制回放中选择案例。支持播放、暂停、重播、跳到结果和证据查看，也可导入自己导出的 JSON。静态模式禁用实时任务，无需 API 密钥。
+访问 <http://127.0.0.1:8781/>，首页自动呈现双仓架构录制的完整结果；左侧独立MCP案例展示安全线索预览。问题与完整提交信息可展开，预览证据不混入双仓报告。使用“热门趋势”导航进入 Hot Monitor 候选池，在录制回放列表切换其他案例。支持播放、暂停、重播、跳到结果和证据查看，也可导入自己导出的 JSON。静态模式禁用实时任务，无需 API 密钥。
 
 回放包上限 5 MiB，载入时核对包和片段哈希、证据身份、固定版本、引用及来源地址。格式见 [REPLAY_BUNDLE_SCHEMA.md](REPLAY_BUNDLE_SCHEMA.md)。分享时提供整个 `public/` 或通过已有 Pages 工作流发布。
+
+## IDE Skill / CLI 调用
+
+从 [skills/INDEX.md](../../skills/INDEX.md) 选择架构研报、安全线索审计或部署适配，再读取对应 SKILL.md。Claude Code / Cursor 可照规范调用以下现有引擎接口；目录本身不修改IDE配置。
+
+```bash
+# 在RepoAudit仓库执行，project是需要适配的调用方项目。
+.venv/bin/python -m evidence.cli skills
+.venv/bin/python -m evidence.cli inspect --project /absolute/local-project
+.venv/bin/python -m evidence.cli run --workflow deploy_readiness --repo pydantic/pydantic-ai --project /absolute/local-project --base-url http://127.0.0.1:8773 --wait 300
+.venv/bin/python -m evidence.cli result --session SESSION_ID --base-url http://127.0.0.1:8773
+.venv/bin/python -m evidence.cli replay --replay v3-mcp-security-signals.json --workbench-url http://127.0.0.1:8781/
+```
+
+`run`支持重复 `--repo`（最多3个）、`--query`、`--wait 0..600`。不指定query时采用统一工作流模板；提供project时附加本机Python声明和配置文件名称。探测只看根目录指定文件，不执行项目、不读取.env；.env.example只输出变量名称。解析失败、符号链接或超过64KiB时记录缺口。`run`会使用服务端模型配置并产生调用费用，原编排、检查点和预算沿用。
+
+stdout只输出一行JSON，包含会话状态、固定版本、紧凑判断、证据ID、review_required及workbench_url。退出0表示取得结果，不能当作全部PASS；review_required为true时显示review_url供复核。等待结束但任务未完成时返回wait_expired，后端仍继续执行；用result查询，避免重复run。实际API错误返回JSON及退出1。
+
+工作台链接：
+
+- `?session=ID`：打开对应本机服务中的会话，保留追问与导出。
+- `?replay=v3-architecture-gateway.json`：打开内置回放的完整结果，路径限定在六份清单内。
+- `?view=discover`：直接打开热门趋势候选池。
+- 无参数：架构旗舰结果与独立安全案例预览，零模型调用。
+
+请求同时带session和replay、未知回放或外部地址时显示明确错误。Pages上会话链接提示使用本机服务。首屏录制与手动选择采用相同Hash和引用校验。
 
 ## 数据与恢复
 

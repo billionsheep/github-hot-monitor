@@ -1,8 +1,8 @@
-# RepoAudit-Agent · GitHub Hot Monitor
+# RepoAudit-Agent｜开源架构逆向、安全审计与选型工作台
 
 面向开源框架调研和引入决策的证据核查工作台。提供架构研报、安全线索审计、部署适配三种工作流，支持1～3个仓库顺序调查与比较。
 
-**使用流程：发现项目 → 加入候选 → 输入约束 → Agent 取证 → 比较矩阵 → 打开原文 → 追问 → 导出报告与回放。**
+**首页直接展示双仓录制结果与独立安全线索预览；可切换六份回放，或从 Hot Monitor 热门趋势候选池选择仓库发起实时核查。**
 
 - Lead 拆解共同问题，每仓 Sub 使用独立上下文和八类只读工具；简单单仓部署核查走确定性快速路由。
 - Python AST 定位参数与完整调用语句；有界扫描输出源码关联图、安全线索与覆盖缺口，配置示例可复制并附验证步骤。
@@ -12,6 +12,8 @@
 - 保留原有热门榜单、搜索、专项评分与 GitHub Pages 构建。
 
 技术栈：Python 3.11、FastAPI、Pydantic v2、HTTPX、SQLite WAL、OpenAI Responses / Function Calling、原生 HTML/CSS/JavaScript。
+
+[在线演示：打开默认工作台](https://billionsheep.github.io/github-hot-monitor/) · [热门趋势候选池](https://billionsheep.github.io/github-hot-monitor/?view=discover)
 
 ## 启动
 
@@ -37,10 +39,23 @@ python3 ops/scripts/build_pages.py --state-dir data --web-dir web --out-dir publ
 python3 -m http.server 8781 --bind 127.0.0.1 --directory public
 ```
 
-打开 <http://127.0.0.1:8781/>，进入“尽调 → 录制回放”，播放真实会话、比较结果、打开原文。回放不调用模型。
+打开 <http://127.0.0.1:8781/>，默认显示旗舰架构回放的完整结果及独立MCP安全预览。可直接点原文、切换报告轮次或选择其他五份回放。回放不调用模型。
+
+## IDE Skill 与 CLI
+
+按需读取 [技能总纲](skills/INDEX.md) 和一个工作流 SKILL.md；在引擎目录运行：
+
+```bash
+.venv/bin/python -m evidence.cli inspect --project /absolute/local-project
+.venv/bin/python -m evidence.cli replay --replay v3-architecture-gateway.json --workbench-url http://127.0.0.1:8781/
+.venv/bin/python -m evidence.cli run --workflow deploy_readiness --repo pydantic/pydantic-ai --project /absolute/local-project
+```
+
+CLI输出紧凑JSON、四态结果及工作台链接。`run`调用已启动的本机引擎；`inspect`和`replay`不调用模型。有FAIL/RISK/UNVERIFIED时提供 `review_url`，已有会话使用 `result --session ID` 查询。详见 [运行说明](docs/project/RUNBOOK.md)。
 
 ## 文档与验证
 
+- [v3.1收尾验收](docs/project/V31_VALIDATION.md)
 - [版本基线](docs/project/RELEASE_BASELINE.md)：v3 `repoaudit-v3-demo-2026-11-14`，保留 v2 基线
 - [交付现状与验收](docs/project/DELIVERY_STATUS.md)
 - [五分钟演示与交付指南](docs/project/DELIVERY_GUIDE.md)
